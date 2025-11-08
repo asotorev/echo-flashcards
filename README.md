@@ -1,6 +1,6 @@
 # Echo Flashcards
 
-Curated flashcard decks for software engineering interview preparation. Use with [EchoStudy](https://github.com/yourusername/EchoStudy) or any spaced repetition app that supports JSON imports.
+Curated flashcard decks for software engineering interview preparation. Use with [EchoStudy](https://github.com/asotorev/echo-flashcards) or any spaced repetition app that supports JSON imports.
 
 ## Categories
 
@@ -37,7 +37,7 @@ Comprehensive AI/ML interview preparation covering:
 2. Tap Import → From URL
 3. Enter the raw GitHub URL for any deck:
 ```
-https://raw.githubusercontent.com/yourusername/echo-flashcards/main/Backend/expressjs.json
+https://raw.githubusercontent.com/asotorev/echo-flashcards/main/Backend/expressjs.json
 ```
 
 ### Import via Files App
