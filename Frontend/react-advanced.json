@@ -1,0 +1,335 @@
+{
+  "decks": [
+    {
+      "name": "React Advanced",
+      "description": "Interview questions about React Advanced",
+      "cards": [
+        {
+          "id": "171",
+          "question": "What is `useMemo()`?",
+          "answer": "Hook for memoizing expensive calculations.\n\n```jsx\nconst expensiveValue = useMemo(() => {\n  return computeExpensive(a, b);\n}, [a, b]);\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "172",
+          "question": "What is `useCallback()`?",
+          "answer": "Hook for memoizing functions.\n\n```jsx\nconst handleClick = useCallback(() => {\n  console.log(count);\n}, [count]);\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "173",
+          "question": "What is the difference between useMemo and useCallback?",
+          "answer": "- `useMemo`: memoizes return value\n- `useCallback`: memoizes function itself\n\n```jsx\nuseMemo(() => fn, [deps]) // memoizes fn()\nuseCallback(fn, [deps]) // memoizes fn\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "174",
+          "question": "What is `useReducer()`?",
+          "answer": "Hook for complex state logic using reducer pattern.\n\n```jsx\nconst [state, dispatch] = useReducer(reducer, initialState);\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case 'increment':\n      return { count: state.count + 1 };\n    default:\n      return state;\n  }\n}\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "175",
+          "question": "What is `useLayoutEffect()`?",
+          "answer": "Like useEffect but fires synchronously after DOM mutations, before browser paint.\n\n```jsx\nuseLayoutEffect(() => {\n  // measure DOM, update state\n}, []);\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "176",
+          "question": "What is code splitting?",
+          "answer": "Splitting bundle into smaller chunks loaded on demand.\n\n```jsx\nconst LazyComponent = React.lazy(() => import('./Component'));\n\n<Suspense fallback={<Loading />}>\n  <LazyComponent />\n</Suspense>\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "177",
+          "question": "What is React.lazy()?",
+          "answer": "Function for lazy loading components.\n\n```jsx\nconst About = React.lazy(() => import('./About'));\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "178",
+          "question": "What is Suspense?",
+          "answer": "Component for handling async operations like lazy loading.\n\n```jsx\n<Suspense fallback={<Spinner />}>\n  <LazyComponent />\n</Suspense>\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "179",
+          "question": "What is Error Boundary?",
+          "answer": "Component catching JavaScript errors in child component tree.\n\n```jsx\nclass ErrorBoundary extends React.Component {\n  state = { hasError: false };\n\n  static getDerivedStateFromError(error) {\n    return { hasError: true };\n  }\n\n  render() {\n    if (this.state.hasError) return <h1>Error</h1>;\n    return this.props.children;\n  }\n}\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "180",
+          "question": "What is HOC (Higher-Order Component)?",
+          "answer": "Function that takes component and returns enhanced component.\n\n```jsx\nfunction withAuth(Component) {\n  return function(props) {\n    if (!isAuthenticated) return <Login />;\n    return <Component {...props} />;\n  };\n}\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "181",
+          "question": "What is render props?",
+          "answer": "Pattern for sharing code using prop whose value is a function.\n\n```jsx\n<DataProvider render={data => <Display data={data} />} />\n\nfunction DataProvider({ render }) {\n  const [data, setData] = useState(null);\n  return render(data);\n}\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "182",
+          "question": "What is prop types?",
+          "answer": "Runtime type checking for props.\n\n```jsx\nimport PropTypes from 'prop-types';\n\nButton.propTypes = {\n  label: PropTypes.string.isRequired,\n  onClick: PropTypes.func\n};\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "183",
+          "question": "What is forwardRef?",
+          "answer": "Passes ref through component to child.\n\n```jsx\nconst Input = React.forwardRef((props, ref) => {\n  return <input ref={ref} {...props} />;\n});\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "184",
+          "question": "What is useImperativeHandle?",
+          "answer": "Customizes instance value exposed when using ref.\n\n```jsx\nuseImperativeHandle(ref, () => ({\n  focus: () => inputRef.current.focus()\n}));\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "185",
+          "question": "What is Portal?",
+          "answer": "Renders children into DOM node outside parent hierarchy.\n\n```jsx\nReactDOM.createPortal(\n  <Modal />,\n  document.getElementById('modal-root')\n);\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "186",
+          "question": "What is React.memo()?",
+          "answer": "HOC that memoizes component, preventing re-render if props unchanged.\n\n```jsx\nconst MemoizedComponent = React.memo(Component);\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "187",
+          "question": "What is PureComponent?",
+          "answer": "Class component with shallow prop/state comparison.\n\n```jsx\nclass MyComponent extends React.PureComponent {\n  render() {\n    return <div>{this.props.value}</div>;\n  }\n}\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "188",
+          "question": "What is the difference between React.memo and PureComponent?",
+          "answer": "- React.memo: for functional components\n- PureComponent: for class components",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "189",
+          "question": "What is custom hook?",
+          "answer": "Reusable function extracting component logic.\n\n```jsx\nfunction useCounter(initial = 0) {\n  const [count, setCount] = useState(initial);\n  const increment = () => setCount(c => c + 1);\n  return { count, increment };\n}\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "190",
+          "question": "What are rules of hooks?",
+          "answer": "1. Only call at top level (not in loops/conditions)\n2. Only call from React functions",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "191",
+          "question": "What is React Router?",
+          "answer": "Library for routing in React applications.\n\n```jsx\n<BrowserRouter>\n  <Routes>\n    <Route path=\"/\" element={<Home />} />\n    <Route path=\"/about\" element={<About />} />\n  </Routes>\n</BrowserRouter>\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "192",
+          "question": "What is useNavigate?",
+          "answer": "Hook for programmatic navigation.\n\n```jsx\nconst navigate = useNavigate();\nnavigate('/dashboard');\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "193",
+          "question": "What is useParams?",
+          "answer": "Hook for accessing URL parameters.\n\n```jsx\nconst { id } = useParams(); // from /user/:id\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "194",
+          "question": "What is useLocation?",
+          "answer": "Hook for accessing current location object.\n\n```jsx\nconst location = useLocation();\nconsole.log(location.pathname);\n```",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "195",
+          "question": "What is state management in React?",
+          "answer": "Managing and sharing data across components (useState, Context, Redux, Zustand).",
+          "tags": [
+            "React",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "decks": [
+    {
+      "name": "Part 4: Natural Language Processing Basics",
+      "description": "Fundamental NLP concepts - tokenization, embeddings, and common tasks",
+      "cards": [
+        {
+          "id": "66",
+          "question": "What is Natural Language Processing (NLP)?",
+          "answer": "NLP is the field of AI focused on enabling computers to understand, interpret, and generate human language. It combines linguistics, computer science, and machine learning to process text and speech. Common applications include translation, sentiment analysis, chatbots, text summarization, and voice assistants. NLP bridges the gap between human communication and computer understanding.",
+          "tags": [
+            "NLP",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "67",
+          "question": "What are the main challenges in processing human language?",
+          "answer": "Human language is ambiguous (words with multiple meanings), context-dependent (meaning changes with context), has complex syntax and grammar, uses idioms and sarcasm, contains typos and informal expressions, and varies across cultures and regions. Additionally, language evolves constantly, has infinite possible sentences from finite words, and relies heavily on world knowledge and common sense that machines lack.",
+          "tags": [
+            "NLP",
+            "Challenges"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "68",
+          "question": "What is tokenization?",
+          "answer": "Tokenization is the process of breaking text into smaller units called tokens (words, subwords, or characters). It's the first step in NLP, converting raw text into a format models can process. For example, 'I love AI!' might become ['I', 'love', 'AI', '!']. The choice of tokenization strategy significantly affects model performance and vocabulary size.",
+          "tags": [
+            "NLP",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "69",
+          "question": "What are different tokenization strategies (word, subword, character)?",
+          "answer": "Word tokenization splits on spaces/punctuation, simple but creates huge vocabularies and struggles with rare words. Subword tokenization (like BPE) breaks words into common pieces, balancing vocabulary size with representation ability. Character tokenization uses individual characters, giving tiny vocabularies but very long sequences. Modern LLMs use subword approaches, handling rare words while keeping reasonable vocabulary sizes.",
+          "tags": [
+            "NLP",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "70",
+          "question": "What is a vocabulary in NLP?",
+          "answer": "A vocabulary is the complete set of unique tokens that a model recognizes and can process. It maps tokens to numerical IDs (like 'cat' -> 1534). Vocabulary size is a key design choice - larger vocabularies can represent more words but require more memory and computation. Unknown words outside the vocabulary are typically represented by a special [UNK] token or broken into subword pieces.",
+          "tags": [
+            "NLP",
+            "Vocabulary"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "71",
+          "question": "What is byte-pair encoding (BPE)?",
+          "answer": "BPE is a subword tokenization algorithm that starts with characters and iteratively merges the most frequent adjacent pairs to create a vocabulary. It learns common subword units from data, allowing it to represent rare words as combinations of frequent subwords. This solves the out-of-vocabulary problem while keeping vocabulary size manageable. Most modern LLMs use BPE or similar algorithms.",
+          "tags": [
+            "NLP",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "72",
+          "question": "What are word embeddings?",
+          "answer": "Word embeddings are dense vector representations of words that capture semantic meaning in a continuous space. Similar words have similar vectors, enabling mathematical operations on meaning (like 'king' - 'man' + 'woman' \u2248 'queen'). Unlike one-hot encoding, embeddings are learned from data and represent words in much lower dimensions (typically 100-1000), making them computationally efficient.",
+          "tags": [
+            "NLP",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "73",
+          "question": "What is Word2Vec?",
+          "answer": "Word2Vec is a technique for learning word embeddings by predicting context from words (skip-gram) or words from context (CBOW). It trains a shallow neural network on large text corpora, learning embeddings where words appearing in similar contexts get similar vectors. Word2Vec was revolutionary for showing that embeddings could capture semantic relationships and analogies purely from unlabeled text.",
+          "tags": [
+            "NLP",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "74",
+          "question": "What is GloVe?",
+          "answer": "GloVe (Global Vectors) learns word embeddings by factorizing a word co-occurrence matrix, combining global statistics with local context. Unlike Word2Vec which uses local context windows, GloVe considers corpus-wide statistics about how often words appear together. It produces embeddings where vector differences capture meaning relationships, making it effective for word analogy tasks and semantic similarity.",
+          "tags": [
+            "NLP",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "75",
+          "question": "How do word embeddings capture semantic meaning?",
+          "answer": "Embeddings capture meaning through the distributional hypothesis: words appearing in similar contexts have similar meanings. During training, words like 'cat' and 'dog' appear in similar contexts ('pet the ___', 'feed the ___'), so they get similar vector representations. The high-dimensional space organizes words where semantic relationships become geometric relationships (like vector arithmetic capturing analogies).",
+          "tags": [
+            "NLP",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "76",
+          "question": "What is the distributional hypothesis in linguistics?",
+          "answer": "The distributional hypothesis states that words appearing in similar contexts tend to have similar meanings. Formulated as 'you shall know a word by the company it keeps,' this principle underlies modern word embeddings. For example, 'car' and 'automobile' appear in similar contexts, so we infer they have similar meanings. This enables learning word representations purely from patterns of word usage.",
+          "tags": [
+            "NLP",
+            "Theory"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "77",
+          "question": "What is contextual vs non-contextual embeddings?",
+          "answer": "Non-contextual embeddings (like Word2Vec, GloVe) assign one fixed vector per word regardless of context, so 'bank' always has the same representation. Contextual embeddings (from BERT, GPT) generate different vectors based on surrounding words, so 'river bank' and 'financial bank' get different representations. Contextual embeddings capture polysemy and are much more powerful for understanding language.",
+          "tags": [
+            "NLP",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "78",
+          "question": "What are n-grams?",
+          "answer": "N-grams are contiguous sequences of n items (words or characters) from text. Unigrams are single words, bigrams are pairs, trigrams are triplets. They capture local context and word order - 'not good' has different meaning than 'good' alone. N-grams were foundational in traditional NLP but are less central in modern deep learning approaches, though they still appear in feature engineering and tokenization.",
+          "tags": [
+            "NLP",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "79",
+          "question": "What is Part-of-Speech (POS) tagging?",
+          "answer": "POS tagging assigns grammatical categories (noun, verb, adjective, etc.) to each word in a sentence. For example, 'They fish in the river' might tag 'They' as pronoun, 'fish' as verb, 'river' as noun. This helps understand sentence structure and word roles. Modern systems use neural networks, but POS tagging is less critical with LLMs that learn grammar implicitly.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "80",
+          "question": "What is Named Entity Recognition (NER)?",
+          "answer": "NER identifies and classifies named entities in text into predefined categories like person names, organizations, locations, dates, etc. For example, in 'Apple Inc. was founded in California,' it would identify 'Apple Inc.' as an organization and 'California' as a location. NER is crucial for information extraction, question answering, and understanding text structure.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "81",
+          "question": "What is sentiment analysis?",
+          "answer": "Sentiment analysis determines the emotional tone or attitude expressed in text, typically classifying it as positive, negative, or neutral. For example, 'This product is amazing!' would be classified as positive. Advanced systems detect fine-grained emotions (joy, anger, sadness) or aspect-based sentiment (liking a restaurant's food but not service). It's widely used for customer feedback analysis and social media monitoring.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "82",
+          "question": "What is text classification?",
+          "answer": "Text classification assigns predefined categories or labels to text documents. Examples include spam detection (spam/not spam), topic categorization (sports, politics, technology), or language identification. It's a supervised learning task where models learn from labeled examples to classify new texts. Modern approaches use fine-tuned transformers, achieving high accuracy with relatively little training data.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "83",
+          "question": "What is machine translation?",
+          "answer": "Machine translation automatically converts text from one language to another, like English to Spanish. Modern systems use neural machine translation with encoder-decoder transformers that learn to map meanings across languages. Unlike older phrase-based systems, neural models understand context and produce more fluent, natural translations. Services like Google Translate use these approaches, though nuanced translation remains challenging.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "84",
+          "question": "What is text generation?",
+          "answer": "Text generation creates new text that follows patterns learned from training data. This includes continuing text, writing stories, answering questions, or engaging in dialogue. Modern LLMs like GPT excel at text generation by predicting the next token based on context. Generation can be conditional (based on prompts) or unconditional, and quality is controlled through sampling strategies and parameters like temperature.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "85",
+          "question": "What is the difference between extractive and abstractive summarization?",
+          "answer": "Extractive summarization selects and combines existing sentences from the source text without modification, like highlighting key passages. Abstractive summarization generates new text that captures the main ideas, potentially using different words and phrasing, like a human would summarize. Abstractive is more flexible and natural but harder to implement, while extractive is simpler and ensures factual accuracy by using original text.",
+          "tags": [
+            "NLP",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

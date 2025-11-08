@@ -1,0 +1,350 @@
+{
+  "decks": [
+    {
+      "name": "Part 11: Hugging Face Ecosystem Basics",
+      "description": "Understanding the Hugging Face platform and its role in the AI ecosystem",
+      "cards": [
+        {
+          "id": "205",
+          "question": "What is Hugging Face?",
+          "answer": "Hugging Face is a leading AI company and platform that provides tools, models, and infrastructure for machine learning. It's best known for its open-source libraries (like Transformers), the Hugging Face Hub (a repository for models and datasets), and democratizing access to state-of-the-art AI models through easy-to-use interfaces.",
+          "tags": [
+            "Hugging Face",
+            "Ecosystem"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "206",
+          "question": "What role does Hugging Face play in the AI ecosystem?",
+          "answer": "Hugging Face serves as the GitHub of machine learning - a centralized platform for sharing, discovering, and collaborating on AI models and datasets. It bridges research and production by making cutting-edge models accessible to developers, provides standardized APIs through libraries like Transformers, and hosts community spaces for demos and applications.",
+          "tags": [
+            "Hugging Face",
+            "Ecosystem"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "207",
+          "question": "What is the Hugging Face Hub?",
+          "answer": "The Hugging Face Hub is a platform for hosting and sharing machine learning models, datasets, and demo applications (Spaces). It functions like a repository where you can discover pre-trained models, download them, use version control with git, collaborate with others, and deploy applications. It's the central distribution point for the AI community.",
+          "tags": [
+            "Hugging Face",
+            "Hub"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "208",
+          "question": "What can you find on the Hugging Face Hub? (models, datasets, spaces)",
+          "answer": "Models: Pre-trained models for various tasks (LLMs, vision, audio, etc.). Datasets: Curated datasets for training and evaluation. Spaces: Interactive demo applications built with Gradio or Streamlit. You'll also find model cards (documentation), community discussions, and collections organizing related resources.",
+          "tags": [
+            "Hugging Face",
+            "Hub"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "209",
+          "question": "What is a Hugging Face model card?",
+          "answer": "A model card is documentation that accompanies each model on the Hub. It describes what the model does, how it was trained, intended use cases, limitations, evaluation results, and licensing information. Model cards promote transparency and responsible AI use by helping users understand model capabilities and limitations before deployment.",
+          "tags": [
+            "Hugging Face",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "210",
+          "question": "What information does a model card contain?",
+          "answer": "Model cards typically include: model description and architecture, training data and procedure, intended uses and limitations, performance metrics, bias and fairness considerations, example usage code, citation information, and license. This comprehensive documentation helps users make informed decisions about model selection and deployment.",
+          "tags": [
+            "Hugging Face",
+            "Documentation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "211",
+          "question": "What is the difference between a base model and a fine-tuned model on Hugging Face?",
+          "answer": "A base model is pre-trained on general data without task-specific training (like Llama-3-8B or GPT-2). A fine-tuned model has been additionally trained on specific data for particular tasks (like Llama-3-8B-Instruct or a customer service chatbot). Base models are starting points; fine-tuned models are specialized for specific applications.",
+          "tags": [
+            "Hugging Face",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "212",
+          "question": "What are Hugging Face Spaces?",
+          "answer": "Spaces are hosted applications that showcase ML models through interactive demos. Built with frameworks like Gradio or Streamlit, Spaces let you create web UIs for models without managing infrastructure. They're useful for sharing demos, prototyping, and letting users interact with models through a browser interface.",
+          "tags": [
+            "Hugging Face",
+            "Spaces"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "213",
+          "question": "What is Gradio and how does it relate to Hugging Face?",
+          "answer": "Gradio is a Python library for quickly creating web interfaces for ML models. Hugging Face acquired Gradio and tightly integrated it with Spaces. You can build a Gradio interface in a few lines of code, defining inputs and outputs, and deploy it to Spaces for sharing. It's designed for rapid prototyping and demos.",
+          "tags": [
+            "Hugging Face",
+            "Gradio",
+            "Tools"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "214",
+          "question": "What is Streamlit in the context of Hugging Face Spaces?",
+          "answer": "Streamlit is a Python framework for building data and ML web applications with simple scripts. Hugging Face Spaces supports Streamlit as an alternative to Gradio. Streamlit offers more flexibility for complex dashboards and custom layouts but requires slightly more code than Gradio for simple interfaces.",
+          "tags": [
+            "Hugging Face",
+            "Streamlit",
+            "Tools"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "215",
+          "question": "What are Hugging Face datasets?",
+          "answer": "Hugging Face Datasets is both a library and a Hub section. The library provides efficient tools for loading and processing datasets. The Hub hosts thousands of datasets for various ML tasks (text, vision, audio). Datasets can be loaded with simple APIs, streamed for large files, and include built-in processing utilities.",
+          "tags": [
+            "Hugging Face",
+            "Datasets"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "216",
+          "question": "How do you search for models on Hugging Face?",
+          "answer": "Use the Hub's search interface with filters for task (text generation, image classification), library (PyTorch, TensorFlow), language, license, and more. You can sort by trending, most downloads, or recently updated. The search supports keywords and can filter by specific model architectures or organizations.",
+          "tags": [
+            "Hugging Face",
+            "Hub"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "217",
+          "question": "What are model tags and filters on Hugging Face?",
+          "answer": "Tags categorize models by attributes: task type (text-generation, translation), library (transformers, diffusers), language (en, multilingual), dataset used for training, and architecture (llama, bert). Filters let you narrow searches to find models matching specific criteria like license type or framework compatibility.",
+          "tags": [
+            "Hugging Face",
+            "Hub"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "218",
+          "question": "What is the difference between public and private models on Hugging Face?",
+          "answer": "Public models are visible to everyone and can be freely downloaded and used (subject to license). Private models are only accessible to you and collaborators you specify. Private models are useful for proprietary work, internal company models, or models undergoing development before public release.",
+          "tags": [
+            "Hugging Face",
+            "Privacy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "219",
+          "question": "What are gated models on Hugging Face?",
+          "answer": "Gated models require users to accept terms or request access before downloading. This allows model creators to control distribution, track usage, require agreeing to specific licenses, or limit access to approved researchers. Examples include Meta's Llama models which require accepting their license agreement.",
+          "tags": [
+            "Hugging Face",
+            "Access"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "220",
+          "question": "What is a Hugging Face organization vs personal account?",
+          "answer": "Personal accounts are for individuals to host their models and projects. Organizations are shared accounts for teams or companies, allowing multiple members to collaborate, manage permissions, and publish models under a unified brand. Organizations are useful for company model repositories or research labs.",
+          "tags": [
+            "Hugging Face",
+            "Accounts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "221",
+          "question": "What are download statistics and why are they useful?",
+          "answer": "Download stats show how many times a model has been downloaded and its recent usage trends. They help gauge model popularity, reliability (highly downloaded models are typically well-tested), and community adoption. Popular models often have better documentation and community support.",
+          "tags": [
+            "Hugging Face",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "222",
+          "question": "What is the Hugging Face Model Hub license system?",
+          "answer": "Each model on the Hub specifies a license that defines usage rights. The Hub supports various licenses (Apache 2.0, MIT, custom licenses) and displays them clearly. Users must respect these licenses - some allow commercial use, others are research-only. Always check the license before using a model in production.",
+          "tags": [
+            "Hugging Face",
+            "Licensing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "223",
+          "question": "What are popular open-source model licenses? (Apache 2.0, MIT, OpenRAIL)",
+          "answer": "Apache 2.0: Permissive, allows commercial use with patent grant. MIT: Very permissive, minimal restrictions. OpenRAIL: Responsible AI license with use-based restrictions (no harmful applications). CreativeML OpenRAIL-M is common for diffusion models. Each has different requirements for attribution, liability, and acceptable use.",
+          "tags": [
+            "Hugging Face",
+            "Licensing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "224",
+          "question": "What is the difference between commercial and non-commercial licenses?",
+          "answer": "Commercial licenses allow using models in for-profit applications and services. Non-commercial licenses restrict use to research, education, or personal projects - you cannot monetize applications using these models. Always verify license terms before deploying models in production or revenue-generating applications.",
+          "tags": [
+            "Hugging Face",
+            "Licensing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "225",
+          "question": "What is community engagement on Hugging Face? (likes, discussions)",
+          "answer": "Users can like models and spaces to bookmark favorites and show appreciation. Discussions allow asking questions, reporting issues, sharing tips, or requesting features. This creates a collaborative environment where model creators and users interact, improving model quality and documentation through community feedback.",
+          "tags": [
+            "Hugging Face",
+            "Community"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "226",
+          "question": "What are Hugging Face collections?",
+          "answer": "Collections are curated lists of related models, datasets, or spaces organized by theme or purpose. Users or organizations create collections to group resources like 'Best models for sentiment analysis' or 'Medical NLP tools'. They help discover related resources and understand model ecosystems.",
+          "tags": [
+            "Hugging Face",
+            "Organization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "227",
+          "question": "What is the Hugging Face Inference API?",
+          "answer": "The Inference API lets you run models hosted on the Hub via HTTP requests without downloading them locally. It's useful for quick testing, prototyping, or low-volume inference. Free tier available for public models; paid plans offer higher rate limits and private model support.",
+          "tags": [
+            "Hugging Face",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "228",
+          "question": "What are Hugging Face Inference Endpoints?",
+          "answer": "Inference Endpoints are dedicated, scalable deployments of models with guaranteed availability and performance. Unlike the shared Inference API, endpoints provide production-grade infrastructure with autoscaling, private networking, and SLAs. They're designed for deploying models in production applications with consistent performance.",
+          "tags": [
+            "Hugging Face",
+            "Deployment"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "229",
+          "question": "What is AutoTrain on Hugging Face?",
+          "answer": "AutoTrain is a no-code tool for training and fine-tuning models. Upload your data, select a task, and AutoTrain handles training configuration, hyperparameter tuning, and model evaluation. It democratizes ML by letting non-experts train custom models without writing code or understanding training details.",
+          "tags": [
+            "Hugging Face",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "230",
+          "question": "What is the Hugging Face Pro subscription and what does it offer?",
+          "answer": "Pro subscription provides enhanced features: increased storage for private models and datasets, higher Inference API rate limits, early access to new features, priority support, and extended Spaces compute. It's designed for professional developers and researchers who need more resources than the free tier.",
+          "tags": [
+            "Hugging Face",
+            "Subscription"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

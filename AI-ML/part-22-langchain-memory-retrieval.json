@@ -1,0 +1,360 @@
+{
+  "decks": [
+    {
+      "name": "Part 22: LangChain Memory & Retrieval",
+      "description": "Memory management, document loading, text splitting, and retrieval basics",
+      "cards": [
+        {
+          "id": "501",
+          "question": "What is ConversationBufferWindowMemory?",
+          "answer": "ConversationBufferWindowMemory keeps only last N interactions (e.g., last 5 exchanges). Older messages are forgotten. Prevents unbounded growth while maintaining recent context. Good balance for most chatbots. Example: window_size=5 keeps last 10 messages (5 user + 5 AI). Recent context usually sufficient for coherent conversation.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Window"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "502",
+          "question": "What is ConversationSummaryMemory?",
+          "answer": "ConversationSummaryMemory uses LLM to summarize conversation history progressively. Instead of storing all messages, stores running summary. Trades precision for space efficiency. Good for very long conversations. Downside: costs LLM calls to generate summaries, may lose details. Keeps memory bounded regardless of conversation length.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Summary"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "503",
+          "question": "What is ConversationSummaryBufferMemory?",
+          "answer": "ConversationSummaryBufferMemory combines summary and buffer approaches. Keeps recent messages verbatim, summarizes older ones. Best of both: detail for recent context, compression for history. Token limit triggers summarization. Balances accuracy (recent messages) with efficiency (summarized old messages). Most sophisticated memory option.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Hybrid"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "504",
+          "question": "What's the difference between buffer and summary memory?",
+          "answer": "Buffer stores exact messages; summary stores compressed version. Buffer: perfect recall, grows unbounded. Summary: bounded size, loses details. Buffer faster (no LLM summarization), summary more scalable. Use buffer for short conversations needing exact history; summary for long conversations where space matters more than perfect recall.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "505",
+          "question": "What is entity memory?",
+          "answer": "Entity memory tracks specific entities (people, places, facts) mentioned in conversation. Stores key-value facts extracted from dialogue. Example: remembers user's name, preferences, mentioned dates. More structured than buffer memory. Useful for personalization and long-term context. Combines with other memory types for better entity tracking.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Entities"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "506",
+          "question": "How do you persist memory between sessions?",
+          "answer": "Save memory to database/file when session ends, load on next session. Store conversation history in SQL, Redis, or file system. Key by user ID or session ID. Example: save to PostgreSQL with session_id, load on reconnect. Critical for production chatbots where users return later. Memory is otherwise lost when app restarts.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Persistence"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "507",
+          "question": "What are the trade-offs between different memory types?",
+          "answer": "Buffer: accurate but unbounded. Window: bounded but forgets old context. Summary: compact but loses details and costs LLM calls. SummaryBuffer: balanced but complex. Entity: structured but requires extraction. Choose based on conversation length, accuracy needs, and cost constraints. Most apps use window memory as good default.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Trade-offs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "508",
+          "question": "What is a document in LangChain?",
+          "answer": "Document is an object containing text content and metadata. Structure: page_content (the text) and metadata (source, page number, etc.). Base unit for RAG systems. Created by document loaders. Example: PDF page becomes one document with content and metadata like page number. Documents are chunked and embedded for retrieval.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "RAG"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "509",
+          "question": "What is a document loader?",
+          "answer": "Document loader reads files/sources and converts them to LangChain documents. Each loader handles specific format: PDFLoader, CSVLoader, TextLoader. Extracts text and metadata. Returns list of documents. Example: 'PyPDFLoader(\"file.pdf\").load()' returns document per page. First step in building RAG knowledge base.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "Loading"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "510",
+          "question": "What document loaders are available? (PDF, CSV, TXT, etc.)",
+          "answer": "LangChain supports many formats: PyPDFLoader (PDF), CSVLoader (CSV), TextLoader (TXT), UnstructuredFileLoader (multiple formats), WebBaseLoader (web pages), GitHubLoader (repos), GoogleDriveLoader (Drive docs). Each extracts text appropriately for format. Choose loader matching your data source. Check langchain-community for more loaders.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "Loaders"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "511",
+          "question": "What is the TextLoader?",
+          "answer": "TextLoader loads plain text files. Simplest loader. Usage: 'TextLoader(\"file.txt\").load()'. Creates one document per file. Preserves text as-is. Metadata includes file source. Use for .txt, .md, code files. For more complex text processing, use UnstructuredFileLoader or custom parsing.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "Text"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "512",
+          "question": "What is the PyPDFLoader?",
+          "answer": "PyPDFLoader extracts text from PDF files. Creates one document per page. Metadata includes page number and source. Usage: 'PyPDFLoader(\"doc.pdf\").load()'. Handles most PDFs but struggles with complex layouts. For better PDF extraction, consider UnstructuredPDFLoader or PDFMiner. Essential for PDF-based RAG systems.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "PDF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "513",
+          "question": "What is the CSVLoader?",
+          "answer": "CSVLoader loads CSV files into documents. Each row can become a document, or entire file as one document. Configurable column handling. Metadata from CSV columns. Usage: 'CSVLoader(\"data.csv\").load()'. Good for structured data like product catalogs, customer records. Enables RAG over tabular data.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "CSV"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "514",
+          "question": "What is UnstructuredFileLoader?",
+          "answer": "UnstructuredFileLoader handles multiple file formats intelligently. Auto-detects type (PDF, Word, HTML, etc.) and extracts text. Uses Unstructured library for better parsing. More powerful than format-specific loaders. Usage: 'UnstructuredFileLoader(\"file.docx\").load()'. Good when dealing with mixed file types. Requires unstructured package.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "Unstructured"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "515",
+          "question": "What is a text splitter in LangChain?",
+          "answer": "Text splitter breaks documents into smaller chunks for embedding. Documents often too long for embedding models or context windows. Splitter creates overlapping chunks of target size. Preserves semantic coherence. Example: split 1000-word doc into 200-word chunks with 50-word overlap. Essential for RAG - retrieves relevant chunks, not entire documents.",
+          "tags": [
+            "LangChain",
+            "Text Splitting",
+            "RAG"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "516",
+          "question": "What is RecursiveCharacterTextSplitter?",
+          "answer": "RecursiveCharacterTextSplitter is recommended default splitter. Splits on multiple separators hierarchically: paragraphs, then sentences, then words. Preserves semantic units better than fixed-size chunking. Configuration: chunk_size, chunk_overlap. Example: tries '\\n\\n' first, then '\\n', then ' '. Creates more coherent chunks than simple character splitting.",
+          "tags": [
+            "LangChain",
+            "Text Splitting",
+            "Recommended"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "517",
+          "question": "What is CharacterTextSplitter?",
+          "answer": "CharacterTextSplitter splits on specific separator (default '\\n\\n'). Simpler than recursive splitter. Less intelligent about semantic boundaries. Use when you know document structure (e.g., newline-delimited records). RecursiveCharacterTextSplitter usually better for general text. CharacterTextSplitter good for structured data with clear delimiters.",
+          "tags": [
+            "LangChain",
+            "Text Splitting",
+            "Simple"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "518",
+          "question": "What is TokenTextSplitter?",
+          "answer": "TokenTextSplitter splits based on token count, not characters. Respects embedding model's token limit. Uses actual tokenizer for accurate counting. Example: chunk_size=512 tokens. More precise than character-based splitting since models work with tokens. Prevents chunks exceeding model limits. Slightly slower due to tokenization.",
+          "tags": [
+            "LangChain",
+            "Text Splitting",
+            "Tokens"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "519",
+          "question": "How do you choose chunk size and overlap?",
+          "answer": "Chunk size: 500-1000 characters typical (200-400 tokens). Too small: loses context. Too large: less precise retrieval. Overlap: 10-20% of chunk size preserves context across boundaries. Test with your data - technical docs may need larger chunks than chat logs. Balance between context preservation and retrieval precision.",
+          "tags": [
+            "LangChain",
+            "Text Splitting",
+            "Configuration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "520",
+          "question": "What is a retriever in LangChain?",
+          "answer": "Retriever fetches relevant documents given a query. Interface for search: takes string, returns list of documents. Abstracts vector database, keyword search, or hybrid. Example: 'retriever.get_relevant_documents(\"question\")'. Used in RAG chains to find context. Different retrievers: vector store, multi-query, contextual compression.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "RAG"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "521",
+          "question": "What is the VectorStoreRetriever?",
+          "answer": "VectorStoreRetriever performs similarity search against vector database. Created from vector store: 'vectorstore.as_retriever()'. Returns top-k most similar documents. Configurable: search type (similarity, MMR), k value. Most common retriever for RAG. Wraps vector database with standard retriever interface.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Vector Store"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "522",
+          "question": "What is similarity search vs MMR in retrievers?",
+          "answer": "Similarity search: returns k most similar documents (may be redundant). MMR (Maximal Marginal Relevance): balances relevance and diversity. MMR avoids returning very similar documents. Example: query 'Python' - similarity might return 5 docs all about same topic; MMR returns diverse Python-related docs. Use MMR when diversity matters.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Search Algorithms"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "523",
+          "question": "How do you build a RAG system with LangChain?",
+          "answer": "Steps: 1) Load documents (document loader), 2) Split into chunks (text splitter), 3) Create embeddings and store in vector DB, 4) Create retriever from vector store, 5) Build chain: retrieve documents, pass to LLM with query. Modern: use LCEL to chain components. Result: LLM answers using your documents as context.",
+          "tags": [
+            "LangChain",
+            "RAG",
+            "Implementation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "524",
+          "question": "What is the RetrievalQA chain?",
+          "answer": "RetrievalQA chain combines retriever and LLM for question answering. Legacy approach. Takes question, retrieves relevant docs, sends to LLM for answer. Simple one-shot QA (no conversation memory). Usage: 'RetrievalQA.from_chain_type(llm=llm, retriever=retriever)'. Modern alternative: build with LCEL for more control.",
+          "tags": [
+            "LangChain",
+            "RAG",
+            "QA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "525",
+          "question": "What is ConversationalRetrievalChain?",
+          "answer": "ConversationalRetrievalChain adds conversation memory to RetrievalQA. Handles follow-up questions using chat history. Reformulates user question considering context. Example: 'What is RAG?' then 'How does it work?' - second question needs context. Combines retrieval, memory, and QA. Legacy chain, prefer LCEL implementation in new code.",
+          "tags": [
+            "LangChain",
+            "RAG",
+            "Conversation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

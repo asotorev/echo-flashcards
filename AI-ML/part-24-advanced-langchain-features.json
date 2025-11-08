@@ -1,0 +1,360 @@
+{
+  "decks": [
+    {
+      "name": "Part 24: Advanced LangChain Features",
+      "description": "Callbacks, caching, async operations, and framework integrations",
+      "cards": [
+        {
+          "id": "553",
+          "question": "How do you deploy LangChain applications?",
+          "answer": "Options: LangServe (FastAPI wrapper), custom FastAPI/Flask app, Streamlit/Gradio for UIs, Docker containers. LangServe easiest: auto-generates API endpoints. Add authentication, rate limiting, monitoring. Deploy to cloud (AWS, GCP, Azure) or serverless (Lambda, Cloud Functions). Consider async endpoints for better concurrency.",
+          "tags": [
+            "LangChain",
+            "Deployment",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "554",
+          "question": "What is a callback in LangChain?",
+          "answer": "Callback is function called at specific execution points. Hooks into chain lifecycle: on_llm_start, on_llm_end, on_chain_start, etc. Used for logging, monitoring, streaming, custom tracking. Create custom CallbackHandler class. Enables instrumentation without modifying chain logic. Foundation for tracing and observability.",
+          "tags": [
+            "LangChain",
+            "Callbacks",
+            "Monitoring"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "555",
+          "question": "What are callback handlers used for?",
+          "answer": "Callback handlers enable: streaming output to UI, logging to files/databases, cost tracking, latency measurement, error monitoring, custom analytics. Examples: StdOutCallbackHandler (print to console), FileCallbackHandler (log to file), LangSmith tracing. Attach to chains with callbacks=[handler]. Multiple handlers can run simultaneously.",
+          "tags": [
+            "LangChain",
+            "Callbacks",
+            "Use Cases"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "556",
+          "question": "How do you implement streaming with callbacks?",
+          "answer": "Create callback handler with on_llm_new_token method. Called for each token generated. Send tokens to client in real-time. Example: WebSocket handler sends tokens as they arrive. Alternatively, use built-in stream() method on chains. Callbacks provide more control over streaming behavior.",
+          "tags": [
+            "LangChain",
+            "Streaming",
+            "Callbacks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "557",
+          "question": "What is the StdOutCallbackHandler?",
+          "answer": "StdOutCallbackHandler prints chain execution to console. Shows LLM inputs/outputs, tool calls, intermediate steps. Useful for development debugging. Usage: 'chain.invoke(input, config={\"callbacks\": [StdOutCallbackHandler()]})'. Verbose alternative to verbose=True flag. Helps understand chain behavior during development.",
+          "tags": [
+            "LangChain",
+            "Callbacks",
+            "Debugging"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "558",
+          "question": "What is token counting in LangChain?",
+          "answer": "Token counting tracks tokens used in LLM calls for cost estimation. Use callback handlers or built-in methods. Example: get_openai_callback() context manager counts tokens and estimates cost. Important for monitoring spend, optimizing prompts, staying within budgets. Different models have different token costs.",
+          "tags": [
+            "LangChain",
+            "Cost Management",
+            "Tokens"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "559",
+          "question": "How do you estimate costs with LangChain?",
+          "answer": "Use get_openai_callback(): 'with get_openai_callback() as cb: chain.invoke(); print(cb.total_cost)'. Tracks tokens and calculates cost based on model pricing. For other providers, implement custom callback. Monitor prompt tokens vs completion tokens separately. Helps optimize cost: smaller prompts, cheaper models, caching.",
+          "tags": [
+            "LangChain",
+            "Cost Management",
+            "OpenAI"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "560",
+          "question": "What is caching in LangChain?",
+          "answer": "Caching stores LLM responses to reuse for identical inputs. Avoids redundant API calls, saves cost and latency. LangChain supports: InMemoryCache, SQLiteCache, Redis cache. Enable globally or per-chain. Example: same question asked multiple times uses cached response. Transparent to application logic.",
+          "tags": [
+            "LangChain",
+            "Caching",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "561",
+          "question": "What types of caching does LangChain support?",
+          "answer": "InMemoryCache: fast, lost on restart. SQLiteCache: persistent across restarts, local file. RedisCache: distributed, scalable for multiple instances. GPTCache: semantic caching (similar queries). Choose based on deployment: single instance (SQLite), distributed (Redis), development (InMemory). Configure with set_llm_cache().",
+          "tags": [
+            "LangChain",
+            "Caching",
+            "Options"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "562",
+          "question": "What is SQLiteCache?",
+          "answer": "SQLiteCache stores LLM responses in SQLite database file. Persists across application restarts. Usage: 'set_llm_cache(SQLiteCache(database_path=\".langchain.db\"))'. Good for single-server deployments. Faster than API calls, works offline for cached queries. Grows over time, may need cleanup. Simple persistent caching solution.",
+          "tags": [
+            "LangChain",
+            "Caching",
+            "SQLite"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "563",
+          "question": "What is InMemoryCache?",
+          "answer": "InMemoryCache stores responses in Python dictionary. Fast but lost on restart. No persistence. Usage: 'set_llm_cache(InMemoryCache())'. Good for development or short-lived processes. Zero setup, no external dependencies. Limited by RAM. Use for testing or when persistence not needed.",
+          "tags": [
+            "LangChain",
+            "Caching",
+            "Memory"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "564",
+          "question": "How do you implement custom caching?",
+          "answer": "Inherit from BaseCache, implement lookup and update methods. lookup(prompt, llm_string) returns cached response or None. update(prompt, llm_string, return_val) stores response. Register with set_llm_cache(). Enables custom storage (S3, database), custom logic (TTL, compression), integration with existing cache systems.",
+          "tags": [
+            "LangChain",
+            "Caching",
+            "Custom"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "565",
+          "question": "What is the rate limiter in LangChain?",
+          "answer": "Rate limiter controls request frequency to APIs. Prevents hitting provider rate limits. Configure max requests per time period. Example: 'RequestsRateLimiter(requests_per_second=1)'. Automatically delays requests to stay within limits. Important for high-volume applications. Prevents API errors and bans.",
+          "tags": [
+            "LangChain",
+            "Rate Limiting",
+            "API Management"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "566",
+          "question": "How do you handle API rate limits?",
+          "answer": "Use retry with exponential backoff, rate limiter, request queuing. LangChain's .with_retry() handles transient errors. For sustained high load, implement request queue or use multiple API keys with load balancing. Monitor 429 errors. Consider caching to reduce API calls. Plan capacity based on rate limits.",
+          "tags": [
+            "LangChain",
+            "Rate Limiting",
+            "Error Handling"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "567",
+          "question": "What is async support in LangChain?",
+          "answer": "LangChain supports async operations for concurrent execution. All runnables have async methods: ainvoke(), astream(), abatch(). Enables handling multiple requests simultaneously with asyncio. Better resource utilization than sync. Example: 'await chain.ainvoke(input)'. Essential for production APIs serving concurrent users.",
+          "tags": [
+            "LangChain",
+            "Async",
+            "Concurrency"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "568",
+          "question": "What is ainvoke() vs invoke()?",
+          "answer": "invoke(): synchronous, blocks until complete. ainvoke(): asynchronous, returns awaitable. Use ainvoke() in async functions with 'await chain.ainvoke()'. Enables concurrent request handling. Sync fine for single user, async required for production APIs. Same functionality, different execution model. Choose based on application architecture.",
+          "tags": [
+            "LangChain",
+            "Async",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "569",
+          "question": "What is astream() vs stream()?",
+          "answer": "stream(): synchronous generator, iterate with 'for chunk in chain.stream()'. astream(): async generator, use 'async for chunk in chain.astream()'. Async streaming enables concurrent streams. Critical for real-time user interfaces with multiple users. Async has better performance under load. Use async in production web apps.",
+          "tags": [
+            "LangChain",
+            "Async",
+            "Streaming"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "570",
+          "question": "How do you batch process with LangChain?",
+          "answer": "Use batch() method: 'results = chain.batch([input1, input2, input3])'. Processes multiple inputs efficiently. Async version: 'await chain.abatch([...])'. Useful for processing datasets, evaluation, batch workflows. May parallelize internally depending on implementation. More efficient than loop of invoke() calls.",
+          "tags": [
+            "LangChain",
+            "Batch Processing",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "571",
+          "question": "What is the batch() method?",
+          "answer": "batch(inputs) processes list of inputs and returns list of outputs. Maintains order. Example: 'summaries = summarizer.batch(documents)'. Internally may use concurrency or batching optimizations. Simpler than managing parallel calls manually. Both sync and async versions available (abatch).",
+          "tags": [
+            "LangChain",
+            "Batch Processing",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "572",
+          "question": "What is error handling in LangChain chains?",
+          "answer": "Use try-except around invoke/stream calls. Add fallbacks with .with_fallbacks(). Add retries with .with_retry(). Implement error callbacks for monitoring. Common errors: API failures, rate limits, invalid responses. Log errors for debugging. Graceful degradation: show error message instead of crashing. Production chains need comprehensive error handling.",
+          "tags": [
+            "LangChain",
+            "Error Handling",
+            "Reliability"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "573",
+          "question": "How do you implement retry logic?",
+          "answer": "Use .with_retry(stop_after_attempt=N, wait_exponential_multiplier=M). Automatically retries on failure. Exponential backoff prevents overwhelming failed services. Example: 'chain.with_retry(stop_after_attempt=3)'. Configure wait strategy, which exceptions to retry. Combine with fallbacks for comprehensive resilience. Essential for production reliability.",
+          "tags": [
+            "LangChain",
+            "Error Handling",
+            "Retry"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "574",
+          "question": "How do you integrate LangChain with FastAPI?",
+          "answer": "Use LangServe for automatic integration: 'add_routes(app, chain, path=\"/chat\")'. Or create custom endpoints: '@app.post(\"/chat\") async def chat(msg: str): return await chain.ainvoke(msg)'. LangServe provides /invoke, /stream, /batch automatically. Add authentication, CORS, validation. FastAPI's async support works well with LangChain's async methods.",
+          "tags": [
+            "LangChain",
+            "FastAPI",
+            "Integration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "575",
+          "question": "How do you integrate LangChain with Streamlit?",
+          "answer": "Import streamlit, create UI components, call LangChain in event handlers. Example: 'if st.button(\"Ask\"): response = chain.invoke(question); st.write(response)'. Use st.session_state for memory. st.status or streaming callbacks for progress. Good for demos and internal tools. Streamlit handles UI, LangChain handles AI logic.",
+          "tags": [
+            "LangChain",
+            "Streamlit",
+            "UI"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "576",
+          "question": "How do you integrate LangChain with Gradio?",
+          "answer": "Create Gradio interface, pass LangChain function. Example: 'gr.Interface(fn=chain.invoke, inputs=\"text\", outputs=\"text\").launch()'. Gradio handles UI and hosting. Good for quick demos and sharing. Supports streaming with yield. Can deploy to Hugging Face Spaces. Simpler than Streamlit for basic interfaces.",
+          "tags": [
+            "LangChain",
+            "Gradio",
+            "UI"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "577",
+          "question": "What is the difference between running locally vs in production?",
+          "answer": "Local: development, verbose output, in-memory cache, no authentication, single user. Production: monitoring, logging, persistent cache/memory, auth, rate limiting, error handling, scaling, security, cost tracking. Production needs: async, fallbacks, retries, observability. Different embedding/LLM choices (local for dev, API for prod quality).",
+          "tags": [
+            "LangChain",
+            "Production",
+            "Development"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,530 @@
+{
+  "decks": [
+    {
+      "name": "JavaScript Fundamentals",
+      "description": "Interview questions about JavaScript Fundamentals",
+      "cards": [
+        {
+          "id": "1",
+          "question": "What are the data types in JavaScript?",
+          "answer": "Primitive: `string`, `number`, `boolean`, `undefined`, `null`, `symbol`, `bigint`. Non-primitive: `object`, `array`, `function`.",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "2",
+          "question": "What is the difference between `var`, `let`, and `const`?",
+          "answer": "- `var`: function-scoped, hoisted, can be redeclared\n- `let`: block-scoped, hoisted but not initialized, cannot be redeclared\n- `const`: block-scoped, hoisted but not initialized, cannot be reassigned\n\n```javascript\nvar x = 1; // function scope\nlet y = 2; // block scope\nconst z = 3; // block scope, immutable binding\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "3",
+          "question": "What is hoisting?",
+          "answer": "Variables and function declarations are moved to the top of their scope during compilation.\n\n```javascript\nconsole.log(x); // undefined (not ReferenceError)\nvar x = 5;\n\n// Interpreted as:\nvar x;\nconsole.log(x);\nx = 5;\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "4",
+          "question": "What is the difference between `==` and `===`?",
+          "answer": "- `==`: equality with type coercion\n- `===`: strict equality without type coercion\n\n```javascript\n5 == \"5\"  // true\n5 === \"5\" // false\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "5",
+          "question": "What is a closure?",
+          "answer": "A function that has access to variables from its outer scope even after the outer function has returned.\n\n```javascript\nfunction outer() {\n  let count = 0;\n  return function inner() {\n    count++;\n    return count;\n  }\n}\nconst counter = outer();\ncounter(); // 1\ncounter(); // 2\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "6",
+          "question": "What is the `this` keyword?",
+          "answer": "Refers to the object that is executing the current function. Its value depends on how the function is called.\n\n```javascript\nconst obj = {\n  name: \"John\",\n  greet() { console.log(this.name); }\n};\nobj.greet(); // \"John\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "7",
+          "question": "What are arrow functions and how do they differ from regular functions?",
+          "answer": "Arrow functions have shorter syntax and don't bind their own `this`.\n\n```javascript\nconst regular = function() { return this; };\nconst arrow = () => this; // inherits this from parent scope\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "8",
+          "question": "What is the difference between `null` and `undefined`?",
+          "answer": "- `undefined`: variable declared but not assigned\n- `null`: intentional absence of value\n\n```javascript\nlet x; // undefined\nlet y = null; // null\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "9",
+          "question": "What is a callback function?",
+          "answer": "A function passed as an argument to another function to be executed later.\n\n```javascript\nfunction fetchData(callback) {\n  setTimeout(() => callback(\"data\"), 1000);\n}\nfetchData((data) => console.log(data));\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "10",
+          "question": "What is event bubbling?",
+          "answer": "Events propagate from the target element up through its ancestors.\n\n```javascript\n<div onclick=\"alert('div')\">\n  <button onclick=\"alert('button')\">Click</button>\n</div>\n// Clicking button alerts: \"button\" then \"div\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "11",
+          "question": "What is event delegation?",
+          "answer": "Using a single event listener on a parent to handle events from multiple children.\n\n```javascript\ndocument.querySelector('ul').addEventListener('click', (e) => {\n  if (e.target.tagName === 'LI') {\n    console.log(e.target.textContent);\n  }\n});\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "12",
+          "question": "What is the spread operator?",
+          "answer": "Expands iterables into individual elements.\n\n```javascript\nconst arr1 = [1, 2];\nconst arr2 = [...arr1, 3, 4]; // [1, 2, 3, 4]\nconst obj = { a: 1, ...{ b: 2 } }; // { a: 1, b: 2 }\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "13",
+          "question": "What is destructuring?",
+          "answer": "Extracting values from arrays or objects into variables.\n\n```javascript\nconst [a, b] = [1, 2]; // a=1, b=2\nconst { name, age } = { name: \"John\", age: 30 };\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "14",
+          "question": "What is the rest parameter?",
+          "answer": "Collects remaining arguments into an array.\n\n```javascript\nfunction sum(...numbers) {\n  return numbers.reduce((a, b) => a + b, 0);\n}\nsum(1, 2, 3, 4); // 10\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "15",
+          "question": "What is a template literal?",
+          "answer": "String literals with embedded expressions using backticks.\n\n```javascript\nconst name = \"John\";\nconst greeting = `Hello, ${name}!`;\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "16",
+          "question": "What is the difference between `map()` and `forEach()`?",
+          "answer": "- `map()`: returns new array with transformed elements\n- `forEach()`: executes function for each element, returns undefined\n\n```javascript\n[1, 2, 3].map(x => x * 2); // [2, 4, 6]\n[1, 2, 3].forEach(x => console.log(x)); // undefined\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "17",
+          "question": "What does `filter()` do?",
+          "answer": "Returns new array with elements that pass the test.\n\n```javascript\n[1, 2, 3, 4].filter(x => x > 2); // [3, 4]\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "18",
+          "question": "What does `reduce()` do?",
+          "answer": "Reduces array to a single value by applying a function.\n\n```javascript\n[1, 2, 3, 4].reduce((sum, x) => sum + x, 0); // 10\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "19",
+          "question": "What is the difference between `slice()` and `splice()`?",
+          "answer": "- `slice()`: returns new array, doesn't modify original\n- `splice()`: modifies original array, returns removed elements\n\n```javascript\nconst arr = [1, 2, 3, 4];\narr.slice(1, 3); // [2, 3], arr unchanged\narr.splice(1, 2); // [2, 3], arr is now [1, 4]\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "20",
+          "question": "What is the `bind()` method?",
+          "answer": "Creates new function with `this` set to provided value.\n\n```javascript\nconst obj = { name: \"John\" };\nfunction greet() { console.log(this.name); }\nconst boundGreet = greet.bind(obj);\nboundGreet(); // \"John\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "21",
+          "question": "What is the difference between `call()` and `apply()`?",
+          "answer": "Both invoke function with specified `this`, but `apply()` takes array of arguments.\n\n```javascript\nfunction greet(greeting, punctuation) {\n  console.log(`${greeting}, ${this.name}${punctuation}`);\n}\nconst obj = { name: \"John\" };\ngreet.call(obj, \"Hello\", \"!\"); // \"Hello, John!\"\ngreet.apply(obj, [\"Hello\", \"!\"]); // \"Hello, John!\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "22",
+          "question": "What is a pure function?",
+          "answer": "Function that always returns same output for same input and has no side effects.\n\n```javascript\n// Pure\nconst add = (a, b) => a + b;\n\n// Impure\nlet total = 0;\nconst addToTotal = (x) => total += x;\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "23",
+          "question": "What is `typeof` operator?",
+          "answer": "Returns string indicating type of operand.\n\n```javascript\ntypeof 42; // \"number\"\ntypeof \"hello\"; // \"string\"\ntypeof undefined; // \"undefined\"\ntypeof null; // \"object\" (quirk)\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "24",
+          "question": "What is the ternary operator?",
+          "answer": "Shorthand for if-else statement.\n\n```javascript\nconst age = 18;\nconst canVote = age >= 18 ? \"yes\" : \"no\";\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "25",
+          "question": "What is short-circuit evaluation?",
+          "answer": "Logical operators return first truthy/falsy value without evaluating rest.\n\n```javascript\nconst x = null || \"default\"; // \"default\"\nconst y = true && \"value\"; // \"value\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "26",
+          "question": "What is optional chaining (`?.`)?",
+          "answer": "Safely accesses nested properties without throwing error if intermediate is null/undefined.\n\n```javascript\nconst user = { address: { city: \"NYC\" } };\nuser?.address?.city; // \"NYC\"\nuser?.contact?.phone; // undefined (no error)\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "27",
+          "question": "What is nullish coalescing (`??`)?",
+          "answer": "Returns right operand when left is null or undefined (not other falsy values).\n\n```javascript\nconst x = 0 ?? 42; // 0\nconst y = null ?? 42; // 42\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "28",
+          "question": "What is the difference between shallow and deep copy?",
+          "answer": "- Shallow: copies top level only\n- Deep: copies all nested levels\n\n```javascript\n// Shallow\nconst obj1 = { a: 1, b: { c: 2 } };\nconst shallow = { ...obj1 };\nshallow.b.c = 3; // affects obj1.b.c\n\n// Deep\nconst deep = JSON.parse(JSON.stringify(obj1));\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "29",
+          "question": "What is `Object.freeze()`?",
+          "answer": "Makes object immutable (cannot add, delete, or modify properties).\n\n```javascript\nconst obj = Object.freeze({ name: \"John\" });\nobj.name = \"Jane\"; // fails silently (or throws in strict mode)\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "30",
+          "question": "What is `Object.seal()`?",
+          "answer": "Prevents adding/removing properties but allows modifying existing ones.\n\n```javascript\nconst obj = Object.seal({ name: \"John\" });\nobj.name = \"Jane\"; // works\nobj.age = 30; // fails\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "31",
+          "question": "What is the difference between `for...in` and `for...of`?",
+          "answer": "- `for...in`: iterates over enumerable property names\n- `for...of`: iterates over iterable values\n\n```javascript\nconst arr = [10, 20, 30];\nfor (let i in arr) console.log(i); // \"0\", \"1\", \"2\"\nfor (let val of arr) console.log(val); // 10, 20, 30\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "32",
+          "question": "What is the `arguments` object?",
+          "answer": "Array-like object containing all arguments passed to a function.\n\n```javascript\nfunction sum() {\n  return Array.from(arguments).reduce((a, b) => a + b, 0);\n}\nsum(1, 2, 3); // 6\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "33",
+          "question": "What is the `new` keyword?",
+          "answer": "Creates instance of constructor function or class.\n\n```javascript\nfunction Person(name) {\n  this.name = name;\n}\nconst john = new Person(\"John\");\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "34",
+          "question": "What is a prototype?",
+          "answer": "Object from which other objects inherit properties and methods.\n\n```javascript\nfunction Person(name) {\n  this.name = name;\n}\nPerson.prototype.greet = function() {\n  console.log(`Hello, ${this.name}`);\n};\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "35",
+          "question": "What is prototypal inheritance?",
+          "answer": "Objects inherit directly from other objects.\n\n```javascript\nconst parent = { greet() { console.log(\"Hi\"); } };\nconst child = Object.create(parent);\nchild.greet(); // \"Hi\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "36",
+          "question": "What is the difference between `.prototype` and `.__proto__`?",
+          "answer": "- `.prototype`: property of constructor functions\n- `.__proto__`: property of object instances, points to prototype\n\n```javascript\nfunction Person() {}\nPerson.prototype; // prototype object\nconst p = new Person();\np.__proto__ === Person.prototype; // true\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "37",
+          "question": "What is `Object.create()`?",
+          "answer": "Creates new object with specified prototype.\n\n```javascript\nconst parent = { greet() { console.log(\"Hi\"); } };\nconst child = Object.create(parent);\nchild.greet(); // \"Hi\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "38",
+          "question": "What is the `instanceof` operator?",
+          "answer": "Tests if object is instance of constructor.\n\n```javascript\nfunction Person() {}\nconst john = new Person();\njohn instanceof Person; // true\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "39",
+          "question": "What are default parameters?",
+          "answer": "Function parameters with default values if not provided.\n\n```javascript\nfunction greet(name = \"Guest\") {\n  console.log(`Hello, ${name}`);\n}\ngreet(); // \"Hello, Guest\"\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "40",
+          "question": "What is the comma operator?",
+          "answer": "Evaluates each operand and returns the last one.\n\n```javascript\nlet x = (1, 2, 3); // x = 3\n```",
+          "tags": [
+            "JavaScript",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

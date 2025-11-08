@@ -1,0 +1,270 @@
+{
+  "decks": [
+    {
+      "name": "Part 17: Advanced Ollama",
+      "description": "Advanced Ollama features including streaming, embeddings, and deployment",
+      "cards": [
+        {
+          "id": "360",
+          "question": "What is the `/api/chat` endpoint?",
+          "answer": "/api/chat handles multi-turn conversations with message history. Send array of messages with roles (system, user, assistant) and content. Maintains conversation context. Returns: assistant response. This is the primary endpoint for chatbots and conversational applications.",
+          "tags": [
+            "Ollama",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "361",
+          "question": "What's the difference between generate and chat endpoints?",
+          "answer": "/api/generate: single-turn completion, simple prompt string, no conversation structure. /api/chat: multi-turn conversations, message array with roles, maintains context. Use generate for simple completions (code completion, text continuation). Use chat for conversational interfaces with history.",
+          "tags": [
+            "Ollama",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "362",
+          "question": "How do you stream responses from Ollama?",
+          "answer": "Add 'stream: true' to API request. Response comes as newline-delimited JSON chunks. Each chunk contains a token. Final chunk has 'done: true'. Streaming enables real-time display of generation (ChatGPT-style). Handle by reading response line-by-line and parsing JSON incrementally.",
+          "tags": [
+            "Ollama",
+            "Streaming"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "363",
+          "question": "What is the `/api/embeddings` endpoint?",
+          "answer": "/api/embeddings generates vector embeddings for text using the model's embedding layer. Send model and prompt/text. Returns: embedding vector (array of floats). Use for semantic search, similarity comparison, or as input to vector databases in RAG systems.",
+          "tags": [
+            "Ollama",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "364",
+          "question": "How do you get embeddings using Ollama?",
+          "answer": "POST to /api/embeddings with model and prompt: '{\"model\": \"llama3.2\", \"prompt\": \"your text here\"}'. Returns JSON with embedding array. Use same model for all texts you want to compare. Ollama uses the model's built-in embeddings, so quality depends on the model.",
+          "tags": [
+            "Ollama",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "365",
+          "question": "What is model quantization in Ollama?",
+          "answer": "Ollama models come pre-quantized in various levels to balance size and quality. Quantization reduces model precision from FP16 to 8-bit, 4-bit, or lower. Lower precision = smaller size and faster inference but slightly reduced quality. Ollama abstracts this complexity - just select the quantization level when pulling models.",
+          "tags": [
+            "Ollama",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "366",
+          "question": "What quantization levels does Ollama support? (Q4, Q5, Q8, etc.)",
+          "answer": "Common levels: Q4_0 (4-bit, smallest), Q4_K_M (4-bit medium quality), Q5_K_M (5-bit medium), Q8_0 (8-bit, high quality), F16 (16-bit, highest quality). Lower number = smaller size, faster, but lower quality. Higher number = larger, slower, better quality. Most users find Q4_K_M a good balance.",
+          "tags": [
+            "Ollama",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "367",
+          "question": "What does Q4_0, Q4_K_M, etc. mean in Ollama models?",
+          "answer": "Q4_0: 4-bit quantization, method 0 (basic). Q4_K_M: 4-bit with K-quant method, M (medium) quality. K-quants preserve important weights better. Suffix meanings: S (small, aggressive), M (medium), L (large, conservative). Method numbers (0, 1) indicate quantization algorithms. Higher K-quant quality usually better for same bit level.",
+          "tags": [
+            "Ollama",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "368",
+          "question": "How do you choose the right quantization level?",
+          "answer": "Consider: available RAM/VRAM (Q4 for 8GB, Q5/Q8 for 16GB+), quality needs (Q8 for high accuracy, Q4 for casual use), speed requirements (lower is faster). Start with Q4_K_M for balance. Test with your use case - sometimes Q4 is sufficient. For production quality-critical apps, use Q8 or F16.",
+          "tags": [
+            "Ollama",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "369",
+          "question": "What is the trade-off between model size and quality in quantization?",
+          "answer": "Lower quantization (Q4): 3-4GB for 7B model, faster, good for most tasks but noticeable quality loss in complex reasoning. Higher (Q8): 7-8GB, slower, better quality, minimal degradation. F16: 14GB, best quality but 2x memory and time. Choose based on hardware limits and quality requirements.",
+          "tags": [
+            "Ollama",
+            "Trade-offs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "370",
+          "question": "How does Ollama handle GPU acceleration?",
+          "answer": "Ollama automatically detects and uses available GPUs (NVIDIA via CUDA, AMD via ROCm, Apple Silicon via Metal). It offloads model layers to GPU based on available VRAM. No configuration needed - it just works. Use OLLAMA_NUM_GPU environment variable to control GPU usage.",
+          "tags": [
+            "Ollama",
+            "GPU"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "371",
+          "question": "Can Ollama run models on CPU only?",
+          "answer": "Yes, Ollama runs on CPU when no GPU is available. Performance is 10-50x slower than GPU depending on model size. Small models (1B-3B) are usable on modern CPUs. Use quantized models (Q4) for better CPU performance. Set OLLAMA_NUM_GPU=0 to force CPU-only mode.",
+          "tags": [
+            "Ollama",
+            "CPU"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "372",
+          "question": "What is the performance difference between CPU and GPU in Ollama?",
+          "answer": "GPU is dramatically faster: 7B model on RTX 3090 might generate 50 tokens/sec, same model on CPU might be 2-5 tokens/sec. Larger models show bigger gaps. GPU enables real-time interaction; CPU is usable but slower. For production with user-facing apps, GPU is highly recommended.",
+          "tags": [
+            "Ollama",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "373",
+          "question": "How do you set GPU layers in Ollama?",
+          "answer": "Use OLLAMA_NUM_GPU_LAYERS environment variable or num_gpu parameter in Modelfile. This controls how many model layers run on GPU vs CPU. Useful when model doesn't fully fit in VRAM - put some layers on GPU for speed, rest on CPU. Higher number = more GPU usage and faster inference.",
+          "tags": [
+            "Ollama",
+            "GPU"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "374",
+          "question": "What is the Ollama Docker image?",
+          "answer": "ollama/ollama is the official Docker image for running Ollama in containers. Provides isolated environment, easy deployment, and consistent behavior across systems. Image includes Ollama server and dependencies. Use for production deployments, CI/CD, or development environment standardization.",
+          "tags": [
+            "Ollama",
+            "Docker"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "375",
+          "question": "How do you run Ollama in a container?",
+          "answer": "docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama. For GPU: add --gpus=all (NVIDIA). Volume persists models between container restarts. Then exec into container to pull models: 'docker exec ollama ollama pull llama3.2' or use API to manage models.",
+          "tags": [
+            "Ollama",
+            "Docker"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "376",
+          "question": "How do you expose Ollama to network requests?",
+          "answer": "Ollama listens on localhost:11434 by default. To allow external access, set OLLAMA_HOST=0.0.0.0:11434 (environment variable). In Docker, map port with -p 11434:11434. For production, use reverse proxy (nginx) for security, SSL, and access control. Always secure external-facing Ollama instances.",
+          "tags": [
+            "Ollama",
+            "Networking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "377",
+          "question": "What is the default Ollama port?",
+          "answer": "Port 11434. API accessible at http://localhost:11434. This port serves all API endpoints (/api/generate, /api/chat, etc.). Can be changed with OLLAMA_HOST environment variable. Ensure this port is available and not blocked by firewall for Ollama to function.",
+          "tags": [
+            "Ollama",
+            "Configuration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "378",
+          "question": "How do you integrate Ollama with other applications?",
+          "answer": "Use the REST API from any language that makes HTTP requests. Python: ollama package or requests. JavaScript: fetch() or axios. Use LangChain's Ollama integration for complex workflows. OpenAI-compatible endpoint allows drop-in replacement in OpenAI client code. Design apps to be LLM-provider agnostic for flexibility.",
+          "tags": [
+            "Ollama",
+            "Integration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "379",
+          "question": "What is LangChain?",
+          "answer": "LangChain is a framework for developing applications powered by language models. It provides components for prompts, chains (multi-step workflows), agents (autonomous decision-making), memory (conversation history), and integrations with vector databases and tools. It simplifies building complex LLM applications beyond simple API calls.",
+          "tags": [
+            "LangChain",
+            "Framework"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

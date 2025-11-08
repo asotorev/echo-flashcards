@@ -1,0 +1,610 @@
+{
+  "decks": [
+    {
+      "name": "PostgreSQL",
+      "description": "Interview questions about PostgreSQL",
+      "cards": [
+        {
+          "id": "46",
+          "question": "What is PostgreSQL?",
+          "answer": "Open-source relational database management system (RDBMS) emphasizing extensibility and SQL compliance.",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "47",
+          "question": "What is a primary key?",
+          "answer": "Unique identifier for each row in a table.\n\n```sql\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  email VARCHAR(255) UNIQUE NOT NULL\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "48",
+          "question": "What is a foreign key?",
+          "answer": "Column that references primary key of another table, establishing relationship.\n\n```sql\nCREATE TABLE orders (\n  id SERIAL PRIMARY KEY,\n  user_id INTEGER REFERENCES users(id),\n  total DECIMAL(10, 2)\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "49",
+          "question": "What are the main data types in PostgreSQL?",
+          "answer": "- Numeric: `INTEGER`, `BIGINT`, `DECIMAL`, `NUMERIC`, `REAL`, `DOUBLE PRECISION`\n- Character: `VARCHAR(n)`, `CHAR(n)`, `TEXT`\n- Date/Time: `DATE`, `TIME`, `TIMESTAMP`, `INTERVAL`\n- Boolean: `BOOLEAN`\n- JSON: `JSON`, `JSONB`\n- Arrays: `INTEGER[]`, `TEXT[]`",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "50",
+          "question": "What is the difference between VARCHAR and TEXT?",
+          "answer": "- `VARCHAR(n)`: variable length with limit\n- `TEXT`: unlimited variable length\nPerformance-wise, similar in PostgreSQL.\n\n```sql\nname VARCHAR(100),\ndescription TEXT\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "51",
+          "question": "What is a JOIN?",
+          "answer": "Combines rows from multiple tables based on related column.\n\n```sql\nSELECT users.name, orders.total\nFROM users\nINNER JOIN orders ON users.id = orders.user_id;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "52",
+          "question": "What are the types of JOINs?",
+          "answer": "- `INNER JOIN`: returns matching rows from both tables\n- `LEFT JOIN`: all rows from left table, matching from right\n- `RIGHT JOIN`: all rows from right table, matching from left\n- `FULL OUTER JOIN`: all rows from both tables\n- `CROSS JOIN`: cartesian product of both tables",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "53",
+          "question": "What is the difference between INNER JOIN and LEFT JOIN?",
+          "answer": "```sql\n-- INNER JOIN: only matching rows\nSELECT * FROM users\nINNER JOIN orders ON users.id = orders.user_id;\n\n-- LEFT JOIN: all users, even without orders\nSELECT * FROM users\nLEFT JOIN orders ON users.id = orders.user_id;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "54",
+          "question": "What is an INDEX?",
+          "answer": "Database structure improving query performance by creating quick lookup.\n\n```sql\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_orders_user_id ON orders(user_id);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "55",
+          "question": "What types of indexes exist in PostgreSQL?",
+          "answer": "- B-tree (default): general purpose\n- Hash: equality comparisons\n- GiST: geometric and full-text search\n- GIN: multi-value columns (arrays, JSONB)\n- BRIN: very large tables with natural ordering",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "56",
+          "question": "What is a UNIQUE constraint?",
+          "answer": "Ensures all values in column are different.\n\n```sql\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  email VARCHAR(255) UNIQUE,\n  username VARCHAR(50) UNIQUE\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "57",
+          "question": "What is a CHECK constraint?",
+          "answer": "Ensures values meet specific condition.\n\n```sql\nCREATE TABLE products (\n  id SERIAL PRIMARY KEY,\n  price DECIMAL(10, 2) CHECK (price > 0),\n  quantity INTEGER CHECK (quantity >= 0)\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "58",
+          "question": "What is a transaction?",
+          "answer": "Group of operations executed as single unit (all or nothing).\n\n```sql\nBEGIN;\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\nCOMMIT;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "59",
+          "question": "What are ACID properties?",
+          "answer": "- **Atomicity**: all or nothing\n- **Consistency**: database remains valid state\n- **Isolation**: concurrent transactions don't interfere\n- **Durability**: committed changes are permanent",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "60",
+          "question": "What is ROLLBACK?",
+          "answer": "Undoes changes made in current transaction.\n\n```sql\nBEGIN;\nUPDATE users SET balance = balance - 100 WHERE id = 1;\n-- Something went wrong\nROLLBACK;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "61",
+          "question": "What are isolation levels?",
+          "answer": "Control how transactions see changes from other concurrent transactions:\n- `READ UNCOMMITTED`: lowest isolation\n- `READ COMMITTED`: default in PostgreSQL\n- `REPEATABLE READ`: prevents non-repeatable reads\n- `SERIALIZABLE`: highest isolation",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "62",
+          "question": "What is a subquery?",
+          "answer": "Query nested inside another query.\n\n```sql\nSELECT name FROM users\nWHERE id IN (SELECT user_id FROM orders WHERE total > 100);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "63",
+          "question": "What is the difference between WHERE and HAVING?",
+          "answer": "- `WHERE`: filters rows before grouping\n- `HAVING`: filters groups after aggregation\n\n```sql\nSELECT user_id, COUNT(*) as order_count\nFROM orders\nWHERE status = 'completed'\nGROUP BY user_id\nHAVING COUNT(*) > 5;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "64",
+          "question": "What are aggregate functions?",
+          "answer": "Functions operating on set of rows returning single value.\n\n```sql\nSELECT\n  COUNT(*) as total_users,\n  AVG(age) as average_age,\n  MAX(created_at) as latest_signup,\n  SUM(balance) as total_balance\nFROM users;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "65",
+          "question": "What is GROUP BY?",
+          "answer": "Groups rows with same values into summary rows.\n\n```sql\nSELECT category, COUNT(*) as product_count\nFROM products\nGROUP BY category;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "66",
+          "question": "What is a VIEW?",
+          "answer": "Virtual table based on result of SELECT query.\n\n```sql\nCREATE VIEW active_users AS\nSELECT id, name, email\nFROM users\nWHERE status = 'active';\n\nSELECT * FROM active_users;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "67",
+          "question": "What is the difference between VIEW and MATERIALIZED VIEW?",
+          "answer": "- `VIEW`: query executed each time it's accessed\n- `MATERIALIZED VIEW`: query result stored, must be refreshed\n\n```sql\nCREATE MATERIALIZED VIEW user_stats AS\nSELECT user_id, COUNT(*) as order_count\nFROM orders\nGROUP BY user_id;\n\nREFRESH MATERIALIZED VIEW user_stats;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "68",
+          "question": "What is a stored procedure?",
+          "answer": "Reusable SQL code stored in database.\n\n```sql\nCREATE OR REPLACE FUNCTION get_user_orders(p_user_id INTEGER)\nRETURNS TABLE(order_id INTEGER, total DECIMAL) AS $$\nBEGIN\n  RETURN QUERY\n  SELECT id, total FROM orders WHERE user_id = p_user_id;\nEND;\n$$ LANGUAGE plpgsql;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "69",
+          "question": "What is a trigger?",
+          "answer": "Function automatically executed when certain events occur.\n\n```sql\nCREATE TRIGGER update_modified_timestamp\nBEFORE UPDATE ON users\nFOR EACH ROW\nEXECUTE FUNCTION update_timestamp();\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "70",
+          "question": "What is EXPLAIN?",
+          "answer": "Shows execution plan for a query.\n\n```sql\nEXPLAIN ANALYZE\nSELECT * FROM users WHERE email = 'test@example.com';\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "71",
+          "question": "What is VACUUM?",
+          "answer": "Reclaims storage and updates statistics.\n\n```sql\nVACUUM users;\nVACUUM ANALYZE users; -- also updates statistics\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "72",
+          "question": "What is the difference between DELETE and TRUNCATE?",
+          "answer": "- `DELETE`: removes rows, can use WHERE, slower, logged\n- `TRUNCATE`: removes all rows, faster, less logging, resets sequences\n\n```sql\nDELETE FROM users WHERE status = 'inactive';\nTRUNCATE TABLE logs;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "73",
+          "question": "What is CASCADE in foreign keys?",
+          "answer": "Automatically performs action on related rows.\n\n```sql\nCREATE TABLE orders (\n  id SERIAL PRIMARY KEY,\n  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE\n);\n-- Deleting user deletes their orders\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "74",
+          "question": "What is normalization?",
+          "answer": "Organizing data to reduce redundancy and improve integrity.\n\n**1NF**: Atomic values, no repeating groups\n**2NF**: No partial dependencies\n**3NF**: No transitive dependencies",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "75",
+          "question": "What is denormalization?",
+          "answer": "Intentionally introducing redundancy for performance.\n\n```sql\n-- Instead of joining every time\nCREATE TABLE orders (\n  id SERIAL PRIMARY KEY,\n  user_id INTEGER,\n  user_name VARCHAR(255), -- denormalized\n  total DECIMAL(10, 2)\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "76",
+          "question": "What is a composite key?",
+          "answer": "Primary key consisting of multiple columns.\n\n```sql\nCREATE TABLE enrollments (\n  student_id INTEGER,\n  course_id INTEGER,\n  enrollment_date DATE,\n  PRIMARY KEY (student_id, course_id)\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "77",
+          "question": "What is JSONB in PostgreSQL?",
+          "answer": "Binary JSON storage format, more efficient than JSON.\n\n```sql\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  metadata JSONB\n);\n\nINSERT INTO users (metadata) VALUES\n  ('{\"age\": 25, \"city\": \"NYC\"}');\n\nSELECT * FROM users WHERE metadata->>'city' = 'NYC';\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "78",
+          "question": "How do you query JSONB data?",
+          "answer": "Using operators: `->`, `->>`, `@>`, `?`\n\n```sql\n-- Extract as JSON\nSELECT metadata->'age' FROM users;\n\n-- Extract as text\nSELECT metadata->>'age' FROM users;\n\n-- Contains\nSELECT * FROM users WHERE metadata @> '{\"city\": \"NYC\"}';\n\n-- Key exists\nSELECT * FROM users WHERE metadata ? 'age';\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "79",
+          "question": "What is a CTE (Common Table Expression)?",
+          "answer": "Temporary result set for use within query.\n\n```sql\nWITH high_value_orders AS (\n  SELECT user_id, SUM(total) as total_spent\n  FROM orders\n  GROUP BY user_id\n  HAVING SUM(total) > 1000\n)\nSELECT u.name, h.total_spent\nFROM users u\nJOIN high_value_orders h ON u.id = h.user_id;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "80",
+          "question": "What is a window function?",
+          "answer": "Performs calculation across rows related to current row.\n\n```sql\nSELECT\n  name,\n  salary,\n  AVG(salary) OVER (PARTITION BY department) as dept_avg,\n  RANK() OVER (ORDER BY salary DESC) as salary_rank\nFROM employees;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "81",
+          "question": "What is COALESCE?",
+          "answer": "Returns first non-null value.\n\n```sql\nSELECT COALESCE(phone, email, 'No contact') as contact\nFROM users;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "82",
+          "question": "What is NULLIF?",
+          "answer": "Returns NULL if two expressions are equal.\n\n```sql\nSELECT NULLIF(status, 'unknown') FROM users;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "83",
+          "question": "What is a sequence?",
+          "answer": "Generates unique sequential numbers.\n\n```sql\nCREATE SEQUENCE order_number_seq START 1000;\n\nSELECT nextval('order_number_seq');\nSELECT currval('order_number_seq');\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "84",
+          "question": "What is connection pooling?",
+          "answer": "Reusing database connections to reduce overhead.\n\n```javascript\nconst { Pool } = require('pg');\nconst pool = new Pool({\n  host: 'localhost',\n  database: 'mydb',\n  max: 20, // max connections\n  idleTimeoutMillis: 30000\n});\n\nconst result = await pool.query('SELECT * FROM users');\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "85",
+          "question": "How do you handle concurrent updates?",
+          "answer": "Using optimistic or pessimistic locking.\n\n```sql\n-- Optimistic locking (version column)\nUPDATE products\nSET quantity = quantity - 1, version = version + 1\nWHERE id = 1 AND version = 5;\n\n-- Pessimistic locking\nSELECT * FROM products WHERE id = 1 FOR UPDATE;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "86",
+          "question": "What is UPSERT (INSERT ... ON CONFLICT)?",
+          "answer": "Insert or update if row exists.\n\n```sql\nINSERT INTO users (id, name, email)\nVALUES (1, 'John', 'john@example.com')\nON CONFLICT (id)\nDO UPDATE SET name = EXCLUDED.name, email = EXCLUDED.email;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "87",
+          "question": "What are table partitioning strategies?",
+          "answer": "Dividing large table into smaller pieces.\n\n```sql\nCREATE TABLE orders (\n  id SERIAL,\n  order_date DATE,\n  total DECIMAL\n) PARTITION BY RANGE (order_date);\n\nCREATE TABLE orders_2024 PARTITION OF orders\nFOR VALUES FROM ('2024-01-01') TO ('2025-01-01');\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "88",
+          "question": "What is LATERAL join?",
+          "answer": "Allows subquery to reference columns from preceding tables.\n\n```sql\nSELECT u.name, recent_orders.*\nFROM users u\nLEFT JOIN LATERAL (\n  SELECT * FROM orders\n  WHERE user_id = u.id\n  ORDER BY created_at DESC\n  LIMIT 3\n) recent_orders ON true;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "89",
+          "question": "What is the DISTINCT keyword?",
+          "answer": "Removes duplicate rows from result.\n\n```sql\nSELECT DISTINCT city FROM users;\nSELECT DISTINCT ON (user_id) * FROM orders ORDER BY user_id, created_at DESC;\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "90",
+          "question": "What are prepared statements?",
+          "answer": "Precompiled SQL statements for better performance and security.\n\n```javascript\nconst query = {\n  text: 'SELECT * FROM users WHERE email = $1',\n  values: ['john@example.com']\n};\nconst result = await pool.query(query);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "91",
+          "question": "How do you prevent SQL injection?",
+          "answer": "Use parameterized queries/prepared statements.\n\n```javascript\n// Bad - SQL injection vulnerable\nconst email = \"user@example.com'; DROP TABLE users; --\";\nconst query = `SELECT * FROM users WHERE email = '${email}'`;\n\n// Good - parameterized\nconst result = await pool.query(\n  'SELECT * FROM users WHERE email = $1',\n  [email]\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "92",
+          "question": "What is full-text search in PostgreSQL?",
+          "answer": "Searching natural language documents.\n\n```sql\nCREATE INDEX idx_products_search ON products\nUSING GIN(to_tsvector('english', name || ' ' || description));\n\nSELECT * FROM products\nWHERE to_tsvector('english', name || ' ' || description)\n  @@ to_tsquery('english', 'laptop & gaming');\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "93",
+          "question": "What is the difference between UNION and UNION ALL?",
+          "answer": "- `UNION`: removes duplicates\n- `UNION ALL`: keeps all rows, faster\n\n```sql\nSELECT name FROM users WHERE city = 'NYC'\nUNION\nSELECT name FROM users WHERE city = 'LA';\n\nSELECT name FROM users WHERE city = 'NYC'\nUNION ALL\nSELECT name FROM users WHERE city = 'LA';\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "94",
+          "question": "What are database constraints?",
+          "answer": "Rules enforcing data integrity.\n\n```sql\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  email VARCHAR(255) UNIQUE NOT NULL,\n  age INTEGER CHECK (age >= 18),\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "95",
+          "question": "What is ARRAY data type?",
+          "answer": "Store multiple values in single column.\n\n```sql\nCREATE TABLE posts (\n  id SERIAL PRIMARY KEY,\n  tags TEXT[]\n);\n\nINSERT INTO posts (tags) VALUES (ARRAY['javascript', 'react', 'node']);\n\nSELECT * FROM posts WHERE 'react' = ANY(tags);\n```",
+          "tags": [
+            "PostgreSQL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

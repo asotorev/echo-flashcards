@@ -1,0 +1,387 @@
+{
+  "decks": [
+    {
+      "name": "Part 16: Ollama Fundamentals",
+      "description": "Understanding Ollama for running LLMs locally",
+      "cards": [
+        {
+          "id": "331",
+          "question": "What is Ollama?",
+          "answer": "Ollama is a user-friendly tool for running LLMs locally on your machine. It provides a simple CLI and API for downloading, managing, and running models like Llama, Mistral, and others. Think of it as Docker for LLMs - it handles model management, server setup, and provides a consistent interface.",
+          "tags": [
+            "Ollama",
+            "Tools"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "332",
+          "question": "What is Ollama and how does it relate to LLM models like Llama 3.2?",
+          "answer": "Ollama is a runtime environment that manages and runs LLM models. Llama 3.2 is a specific model that can run inside Ollama. Relationship: Llama 3.2 is the 'application', Ollama is the 'platform' that runs it. Ollama handles model download, quantization, memory management, and provides APIs to interact with models.",
+          "tags": [
+            "Ollama",
+            "LLMs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "333",
+          "question": "What problem does Ollama solve?",
+          "answer": "Ollama simplifies running LLMs locally: easy model installation (no manual weight downloads), automatic quantization selection, consistent API across models, built-in server for applications, model version management, and resource optimization. It removes complexity of setting up llama.cpp, managing GGUF files, and configuring inference parameters.",
+          "tags": [
+            "Ollama",
+            "Problem Solving"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "334",
+          "question": "How does Ollama differ from using models directly?",
+          "answer": "Direct usage requires downloading weights, loading with libraries like Transformers, managing memory, and building APIs. Ollama provides: one-command model installation, automatic quantization, built-in API server, model management CLI, and optimized inference. It's the difference between configuring Apache manually vs using Docker - abstraction and convenience.",
+          "tags": [
+            "Ollama",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "335",
+          "question": "What operating systems does Ollama support?",
+          "answer": "Ollama supports macOS (Apple Silicon and Intel), Linux (x86_64), and Windows (preview). It's optimized for Apple Silicon Macs using Metal acceleration. Each platform has native installers. Ollama also runs in Docker containers for deployment flexibility.",
+          "tags": [
+            "Ollama",
+            "Platforms"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "336",
+          "question": "What are the key differences between running Ollama in Docker vs native installation?",
+          "answer": "Native: Direct hardware access, better GPU performance, simpler setup. Docker: Isolated environment, easier deployment, version control, reproducible, works across platforms. For development, native is faster. For production or team consistency, Docker provides better isolation and deployment options. GPU support in Docker requires nvidia-docker on Linux.",
+          "tags": [
+            "Ollama",
+            "Deployment"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "337",
+          "question": "How do you install Ollama?",
+          "answer": "macOS/Linux: Download from ollama.ai and run installer, or use 'curl https://ollama.ai/install.sh | sh'. Windows: Download installer. Docker: 'docker pull ollama/ollama'. After install, verify with 'ollama --version'. The installer sets up the CLI and starts the Ollama service.",
+          "tags": [
+            "Ollama",
+            "Installation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "338",
+          "question": "What is the Ollama model library?",
+          "answer": "The model library at ollama.ai/library lists available models: Llama, Mistral, CodeLlama, Phi, Gemma, and more. Each model has multiple versions (different sizes, quantizations). The library shows model capabilities, size, and usage instructions. You can also create custom models from GGUF files or Modelfiles.",
+          "tags": [
+            "Ollama",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "339",
+          "question": "How do you pull a model in Ollama?",
+          "answer": "Use 'ollama pull model:tag' (e.g., 'ollama pull llama3.2:1b'). Ollama downloads the model and caches it locally. Default tag is 'latest'. You can specify quantization (llama3.2:1b-q4_0). The first pull downloads the full model; subsequent pulls use cached versions.",
+          "tags": [
+            "Ollama",
+            "Commands"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "340",
+          "question": "What is the `ollama run` command?",
+          "answer": "'ollama run model_name' starts an interactive chat session with the model. It pulls the model if not cached, loads it into memory, and opens a chat interface. Exit with /bye. Useful for quick testing and experimentation. For programmatic use, use the API instead.",
+          "tags": [
+            "Ollama",
+            "Commands"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "341",
+          "question": "What is the `ollama list` command?",
+          "answer": "'ollama list' shows all locally cached models with their names, sizes, and last modified dates. This helps track which models are available and manage disk space. Output includes model ID for reference.",
+          "tags": [
+            "Ollama",
+            "Commands"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "342",
+          "question": "What is the `ollama ps` command?",
+          "answer": "'ollama ps' shows currently running models loaded in memory. Displays model name, memory usage, and processing time. Useful for monitoring resource usage and seeing which models are actively loaded. Models stay in memory for faster subsequent requests.",
+          "tags": [
+            "Ollama",
+            "Commands"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "343",
+          "question": "What is the `ollama rm` command?",
+          "answer": "'ollama rm model_name' removes a model from local storage to free disk space. The model can be re-pulled if needed later. Use 'ollama list' to see available models before removing. Useful for managing limited disk space.",
+          "tags": [
+            "Ollama",
+            "Commands"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "344",
+          "question": "How does Ollama manage model storage?",
+          "answer": "Ollama stores models in a local cache: ~/.ollama/models on macOS/Linux, C:\\Users\\username\\.ollama\\models on Windows. Models are stored in GGUF format with metadata. Ollama handles deduplication (shared layers between models) to save space. The cache persists across runs.",
+          "tags": [
+            "Ollama",
+            "Storage"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "345",
+          "question": "Where does Ollama store models locally?",
+          "answer": "Models are stored in ~/.ollama/models (macOS/Linux) or C:\\Users\\username\\.ollama\\models (Windows). This directory contains model weights (GGUF files), manifests, and blobs. You can change location with OLLAMA_MODELS environment variable.",
+          "tags": [
+            "Ollama",
+            "Storage"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "346",
+          "question": "What is a Modelfile in Ollama?",
+          "answer": "A Modelfile is a blueprint for creating custom Ollama models, similar to a Dockerfile. It specifies the base model, system prompts, parameters (temperature, context length), and custom behavior. Use Modelfiles to create specialized versions of models with pre-configured settings.",
+          "tags": [
+            "Ollama",
+            "Modelfile"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "347",
+          "question": "What can you specify in a Modelfile?",
+          "answer": "FROM: base model. PARAMETER: inference settings (temperature, num_ctx, top_p). TEMPLATE: prompt template format. SYSTEM: system prompt/instructions. MESSAGE: example messages. ADAPTER: LoRA adapters. LICENSE: model license. This allows creating customized, reusable model configurations.",
+          "tags": [
+            "Ollama",
+            "Modelfile"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "348",
+          "question": "How do you create a custom model in Ollama?",
+          "answer": "Create a Modelfile with your configuration, then run 'ollama create mymodel -f Modelfile'. This builds a new model from your specifications. The custom model appears in 'ollama list' and can be used like any other model. Useful for creating specialized assistants with consistent behavior.",
+          "tags": [
+            "Ollama",
+            "Custom Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "349",
+          "question": "What is the FROM instruction in a Modelfile?",
+          "answer": "FROM specifies the base model to build upon. Examples: 'FROM llama3.2:1b' or 'FROM ./local-model.gguf'. This is required and must be the first instruction. You can use models from the library or local GGUF files.",
+          "tags": [
+            "Ollama",
+            "Modelfile"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "350",
+          "question": "What is the PARAMETER instruction in a Modelfile?",
+          "answer": "PARAMETER sets inference parameters: 'PARAMETER temperature 0.7', 'PARAMETER num_ctx 4096' (context window), 'PARAMETER top_p 0.9'. These become defaults for the custom model. Users can still override at inference time. Useful for standardizing model behavior.",
+          "tags": [
+            "Ollama",
+            "Modelfile"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "351",
+          "question": "What is the TEMPLATE instruction in a Modelfile?",
+          "answer": "TEMPLATE defines how prompts are formatted before being sent to the model. Different models expect different formats (ChatML, Llama2 format, etc.). Template ensures prompts match the model's training format. Example: 'TEMPLATE \"{{.System}}\\n\\n{{.Prompt}}\"'.",
+          "tags": [
+            "Ollama",
+            "Modelfile"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "352",
+          "question": "What is the SYSTEM instruction in a Modelfile?",
+          "answer": "SYSTEM sets the system prompt that defines the model's behavior and personality. Example: 'SYSTEM You are a helpful coding assistant specialized in Python.' This prompt is prepended to all conversations, giving the model consistent context about its role.",
+          "tags": [
+            "Ollama",
+            "Modelfile"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "353",
+          "question": "How do you set temperature in Ollama?",
+          "answer": "In Modelfile: 'PARAMETER temperature 0.7'. Via API: include temperature in request JSON. Via CLI: not directly settable in ollama run. Temperature controls randomness: lower (0.1-0.4) for focused/deterministic, higher (0.7-1.0) for creative/diverse outputs.",
+          "tags": [
+            "Ollama",
+            "Parameters"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "354",
+          "question": "How do you set context window size in Ollama?",
+          "answer": "In Modelfile: 'PARAMETER num_ctx 4096'. Via API: 'num_ctx' in options. This sets the maximum context tokens the model processes. Larger contexts allow more conversation history or document content but require more memory. Default is model-specific (often 2048-4096).",
+          "tags": [
+            "Ollama",
+            "Parameters"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "355",
+          "question": "What is the Ollama API?",
+          "answer": "Ollama provides a REST API (default port 11434) for programmatic access. Endpoints for generation, chat, embeddings, and model management. Compatible with OpenAI API format for easy integration. The API enables building applications on top of Ollama-managed models.",
+          "tags": [
+            "Ollama",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "356",
+          "question": "What endpoints does the Ollama API provide?",
+          "answer": "/api/generate: text completion. /api/chat: chat conversations. /api/embeddings: vector embeddings. /api/pull: download models. /api/push: upload custom models. /api/tags: list models. /api/show: model details. These enable full programmatic control over Ollama.",
+          "tags": [
+            "Ollama",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "357",
+          "question": "How do you call Ollama from Python?",
+          "answer": "Use requests library or ollama Python package: 'import ollama; response = ollama.chat(model='llama3.2', messages=[{'role':'user','content':'Hello'}])'. Or HTTP: 'requests.post('http://localhost:11434/api/chat', json={...})'. The ollama package provides a cleaner interface.",
+          "tags": [
+            "Ollama",
+            "Python"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "358",
+          "question": "What is LangChain and why use it instead of calling Ollama directly?",
+          "answer": "LangChain is a framework for building LLM applications with components for prompts, chains, agents, and memory. Use LangChain over direct Ollama calls for: complex workflows (RAG, agents), abstraction (swap LLM providers easily), built-in patterns (conversation memory, retrieval), and rich ecosystem. Direct API is simpler for basic generation.",
+          "tags": [
+            "Ollama",
+            "LangChain"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "359",
+          "question": "What is the `/api/generate` endpoint?",
+          "answer": "/api/generate takes a prompt and generates completion text. It's for single-turn generation (no conversation history). Send: model name, prompt, optional parameters (temperature, top_p). Returns: generated text, optionally streamed. Use for simple completions without chat structure.",
+          "tags": [
+            "Ollama",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

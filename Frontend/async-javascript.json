@@ -1,0 +1,270 @@
+{
+  "decks": [
+    {
+      "name": "Async JavaScript",
+      "description": "Interview questions about Async JavaScript",
+      "cards": [
+        {
+          "id": "121",
+          "question": "What is a Promise?",
+          "answer": "Object representing eventual completion or failure of async operation.\n\n```javascript\nconst promise = new Promise((resolve, reject) => {\n  setTimeout(() => resolve(\"done\"), 1000);\n});\npromise.then(result => console.log(result));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "122",
+          "question": "What are Promise states?",
+          "answer": "- Pending: initial state\n- Fulfilled: operation completed successfully\n- Rejected: operation failed",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "123",
+          "question": "What is Promise chaining?",
+          "answer": "Calling `.then()` on a Promise to handle sequential async operations.\n\n```javascript\nfetch('/api/user')\n  .then(res => res.json())\n  .then(user => fetch(`/api/posts/${user.id}`))\n  .then(res => res.json())\n  .then(posts => console.log(posts));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "124",
+          "question": "What is `Promise.all()`?",
+          "answer": "Waits for all promises to resolve, returns array of results.\n\n```javascript\nPromise.all([promise1, promise2, promise3])\n  .then(results => console.log(results));\n// Rejects if any promise rejects\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "125",
+          "question": "What is `Promise.race()`?",
+          "answer": "Returns first promise to settle (resolve or reject).\n\n```javascript\nPromise.race([promise1, promise2])\n  .then(result => console.log(result));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "126",
+          "question": "What is `Promise.allSettled()`?",
+          "answer": "Waits for all promises to settle, returns array with status of each.\n\n```javascript\nPromise.allSettled([promise1, promise2])\n  .then(results => console.log(results));\n// [{status: \"fulfilled\", value: ...}, {status: \"rejected\", reason: ...}]\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "127",
+          "question": "What is `Promise.any()`?",
+          "answer": "Returns first promise to fulfill, rejects if all reject.\n\n```javascript\nPromise.any([promise1, promise2])\n  .then(result => console.log(result));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "128",
+          "question": "What is `async/await`?",
+          "answer": "Syntactic sugar for working with Promises.\n\n```javascript\nasync function fetchUser() {\n  const response = await fetch('/api/user');\n  const user = await response.json();\n  return user;\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "129",
+          "question": "How do you handle errors with async/await?",
+          "answer": "Use try-catch blocks.\n\n```javascript\nasync function fetchUser() {\n  try {\n    const res = await fetch('/api/user');\n    return await res.json();\n  } catch (error) {\n    console.error(error);\n  }\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "130",
+          "question": "What is the difference between Promise and async/await?",
+          "answer": "Same functionality, different syntax. Async/await is more readable for sequential operations.\n\n```javascript\n// Promise\nfetch('/api').then(res => res.json()).then(data => console.log(data));\n\n// Async/await\nconst res = await fetch('/api');\nconst data = await res.json();\nconsole.log(data);\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "131",
+          "question": "What is callback hell?",
+          "answer": "Deeply nested callbacks making code hard to read.\n\n```javascript\ngetData(function(a) {\n  getMoreData(a, function(b) {\n    getEvenMoreData(b, function(c) {\n      // callback hell\n    });\n  });\n});\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "132",
+          "question": "What is `setTimeout()`?",
+          "answer": "Executes function after specified delay.\n\n```javascript\nsetTimeout(() => console.log(\"delayed\"), 1000);\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "133",
+          "question": "What is `setInterval()`?",
+          "answer": "Repeatedly executes function at specified interval.\n\n```javascript\nconst intervalId = setInterval(() => console.log(\"repeat\"), 1000);\nclearInterval(intervalId); // stop\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "134",
+          "question": "What is the difference between `setTimeout()` with 0ms and immediate execution?",
+          "answer": "SetTimeout with 0ms schedules execution after current call stack clears.\n\n```javascript\nconsole.log(1);\nsetTimeout(() => console.log(2), 0);\nconsole.log(3);\n// Output: 1, 3, 2\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "135",
+          "question": "What is `Promise.resolve()`?",
+          "answer": "Creates immediately resolved promise.\n\n```javascript\nPromise.resolve(42).then(x => console.log(x)); // 42\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "136",
+          "question": "What is `Promise.reject()`?",
+          "answer": "Creates immediately rejected promise.\n\n```javascript\nPromise.reject(\"error\").catch(err => console.log(err));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "137",
+          "question": "How do you convert callback to Promise?",
+          "answer": "Wrap callback in Promise constructor.\n\n```javascript\nfunction readFilePromise(path) {\n  return new Promise((resolve, reject) => {\n    fs.readFile(path, (err, data) => {\n      if (err) reject(err);\n      else resolve(data);\n    });\n  });\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "138",
+          "question": "What is `finally()` in Promises?",
+          "answer": "Executes regardless of promise resolution.\n\n```javascript\nfetch('/api')\n  .then(res => res.json())\n  .catch(err => console.error(err))\n  .finally(() => console.log(\"cleanup\"));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "139",
+          "question": "Can you use async/await with forEach()?",
+          "answer": "No, forEach doesn't wait for async operations. Use for-of or Promise.all instead.\n\n```javascript\n// Wrong\nitems.forEach(async item => await process(item));\n\n// Correct\nfor (const item of items) {\n  await process(item);\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "140",
+          "question": "What is parallel vs sequential async execution?",
+          "answer": "- Parallel: operations run simultaneously\n- Sequential: operations run one after another\n\n```javascript\n// Sequential\nfor (const url of urls) {\n  await fetch(url);\n}\n\n// Parallel\nawait Promise.all(urls.map(url => fetch(url)));\n```",
+          "tags": [
+            "JavaScript",
+            "Async"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

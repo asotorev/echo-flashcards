@@ -1,0 +1,400 @@
+{
+  "decks": [
+    {
+      "name": "JavaScript Advanced",
+      "description": "Interview questions about JavaScript Advanced",
+      "cards": [
+        {
+          "id": "41",
+          "question": "What is an IIFE (Immediately Invoked Function Expression)?",
+          "answer": "Function that executes immediately after definition.\n\n```javascript\n(function() {\n  console.log(\"IIFE executed\");\n})();\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "42",
+          "question": "What is currying?",
+          "answer": "Transforming function with multiple arguments into sequence of functions with single argument.\n\n```javascript\nconst add = a => b => a + b;\nconst add5 = add(5);\nadd5(3); // 8\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "43",
+          "question": "What is memoization?",
+          "answer": "Caching function results to avoid repeated calculations.\n\n```javascript\nfunction memoize(fn) {\n  const cache = {};\n  return function(...args) {\n    const key = JSON.stringify(args);\n    if (key in cache) return cache[key];\n    return cache[key] = fn(...args);\n  };\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "44",
+          "question": "What is debouncing?",
+          "answer": "Delaying function execution until after specified time has passed since last invocation.\n\n```javascript\nfunction debounce(fn, delay) {\n  let timer;\n  return function(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() => fn(...args), delay);\n  };\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "45",
+          "question": "What is throttling?",
+          "answer": "Limiting function execution to once per specified time period.\n\n```javascript\nfunction throttle(fn, delay) {\n  let lastCall = 0;\n  return function(...args) {\n    const now = Date.now();\n    if (now - lastCall >= delay) {\n      lastCall = now;\n      fn(...args);\n    }\n  };\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "46",
+          "question": "What is the event loop?",
+          "answer": "Mechanism that handles asynchronous operations by managing call stack, callback queue, and microtask queue.\n\n```javascript\nconsole.log(1);\nsetTimeout(() => console.log(2), 0);\nPromise.resolve().then(() => console.log(3));\nconsole.log(4);\n// Output: 1, 4, 3, 2\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "47",
+          "question": "What are microtasks and macrotasks?",
+          "answer": "- Microtasks: Promises, MutationObserver (higher priority)\n- Macrotasks: setTimeout, setInterval, I/O (lower priority)",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "48",
+          "question": "What is a generator function?",
+          "answer": "Function that can pause and resume execution using `yield`.\n\n```javascript\nfunction* numbers() {\n  yield 1;\n  yield 2;\n  yield 3;\n}\nconst gen = numbers();\ngen.next().value; // 1\ngen.next().value; // 2\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "49",
+          "question": "What is an iterator?",
+          "answer": "Object with `next()` method that returns `{value, done}`.\n\n```javascript\nconst arr = [1, 2, 3];\nconst iterator = arr[Symbol.iterator]();\niterator.next(); // {value: 1, done: false}\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "50",
+          "question": "What is a symbol?",
+          "answer": "Unique and immutable primitive value used as object property key.\n\n```javascript\nconst sym1 = Symbol('id');\nconst sym2 = Symbol('id');\nsym1 === sym2; // false\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "51",
+          "question": "What is a WeakMap?",
+          "answer": "Map with weak references to keys (objects only), allowing garbage collection.\n\n```javascript\nconst wm = new WeakMap();\nlet obj = {};\nwm.set(obj, \"value\");\nobj = null; // obj can be garbage collected\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "52",
+          "question": "What is a WeakSet?",
+          "answer": "Set with weak references to objects, allowing garbage collection.\n\n```javascript\nconst ws = new WeakSet();\nlet obj = {};\nws.add(obj);\nobj = null; // obj can be garbage collected\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "53",
+          "question": "What is a Proxy?",
+          "answer": "Object that intercepts and customizes operations on another object.\n\n```javascript\nconst handler = {\n  get(target, prop) {\n    return prop in target ? target[prop] : \"default\";\n  }\n};\nconst proxy = new Proxy({}, handler);\nproxy.x; // \"default\"\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "54",
+          "question": "What is Reflect?",
+          "answer": "Built-in object with methods for interceptable operations.\n\n```javascript\nconst obj = { x: 1 };\nReflect.get(obj, 'x'); // 1\nReflect.has(obj, 'x'); // true\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "55",
+          "question": "What is the `with` statement (and why avoid it)?",
+          "answer": "Creates scope for object properties. Avoid: confusing, slow, deprecated in strict mode.\n\n```javascript\n// Don't use\nwith (Math) {\n  console.log(PI); // 3.14159...\n}\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "56",
+          "question": "What is strict mode?",
+          "answer": "Opt-in mode with stricter parsing and error handling.\n\n```javascript\n\"use strict\";\nx = 10; // ReferenceError (implicit global not allowed)\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "57",
+          "question": "What is a higher-order function?",
+          "answer": "Function that takes function as argument or returns function.\n\n```javascript\nconst withLogging = (fn) => (...args) => {\n  console.log(\"calling function\");\n  return fn(...args);\n};\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "58",
+          "question": "What is function composition?",
+          "answer": "Combining functions to create new function.\n\n```javascript\nconst compose = (f, g) => x => f(g(x));\nconst add1 = x => x + 1;\nconst mult2 = x => x * 2;\nconst add1ThenMult2 = compose(mult2, add1);\nadd1ThenMult2(5); // 12\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "59",
+          "question": "What is the module pattern?",
+          "answer": "Design pattern using closures to create private variables.\n\n```javascript\nconst counter = (function() {\n  let count = 0;\n  return {\n    increment: () => ++count,\n    getCount: () => count\n  };\n})();\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "60",
+          "question": "What are ES6 modules?",
+          "answer": "Native module system using `import` and `export`.\n\n```javascript\n// math.js\nexport const add = (a, b) => a + b;\n\n// app.js\nimport { add } from './math.js';\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "61",
+          "question": "What is the difference between default and named exports?",
+          "answer": "- Default: one per module, import without braces\n- Named: multiple per module, import with braces\n\n```javascript\n// default\nexport default function() {}\nimport myFunc from './module.js';\n\n// named\nexport const x = 1;\nimport { x } from './module.js';\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "62",
+          "question": "What is tree shaking?",
+          "answer": "Dead code elimination during bundling.\n\n```javascript\n// Only imported functions are included in bundle\nimport { add } from './math.js'; // subtract() not included\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "63",
+          "question": "What is the temporal dead zone?",
+          "answer": "Period between entering scope and variable initialization where accessing variable throws error.\n\n```javascript\nconsole.log(x); // ReferenceError\nlet x = 5;\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "64",
+          "question": "What is coercion?",
+          "answer": "Automatic type conversion.\n\n```javascript\n\"5\" + 3; // \"53\" (number to string)\n\"5\" - 3; // 2 (string to number)\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "65",
+          "question": "What are tagged template literals?",
+          "answer": "Function that processes template literal.\n\n```javascript\nfunction tag(strings, ...values) {\n  return strings[0] + values[0].toUpperCase();\n}\nconst name = \"john\";\ntag`Hello ${name}`; // \"Hello JOHN\"\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "66",
+          "question": "What is `Object.assign()`?",
+          "answer": "Copies properties from source objects to target.\n\n```javascript\nconst target = { a: 1 };\nconst source = { b: 2 };\nObject.assign(target, source); // { a: 1, b: 2 }\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "67",
+          "question": "What is `Object.entries()`?",
+          "answer": "Returns array of object's key-value pairs.\n\n```javascript\nObject.entries({ a: 1, b: 2 }); // [[\"a\", 1], [\"b\", 2]]\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "68",
+          "question": "What is `Object.keys()` and `Object.values()`?",
+          "answer": "- `keys()`: returns array of property names\n- `values()`: returns array of property values\n\n```javascript\nconst obj = { a: 1, b: 2 };\nObject.keys(obj); // [\"a\", \"b\"]\nObject.values(obj); // [1, 2]\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "69",
+          "question": "What is `Array.from()`?",
+          "answer": "Creates array from array-like or iterable object.\n\n```javascript\nArray.from(\"hello\"); // [\"h\", \"e\", \"l\", \"l\", \"o\"]\nArray.from([1, 2, 3], x => x * 2); // [2, 4, 6]\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "70",
+          "question": "What is `Array.isArray()`?",
+          "answer": "Checks if value is an array.\n\n```javascript\nArray.isArray([1, 2]); // true\nArray.isArray(\"hello\"); // false\n```",
+          "tags": [
+            "JavaScript",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

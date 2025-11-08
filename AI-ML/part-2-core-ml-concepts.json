@@ -1,0 +1,335 @@
+{
+  "decks": [
+    {
+      "name": "Part 2: Core ML Concepts",
+      "description": "Fundamental machine learning concepts - neural networks, optimization, and regularization",
+      "cards": [
+        {
+          "id": "21",
+          "question": "What's the difference between supervised and unsupervised learning?",
+          "answer": "Supervised learning uses labeled data where you know the correct outputs (like house prices with features), and the model learns to map inputs to outputs. Unsupervised learning works with unlabeled data to find hidden patterns or groupings (like customer segmentation) without being told what to look for. The key difference is whether you have ground truth labels during training.",
+          "tags": [
+            "ML",
+            "Learning Types"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "22",
+          "question": "What is semi-supervised learning?",
+          "answer": "Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data during training. It's useful when labeling data is expensive or time-consuming but you have lots of unlabeled examples. The model learns from the labeled examples and uses the unlabeled data to better understand the underlying data distribution and improve generalization.",
+          "tags": [
+            "ML",
+            "Learning Types"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "23",
+          "question": "What is reinforcement learning and how does it differ from supervised learning?",
+          "answer": "Reinforcement learning trains an agent to make sequences of decisions by rewarding good actions and penalizing bad ones, learning through trial and error. Unlike supervised learning where you provide correct answers upfront, RL provides feedback (rewards/penalties) after actions are taken. Think of training a dog with treats (RL) versus showing flashcards with answers (supervised).",
+          "tags": [
+            "ML",
+            "Reinforcement Learning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "24",
+          "question": "What is a neural network? How is it inspired by the brain?",
+          "answer": "A neural network is a computing system with interconnected nodes (neurons) organized in layers that process and transform information. It's inspired by biological neurons: artificial neurons receive inputs, apply weights, add bias, pass through an activation function, and send outputs to other neurons. Like the brain, learning happens by adjusting connection strengths (weights) based on experience.",
+          "tags": [
+            "Neural Networks",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "25",
+          "question": "What is a perceptron?",
+          "answer": "A perceptron is the simplest neural network unit, consisting of a single neuron that takes weighted inputs, sums them with a bias, and applies an activation function to produce an output. It's a binary classifier that can learn to separate data into two classes using a linear decision boundary. Modern neural networks stack many perceptrons in layers to learn complex patterns.",
+          "tags": [
+            "Neural Networks",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "26",
+          "question": "What are layers in a neural network?",
+          "answer": "Layers are groups of neurons that process data at the same stage in the network. The input layer receives raw data, hidden layers perform intermediate transformations, and the output layer produces final predictions. Each layer learns increasingly abstract representations - early layers might detect edges in images, while deeper layers recognize complex patterns like faces or objects.",
+          "tags": [
+            "Neural Networks",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "27",
+          "question": "What is an activation function and why do we need it?",
+          "answer": "An activation function introduces non-linearity into neural networks, allowing them to learn complex patterns beyond straight lines. Without activation functions, stacking multiple layers would be equivalent to a single linear layer. Activation functions like ReLU, sigmoid, or tanh determine whether a neuron should 'fire' (activate) based on its input, mimicking biological neurons.",
+          "tags": [
+            "Neural Networks",
+            "Activation Functions"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "28",
+          "question": "What are some common activation functions (ReLU, sigmoid, tanh)?",
+          "answer": "ReLU (Rectified Linear Unit) outputs max(0, x), being simple and fast while avoiding vanishing gradients. Sigmoid squashes values to 0-1, useful for probabilities but suffers from vanishing gradients. Tanh outputs -1 to 1, centered at zero which helps with training. ReLU is most common in hidden layers, sigmoid for binary classification outputs, and tanh when you need negative outputs.",
+          "tags": [
+            "Neural Networks",
+            "Activation Functions"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "29",
+          "question": "What is forward propagation?",
+          "answer": "Forward propagation is the process of passing input data through the network layer by layer to generate predictions. Each layer receives inputs, applies weights and biases, passes through activation functions, and sends outputs to the next layer. This continues from input to output layer, producing the final prediction. It's the 'inference' phase where the model makes predictions.",
+          "tags": [
+            "Neural Networks",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "30",
+          "question": "What is backpropagation?",
+          "answer": "Backpropagation is the algorithm for training neural networks by calculating gradients of the loss function with respect to each weight. It works backward from the output layer to input, using the chain rule to compute how much each weight contributed to the error. These gradients tell the optimizer how to adjust weights to reduce loss, making it the foundation of neural network learning.",
+          "tags": [
+            "Neural Networks",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "31",
+          "question": "What is the chain rule and why is it important for neural networks?",
+          "answer": "The chain rule is a calculus principle for computing derivatives of composite functions by multiplying derivatives of each component. In neural networks, it enables backpropagation by calculating how the loss changes with respect to each weight through multiple layers. Without the chain rule, we couldn't efficiently train deep networks because we couldn't compute gradients through stacked layers.",
+          "tags": [
+            "Neural Networks",
+            "Math"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "32",
+          "question": "What is a learning rate?",
+          "answer": "Learning rate is a hyperparameter that controls how much to adjust weights in response to the calculated gradient during training. It determines the step size when moving toward the minimum loss. If too high, training may overshoot the optimal solution or diverge; if too low, training will be very slow and might get stuck in local minima.",
+          "tags": [
+            "ML",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "33",
+          "question": "What happens if the learning rate is too high or too low?",
+          "answer": "Too high: The model takes large steps and may overshoot the optimal solution, causing loss to oscillate or diverge (increase) instead of decreasing. Too low: Training becomes extremely slow, may get stuck in local minima, and waste computational resources. Finding the right learning rate is critical - common starting values are 0.001 or 0.0001, often adjusted during training with schedulers.",
+          "tags": [
+            "ML",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "34",
+          "question": "What is batch, mini-batch, and stochastic gradient descent?",
+          "answer": "Batch gradient descent uses the entire dataset to compute gradients (slow but stable). Stochastic gradient descent (SGD) uses one sample at a time (fast but noisy updates). Mini-batch gradient descent (most common) uses small batches of samples like 32 or 64 examples, balancing speed and stability. Mini-batch is preferred because it's computationally efficient and the noise helps escape local minima.",
+          "tags": [
+            "ML",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "35",
+          "question": "What is an epoch in training?",
+          "answer": "An epoch is one complete pass through the entire training dataset. If you have 1000 samples and use a batch size of 100, one epoch consists of 10 batches. Training typically runs for multiple epochs (like 10, 50, or 100) until the model converges. Monitoring performance across epochs helps determine when to stop training to avoid overfitting.",
+          "tags": [
+            "ML",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "36",
+          "question": "What are optimization algorithms beyond basic gradient descent? (Adam, RMSprop, etc.)",
+          "answer": "Advanced optimizers adapt learning rates during training. Adam (Adaptive Moment Estimation) combines momentum and adaptive learning rates, being the most popular general-purpose optimizer. RMSprop adjusts learning rates based on recent gradients. AdaGrad adapts rates for each parameter. These methods typically converge faster and more reliably than basic gradient descent, with Adam being the default choice for most applications.",
+          "tags": [
+            "ML",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "37",
+          "question": "What is regularization and why do we need it?",
+          "answer": "Regularization adds constraints to the training process to prevent overfitting by discouraging overly complex models. It helps the model generalize better to new data rather than memorizing training examples. Common techniques include L1/L2 regularization (penalizing large weights), dropout (randomly disabling neurons), and early stopping (halting training before overfitting occurs).",
+          "tags": [
+            "ML",
+            "Regularization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "38",
+          "question": "What is L1 vs L2 regularization?",
+          "answer": "L1 regularization adds the absolute value of weights to the loss function, pushing some weights to exactly zero, effectively performing feature selection. L2 regularization adds the square of weights to the loss, shrinking all weights toward zero but rarely to exactly zero. L2 (also called weight decay) is more common and generally performs better, while L1 is useful when you want a sparse model with fewer features.",
+          "tags": [
+            "ML",
+            "Regularization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "39",
+          "question": "What is dropout and how does it prevent overfitting?",
+          "answer": "Dropout randomly disables a percentage of neurons during each training step (typically 20-50%), forcing the network to learn redundant representations and not rely on specific neurons. This prevents complex co-adaptations where neurons become too specialized to training data. At inference time, all neurons are active but their outputs are scaled appropriately, resulting in a more robust model.",
+          "tags": [
+            "Neural Networks",
+            "Regularization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "40",
+          "question": "What is batch normalization?",
+          "answer": "Batch normalization normalizes the inputs to each layer by adjusting and scaling activations within each mini-batch, reducing internal covariate shift. This stabilizes and accelerates training by allowing higher learning rates and reducing sensitivity to initialization. It also acts as a mild regularizer, reducing the need for dropout. Batch norm is applied before or after activation functions in most modern architectures.",
+          "tags": [
+            "Neural Networks",
+            "Techniques"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "41",
+          "question": "What is early stopping?",
+          "answer": "Early stopping halts training when validation performance stops improving, preventing overfitting by avoiding unnecessary training iterations. You monitor validation loss during training and stop when it hasn't improved for a certain number of epochs (patience period). This is a simple but effective regularization technique that saves computation and typically gives better generalization than training until loss plateaus.",
+          "tags": [
+            "ML",
+            "Regularization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "42",
+          "question": "What is data augmentation?",
+          "answer": "Data augmentation artificially increases training data by creating modified versions of existing examples, helping models generalize better and preventing overfitting. For images: rotation, flipping, cropping, color adjustments. For text: synonym replacement, back-translation. For audio: speed changes, noise addition. This technique is especially valuable when labeled data is limited, essentially teaching the model invariances.",
+          "tags": [
+            "ML",
+            "Techniques"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "43",
+          "question": "What is transfer learning in general terms?",
+          "answer": "Transfer learning leverages knowledge learned from one task to improve performance on a related task. Instead of training from scratch, you start with a pre-trained model (trained on large datasets like ImageNet or web text) and adapt it to your specific task. This works because early layers learn general features applicable across tasks, requiring less data and computation for the new task.",
+          "tags": [
+            "ML",
+            "Transfer Learning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "44",
+          "question": "What is the curse of dimensionality?",
+          "answer": "The curse of dimensionality refers to various phenomena that arise when working with high-dimensional data. As dimensions increase, data becomes increasingly sparse, distances between points become less meaningful, and exponentially more data is needed to maintain the same density. This makes learning harder, increases computational requirements, and can lead to overfitting. Dimensionality reduction techniques like PCA help address this.",
+          "tags": [
+            "ML",
+            "Theory"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "45",
+          "question": "What is feature scaling/normalization and why is it important?",
+          "answer": "Feature scaling transforms features to similar ranges, preventing features with larger magnitudes from dominating the learning process. Normalization scales to 0-1 range, while standardization transforms to mean 0 and standard deviation 1. This is crucial for gradient descent convergence, distance-based algorithms, and neural networks. For example, without scaling, a 'price' feature in thousands could overwhelm a 'number of bedrooms' feature ranging 1-5.",
+          "tags": [
+            "ML",
+            "Preprocessing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "decks": [
+    {
+      "name": "Part 3: Deep Learning Architectures",
+      "description": "Neural network architectures - CNNs, RNNs, LSTMs, and Transformers",
+      "cards": [
+        {
+          "id": "46",
+          "question": "What makes a neural network 'deep'?",
+          "answer": "A neural network is considered 'deep' when it has multiple hidden layers between input and output (typically 3 or more). Deep networks can learn hierarchical representations where each layer learns increasingly abstract features. The 'deep' in deep learning refers to this depth of layers, enabling models to automatically learn complex patterns without manual feature engineering.",
+          "tags": [
+            "Deep Learning",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "47",
+          "question": "What is a Convolutional Neural Network (CNN)?",
+          "answer": "CNNs are neural networks designed for processing grid-like data such as images, using convolutional layers that apply filters to detect local patterns. They use weight sharing (same filter across the image) and spatial hierarchies to efficiently learn visual features. CNNs excel at computer vision tasks because they preserve spatial relationships and are translation-invariant, meaning they recognize patterns regardless of position.",
+          "tags": [
+            "Deep Learning",
+            "CNN"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "48",
+          "question": "What are convolutional layers and what do they detect?",
+          "answer": "Convolutional layers apply learnable filters (kernels) that slide across the input to detect local patterns. Early layers detect simple features like edges, corners, and textures. Deeper layers combine these to recognize more complex patterns like shapes, parts of objects, and eventually entire objects. Each filter specializes in detecting specific patterns, and the layer produces a feature map showing where those patterns occur.",
+          "tags": [
+            "Deep Learning",
+            "CNN"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "49",
+          "question": "What is pooling in CNNs?",
+          "answer": "Pooling reduces the spatial dimensions of feature maps while retaining important information, making the network more computationally efficient and providing spatial invariance. Max pooling takes the maximum value in each region (most common), while average pooling takes the mean. Pooling helps make the network less sensitive to small translations and reduces overfitting by decreasing the number of parameters.",
+          "tags": [
+            "Deep Learning",
+            "CNN"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "50",
+          "question": "What are CNNs primarily used for?",
+          "answer": "CNNs excel at computer vision tasks including image classification (identifying what's in an image), object detection (finding and localizing objects), semantic segmentation (labeling each pixel), face recognition, medical image analysis, and video processing. They're also surprisingly effective for some non-vision tasks like text classification where treating text as 1D sequences benefits from local pattern detection.",
+          "tags": [
+            "Deep Learning",
+            "CNN",
+            "Applications"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "51",
+          "question": "What is a Recurrent Neural Network (RNN)?",
+          "answer": "RNNs are neural networks designed for sequential data, maintaining a hidden state that acts as memory of previous inputs. At each time step, they process the current input and the previous hidden state to produce an output and update the hidden state. This makes them suitable for tasks where context and order matter, like language modeling, translation, and time series forecasting.",
+          "tags": [
+            "Deep Learning",
+            "RNN"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "52",
+          "question": "What is the vanishing gradient problem in RNNs?",
+          "answer": "During backpropagation through time in RNNs, gradients can become exponentially small as they propagate through many time steps, making it nearly impossible to learn long-term dependencies. This happens because gradients are repeatedly multiplied by values less than 1, causing them to vanish. This severely limits standard RNNs to learning only short-term patterns, which is why LSTMs and GRUs were developed.",
+          "tags": [
+            "Deep Learning",
+            "RNN",
+            "Challenges"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "53",
+          "question": "What is an LSTM (Long Short-Term Memory) network?",
+          "answer": "LSTMs are specialized RNNs that solve the vanishing gradient problem using gating mechanisms (input, forget, and output gates) to control information flow. They maintain a cell state that acts as a memory highway, allowing gradients to flow unchanged. This enables learning dependencies over hundreds of time steps, making them effective for tasks requiring long-term memory like language understanding and speech recognition.",
+          "tags": [
+            "Deep Learning",
+            "LSTM"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "54",
+          "question": "What is a GRU (Gated Recurrent Unit)?",
+          "answer": "GRUs are a simplified version of LSTMs with fewer gates (update and reset gates instead of three), combining the cell state and hidden state into one. They're computationally more efficient while achieving similar performance to LSTMs on many tasks. GRUs are often preferred when computational resources are limited or when the simpler architecture is sufficient for the task at hand.",
+          "tags": [
+            "Deep Learning",
+            "RNN"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "55",
+          "question": "What are sequence-to-sequence models?",
+          "answer": "Sequence-to-sequence (seq2seq) models transform one sequence into another, typically using an encoder-decoder architecture. The encoder processes the input sequence into a fixed representation, and the decoder generates the output sequence from that representation. They're used for machine translation, text summarization, chatbots, and any task where input and output are both sequences of potentially different lengths.",
+          "tags": [
+            "Deep Learning",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "56",
+          "question": "What is the attention mechanism?",
+          "answer": "Attention allows models to focus on relevant parts of the input when producing each output, rather than compressing all information into a fixed vector. It computes weights indicating how much each input position should contribute to the current output. This breakthrough solved the information bottleneck in seq2seq models and enabled much better performance on tasks like translation and summarization.",
+          "tags": [
+            "Deep Learning",
+            "Attention"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "57",
+          "question": "Why was attention a breakthrough for neural networks?",
+          "answer": "Attention solved the bottleneck problem where all input information had to be compressed into a single fixed-size vector. It allowed models to dynamically access relevant parts of the input, dramatically improving performance on long sequences. Attention also provided interpretability by showing which parts of the input the model focuses on. Most importantly, it led to transformers, which replaced RNNs and revolutionized NLP.",
+          "tags": [
+            "Deep Learning",
+            "Attention"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "58",
+          "question": "What is self-attention?",
+          "answer": "Self-attention computes relationships between different positions within the same sequence, allowing each position to attend to all other positions. For each word, it determines how much attention to pay to every other word in the sentence. This captures long-range dependencies and contextual relationships efficiently. Self-attention is the core mechanism in transformers, enabling them to understand context better than RNNs.",
+          "tags": [
+            "Deep Learning",
+            "Attention"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "59",
+          "question": "What is the transformer architecture?",
+          "answer": "Transformers are neural networks that rely entirely on self-attention mechanisms, eliminating recurrence and convolutions. They process entire sequences in parallel using multi-head attention and position encodings to maintain order information. This architecture is highly parallelizable, scales better, and captures long-range dependencies more effectively than RNNs. Transformers are the foundation of modern LLMs like GPT and BERT.",
+          "tags": [
+            "Deep Learning",
+            "Transformers"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "60",
+          "question": "How do transformers differ from RNNs?",
+          "answer": "RNNs process sequences one step at a time sequentially, maintaining a hidden state. Transformers process entire sequences in parallel using self-attention to capture relationships between all positions simultaneously. This makes transformers much faster to train, better at capturing long-range dependencies, and easier to scale to large models. However, transformers require more memory since they attend to all positions at once.",
+          "tags": [
+            "Deep Learning",
+            "Transformers"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "61",
+          "question": "What are encoder and decoder in transformers?",
+          "answer": "The encoder processes the input sequence and builds representations capturing contextual information from the entire input. The decoder generates the output sequence, attending to both its own previous outputs and the encoder's representations. Encoder-only models (BERT) are used for understanding tasks, decoder-only (GPT) for generation, and encoder-decoder models (T5) for sequence transformation tasks like translation.",
+          "tags": [
+            "Deep Learning",
+            "Transformers"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "62",
+          "question": "What is multi-head attention?",
+          "answer": "Multi-head attention runs multiple attention mechanisms in parallel, each learning different aspects of the relationships between tokens. Each 'head' has its own learned weight matrices and captures different patterns (like syntactic vs semantic relationships). The outputs are concatenated and projected, allowing the model to jointly attend to information from different representation subspaces, greatly enhancing the model's capacity.",
+          "tags": [
+            "Deep Learning",
+            "Transformers"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "63",
+          "question": "What are positional encodings in transformers?",
+          "answer": "Since transformers process sequences in parallel without inherent order, positional encodings add information about token positions. These are vectors added to input embeddings that encode position using sine and cosine functions of different frequencies. This allows the model to understand word order and relative positions, which is crucial for language understanding where word order significantly affects meaning.",
+          "tags": [
+            "Deep Learning",
+            "Transformers"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "64",
+          "question": "What is an autoencoder?",
+          "answer": "An autoencoder is a neural network trained to compress input data into a lower-dimensional representation (encoding) and then reconstruct the original input from that representation (decoding). It learns to capture the most important features needed for reconstruction. Autoencoders are used for dimensionality reduction, denoising, anomaly detection, and learning useful data representations for downstream tasks.",
+          "tags": [
+            "Deep Learning",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "65",
+          "question": "What are Generative Adversarial Networks (GANs)?",
+          "answer": "GANs consist of two competing neural networks: a generator that creates fake samples and a discriminator that tries to distinguish fake from real samples. They train together in a game where the generator improves at creating realistic samples while the discriminator gets better at detecting fakes. GANs excel at generating realistic images, videos, and other data, though they can be difficult to train.",
+          "tags": [
+            "Deep Learning",
+            "Generative Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "decks": [
+    {
+      "name": "Part 8: Advanced Fine-tuning",
+      "description": "RLHF, DPO, and advanced fine-tuning techniques",
+      "cards": [
+        {
+          "id": "152",
+          "question": "What is Reinforcement Learning from Human Feedback (RLHF)?",
+          "answer": "RLHF trains models to align with human preferences using reinforcement learning. First, humans rank model outputs. Then a reward model learns these preferences. Finally, the LLM is fine-tuned using RL to maximize the reward model's scores. RLHF makes models more helpful, harmless, and aligned with human values, used in ChatGPT and Claude to improve instruction-following and reduce harmful outputs.",
+          "tags": [
+            "Fine-tuning",
+            "RLHF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "153",
+          "question": "How does RLHF improve model alignment?",
+          "answer": "RLHF captures nuanced human preferences that are hard to specify in supervised data. Rather than just imitating examples, models learn what outputs humans prefer through comparative rankings. This helps models refuse harmful requests, provide more helpful responses, and better understand subjective quality. The iterative feedback loop continuously improves alignment beyond what supervised fine-tuning alone achieves.",
+          "tags": [
+            "Fine-tuning",
+            "RLHF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "154",
+          "question": "What is a reward model in RLHF?",
+          "answer": "A reward model is a separate neural network trained to predict human preference scores for model outputs. It's trained on human rankings (output A is better than output B) and learns to score outputs based on quality, helpfulness, and safety. During RL training, the reward model evaluates generated text, providing signals to update the LLM. The reward model essentially automates human feedback at scale.",
+          "tags": [
+            "Fine-tuning",
+            "RLHF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "155",
+          "question": "What is Direct Preference Optimization (DPO)?",
+          "answer": "DPO is a simpler alternative to RLHF that directly optimizes models on preference data without training a separate reward model or using reinforcement learning. It reformulates the RLHF objective into a supervised learning problem, making training more stable, efficient, and easier to implement. DPO achieves similar alignment results to RLHF with less complexity and computational cost.",
+          "tags": [
+            "Fine-tuning",
+            "DPO"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "156",
+          "question": "How does DPO differ from RLHF?",
+          "answer": "RLHF requires three stages: supervised fine-tuning, reward model training, and RL optimization. DPO skips the reward model and RL, directly optimizing on preference pairs using supervised learning. DPO is simpler to implement, more stable, faster to train, and requires less compute. However, RLHF may handle more complex preferences. DPO is becoming popular for its simplicity and effectiveness.",
+          "tags": [
+            "Fine-tuning",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "157",
+          "question": "What is the difference between instruction tuning and alignment tuning?",
+          "answer": "Instruction tuning teaches models to follow instructions and understand task formats using supervised learning on instruction-response pairs. Alignment tuning (RLHF/DPO) teaches models to produce outputs humans prefer, handling subjective qualities like helpfulness, safety, and tone. Instruction tuning focuses on capability and task performance, while alignment focuses on preference and values. They're typically used sequentially in model training.",
+          "tags": [
+            "Fine-tuning",
+            "Concepts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "158",
+          "question": "What are the risks of fine-tuning? (performance degradation, bias amplification)",
+          "answer": "Fine-tuning risks include catastrophic forgetting (losing general capabilities), overfitting to training data, amplifying biases present in fine-tuning data, degrading performance on tasks outside the fine-tuning distribution, and learning spurious correlations. Poor-quality data can teach bad behaviors. These risks are mitigated through careful data curation, regularization, using PEFT methods, and comprehensive evaluation across diverse tasks.",
+          "tags": [
+            "Fine-tuning",
+            "Risks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "159",
+          "question": "How do you evaluate a fine-tuned model?",
+          "answer": "Evaluate on held-out test data matching your use case, using task-specific metrics (accuracy, F1, BLEU, ROUGE) and qualitative assessment. Test edge cases, check for catastrophic forgetting on general tasks, measure inference speed, and conduct human evaluation. Compare against baseline (pre-trained model, prompting, or other approaches). Monitor for biases and failure modes. A/B testing in production provides real-world validation.",
+          "tags": [
+            "Fine-tuning",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "160",
+          "question": "What is domain adaptation through fine-tuning?",
+          "answer": "Domain adaptation fine-tunes general models on domain-specific text to improve performance in specialized fields like medicine, law, or finance. It teaches domain terminology, conventions, and knowledge while retaining general language abilities. Often combines continued pre-training on domain corpora followed by task-specific fine-tuning. This creates models that understand specialized contexts better than general-purpose LLMs.",
+          "tags": [
+            "Fine-tuning",
+            "Applications"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "161",
+          "question": "What is the difference between task-specific and domain-specific fine-tuning?",
+          "answer": "Task-specific fine-tuning teaches a model to perform a particular task (like sentiment analysis or summarization) well. Domain-specific fine-tuning adapts a model to understand a domain's language, terminology, and knowledge (like medical or legal domains) across multiple tasks. Domain adaptation is typically broader, while task fine-tuning is narrower and more focused on achieving high performance on one specific task.",
+          "tags": [
+            "Fine-tuning",
+            "Concepts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "162",
+          "question": "Can you fine-tune on multiple tasks simultaneously?",
+          "answer": "Yes, through multi-task learning where you mix datasets from different tasks during training. This can improve generalization and create more versatile models, but requires careful dataset balancing to prevent one task from dominating. Task-specific prefixes or instructions help the model distinguish tasks. While multi-task models are flexible, single-task fine-tuning usually achieves better peak performance on individual tasks.",
+          "tags": [
+            "Fine-tuning",
+            "Multi-task"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "163",
+          "question": "What is knowledge distillation?",
+          "answer": "Knowledge distillation transfers knowledge from a large 'teacher' model to a smaller 'student' model by training the student to match the teacher's outputs and internal representations. The student learns to mimic the teacher's behavior while being faster and more efficient. This creates compact models that retain much of the larger model's performance, useful for deploying capable models with limited resources.",
+          "tags": [
+            "ML",
+            "Compression"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "164",
+          "question": "How can you combine multiple fine-tuned LoRA adapters?",
+          "answer": "You can merge multiple LoRA adapters by weighted averaging their parameters, allowing a model to combine capabilities from different fine-tunings. Adapters can also be stacked or switched dynamically based on task. Some frameworks support concurrent adapter loading where multiple adapters are active simultaneously. This enables modular specialization - train separate adapters for different tasks and compose them as needed.",
+          "tags": [
+            "Fine-tuning",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "165",
+          "question": "What is merging models and when would you do it?",
+          "answer": "Model merging combines weights from multiple fine-tuned models to create a single model with combined capabilities. Methods include weight averaging, SLERP (spherical interpolation), or TIES (Task-specific Interpolation and Extraction). You'd merge models to combine specialized skills without retraining, reduce deployment complexity, or create ensemble-like capabilities. Merging works best for models fine-tuned from the same base.",
+          "tags": [
+            "Fine-tuning",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "166",
+          "question": "What happens to the original model capabilities after fine-tuning?",
+          "answer": "Fine-tuning generally retains most original capabilities while adding specialized skills, though the degree varies. Light fine-tuning (low learning rate, small dataset, PEFT methods) preserves capabilities well. Heavy fine-tuning can cause catastrophic forgetting where general abilities degrade. The balance between retaining and adapting depends on training hyperparameters, data similarity to pre-training, and fine-tuning method. Regular evaluation on diverse tasks monitors capability retention.",
+          "tags": [
+            "Fine-tuning",
+            "Effects"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

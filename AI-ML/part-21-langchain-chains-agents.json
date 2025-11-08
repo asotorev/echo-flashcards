@@ -1,0 +1,374 @@
+{
+  "decks": [
+    {
+      "name": "Part 21: LangChain Chains & Agents",
+      "description": "Advanced chain patterns, agents, tools, and ReAct framework",
+      "cards": [
+        {
+          "id": "475",
+          "question": "What is a router chain?",
+          "answer": "Router chain dynamically selects which chain to execute based on input. Example: route customer questions to billing, technical, or sales chains. Uses LLM or rules to classify input, then runs appropriate chain. Built with RunnableBranch in modern LangChain. Useful for multi-domain applications with different processing paths.",
+          "tags": [
+            "LangChain",
+            "Chains",
+            "Routing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "476",
+          "question": "What is a transformation chain?",
+          "answer": "Transformation chain modifies data without calling an LLM. Examples: text cleaning, format conversion, data extraction. Simple functions wrapped as runnables. Use when you need preprocessing (remove HTML tags) or postprocessing (parse JSON) between LLM calls. More efficient than using LLM for simple transformations.",
+          "tags": [
+            "LangChain",
+            "Chains",
+            "Data Processing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "477",
+          "question": "What is the modern way to build chains? (LCEL vs legacy chains)",
+          "answer": "Modern: LCEL with pipe operator (|). 'chain = prompt | llm | parser'. Advantages: simpler syntax, better streaming, easier debugging, automatic async support. Legacy: class-based chains (LLMChain, SequentialChain). LCEL is preferred for all new development; legacy chains maintained for backward compatibility.",
+          "tags": [
+            "LangChain",
+            "LCEL",
+            "Best Practices"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "478",
+          "question": "What are runnables in the new LangChain architecture?",
+          "answer": "Runnables are the core abstraction in LCEL - anything that implements invoke(), stream(), and batch(). All components (prompts, LLMs, parsers) are runnables. Can be chained with | operator. Provides consistent interface: run synchronously (invoke), stream results, or batch process. Foundation of modern LangChain composability.",
+          "tags": [
+            "LangChain",
+            "LCEL",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "479",
+          "question": "What is RunnableParallel?",
+          "answer": "RunnableParallel executes multiple runnables simultaneously with same input. Returns dictionary of results. Example: 'RunnableParallel(summary=summarize_chain, keywords=keyword_chain)' runs both at once. Faster than sequential when tasks are independent. Automatic parallelization improves response time for multi-task workflows.",
+          "tags": [
+            "LangChain",
+            "LCEL",
+            "Parallel Processing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "480",
+          "question": "What is RunnablePassthrough?",
+          "answer": "RunnablePassthrough passes input unchanged to next step while optionally adding data. Used to maintain context through chains. Example: preserve original question while adding retrieved documents. Common pattern: 'RunnablePassthrough.assign(context=retriever)' adds context key without removing question. Essential for complex data flow in chains.",
+          "tags": [
+            "LangChain",
+            "LCEL",
+            "Data Flow"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "481",
+          "question": "What is RunnableBranch?",
+          "answer": "RunnableBranch implements conditional logic in chains. Takes conditions and runnables: run different chain based on input. Example: if sentiment negative, run apology chain; if positive, run thanks chain. Modern replacement for router chains. Enables dynamic workflow without custom code.",
+          "tags": [
+            "LangChain",
+            "LCEL",
+            "Conditional Logic"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "482",
+          "question": "How do you add fallbacks to chains?",
+          "answer": "Use .with_fallbacks([alternative_chain]) method. If primary fails, tries alternatives in order. Example: 'chain.with_fallbacks([backup_llm])' switches to backup if primary LLM errors. Critical for production reliability. Handles API failures, rate limits, or model unavailability gracefully.",
+          "tags": [
+            "LangChain",
+            "Error Handling",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "483",
+          "question": "How do you add retries to chains?",
+          "answer": "Use .with_retry(stop_after_attempt=3) method. Automatically retries on failure with configurable attempts and delays. Handles transient errors (network issues, temporary API problems). Combine with exponential backoff for better behavior. Essential for production systems calling external APIs.",
+          "tags": [
+            "LangChain",
+            "Error Handling",
+            "Resilience"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "484",
+          "question": "What is an agent in LangChain?",
+          "answer": "Agent is an LLM that decides which tools to use and in what order to answer questions. Unlike chains (fixed steps), agents reason about what to do next. Can call tools multiple times, change strategy based on results. Uses ReAct pattern: think, act, observe, repeat. Enables dynamic problem-solving.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "AI Reasoning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "485",
+          "question": "What's the difference between a chain and an agent?",
+          "answer": "Chain: fixed sequence of steps, deterministic flow, predefined logic. Agent: LLM decides what to do, dynamic tool selection, adaptive workflow. Chain is faster and more predictable; agent is more flexible but slower and less reliable. Use chains when steps are known; agents when problem-solving strategy varies.",
+          "tags": [
+            "LangChain",
+            "Chains",
+            "Agents"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "486",
+          "question": "How do LangChain Agents with Tools work?",
+          "answer": "Agent receives question and available tools. LLM decides which tool to use and with what input. Tool executes and returns result. Agent observes result, decides next action (use another tool or answer). Continues until agent determines it has enough information. Tools are functions the agent can call.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "Tools"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "487",
+          "question": "What is the ReAct agent pattern?",
+          "answer": "ReAct combines reasoning and acting in a loop. Agent thinks about what to do (reasoning), takes action (uses tool), observes result, then reasons again. Pattern: Thought -> Action -> Observation -> Thought -> ... Enables agents to plan multi-step solutions and adapt based on intermediate results.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "ReAct"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "488",
+          "question": "What does ReAct stand for? (Reasoning + Acting)",
+          "answer": "ReAct = Reasoning + Acting. Framework where LLM alternates between reasoning (thinking about what to do) and acting (using tools). Unlike pure reasoning (chain of thought) or pure acting (direct tool use), ReAct interleaves both. Results in more reliable multi-step problem solving with external tools.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "ReAct"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "489",
+          "question": "What is an agent executor?",
+          "answer": "AgentExecutor runs the agent loop: calls agent, executes tool actions, feeds observations back, repeats until done. Handles max iterations, timeout, error catching. Bridges agent (decision maker) and tools (capabilities). In code: 'AgentExecutor(agent=agent, tools=tools, max_iterations=5)'. Controls agent execution safety.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "Execution"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "490",
+          "question": "What are tools in LangChain agents?",
+          "answer": "Tools are functions agents can call. Each tool has name, description, and function. Description tells agent when to use it. Examples: search tool, calculator, database query. Agent reads descriptions, chooses appropriate tool based on task. Tools extend agent capabilities beyond LLM's knowledge.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "Tools"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "491",
+          "question": "How do you create a custom tool?",
+          "answer": "Define function, add to tools list with description. Example: 'Tool(name=\"calculator\", func=calculate, description=\"Useful for math\")'. Description is critical - agent uses it to decide when to use tool. Function receives string input, returns string output. Clear descriptions = better tool selection.",
+          "tags": [
+            "LangChain",
+            "Tools",
+            "Development"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "492",
+          "question": "What is the @tool decorator?",
+          "answer": "@tool decorator converts regular Python function into LangChain tool. Automatically extracts name from function name, description from docstring. Example: '@tool def search(query: str) -> str: \"Search the web\" ...'. Simpler than Tool() class. Docstring becomes tool description agent sees.",
+          "tags": [
+            "LangChain",
+            "Tools",
+            "Python"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "493",
+          "question": "What are built-in tools in LangChain?",
+          "answer": "LangChain provides pre-made tools: SerpAPI (Google search), Wikipedia, calculator, Python REPL, file system operations, API calls. Import and add to agent's tool list. Example: 'from langchain.tools import WikipediaQueryRun'. Saves time implementing common capabilities. Check community integrations for more.",
+          "tags": [
+            "LangChain",
+            "Tools",
+            "Built-in"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "494",
+          "question": "What is the SerpAPI tool?",
+          "answer": "SerpAPI tool enables agents to search Google. Returns real-time search results. Requires SerpAPI key. Agent can find current information beyond training data. Example use: 'What's the current price of Tesla stock?' Agent searches web and answers. Critical for questions requiring up-to-date data.",
+          "tags": [
+            "LangChain",
+            "Tools",
+            "Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "495",
+          "question": "What is the Wikipedia tool?",
+          "answer": "Wikipedia tool lets agents query Wikipedia for factual information. No API key needed. Agent searches Wikipedia, retrieves article content. Good for general knowledge questions. Example: 'Tell me about quantum computing' - agent fetches Wikipedia article and summarizes. Free alternative to web search for encyclopedic facts.",
+          "tags": [
+            "LangChain",
+            "Tools",
+            "Knowledge"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "496",
+          "question": "What is tool selection in agents?",
+          "answer": "Tool selection is how agent chooses which tool to use. Agent reads tool descriptions, matches them to current task. LLM generates tool name and input based on reasoning. Quality depends on clear tool descriptions and capable LLM. Poor descriptions lead to wrong tool selection. Critical for agent effectiveness.",
+          "tags": [
+            "LangChain",
+            "Agents",
+            "Decision Making"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "497",
+          "question": "What is memory in LangChain?",
+          "answer": "Memory stores conversation history so chains/agents remember previous exchanges. Without memory, each interaction is independent. Memory types: buffer (store all), window (recent N), summary (compressed). Enables contextual conversations. Essential for chatbots that need to reference earlier messages.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Conversation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "498",
+          "question": "Why do you need memory for chatbots?",
+          "answer": "Without memory, chatbot can't reference previous messages. User says 'My name is John' then 'What's my name?' - without memory, chatbot doesn't know. Memory maintains conversation context, enables follow-up questions, personalization, and natural dialogue. Fundamental for any multi-turn conversation application.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Chatbots"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "499",
+          "question": "What is ConversationBufferMemory?",
+          "answer": "ConversationBufferMemory stores entire conversation history as-is. Simple, preserves all context. Example: stores all user/AI messages in list. Downside: grows unbounded, can exceed context window. Good for short conversations. For long chats, use window or summary memory to avoid context limits.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Buffer"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "500",
+          "question": "Explain LangChain's ConversationBufferMemory and its benefits",
+          "answer": "ConversationBufferMemory keeps complete conversation history verbatim. Benefits: no information loss, simple implementation, perfect recall of entire conversation. Drawbacks: memory grows linearly, eventually exceeds LLM context window, higher token costs. Best for short conversations where complete history is needed. Use with caution for long conversations.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Trade-offs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

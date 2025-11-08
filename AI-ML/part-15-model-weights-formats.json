@@ -1,0 +1,335 @@
+{
+  "decks": [
+    {
+      "name": "Part 15: Model Weights & Formats",
+      "description": "Understanding model weight files, formats, and quantization techniques",
+      "cards": [
+        {
+          "id": "306",
+          "question": "What are model weights in neural networks?",
+          "answer": "Model weights are the learned parameters that define the model's behavior. Each weight is a number learned during training that determines how input signals are processed. A model's 'knowledge' is encoded in these weights. For LLMs, weights can be billions of numbers (e.g., 7B parameters = 7 billion weights).",
+          "tags": [
+            "Models",
+            "Weights"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "307",
+          "question": "What file formats store model weights?",
+          "answer": "PyTorch: .bin (pickle), .pt, .pth, .safetensors. TensorFlow: .h5, .pb, SavedModel. ONNX: .onnx. Specialized: .gguf/.ggml (llama.cpp/Ollama). Safetensors is becoming the standard due to security and performance benefits over pickle-based formats.",
+          "tags": [
+            "Models",
+            "Formats"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "308",
+          "question": "What is a PyTorch `.bin` file?",
+          "answer": "A .bin file stores PyTorch model weights using Python's pickle serialization. It contains tensors (multidimensional arrays of numbers) representing learned parameters. While widely used, pickle files have security risks (can execute arbitrary code) and are being replaced by safetensors.",
+          "tags": [
+            "PyTorch",
+            "Formats"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "309",
+          "question": "What is a `.safetensors` file?",
+          "answer": "Safetensors is a secure, efficient format for storing model weights. Unlike pickle, it can't execute code (security), loads faster (optimized deserialization), supports lazy loading (memory-efficient), and includes metadata validation. Hugging Face recommends safetensors for all new models.",
+          "tags": [
+            "Formats",
+            "Security"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "310",
+          "question": "Why are safetensors preferred over pickle files?",
+          "answer": "Security: pickle can execute malicious code, safetensors cannot. Speed: safetensors loads faster. Memory: supports lazy loading for huge models. Reliability: includes validation and corruption detection. Interoperability: works across frameworks. These benefits make safetensors the safer, more efficient choice.",
+          "tags": [
+            "Formats",
+            "Security"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "311",
+          "question": "What security risks exist with pickle files?",
+          "answer": "Pickle can execute arbitrary Python code during deserialization. Malicious actors can embed code in .bin files that runs when loaded, potentially stealing data, installing malware, or compromising systems. Always load pickle files only from trusted sources. Safetensors eliminates this risk entirely.",
+          "tags": [
+            "Security",
+            "Pickle"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "312",
+          "question": "What is the structure of a weights file?",
+          "answer": "Weight files contain named tensors mapped to their values. Each tensor corresponds to a model component (layer weights, biases, embeddings). Structure includes metadata (tensor shapes, data types) and the actual numerical values. Large models split weights across multiple files (sharding) for manageability.",
+          "tags": [
+            "Models",
+            "Structure"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "313",
+          "question": "What does each weight tensor represent?",
+          "answer": "Tensors represent different model components: embedding weights (token to vector mappings), attention weights (query, key, value matrices), feed-forward network weights (linear transformations), layer normalization parameters, and output projection weights. Each tensor has a specific role in the model's computation.",
+          "tags": [
+            "Models",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "314",
+          "question": "How large are typical LLM weight files?",
+          "answer": "Size depends on parameter count and precision. FP32: ~4 bytes per parameter (7B model = 28GB). FP16: ~2 bytes (7B = 14GB). INT8: ~1 byte (7B = 7GB). INT4: ~0.5 bytes (7B = 3.5GB). Very large models like GPT-4 (rumored 1.7T params) would be multiple terabytes in FP32.",
+          "tags": [
+            "Models",
+            "Size"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "315",
+          "question": "What is model sharding?",
+          "answer": "Sharding splits large model weights across multiple files for easier handling and parallel loading. Instead of one 50GB file, you might have 10 files of 5GB each. This enables loading parts of the model on different devices, faster downloads (parallel), and works around filesystem size limits.",
+          "tags": [
+            "Models",
+            "Storage"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "316",
+          "question": "Why do large models need to be sharded?",
+          "answer": "Practical reasons: easier to download/upload (resume on failure), parallel processing, filesystem limits, distributed loading across GPUs. A 100GB file is unwieldy; ten 10GB files are more manageable. Sharding also enables loading specific parts of the model on different devices for model parallelism.",
+          "tags": [
+            "Models",
+            "Distribution"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "317",
+          "question": "What are `pytorch_model.bin.index.json` files?",
+          "answer": "Index files map tensor names to shard files for multi-file models. They specify which parameters are in which weight file, allowing libraries to load the complete model from multiple shards. This metadata is essential for reconstructing the full model from distributed weight files.",
+          "tags": [
+            "PyTorch",
+            "Sharding"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "318",
+          "question": "How do you load sharded models?",
+          "answer": "Use from_pretrained() as normal - the library automatically reads the index file and loads all shards transparently. You don't need special code for sharded models. The library handles assembling weights from multiple files based on the index metadata.",
+          "tags": [
+            "Models",
+            "Loading"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "319",
+          "question": "What is the difference between full precision and quantized weights?",
+          "answer": "Full precision (FP32/FP16) stores exact weight values with high numerical accuracy. Quantized weights (INT8/INT4) use fewer bits, approximating values with reduced precision. Quantization reduces model size and memory but introduces small quality degradation. The trade-off is often worthwhile for deployment.",
+          "tags": [
+            "Quantization",
+            "Precision"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "320",
+          "question": "What is GPTQ quantization?",
+          "answer": "GPTQ is a post-training quantization method that compresses models to 4-bit or 3-bit with minimal quality loss. It carefully analyzes weight importance and quantizes them optimally. GPTQ models are 4x smaller than FP16, enabling large models on consumer GPUs. Requires compatible kernels for fast inference.",
+          "tags": [
+            "Quantization",
+            "GPTQ"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "321",
+          "question": "What is AWQ quantization?",
+          "answer": "AWQ (Activation-aware Weight Quantization) is a 4-bit quantization method that preserves important weights based on activation patterns. It achieves better quality than naive 4-bit quantization by protecting critical weights. AWQ offers similar compression to GPTQ with potentially better accuracy on certain tasks.",
+          "tags": [
+            "Quantization",
+            "AWQ"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "322",
+          "question": "What is GGUF format?",
+          "answer": "GGUF (GPT-Generated Unified Format) is a binary format for storing quantized models, used by llama.cpp and Ollama. It supports various quantization levels (Q4, Q5, Q8) and includes metadata, tokenizer config, and weights in one file. GGUF is optimized for CPU inference and edge deployment.",
+          "tags": [
+            "Formats",
+            "GGUF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "323",
+          "question": "What is GGML format (predecessor to GGUF)?",
+          "answer": "GGML (GPT-Generated Model Language) was the original format for llama.cpp before GGUF. It served the same purpose but had limitations in metadata and extensibility. GGUF replaced GGML with better organization and features. Old GGML files can be converted to GGUF.",
+          "tags": [
+            "Formats",
+            "Legacy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "324",
+          "question": "What tools use GGUF/GGML formats? (llama.cpp, Ollama)",
+          "answer": "llama.cpp: C++ inference engine for LLMs on CPUs. Ollama: User-friendly wrapper around llama.cpp. LM Studio: Desktop app for running models. Text generation web UI: Popular interface for local models. These tools prioritize CPU-friendly inference and quantization, making GGUF their preferred format.",
+          "tags": [
+            "Tools",
+            "GGUF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "325",
+          "question": "How do you convert between different weight formats?",
+          "answer": "Use conversion scripts: Hugging Face to GGUF (llama.cpp convert.py), PyTorch to safetensors (safetensors library), ONNX (Optimum library). Each tool provides conversion utilities. Example: 'python convert-hf-to-gguf.py model_dir'. Always verify converted models work correctly before deployment.",
+          "tags": [
+            "Conversion",
+            "Tools"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "326",
+          "question": "What is the purpose of weight tying?",
+          "answer": "Weight tying shares parameters between different parts of the model, typically between input embeddings and output projection layers. This reduces total parameters and can improve training. For example, tying input and output embeddings means the same vectors represent tokens in both contexts, halving embedding parameters.",
+          "tags": [
+            "Models",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "327",
+          "question": "What are embedding weights vs transformer weights?",
+          "answer": "Embedding weights convert tokens to vectors (vocabulary_size x embedding_dim). Transformer weights include attention matrices (Q, K, V projections), feed-forward networks, and layer norms across all layers. Embeddings are typically a small fraction of total parameters; most weights are in transformer layers.",
+          "tags": [
+            "Models",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "328",
+          "question": "What is weight pruning?",
+          "answer": "Weight pruning removes less important parameters by setting them to zero, creating sparse models. This reduces model size and can improve inference speed with specialized kernels. Structured pruning removes entire neurons/channels; unstructured pruning removes individual weights. Trade-off is between compression and accuracy.",
+          "tags": [
+            "Optimization",
+            "Pruning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "329",
+          "question": "What is knowledge distillation and how does it affect weights?",
+          "answer": "Knowledge distillation trains a smaller 'student' model to mimic a larger 'teacher' model. The student learns to match the teacher's outputs and internal representations. This creates a compact model with different weights but similar capabilities. DistilBERT is a famous example - 40% smaller than BERT with 97% of performance.",
+          "tags": [
+            "Distillation",
+            "Compression"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "330",
+          "question": "How do you verify model weights integrity? (checksums, hashes)",
+          "answer": "Weight files include SHA256 hashes to verify downloads weren't corrupted. Hugging Face Hub stores checksums; the library automatically validates after download. You can manually verify with 'sha256sum file.bin' and compare to published hash. This ensures weights are exact and unmodified.",
+          "tags": [
+            "Security",
+            "Verification"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

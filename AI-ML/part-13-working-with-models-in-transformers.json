@@ -1,0 +1,335 @@
+{
+  "decks": [
+    {
+      "name": "Part 13: Working with Models in Transformers",
+      "description": "Practical usage of Transformers models for inference and text generation",
+      "cards": [
+        {
+          "id": "261",
+          "question": "What is the `model.generate()` method?",
+          "answer": "generate() is the primary method for text generation with autoregressive models. It takes token IDs as input and produces generated text by iteratively predicting next tokens. It supports various generation strategies (greedy, sampling, beam search) and parameters to control output quality and diversity.",
+          "tags": [
+            "Transformers",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "262",
+          "question": "What parameters does `generate()` accept?",
+          "answer": "Key parameters: max_new_tokens/max_length (output length), do_sample (enable sampling), temperature (randomness), top_k/top_p (sampling strategies), num_beams (beam search), repetition_penalty (reduce repetition), early_stopping (beam search termination). These control generation quality, diversity, and computational cost.",
+          "tags": [
+            "Transformers",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "263",
+          "question": "What is `max_new_tokens` vs `max_length`?",
+          "answer": "max_new_tokens specifies how many NEW tokens to generate beyond the input (e.g., 50 new tokens). max_length specifies the TOTAL length including input (e.g., 100 tokens total including prompt). max_new_tokens is generally preferred as it's more intuitive and prevents issues with varying input lengths.",
+          "tags": [
+            "Transformers",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "264",
+          "question": "What is `do_sample` in text generation?",
+          "answer": "do_sample=True enables sampling-based generation where next tokens are randomly selected according to probability distribution. do_sample=False uses greedy decoding (always picks highest probability token). Sampling produces more diverse and creative outputs; greedy produces deterministic, focused outputs.",
+          "tags": [
+            "Transformers",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "265",
+          "question": "How do you implement greedy decoding vs sampling in Transformers?",
+          "answer": "Greedy decoding: 'model.generate(inputs, do_sample=False)' - always picks most likely token. Sampling: 'model.generate(inputs, do_sample=True, temperature=0.7, top_p=0.9)' - randomly samples tokens. Sampling requires temperature and/or top_k/top_p parameters to control randomness.",
+          "tags": [
+            "Transformers",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "266",
+          "question": "What is `num_beams` for beam search?",
+          "answer": "num_beams specifies the number of hypotheses to track during beam search. num_beams=1 is greedy search. num_beams=5 tracks 5 alternative sequences, choosing the one with highest overall probability. Higher beams improve quality but increase computation. Common values are 3-5.",
+          "tags": [
+            "Transformers",
+            "Beam Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "267",
+          "question": "What is beam search and when would you use it?",
+          "answer": "Beam search explores multiple generation paths simultaneously, keeping the most promising ones. Instead of greedily picking the best next token, it maintains several hypotheses (beams) and selects the best complete sequence. Use for tasks requiring high quality and coherence (translation, summarization) rather than creativity.",
+          "tags": [
+            "Transformers",
+            "Beam Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "268",
+          "question": "What is `repetition_penalty`?",
+          "answer": "repetition_penalty penalizes tokens that have already appeared, reducing repetitive outputs. Values > 1.0 discourage repetition (1.2 is common). Too high values can make text incoherent. This is especially useful for dialogue and creative generation where repetition is undesirable.",
+          "tags": [
+            "Transformers",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "269",
+          "question": "What is `length_penalty`?",
+          "answer": "length_penalty adjusts beam search scores based on sequence length. Values > 1.0 encourage longer outputs, < 1.0 prefer shorter outputs. This prevents beam search from favoring very short sequences (which often have higher probabilities). Default is usually 1.0 (no penalty).",
+          "tags": [
+            "Transformers",
+            "Beam Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "270",
+          "question": "What is `early_stopping` in generation?",
+          "answer": "early_stopping controls when beam search terminates. True: stop when num_beams complete sequences are found. False: continue until max_length. 'never': consider all beams equally. This affects generation quality and speed. True is common for tasks with natural endpoints.",
+          "tags": [
+            "Transformers",
+            "Beam Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "271",
+          "question": "How do you control randomness in generation? (temperature, top_k, top_p)",
+          "answer": "Temperature: scales probabilities (lower = more focused, higher = more random). Top_k: only sample from top k most likely tokens. Top_p (nucleus sampling): sample from smallest set of tokens whose cumulative probability exceeds p. Combine these for fine-grained control: temperature=0.7, top_p=0.9 is a common starting point.",
+          "tags": [
+            "Transformers",
+            "Sampling"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "272",
+          "question": "What is the `streamer` parameter for streaming outputs?",
+          "answer": "Streamer enables token-by-token output as the model generates, rather than waiting for complete generation. Useful for user-facing applications where you want to show progress (like ChatGPT). Use TextStreamer for simple printing or create custom streamers for specific behaviors like websocket streaming.",
+          "tags": [
+            "Transformers",
+            "Streaming"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "273",
+          "question": "How do you run inference on CPU vs GPU?",
+          "answer": "CPU: Models run on CPU by default. GPU: Call model.to('cuda') after loading or use device_map='auto' in from_pretrained(). Check GPU availability with torch.cuda.is_available(). GPU inference is dramatically faster (10-100x) for large models but requires GPU memory management.",
+          "tags": [
+            "Transformers",
+            "Hardware"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "274",
+          "question": "What is `device_map` for model parallelism?",
+          "answer": "device_map automatically distributes model layers across available devices (GPUs, CPU). 'auto' intelligently splits large models that don't fit in single GPU memory. 'balanced' distributes evenly across GPUs. This enables running models larger than single GPU memory by spreading them across multiple devices.",
+          "tags": [
+            "Transformers",
+            "Model Parallelism"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "275",
+          "question": "What is `torch.cuda.is_available()` used for?",
+          "answer": "torch.cuda.is_available() returns True if CUDA-capable GPU is available, False otherwise. Use this to write code that adapts to available hardware: 'device = 'cuda' if torch.cuda.is_available() else 'cpu''. This makes code portable between GPU and CPU-only systems.",
+          "tags": [
+            "Transformers",
+            "Hardware"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "276",
+          "question": "How do you move a model to GPU in Transformers?",
+          "answer": "Call model.to('cuda') after loading or use device='cuda' in from_pretrained(). For multi-GPU: model.to('cuda:0') for specific GPU. For automatic placement: device_map='auto'. Remember to also move inputs to the same device: inputs.to('cuda').",
+          "tags": [
+            "Transformers",
+            "GPU"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "277",
+          "question": "What is half-precision (FP16) inference?",
+          "answer": "FP16 uses 16-bit floating point instead of 32-bit (FP32), halving memory usage and often doubling speed on modern GPUs. Load with torch_dtype=torch.float16. Trade-off: slightly lower numerical precision, but usually negligible impact on output quality. Essential for running large models on consumer GPUs.",
+          "tags": [
+            "Transformers",
+            "Precision"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "278",
+          "question": "What is `torch_dtype` parameter in model loading?",
+          "answer": "torch_dtype specifies the data type for model weights: torch.float32 (default, highest precision), torch.float16 (half precision, less memory), torch.bfloat16 (better range than float16). Use in from_pretrained(): 'torch_dtype=torch.float16'. Affects memory usage, speed, and numerical stability.",
+          "tags": [
+            "Transformers",
+            "Precision"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "279",
+          "question": "What is bfloat16 and how does it differ from float16?",
+          "answer": "bfloat16 (brain float16) has the same range as float32 but less precision. float16 has more precision but smaller range and can underflow/overflow. bfloat16 is more stable for training and works well on newer hardware (A100, H100). float16 is better for older GPUs. Both save memory versus float32.",
+          "tags": [
+            "Transformers",
+            "Precision"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "280",
+          "question": "What are the benefits of using lower precision?",
+          "answer": "Lower precision (FP16/BF16 vs FP32) reduces memory usage by 50%, allowing larger models or batch sizes. It often increases inference speed (especially on Tensor Cores). The trade-off is minimal for inference - quality difference is usually imperceptible. Essential for deploying large models on limited hardware.",
+          "tags": [
+            "Transformers",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "281",
+          "question": "What is the trade-off between speed and quality in precision?",
+          "answer": "FP32: highest quality, slowest, most memory. FP16: slight quality loss, 2x faster, 50% memory. FP8/INT8: noticeable quality impact, 4x faster, 75% memory reduction. For most applications, FP16 is the sweet spot - imperceptible quality loss with significant speed/memory gains. INT8 requires careful tuning.",
+          "tags": [
+            "Transformers",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "282",
+          "question": "What is model quantization in Transformers?",
+          "answer": "Quantization reduces model size by converting high-precision weights (FP32/FP16) to lower precision (INT8/INT4). This dramatically reduces memory (4-8x smaller) and can improve speed. Quality degrades somewhat, but techniques like GPTQ and AWQ minimize this. Essential for deploying large models on consumer hardware.",
+          "tags": [
+            "Transformers",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "283",
+          "question": "What is the BitsAndBytes library?",
+          "answer": "BitsAndBytes is a library for efficient quantization integrated with Transformers. It enables loading models in 8-bit or 4-bit precision with minimal quality loss. Use load_in_8bit=True or load_in_4bit=True in from_pretrained(). This makes large models like Llama-70B runnable on consumer GPUs.",
+          "tags": [
+            "Transformers",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "284",
+          "question": "How do you load a model in 8-bit?",
+          "answer": "Use from_pretrained() with load_in_8bit=True: 'model = AutoModelForCausalLM.from_pretrained(model_name, load_in_8bit=True, device_map='auto')'. Requires bitsandbytes library installed. This reduces memory by ~75% with minor quality impact. Useful for running 13B+ models on consumer GPUs.",
+          "tags": [
+            "Transformers",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "285",
+          "question": "How do you load a model in 4-bit?",
+          "answer": "Use load_in_4bit=True: 'model = AutoModelForCausalLM.from_pretrained(model_name, load_in_4bit=True, device_map='auto')'. Even more aggressive compression (~87% memory reduction). Quality loss is more noticeable than 8-bit but still acceptable for many tasks. Enables running very large models (70B+) on single consumer GPU.",
+          "tags": [
+            "Transformers",
+            "Quantization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

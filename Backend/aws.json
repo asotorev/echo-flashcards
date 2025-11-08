@@ -1,0 +1,1210 @@
+{
+  "decks": [
+    {
+      "name": "AWS",
+      "description": "Interview questions about AWS",
+      "cards": [
+        {
+          "id": "146",
+          "question": "What is AWS?",
+          "answer": "Amazon Web Services - cloud computing platform providing on-demand computing resources and services.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "147",
+          "question": "What is EC2?",
+          "answer": "Elastic Compute Cloud - virtual servers in the cloud.\n\n```javascript\n// AWS SDK for Node.js\nconst AWS = require('aws-sdk');\nconst ec2 = new AWS.EC2();\n\nconst params = {\n  ImageId: 'ami-0c55b159cbfafe1f0',\n  InstanceType: 't2.micro',\n  MinCount: 1,\n  MaxCount: 1\n};\n\nec2.runInstances(params, (err, data) => {\n  if (err) console.log(err);\n  else console.log(data);\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "148",
+          "question": "What are EC2 instance types?",
+          "answer": "- **General Purpose**: t2, t3, m5 (balanced compute, memory, networking)\n- **Compute Optimized**: c5, c6 (high-performance processors)\n- **Memory Optimized**: r5, x1 (large datasets in memory)\n- **Storage Optimized**: i3, d2 (high disk throughput)\n- **GPU**: p3, g4 (machine learning, graphics)",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "149",
+          "question": "What is an AMI?",
+          "answer": "Amazon Machine Image - template containing OS, application server, and applications for launching EC2 instances.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "150",
+          "question": "What is the difference between EBS and Instance Store?",
+          "answer": "- **EBS** (Elastic Block Store): persistent, network-attached, survives instance termination\n- **Instance Store**: temporary, physically attached, lost on instance stop/termination",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "151",
+          "question": "What is S3?",
+          "answer": "Simple Storage Service - object storage for storing and retrieving any amount of data.\n\n```javascript\nconst s3 = new AWS.S3();\n\n// Upload file\nconst uploadParams = {\n  Bucket: 'my-bucket',\n  Key: 'file.txt',\n  Body: fileContent\n};\ns3.upload(uploadParams, (err, data) => {\n  console.log(data.Location);\n});\n\n// Download file\ns3.getObject({ Bucket: 'my-bucket', Key: 'file.txt' }, (err, data) => {\n  console.log(data.Body);\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "152",
+          "question": "What are S3 storage classes?",
+          "answer": "- **Standard**: frequent access, high durability\n- **Intelligent-Tiering**: automatic cost optimization\n- **Standard-IA**: infrequent access, lower cost\n- **One Zone-IA**: single AZ, lower cost\n- **Glacier**: archival, minutes to hours retrieval\n- **Glacier Deep Archive**: lowest cost, 12+ hours retrieval",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "153",
+          "question": "What is S3 versioning?",
+          "answer": "Keep multiple versions of an object in same bucket.\n\n```javascript\ns3.putBucketVersioning({\n  Bucket: 'my-bucket',\n  VersioningConfiguration: { Status: 'Enabled' }\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "154",
+          "question": "What is S3 lifecycle policy?",
+          "answer": "Automatically transition objects between storage classes or delete them.\n\n```javascript\n{\n  Rules: [{\n    Id: 'archive-old-files',\n    Status: 'Enabled',\n    Transitions: [{\n      Days: 30,\n      StorageClass: 'GLACIER'\n    }],\n    Expiration: { Days: 365 }\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "155",
+          "question": "What is Lambda?",
+          "answer": "Serverless compute service running code without managing servers.\n\n```javascript\nexports.handler = async (event) => {\n  console.log('Event:', JSON.stringify(event));\n\n  // Your code here\n  const response = {\n    statusCode: 200,\n    body: JSON.stringify({ message: 'Success' })\n  };\n\n  return response;\n};\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "156",
+          "question": "What are Lambda triggers?",
+          "answer": "Events that invoke Lambda functions:\n- API Gateway HTTP requests\n- S3 object uploads\n- DynamoDB stream updates\n- CloudWatch scheduled events\n- SNS/SQS messages",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "157",
+          "question": "What is Lambda cold start?",
+          "answer": "Initial delay when Lambda function is invoked after being idle, due to container initialization.\n\n**Mitigation:**\n- Keep functions warm with scheduled invocations\n- Reduce package size\n- Use provisioned concurrency",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "158",
+          "question": "What are Lambda layers?",
+          "answer": "Shared code and dependencies used across multiple Lambda functions.\n\n```bash\n# Create layer\nzip -r layer.zip nodejs/node_modules\n\naws lambda publish-layer-version \\\n  --layer-name my-dependencies \\\n  --zip-file fileb://layer.zip\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "159",
+          "question": "What is Lambda timeout and memory?",
+          "answer": "- **Timeout**: max 15 minutes (900 seconds)\n- **Memory**: 128 MB to 10 GB\n- **CPU**: scales with memory allocation",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "160",
+          "question": "What is API Gateway?",
+          "answer": "Fully managed service for creating, publishing, and managing REST and WebSocket APIs.\n\n```javascript\n// Integration with Lambda\n{\n  \"Type\": \"AWS_PROXY\",\n  \"IntegrationUri\": \"arn:aws:lambda:region:account:function:myFunction\",\n  \"IntegrationHttpMethod\": \"POST\"\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "161",
+          "question": "What are API Gateway stages?",
+          "answer": "Different environments for API (dev, staging, prod).\n\n```bash\n# Deploy to stage\naws apigateway create-deployment \\\n  --rest-api-id abc123 \\\n  --stage-name prod\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "162",
+          "question": "What is API Gateway throttling?",
+          "answer": "Limiting number of requests per second to prevent overload.\n\n```javascript\n{\n  \"throttle\": {\n    \"rateLimit\": 1000,  // requests per second\n    \"burstLimit\": 2000  // concurrent requests\n  }\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "163",
+          "question": "What is DynamoDB?",
+          "answer": "NoSQL database service providing fast and predictable performance with seamless scalability.\n\n```javascript\nconst dynamodb = new AWS.DynamoDB.DocumentClient();\n\n// Put item\nawait dynamodb.put({\n  TableName: 'Users',\n  Item: {\n    userId: '123',\n    name: 'John',\n    email: 'john@example.com'\n  }\n}).promise();\n\n// Get item\nconst result = await dynamodb.get({\n  TableName: 'Users',\n  Key: { userId: '123' }\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "164",
+          "question": "What is DynamoDB partition key?",
+          "answer": "Primary key uniquely identifying each item (also called hash key).\n\n```javascript\n{\n  AttributeName: 'userId',\n  KeyType: 'HASH'  // Partition key\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "165",
+          "question": "What is DynamoDB sort key?",
+          "answer": "Secondary key used with partition key for composite primary key (also called range key).\n\n```javascript\n{\n  PartitionKey: 'userId',\n  SortKey: 'timestamp'\n}\n// Allows queries like: all items for userId sorted by timestamp\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "166",
+          "question": "What is DynamoDB GSI?",
+          "answer": "Global Secondary Index - alternative partition and sort keys for queries.\n\n```javascript\n{\n  IndexName: 'EmailIndex',\n  KeySchema: [\n    { AttributeName: 'email', KeyType: 'HASH' }\n  ],\n  Projection: { ProjectionType: 'ALL' }\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "167",
+          "question": "What is DynamoDB LSI?",
+          "answer": "Local Secondary Index - same partition key, different sort key.\n\n```javascript\n{\n  IndexName: 'UserTimestampIndex',\n  KeySchema: [\n    { AttributeName: 'userId', KeyType: 'HASH' },\n    { AttributeName: 'createdAt', KeyType: 'RANGE' }\n  ]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "168",
+          "question": "What is DynamoDB Streams?",
+          "answer": "Ordered stream of item-level modifications (create, update, delete).\n\n```javascript\n// Enable streams\n{\n  StreamSpecification: {\n    StreamEnabled: true,\n    StreamViewType: 'NEW_AND_OLD_IMAGES'\n  }\n}\n\n// Process with Lambda\nexports.handler = async (event) => {\n  for (const record of event.Records) {\n    console.log(record.dynamodb.NewImage);\n  }\n};\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "169",
+          "question": "What is DynamoDB capacity modes?",
+          "answer": "- **On-Demand**: pay per request, auto-scaling\n- **Provisioned**: specify read/write capacity units (RCU/WCU)",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "170",
+          "question": "What is RDS?",
+          "answer": "Relational Database Service - managed SQL databases (MySQL, PostgreSQL, Oracle, SQL Server, MariaDB).\n\n```javascript\nconst mysql = require('mysql');\n\nconst connection = mysql.createConnection({\n  host: 'mydb.abc123.us-east-1.rds.amazonaws.com',\n  user: 'admin',\n  password: 'password',\n  database: 'mydb'\n});\n\nconnection.query('SELECT * FROM users', (error, results) => {\n  console.log(results);\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "171",
+          "question": "What is RDS Multi-AZ?",
+          "answer": "Automatic failover to standby instance in different Availability Zone for high availability.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "172",
+          "question": "What is RDS Read Replica?",
+          "answer": "Read-only copy of database for scaling read operations.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "173",
+          "question": "What is Aurora?",
+          "answer": "AWS-built MySQL/PostgreSQL-compatible database with better performance and availability.\n\n**Benefits:**\n- 5x faster than MySQL, 3x faster than PostgreSQL\n- Auto-scaling storage (10GB to 128TB)\n- Up to 15 read replicas\n- Continuous backup to S3",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "174",
+          "question": "What is VPC?",
+          "answer": "Virtual Private Cloud - isolated network within AWS cloud.\n\n```javascript\n// VPC components\n- Subnets (public/private)\n- Route tables\n- Internet Gateway\n- NAT Gateway\n- Security Groups\n- Network ACLs\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "175",
+          "question": "What is a Security Group?",
+          "answer": "Virtual firewall controlling inbound and outbound traffic for EC2 instances.\n\n```javascript\n{\n  IpPermissions: [{\n    IpProtocol: 'tcp',\n    FromPort: 80,\n    ToPort: 80,\n    IpRanges: [{ CidrIp: '0.0.0.0/0' }]\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "176",
+          "question": "What is the difference between Security Group and NACL?",
+          "answer": "- **Security Group**: instance-level, stateful, allow rules only\n- **NACL** (Network ACL): subnet-level, stateless, allow and deny rules",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "177",
+          "question": "What is IAM?",
+          "answer": "Identity and Access Management - control access to AWS resources.\n\n```javascript\n// IAM User\n// IAM Group\n// IAM Role\n// IAM Policy\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "178",
+          "question": "What is an IAM Role?",
+          "answer": "Set of permissions that can be assumed by AWS services or users.\n\n```javascript\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [{\n    \"Effect\": \"Allow\",\n    \"Action\": \"s3:GetObject\",\n    \"Resource\": \"arn:aws:s3:::my-bucket/*\"\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "179",
+          "question": "What is an IAM Policy?",
+          "answer": "JSON document defining permissions.\n\n```javascript\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [{\n    \"Effect\": \"Allow\",\n    \"Action\": [\n      \"dynamodb:GetItem\",\n      \"dynamodb:PutItem\"\n    ],\n    \"Resource\": \"arn:aws:dynamodb:region:account:table/Users\"\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "180",
+          "question": "What is the principle of least privilege?",
+          "answer": "Grant only minimum permissions needed to perform a task.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "181",
+          "question": "What is CloudWatch?",
+          "answer": "Monitoring and observability service for AWS resources and applications.\n\n```javascript\nconst cloudwatch = new AWS.CloudWatch();\n\n// Put metric\ncloudwatch.putMetricData({\n  Namespace: 'MyApp',\n  MetricData: [{\n    MetricName: 'RequestCount',\n    Value: 1,\n    Unit: 'Count'\n  }]\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "182",
+          "question": "What are CloudWatch Logs?",
+          "answer": "Centralized log management for applications and AWS services.\n\n```javascript\nconst winston = require('winston');\nconst CloudWatchTransport = require('winston-cloudwatch');\n\nwinston.add(new CloudWatchTransport({\n  logGroupName: '/aws/lambda/my-function',\n  logStreamName: 'stream'\n}));\n\nwinston.info('Log message');\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "183",
+          "question": "What are CloudWatch Alarms?",
+          "answer": "Notifications when metrics cross thresholds.\n\n```javascript\n{\n  AlarmName: 'HighCPU',\n  MetricName: 'CPUUtilization',\n  Threshold: 80,\n  ComparisonOperator: 'GreaterThanThreshold',\n  EvaluationPeriods: 2,\n  AlarmActions: ['arn:aws:sns:region:account:topic']\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "184",
+          "question": "What is CloudFront?",
+          "answer": "Content Delivery Network (CDN) distributing content globally with low latency.\n\n```javascript\n// Benefits\n- Cache static assets closer to users\n- HTTPS support\n- DDoS protection\n- Integrate with S3, EC2, Load Balancers\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "185",
+          "question": "What is CloudFront origin?",
+          "answer": "Source of content that CloudFront distributes (S3, EC2, custom HTTP server).",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "186",
+          "question": "What is CloudFront invalidation?",
+          "answer": "Remove cached content before expiration.\n\n```bash\naws cloudfront create-invalidation \\\n  --distribution-id ABCDEFG \\\n  --paths \"/*\"\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "187",
+          "question": "What is ELB?",
+          "answer": "Elastic Load Balancing - distributes traffic across multiple targets.\n\n**Types:**\n- **Application Load Balancer** (ALB): HTTP/HTTPS, Layer 7\n- **Network Load Balancer** (NLB): TCP/UDP, Layer 4, high performance\n- **Gateway Load Balancer**: Layer 3, for virtual appliances",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "188",
+          "question": "What is Target Group?",
+          "answer": "Logical grouping of targets (EC2, Lambda, IP addresses) for load balancer.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "189",
+          "question": "What is Auto Scaling?",
+          "answer": "Automatically adjust number of EC2 instances based on demand.\n\n```javascript\n{\n  MinSize: 2,\n  MaxSize: 10,\n  DesiredCapacity: 4,\n  TargetTrackingScaling: {\n    TargetValue: 70,  // CPU utilization %\n  }\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "190",
+          "question": "What is ECS?",
+          "answer": "Elastic Container Service - run Docker containers on AWS.\n\n```javascript\n// Task Definition\n{\n  \"family\": \"my-app\",\n  \"containerDefinitions\": [{\n    \"name\": \"web\",\n    \"image\": \"nginx:latest\",\n    \"memory\": 512,\n    \"cpu\": 256,\n    \"portMappings\": [{\n      \"containerPort\": 80,\n      \"protocol\": \"tcp\"\n    }]\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "191",
+          "question": "What is Fargate?",
+          "answer": "Serverless compute for containers (no EC2 management).\n\n```javascript\n// Launch type: FARGATE\n{\n  \"launchType\": \"FARGATE\",\n  \"networkConfiguration\": {\n    \"awsvpcConfiguration\": {\n      \"subnets\": [\"subnet-12345\"],\n      \"securityGroups\": [\"sg-12345\"],\n      \"assignPublicIp\": \"ENABLED\"\n    }\n  }\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "192",
+          "question": "What is the difference between ECS and EKS?",
+          "answer": "- **ECS**: AWS-native, simpler, tightly integrated with AWS\n- **EKS**: Kubernetes-based, portable, more complex, broader ecosystem",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "193",
+          "question": "What is SNS?",
+          "answer": "Simple Notification Service - pub/sub messaging service.\n\n```javascript\nconst sns = new AWS.SNS();\n\n// Publish message\nawait sns.publish({\n  TopicArn: 'arn:aws:sns:region:account:my-topic',\n  Message: 'Hello from SNS',\n  Subject: 'Notification'\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "194",
+          "question": "What is SQS?",
+          "answer": "Simple Queue Service - fully managed message queuing service.\n\n```javascript\nconst sqs = new AWS.SQS();\n\n// Send message\nawait sqs.sendMessage({\n  QueueUrl: 'https://sqs.region.amazonaws.com/account/my-queue',\n  MessageBody: JSON.stringify({ data: 'value' })\n}).promise();\n\n// Receive message\nconst messages = await sqs.receiveMessage({\n  QueueUrl: queueUrl,\n  MaxNumberOfMessages: 10,\n  WaitTimeSeconds: 20  // long polling\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "195",
+          "question": "What is the difference between SNS and SQS?",
+          "answer": "- **SNS**: push-based, pub/sub, one-to-many, real-time\n- **SQS**: pull-based, queue, one-to-one, asynchronous decoupling",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "196",
+          "question": "What is SQS visibility timeout?",
+          "answer": "Period during which message is invisible to other consumers after being received.\n\n```javascript\n{\n  VisibilityTimeout: 30  // seconds\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "197",
+          "question": "What is SQS Dead Letter Queue?",
+          "answer": "Queue for messages that failed processing after max retries.\n\n```javascript\n{\n  RedrivePolicy: {\n    deadLetterTargetArn: 'arn:aws:sqs:region:account:dlq',\n    maxReceiveCount: 3\n  }\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "198",
+          "question": "What is ElastiCache?",
+          "answer": "Managed in-memory caching service (Redis or Memcached).\n\n```javascript\nconst redis = require('redis');\nconst client = redis.createClient({\n  host: 'my-cluster.abc123.cache.amazonaws.com',\n  port: 6379\n});\n\n// Cache data\nclient.setex('user:123', 3600, JSON.stringify(userData));\n\n// Retrieve cached data\nclient.get('user:123', (err, data) => {\n  console.log(JSON.parse(data));\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "199",
+          "question": "What is the difference between Redis and Memcached?",
+          "answer": "- **Redis**: data persistence, complex data types, pub/sub, replication\n- **Memcached**: simple key-value, multi-threaded, no persistence",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "200",
+          "question": "What is Route 53?",
+          "answer": "Scalable DNS and domain name registration service.\n\n```javascript\n// Record types\n- A: IPv4 address\n- AAAA: IPv6 address\n- CNAME: alias to another domain\n- MX: mail server\n- TXT: text information\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "201",
+          "question": "What are Route 53 routing policies?",
+          "answer": "- **Simple**: single resource\n- **Weighted**: distribute traffic by percentage\n- **Latency**: route to lowest latency region\n- **Failover**: active-passive failover\n- **Geolocation**: route based on user location\n- **Multivalue**: return multiple IP addresses",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "202",
+          "question": "What is AWS Secrets Manager?",
+          "answer": "Store and rotate database credentials, API keys, and secrets.\n\n```javascript\nconst secretsManager = new AWS.SecretsManager();\n\nconst secret = await secretsManager.getSecretValue({\n  SecretId: 'prod/database/credentials'\n}).promise();\n\nconst credentials = JSON.parse(secret.SecretString);\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "203",
+          "question": "What is Systems Manager Parameter Store?",
+          "answer": "Secure, hierarchical storage for configuration data and secrets.\n\n```javascript\nconst ssm = new AWS.SSM();\n\n// Store parameter\nawait ssm.putParameter({\n  Name: '/myapp/database/url',\n  Value: 'postgres://...',\n  Type: 'SecureString'\n}).promise();\n\n// Retrieve parameter\nconst param = await ssm.getParameter({\n  Name: '/myapp/database/url',\n  WithDecryption: true\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "204",
+          "question": "What is KMS?",
+          "answer": "Key Management Service - create and control encryption keys.\n\n```javascript\nconst kms = new AWS.KMS();\n\n// Encrypt data\nconst encrypted = await kms.encrypt({\n  KeyId: 'arn:aws:kms:region:account:key/12345',\n  Plaintext: 'sensitive data'\n}).promise();\n\n// Decrypt data\nconst decrypted = await kms.decrypt({\n  CiphertextBlob: encrypted.CiphertextBlob\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "205",
+          "question": "What is S3 bucket policy?",
+          "answer": "Resource-based policy defining who can access bucket and objects.\n\n```javascript\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [{\n    \"Effect\": \"Allow\",\n    \"Principal\": \"*\",\n    \"Action\": \"s3:GetObject\",\n    \"Resource\": \"arn:aws:s3:::my-bucket/*\",\n    \"Condition\": {\n      \"IpAddress\": {\n        \"aws:SourceIp\": \"203.0.113.0/24\"\n      }\n    }\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "206",
+          "question": "What is S3 CORS?",
+          "answer": "Cross-Origin Resource Sharing - allow web apps to access S3 from different domains.\n\n```javascript\n{\n  \"CORSRules\": [{\n    \"AllowedOrigins\": [\"https://example.com\"],\n    \"AllowedMethods\": [\"GET\", \"PUT\", \"POST\"],\n    \"AllowedHeaders\": [\"*\"],\n    \"MaxAgeSeconds\": 3000\n  }]\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "207",
+          "question": "What is S3 presigned URL?",
+          "answer": "Temporary URL granting time-limited access to private S3 objects.\n\n```javascript\nconst s3 = new AWS.S3();\n\nconst url = s3.getSignedUrl('getObject', {\n  Bucket: 'my-bucket',\n  Key: 'private-file.pdf',\n  Expires: 3600  // 1 hour\n});\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "208",
+          "question": "What is CloudFormation?",
+          "answer": "Infrastructure as Code (IaC) service for provisioning AWS resources.\n\n```yaml\nResources:\n  MyBucket:\n    Type: AWS::S3::Bucket\n    Properties:\n      BucketName: my-app-bucket\n\n  MyFunction:\n    Type: AWS::Lambda::Function\n    Properties:\n      Runtime: nodejs14.x\n      Handler: index.handler\n      Code:\n        ZipFile: |\n          exports.handler = async () => ({ statusCode: 200 });\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "209",
+          "question": "What is CloudFormation stack?",
+          "answer": "Collection of AWS resources managed as single unit.\n\n```bash\n# Create stack\naws cloudformation create-stack \\\n  --stack-name my-stack \\\n  --template-body file://template.yaml\n\n# Update stack\naws cloudformation update-stack \\\n  --stack-name my-stack \\\n  --template-body file://template.yaml\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "210",
+          "question": "What is Elastic Beanstalk?",
+          "answer": "Platform as a Service (PaaS) for deploying and managing applications.\n\n```bash\n# Deploy application\neb init\neb create my-env\neb deploy\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "211",
+          "question": "What are Elastic Beanstalk environments?",
+          "answer": "- **Web Server**: handles HTTP requests\n- **Worker**: processes background tasks from SQS",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "212",
+          "question": "What is CodeDeploy?",
+          "answer": "Automated deployment service for EC2, Lambda, and on-premises servers.\n\n```yaml\n# appspec.yml\nversion: 0.0\nos: linux\nfiles:\n  - source: /\n    destination: /var/www/html\nhooks:\n  AfterInstall:\n    - location: scripts/install_dependencies.sh\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "213",
+          "question": "What is CodePipeline?",
+          "answer": "Continuous delivery service automating build, test, and deploy.\n\n```javascript\nSource (GitHub) \u2192 Build (CodeBuild) \u2192 Deploy (CodeDeploy/ECS)\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "214",
+          "question": "What is CodeBuild?",
+          "answer": "Fully managed build service compiling code, running tests, producing artifacts.\n\n```yaml\n# buildspec.yml\nversion: 0.2\nphases:\n  install:\n    runtime-versions:\n      nodejs: 14\n  build:\n    commands:\n      - npm install\n      - npm test\n      - npm run build\nartifacts:\n  files:\n    - '**/*'\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "215",
+          "question": "What is Step Functions?",
+          "answer": "Serverless orchestration service coordinating multiple AWS services.\n\n```javascript\n{\n  \"StartAt\": \"ProcessPayment\",\n  \"States\": {\n    \"ProcessPayment\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:...:ProcessPayment\",\n      \"Next\": \"SendConfirmation\"\n    },\n    \"SendConfirmation\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:...:SendEmail\",\n      \"End\": true\n    }\n  }\n}\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "216",
+          "question": "What is EventBridge?",
+          "answer": "Serverless event bus connecting applications using events.\n\n```javascript\nconst eventbridge = new AWS.EventBridge();\n\nawait eventbridge.putEvents({\n  Entries: [{\n    Source: 'myapp.orders',\n    DetailType: 'OrderPlaced',\n    Detail: JSON.stringify({ orderId: '123', amount: 99.99 })\n  }]\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "217",
+          "question": "What is AWS SDK?",
+          "answer": "Software Development Kit for interacting with AWS services programmatically.\n\n```javascript\n// AWS SDK v2\nconst AWS = require('aws-sdk');\nAWS.config.update({ region: 'us-east-1' });\n\n// AWS SDK v3 (modular)\nconst { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');\nconst client = new S3Client({ region: 'us-east-1' });\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "218",
+          "question": "What is AWS CLI?",
+          "answer": "Command-line tool for managing AWS services.\n\n```bash\n# Configure credentials\naws configure\n\n# S3 commands\naws s3 ls\naws s3 cp file.txt s3://bucket/\naws s3 sync ./folder s3://bucket/folder\n\n# EC2 commands\naws ec2 describe-instances\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "219",
+          "question": "What is AWS region?",
+          "answer": "Physical location with multiple isolated Availability Zones.\n\n```javascript\n// Major regions\nus-east-1      // N. Virginia\nus-west-2      // Oregon\neu-west-1      // Ireland\nap-southeast-1 // Singapore\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "220",
+          "question": "What is an Availability Zone?",
+          "answer": "Isolated data center within a region for high availability and fault tolerance.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "221",
+          "question": "What is AWS Well-Architected Framework?",
+          "answer": "Best practices across 6 pillars:\n1. **Operational Excellence**\n2. **Security**\n3. **Reliability**\n4. **Performance Efficiency**\n5. **Cost Optimization**\n6. **Sustainability**",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "222",
+          "question": "What is AWS Shared Responsibility Model?",
+          "answer": "- **AWS**: security OF the cloud (infrastructure, hardware, software)\n- **Customer**: security IN the cloud (data, applications, IAM, encryption)",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "223",
+          "question": "What is AWS X-Ray?",
+          "answer": "Distributed tracing service for debugging and analyzing microservices.\n\n```javascript\nconst AWSXRay = require('aws-xray-sdk-core');\nconst AWS = AWSXRay.captureAWS(require('aws-sdk'));\n\n// Traces requests through Lambda, API Gateway, DynamoDB, etc.\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "224",
+          "question": "What is CloudTrail?",
+          "answer": "Audit service logging all API calls in AWS account.\n\n```javascript\n// Use cases\n- Security analysis\n- Compliance auditing\n- Operational troubleshooting\n- Resource change tracking\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "225",
+          "question": "What is AWS Config?",
+          "answer": "Track AWS resource configurations and changes over time.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "226",
+          "question": "What is Amazon Athena?",
+          "answer": "Serverless query service analyzing data in S3 using SQL.\n\n```sql\nCREATE EXTERNAL TABLE logs (\n  timestamp string,\n  request_id string,\n  status_code int\n)\nLOCATION 's3://my-bucket/logs/';\n\nSELECT status_code, COUNT(*)\nFROM logs\nGROUP BY status_code;\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "227",
+          "question": "What is AWS Glue?",
+          "answer": "Serverless ETL (Extract, Transform, Load) service.\n\n```python\n# Glue job\nimport sys\nfrom awsglue.transforms import *\nfrom awsglue.utils import getResolvedOptions\nfrom pyspark.context import SparkContext\nfrom awsglue.context import GlueContext\n\nglueContext = GlueContext(SparkContext.getOrCreate())\ndatasource = glueContext.create_dynamic_frame.from_catalog(\n    database = \"mydatabase\",\n    table_name = \"mytable\"\n)\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "228",
+          "question": "What is Kinesis?",
+          "answer": "Real-time data streaming service.\n\n**Services:**\n- **Kinesis Data Streams**: real-time data ingestion\n- **Kinesis Data Firehose**: load streams into S3, Redshift, Elasticsearch\n- **Kinesis Data Analytics**: SQL queries on streaming data",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "229",
+          "question": "What is SES?",
+          "answer": "Simple Email Service - send and receive emails.\n\n```javascript\nconst ses = new AWS.SES();\n\nawait ses.sendEmail({\n  Source: 'sender@example.com',\n  Destination: {\n    ToAddresses: ['recipient@example.com']\n  },\n  Message: {\n    Subject: { Data: 'Test Email' },\n    Body: { Text: { Data: 'Email content' } }\n  }\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "230",
+          "question": "What is AWS Cognito?",
+          "answer": "Authentication and user management service.\n\n```javascript\n// User pools: user directory\n// Identity pools: grant AWS credentials\n\nconst cognito = new AWS.CognitoIdentityServiceProvider();\n\nawait cognito.signUp({\n  ClientId: 'app-client-id',\n  Username: 'user@example.com',\n  Password: 'Password123!',\n  UserAttributes: [\n    { Name: 'email', Value: 'user@example.com' }\n  ]\n}).promise();\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "231",
+          "question": "What is AWS Amplify?",
+          "answer": "Full-stack development platform for building web and mobile apps.\n\n```javascript\nimport { Amplify, Auth, API, Storage } from 'aws-amplify';\n\n// Authentication\nawait Auth.signIn(username, password);\n\n// API calls\nawait API.post('api', '/users', { body: userData });\n\n// File upload\nawait Storage.put('file.jpg', file);\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "232",
+          "question": "What is VPC Peering?",
+          "answer": "Networking connection between two VPCs for routing traffic privately.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "233",
+          "question": "What is VPN?",
+          "answer": "Virtual Private Network connecting on-premises network to AWS VPC.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "234",
+          "question": "What is Direct Connect?",
+          "answer": "Dedicated network connection from on-premises to AWS (not over internet).",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "235",
+          "question": "What is AWS cost optimization strategies?",
+          "answer": "- Right-size instances\n- Use Reserved Instances or Savings Plans\n- Auto Scaling\n- S3 lifecycle policies\n- Delete unused resources\n- Use Spot Instances for flexible workloads\n- Monitor with Cost Explorer",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "236",
+          "question": "What are Reserved Instances?",
+          "answer": "Commit to 1 or 3 years for significant discount (up to 75% off).",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "237",
+          "question": "What are Spot Instances?",
+          "answer": "Unused EC2 capacity at up to 90% discount (can be interrupted).",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "238",
+          "question": "What is AWS Organizations?",
+          "answer": "Centrally manage multiple AWS accounts.\n\n```javascript\n// Benefits\n- Consolidated billing\n- Service Control Policies (SCPs)\n- Automated account creation\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "239",
+          "question": "What is AWS Backup?",
+          "answer": "Centralized backup service for AWS resources.",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "240",
+          "question": "What is Disaster Recovery strategies?",
+          "answer": "- **Backup & Restore**: lowest cost, highest RTO\n- **Pilot Light**: minimal replication, medium RTO\n- **Warm Standby**: scaled-down version running\n- **Multi-Site**: full replication, lowest RTO, highest cost",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "241",
+          "question": "What is RTO and RPO?",
+          "answer": "- **RTO** (Recovery Time Objective): max acceptable downtime\n- **RPO** (Recovery Point Objective): max acceptable data loss",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "242",
+          "question": "What is AWS WAF?",
+          "answer": "Web Application Firewall protecting against common web exploits.\n\n```javascript\n// Rules\n- SQL injection protection\n- XSS protection\n- Rate limiting\n- Geo-blocking\n- IP blacklisting\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "243",
+          "question": "What is AWS Shield?",
+          "answer": "DDoS protection service.\n- **Shield Standard**: free, automatic protection\n- **Shield Advanced**: paid, enhanced protection, 24/7 support",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "244",
+          "question": "What is Amazon EKS?",
+          "answer": "Elastic Kubernetes Service - managed Kubernetes on AWS.\n\n```yaml\n# Kubernetes deployment on EKS\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app\nspec:\n  replicas: 3\n  template:\n    spec:\n      containers:\n      - name: app\n        image: myapp:latest\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "245",
+          "question": "What is AWS SAM?",
+          "answer": "Serverless Application Model - framework for building serverless applications.\n\n```yaml\n# template.yaml\nAWSTemplateFormatVersion: '2010-09-09'\nTransform: AWS::Serverless-2016-10-31\n\nResources:\n  MyFunction:\n    Type: AWS::Serverless::Function\n    Properties:\n      Runtime: nodejs14.x\n      Handler: index.handler\n      Events:\n        Api:\n          Type: Api\n          Properties:\n            Path: /hello\n            Method: get\n```",
+          "tags": [
+            "AWS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

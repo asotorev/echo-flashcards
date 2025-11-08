@@ -1,0 +1,610 @@
+{
+  "decks": [
+    {
+      "name": "Redux",
+      "description": "Interview questions about Redux",
+      "cards": [
+        {
+          "id": "196",
+          "question": "What is Redux?",
+          "answer": "Predictable state container for JavaScript apps, centralizing application state.\n\n```javascript\nimport { createStore } from 'redux';\n\nconst store = createStore(reducer);\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "197",
+          "question": "What are the three principles of Redux?",
+          "answer": "1. Single source of truth (one store)\n2. State is read-only (dispatch actions to change)\n3. Changes made with pure functions (reducers)",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "198",
+          "question": "What is a Redux store?",
+          "answer": "Object holding complete application state.\n\n```javascript\nconst store = createStore(rootReducer);\nstore.getState(); // get current state\nstore.dispatch(action); // dispatch action\nstore.subscribe(listener); // listen to changes\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "199",
+          "question": "What is an action?",
+          "answer": "Plain object describing what happened.\n\n```javascript\nconst addTodoAction = {\n  type: 'ADD_TODO',\n  payload: {\n    id: 1,\n    text: 'Learn Redux'\n  }\n};\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "200",
+          "question": "What is an action creator?",
+          "answer": "Function that creates and returns an action.\n\n```javascript\nconst addTodo = (text) => ({\n  type: 'ADD_TODO',\n  payload: { id: Date.now(), text }\n});\n\ndispatch(addTodo('Learn Redux'));\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "201",
+          "question": "What is a reducer?",
+          "answer": "Pure function that takes previous state and action, returns new state.\n\n```javascript\nfunction todosReducer(state = [], action) {\n  switch (action.type) {\n    case 'ADD_TODO':\n      return [...state, action.payload];\n    case 'REMOVE_TODO':\n      return state.filter(todo => todo.id !== action.payload);\n    default:\n      return state;\n  }\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "202",
+          "question": "What is dispatch?",
+          "answer": "Function to send actions to the store.\n\n```javascript\nstore.dispatch({ type: 'INCREMENT' });\nstore.dispatch(addTodo('Learn Redux'));\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "203",
+          "question": "What is subscribe?",
+          "answer": "Method to listen to state changes.\n\n```javascript\nconst unsubscribe = store.subscribe(() => {\n  console.log('State changed:', store.getState());\n});\n\nunsubscribe(); // stop listening\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "204",
+          "question": "What is combineReducers?",
+          "answer": "Combines multiple reducers into single root reducer.\n\n```javascript\nimport { combineReducers } from 'redux';\n\nconst rootReducer = combineReducers({\n  todos: todosReducer,\n  user: userReducer,\n  posts: postsReducer\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "205",
+          "question": "What is Redux middleware?",
+          "answer": "Functions that intercept actions before they reach reducers.\n\n```javascript\nconst logger = store => next => action => {\n  console.log('dispatching', action);\n  const result = next(action);\n  console.log('next state', store.getState());\n  return result;\n};\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "206",
+          "question": "What is Redux Thunk?",
+          "answer": "Middleware allowing action creators to return functions instead of objects (for async operations).\n\n```javascript\nconst fetchUser = (id) => {\n  return async (dispatch) => {\n    dispatch({ type: 'FETCH_USER_START' });\n    try {\n      const user = await api.getUser(id);\n      dispatch({ type: 'FETCH_USER_SUCCESS', payload: user });\n    } catch (error) {\n      dispatch({ type: 'FETCH_USER_ERROR', payload: error });\n    }\n  };\n};\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "207",
+          "question": "What is Redux Saga?",
+          "answer": "Middleware using generator functions for side effects.\n\n```javascript\nfunction* fetchUserSaga(action) {\n  try {\n    const user = yield call(api.getUser, action.payload);\n    yield put({ type: 'FETCH_USER_SUCCESS', payload: user });\n  } catch (error) {\n    yield put({ type: 'FETCH_USER_ERROR', payload: error });\n  }\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "208",
+          "question": "What is the difference between Thunk and Saga?",
+          "answer": "- Thunk: simpler, uses promises, good for simple async\n- Saga: more powerful, uses generators, better for complex workflows",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "209",
+          "question": "What is connect() in React-Redux?",
+          "answer": "HOC connecting React component to Redux store.\n\n```javascript\nimport { connect } from 'react-redux';\n\nconst mapStateToProps = (state) => ({\n  todos: state.todos\n});\n\nconst mapDispatchToProps = {\n  addTodo\n};\n\nexport default connect(mapStateToProps, mapDispatchToProps)(TodoList);\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "210",
+          "question": "What is mapStateToProps?",
+          "answer": "Function selecting which parts of state component needs.\n\n```javascript\nconst mapStateToProps = (state, ownProps) => ({\n  todo: state.todos.find(t => t.id === ownProps.id),\n  user: state.user\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "211",
+          "question": "What is mapDispatchToProps?",
+          "answer": "Maps action creators to component props.\n\n```javascript\nconst mapDispatchToProps = (dispatch) => ({\n  addTodo: (text) => dispatch(addTodo(text)),\n  removeTodo: (id) => dispatch(removeTodo(id))\n});\n\n// or shorthand\nconst mapDispatchToProps = {\n  addTodo,\n  removeTodo\n};\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "212",
+          "question": "What is Provider?",
+          "answer": "React component making store available to all nested components.\n\n```javascript\nimport { Provider } from 'react-redux';\n\n<Provider store={store}>\n  <App />\n</Provider>\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "213",
+          "question": "What is useSelector?",
+          "answer": "Hook to extract data from Redux store.\n\n```javascript\nimport { useSelector } from 'react-redux';\n\nfunction TodoList() {\n  const todos = useSelector(state => state.todos);\n  const user = useSelector(state => state.user);\n  return <div>{/* render todos */}</div>;\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "214",
+          "question": "What is useDispatch?",
+          "answer": "Hook to get dispatch function.\n\n```javascript\nimport { useDispatch } from 'react-redux';\n\nfunction AddTodo() {\n  const dispatch = useDispatch();\n\n  const handleAdd = (text) => {\n    dispatch(addTodo(text));\n  };\n\n  return <button onClick={() => handleAdd('New Todo')}>Add</button>;\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "215",
+          "question": "What is useStore?",
+          "answer": "Hook to access Redux store directly (rarely needed).\n\n```javascript\nimport { useStore } from 'react-redux';\n\nfunction Component() {\n  const store = useStore();\n  console.log(store.getState());\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "216",
+          "question": "What is Redux Toolkit (RTK)?",
+          "answer": "Official recommended way to write Redux logic.\n\n```javascript\nimport { configureStore, createSlice } from '@reduxjs/toolkit';\n\nconst todosSlice = createSlice({\n  name: 'todos',\n  initialState: [],\n  reducers: {\n    addTodo: (state, action) => {\n      state.push(action.payload); // RTK uses Immer\n    }\n  }\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "217",
+          "question": "What is createSlice?",
+          "answer": "RTK function creating reducer and action creators automatically.\n\n```javascript\nconst counterSlice = createSlice({\n  name: 'counter',\n  initialState: { value: 0 },\n  reducers: {\n    increment: state => { state.value += 1; },\n    decrement: state => { state.value -= 1; },\n    incrementByAmount: (state, action) => {\n      state.value += action.payload;\n    }\n  }\n});\n\nexport const { increment, decrement, incrementByAmount } = counterSlice.actions;\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "218",
+          "question": "What is configureStore?",
+          "answer": "RTK function simplifying store setup.\n\n```javascript\nimport { configureStore } from '@reduxjs/toolkit';\n\nconst store = configureStore({\n  reducer: {\n    todos: todosReducer,\n    user: userReducer\n  }\n  // automatically adds thunk middleware and dev tools\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "219",
+          "question": "What is createAsyncThunk?",
+          "answer": "RTK function for async operations.\n\n```javascript\nimport { createAsyncThunk } from '@reduxjs/toolkit';\n\nconst fetchUser = createAsyncThunk(\n  'user/fetch',\n  async (userId) => {\n    const response = await api.getUser(userId);\n    return response.data;\n  }\n);\n\n// Automatically creates pending, fulfilled, rejected actions\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "220",
+          "question": "What are extraReducers?",
+          "answer": "Handle actions defined outside the slice (like async thunks).\n\n```javascript\nconst userSlice = createSlice({\n  name: 'user',\n  initialState: { data: null, loading: false },\n  reducers: {},\n  extraReducers: (builder) => {\n    builder\n      .addCase(fetchUser.pending, (state) => {\n        state.loading = true;\n      })\n      .addCase(fetchUser.fulfilled, (state, action) => {\n        state.data = action.payload;\n        state.loading = false;\n      })\n      .addCase(fetchUser.rejected, (state) => {\n        state.loading = false;\n      });\n  }\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "221",
+          "question": "What is createSelector (Reselect)?",
+          "answer": "Creates memoized selectors for derived data.\n\n```javascript\nimport { createSelector } from '@reduxjs/toolkit';\n\nconst selectTodos = state => state.todos;\nconst selectFilter = state => state.filter;\n\nconst selectFilteredTodos = createSelector(\n  [selectTodos, selectFilter],\n  (todos, filter) => {\n    return todos.filter(todo => todo.status === filter);\n  }\n);\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "222",
+          "question": "What is normalization in Redux?",
+          "answer": "Organizing state by IDs to avoid duplication and nesting.\n\n```javascript\n// Bad\nconst state = {\n  posts: [\n    { id: 1, author: { id: 5, name: 'John' } },\n    { id: 2, author: { id: 5, name: 'John' } } // duplicated\n  ]\n};\n\n// Good (normalized)\nconst state = {\n  posts: {\n    byId: {\n      1: { id: 1, authorId: 5 },\n      2: { id: 2, authorId: 5 }\n    },\n    allIds: [1, 2]\n  },\n  authors: {\n    byId: {\n      5: { id: 5, name: 'John' }\n    }\n  }\n};\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "223",
+          "question": "What is createEntityAdapter?",
+          "answer": "RTK utility for normalized CRUD operations.\n\n```javascript\nimport { createEntityAdapter, createSlice } from '@reduxjs/toolkit';\n\nconst todosAdapter = createEntityAdapter();\n\nconst todosSlice = createSlice({\n  name: 'todos',\n  initialState: todosAdapter.getInitialState(),\n  reducers: {\n    todoAdded: todosAdapter.addOne,\n    todosReceived: todosAdapter.setAll,\n    todoUpdated: todosAdapter.updateOne,\n    todoRemoved: todosAdapter.removeOne\n  }\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "224",
+          "question": "What is immer in Redux Toolkit?",
+          "answer": "Library allowing \"mutative\" code that produces immutable updates.\n\n```javascript\nconst slice = createSlice({\n  name: 'todos',\n  initialState: [],\n  reducers: {\n    addTodo: (state, action) => {\n      // looks like mutation, actually immutable\n      state.push(action.payload);\n    }\n  }\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "225",
+          "question": "What is Redux DevTools?",
+          "answer": "Browser extension for debugging Redux applications.\n\n```javascript\nconst store = configureStore({\n  reducer: rootReducer\n  // DevTools automatically enabled with RTK\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "226",
+          "question": "What is time-travel debugging?",
+          "answer": "Redux DevTools feature allowing you to go back and forth through state changes.",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "227",
+          "question": "What is the difference between Redux and Context API?",
+          "answer": "- Redux: more features, middleware, dev tools, better for complex apps\n- Context: simpler, built into React, good for simple state sharing",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "228",
+          "question": "When should you use Redux?",
+          "answer": "- Large, complex applications\n- Shared state across many components\n- Frequent state updates\n- Complex state logic\n- Need for time-travel debugging",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "229",
+          "question": "What is Redux persist?",
+          "answer": "Library persisting and rehydrating Redux store (localStorage, AsyncStorage).\n\n```javascript\nimport { persistStore, persistReducer } from 'redux-persist';\nimport storage from 'redux-persist/lib/storage';\n\nconst persistConfig = {\n  key: 'root',\n  storage\n};\n\nconst persistedReducer = persistReducer(persistConfig, rootReducer);\nconst store = configureStore({ reducer: persistedReducer });\nconst persistor = persistStore(store);\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "230",
+          "question": "What is action type convention?",
+          "answer": "Common pattern: 'domain/eventName'\n\n```javascript\nconst ADD_TODO = 'todos/add';\nconst REMOVE_TODO = 'todos/remove';\nconst FETCH_USER_SUCCESS = 'user/fetchSuccess';\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "231",
+          "question": "What is payload in actions?",
+          "answer": "Data sent with action.\n\n```javascript\n{\n  type: 'ADD_TODO',\n  payload: {\n    id: 1,\n    text: 'Learn Redux',\n    completed: false\n  }\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "232",
+          "question": "What is FSA (Flux Standard Action)?",
+          "answer": "Convention for action structure.\n\n```javascript\n{\n  type: 'ADD_TODO',\n  payload: { text: 'Learn Redux' },\n  error: false, // true if error\n  meta: { timestamp: Date.now() } // optional metadata\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "233",
+          "question": "What is the difference between Redux and MobX?",
+          "answer": "- Redux: immutable, explicit, more boilerplate, easier to debug\n- MobX: mutable, implicit, less boilerplate, uses observables",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "234",
+          "question": "What is Redux middleware flow?",
+          "answer": "Action \u2192 Middleware \u2192 Reducer \u2192 Store Update\n\n```javascript\ndispatch(action) \u2192 middleware1 \u2192 middleware2 \u2192 reducer \u2192 newState\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "235",
+          "question": "How do you handle side effects in Redux?",
+          "answer": "Using middleware like Redux Thunk, Redux Saga, or Redux-Observable.\n\n```javascript\n// Thunk\nconst fetchData = () => async (dispatch) => {\n  const data = await api.fetch();\n  dispatch({ type: 'DATA_RECEIVED', payload: data });\n};\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "236",
+          "question": "What is applyMiddleware?",
+          "answer": "Function to add middleware to Redux store.\n\n```javascript\nimport { createStore, applyMiddleware } from 'redux';\nimport thunk from 'redux-thunk';\n\nconst store = createStore(\n  rootReducer,\n  applyMiddleware(thunk, logger)\n);\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "237",
+          "question": "What is bindActionCreators?",
+          "answer": "Wraps action creators in dispatch calls.\n\n```javascript\nimport { bindActionCreators } from 'redux';\n\nconst boundActions = bindActionCreators(\n  { addTodo, removeTodo },\n  dispatch\n);\n\nboundActions.addTodo('text'); // automatically dispatched\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "238",
+          "question": "What is shallow equality checking?",
+          "answer": "Redux uses shallow comparison to determine if state changed.\n\n```javascript\n// These trigger re-render\nstate = { ...state, newProp: value };\nstate.array = [...state.array, newItem];\n\n// This doesn't (same reference)\nstate.prop = newValue; // don't mutate!\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "239",
+          "question": "What is the difference between state and store?",
+          "answer": "- State: plain JavaScript object holding data\n- Store: object with methods (getState, dispatch, subscribe) managing state",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "240",
+          "question": "What are action constants?",
+          "answer": "Constants defining action types to avoid typos.\n\n```javascript\n// constants.js\nexport const ADD_TODO = 'ADD_TODO';\nexport const REMOVE_TODO = 'REMOVE_TODO';\n\n// usage\nimport { ADD_TODO } from './constants';\n\nconst action = { type: ADD_TODO, payload: todo };\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "241",
+          "question": "What is reducer composition?",
+          "answer": "Breaking reducer logic into smaller, focused reducers.\n\n```javascript\nfunction visibilityFilter(state = 'SHOW_ALL', action) {\n  switch (action.type) {\n    case 'SET_FILTER':\n      return action.payload;\n    default:\n      return state;\n  }\n}\n\nfunction todos(state = [], action) {\n  // handle todo actions\n}\n\nconst rootReducer = combineReducers({\n  visibilityFilter,\n  todos\n});\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "242",
+          "question": "What is the initial state in Redux?",
+          "answer": "State value before any actions are dispatched.\n\n```javascript\nconst initialState = {\n  todos: [],\n  filter: 'SHOW_ALL',\n  loading: false\n};\n\nfunction reducer(state = initialState, action) {\n  // ...\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "243",
+          "question": "Can you dispatch actions in reducers?",
+          "answer": "No, reducers must be pure functions. Dispatch only in components or middleware.",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "244",
+          "question": "What is the difference between Redux and Flux?",
+          "answer": "- Redux: single store, pure reducers, no dispatchers\n- Flux: multiple stores, can mutate, uses dispatchers",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "245",
+          "question": "What is hot reloading in Redux?",
+          "answer": "Updating reducers without losing state.\n\n```javascript\nif (module.hot) {\n  module.hot.accept('./reducers', () => {\n    store.replaceReducer(require('./reducers').default);\n  });\n}\n```",
+          "tags": [
+            "Redux"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

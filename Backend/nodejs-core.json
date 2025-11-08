@@ -1,0 +1,310 @@
+{
+  "decks": [
+    {
+      "name": "Node.js Core",
+      "description": "Interview questions about Node.js Core",
+      "cards": [
+        {
+          "id": "1",
+          "question": "What is Node.js?",
+          "answer": "JavaScript runtime built on Chrome's V8 engine for server-side execution.",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "2",
+          "question": "What is the event-driven architecture?",
+          "answer": "Node.js uses events and callbacks for non-blocking I/O operations.\n\n```javascript\nconst EventEmitter = require('events');\nconst emitter = new EventEmitter();\n\nemitter.on('event', () => console.log('event fired'));\nemitter.emit('event');\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "3",
+          "question": "What is non-blocking I/O?",
+          "answer": "Operations don't wait for completion, allowing other code to execute.\n\n```javascript\nfs.readFile('file.txt', (err, data) => {\n  console.log(data); // executed later\n});\nconsole.log('continues immediately');\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "4",
+          "question": "What is the event loop in Node.js?",
+          "answer": "Handles async operations through phases: timers, I/O callbacks, idle, poll, check, close callbacks.",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "5",
+          "question": "What is a Buffer?",
+          "answer": "Binary data storage (like array of bytes).\n\n```javascript\nconst buf = Buffer.from('hello');\nconsole.log(buf); // <Buffer 68 65 6c 6c 6f>\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "6",
+          "question": "What is a Stream?",
+          "answer": "Interface for working with streaming data.\n\n```javascript\nconst readable = fs.createReadStream('input.txt');\nreadable.on('data', chunk => console.log(chunk));\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "7",
+          "question": "What are types of streams?",
+          "answer": "- Readable: read data (fs.createReadStream)\n- Writable: write data (fs.createWriteStream)\n- Duplex: both read and write (net.Socket)\n- Transform: modify data while reading/writing (zlib)",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "8",
+          "question": "What is pipe()?",
+          "answer": "Connects readable stream to writable stream.\n\n```javascript\nfs.createReadStream('input.txt')\n  .pipe(fs.createWriteStream('output.txt'));\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "9",
+          "question": "What is the `require()` function?",
+          "answer": "Imports modules in CommonJS.\n\n```javascript\nconst fs = require('fs');\nconst myModule = require('./myModule');\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "10",
+          "question": "What is `module.exports`?",
+          "answer": "Exports values from module.\n\n```javascript\n// math.js\nmodule.exports = {\n  add: (a, b) => a + b\n};\n\n// app.js\nconst math = require('./math');\nmath.add(2, 3);\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "11",
+          "question": "What is the difference between `module.exports` and `exports`?",
+          "answer": "`exports` is shorthand for `module.exports`, but reassigning `exports` breaks the reference.\n\n```javascript\n// Works\nexports.fn = () => {};\n\n// Doesn't work\nexports = { fn: () => {} };\n\n// Works\nmodule.exports = { fn: () => {} };\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "12",
+          "question": "What is `process` object?",
+          "answer": "Global object providing info about current Node.js process.\n\n```javascript\nprocess.env.NODE_ENV; // environment variables\nprocess.argv; // command line arguments\nprocess.exit(0); // exit process\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "13",
+          "question": "What is `process.nextTick()`?",
+          "answer": "Schedules callback to execute after current operation completes, before event loop continues.\n\n```javascript\nprocess.nextTick(() => console.log('next tick'));\nconsole.log('immediate');\n// Output: immediate, next tick\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "14",
+          "question": "What is the difference between `setImmediate()` and `process.nextTick()`?",
+          "answer": "- `process.nextTick()`: executes before I/O events\n- `setImmediate()`: executes after I/O events",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "15",
+          "question": "What is `__dirname` and `__filename`?",
+          "answer": "- `__dirname`: directory path of current module\n- `__filename`: file path of current module\n\n```javascript\nconsole.log(__dirname); // /Users/john/project\nconsole.log(__filename); // /Users/john/project/app.js\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "16",
+          "question": "What is npm?",
+          "answer": "Node Package Manager for installing and managing dependencies.\n\n```bash\nnpm install express\nnpm init\nnpm run start\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "17",
+          "question": "What is `package.json`?",
+          "answer": "Manifest file containing project metadata and dependencies.\n\n```json\n{\n  \"name\": \"my-app\",\n  \"version\": \"1.0.0\",\n  \"dependencies\": {\n    \"express\": \"^4.18.0\"\n  }\n}\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "18",
+          "question": "What is the difference between dependencies and devDependencies?",
+          "answer": "- dependencies: required in production\n- devDependencies: only needed for development",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "19",
+          "question": "What is `package-lock.json`?",
+          "answer": "Locks exact versions of dependencies for consistent installs.",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "20",
+          "question": "What is the cluster module?",
+          "answer": "Allows creating child processes to utilize multi-core systems.\n\n```javascript\nconst cluster = require('cluster');\n\nif (cluster.isMaster) {\n  cluster.fork(); // create worker\n} else {\n  // worker code\n}\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "21",
+          "question": "What is the child_process module?",
+          "answer": "Creates and manages child processes.\n\n```javascript\nconst { exec } = require('child_process');\nexec('ls', (error, stdout, stderr) => {\n  console.log(stdout);\n});\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "22",
+          "question": "What is the fs module?",
+          "answer": "File system operations.\n\n```javascript\nconst fs = require('fs');\nfs.readFile('file.txt', 'utf8', (err, data) => {\n  console.log(data);\n});\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "23",
+          "question": "What is the path module?",
+          "answer": "Utilities for file and directory paths.\n\n```javascript\nconst path = require('path');\npath.join(__dirname, 'files', 'test.txt');\npath.basename('/user/docs/file.txt'); // file.txt\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "24",
+          "question": "What is the os module?",
+          "answer": "Operating system information.\n\n```javascript\nconst os = require('os');\nos.platform(); // 'darwin', 'win32', etc.\nos.cpus(); // CPU info\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "25",
+          "question": "What is the url module?",
+          "answer": "URL parsing and formatting.\n\n```javascript\nconst url = require('url');\nconst parsed = url.parse('http://example.com:8080/path?query=1');\nconsole.log(parsed.hostname); // example.com\n```",
+          "tags": [
+            "Node.js"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

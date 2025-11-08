@@ -1,0 +1,400 @@
+{
+  "decks": [
+    {
+      "name": "React Fundamentals",
+      "description": "Interview questions about React Fundamentals",
+      "cards": [
+        {
+          "id": "141",
+          "question": "What is React?",
+          "answer": "JavaScript library for building user interfaces using components.",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "142",
+          "question": "What is JSX?",
+          "answer": "JavaScript syntax extension allowing HTML-like code in JavaScript.\n\n```jsx\nconst element = <h1>Hello, World!</h1>;\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "143",
+          "question": "What are components?",
+          "answer": "Reusable, independent pieces of UI.\n\n```jsx\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "144",
+          "question": "What is the difference between functional and class components?",
+          "answer": "Functional components are simpler functions. Class components use ES6 classes and have lifecycle methods.\n\n```jsx\n// Functional\nfunction Welcome() {\n  return <h1>Hello</h1>;\n}\n\n// Class\nclass Welcome extends React.Component {\n  render() {\n    return <h1>Hello</h1>;\n  }\n}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "145",
+          "question": "What are props?",
+          "answer": "Properties passed from parent to child components (read-only).\n\n```jsx\nfunction Greeting(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n<Greeting name=\"John\" />\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "146",
+          "question": "What is state?",
+          "answer": "Mutable data managed within a component.\n\n```jsx\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return <button onClick={() => setCount(count + 1)}>{count}</button>;\n}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "147",
+          "question": "What is the difference between props and state?",
+          "answer": "- Props: passed from parent, immutable\n- State: managed within component, mutable",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "148",
+          "question": "What is `useState()`?",
+          "answer": "Hook for adding state to functional components.\n\n```jsx\nconst [value, setValue] = useState(initialValue);\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "149",
+          "question": "What is `useEffect()`?",
+          "answer": "Hook for side effects (data fetching, subscriptions, DOM manipulation).\n\n```jsx\nuseEffect(() => {\n  document.title = `Count: ${count}`;\n}, [count]); // runs when count changes\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "150",
+          "question": "What is the dependency array in useEffect?",
+          "answer": "Controls when effect runs:\n- `[]`: runs once on mount\n- `[dep]`: runs when dep changes\n- No array: runs on every render\n\n```jsx\nuseEffect(() => console.log(\"mount\"), []); // once\nuseEffect(() => console.log(\"update\"), [count]); // when count changes\nuseEffect(() => console.log(\"every render\")); // always\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "151",
+          "question": "What is component lifecycle?",
+          "answer": "Phases: Mounting, Updating, Unmounting.\n\n```jsx\nuseEffect(() => {\n  // mounting\n  return () => {\n    // unmounting\n  };\n}, []);\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "152",
+          "question": "What is the virtual DOM?",
+          "answer": "Lightweight copy of actual DOM. React compares virtual DOM with actual DOM and updates only changed parts.",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "153",
+          "question": "What is reconciliation?",
+          "answer": "Process of comparing virtual DOM with actual DOM and updating efficiently.",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "154",
+          "question": "What is a key prop?",
+          "answer": "Unique identifier for list elements helping React identify changed items.\n\n```jsx\n{items.map(item => <li key={item.id}>{item.name}</li>)}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "155",
+          "question": "What is conditional rendering?",
+          "answer": "Rendering different content based on conditions.\n\n```jsx\n{isLoggedIn ? <Dashboard /> : <Login />}\n{error && <ErrorMessage />}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "156",
+          "question": "What is list rendering?",
+          "answer": "Rendering arrays of data.\n\n```jsx\n{users.map(user => <User key={user.id} data={user} />)}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "157",
+          "question": "What is event handling in React?",
+          "answer": "Handling user interactions.\n\n```jsx\n<button onClick={handleClick}>Click</button>\n<input onChange={handleChange} />\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "158",
+          "question": "What is controlled vs uncontrolled component?",
+          "answer": "- Controlled: form data handled by React state\n- Uncontrolled: form data handled by DOM\n\n```jsx\n// Controlled\n<input value={value} onChange={e => setValue(e.target.value)} />\n\n// Uncontrolled\n<input ref={inputRef} />\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "159",
+          "question": "What is `useRef()`?",
+          "answer": "Hook for accessing DOM elements or persisting values across renders without causing re-render.\n\n```jsx\nconst inputRef = useRef(null);\ninputRef.current.focus();\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "160",
+          "question": "What is `useContext()`?",
+          "answer": "Hook for consuming context values.\n\n```jsx\nconst theme = useContext(ThemeContext);\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "161",
+          "question": "What is Context API?",
+          "answer": "Way to pass data through component tree without props drilling.\n\n```jsx\nconst ThemeContext = React.createContext('light');\n\nfunction App() {\n  return (\n    <ThemeContext.Provider value=\"dark\">\n      <Child />\n    </ThemeContext.Provider>\n  );\n}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "162",
+          "question": "What is props drilling?",
+          "answer": "Passing props through multiple levels of components.\n\n```jsx\n<A> \u2192 <B prop={x}> \u2192 <C prop={x}> \u2192 <D prop={x}>\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "163",
+          "question": "What is component composition?",
+          "answer": "Building complex components from simpler ones.\n\n```jsx\nfunction Layout({ children }) {\n  return <div className=\"layout\">{children}</div>;\n}\n\n<Layout>\n  <Header />\n  <Content />\n</Layout>\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "164",
+          "question": "What is children prop?",
+          "answer": "Special prop containing content between component tags.\n\n```jsx\nfunction Card({ children }) {\n  return <div className=\"card\">{children}</div>;\n}\n\n<Card><p>Content</p></Card>\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "165",
+          "question": "What is fragment?",
+          "answer": "Wrapper that doesn't add extra DOM nodes.\n\n```jsx\n<>\n  <h1>Title</h1>\n  <p>Text</p>\n</>\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "166",
+          "question": "What is React.StrictMode?",
+          "answer": "Development tool highlighting potential problems.\n\n```jsx\n<React.StrictMode>\n  <App />\n</React.StrictMode>\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "167",
+          "question": "What is the difference between createElement and JSX?",
+          "answer": "JSX is syntactic sugar for createElement.\n\n```jsx\n// JSX\n<div className=\"box\">Hello</div>\n\n// createElement\nReact.createElement('div', { className: 'box' }, 'Hello')\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "168",
+          "question": "What is synthetic event?",
+          "answer": "Cross-browser wrapper around native browser event.\n\n```jsx\nfunction handleClick(e) {\n  e.preventDefault(); // synthetic event\n  console.log(e.nativeEvent); // native event\n}\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "169",
+          "question": "What is the difference between HTML and React event handling?",
+          "answer": "React uses camelCase and you pass function reference.\n\n```jsx\n// HTML\n<button onclick=\"handleClick()\">Click</button>\n\n// React\n<button onClick={handleClick}>Click</button>\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "170",
+          "question": "What is default props?",
+          "answer": "Default values for props.\n\n```jsx\nfunction Button({ label = \"Click me\" }) {\n  return <button>{label}</button>;\n}\n\n// or\nButton.defaultProps = {\n  label: \"Click me\"\n};\n```",
+          "tags": [
+            "React",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

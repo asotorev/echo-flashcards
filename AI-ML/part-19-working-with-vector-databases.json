@@ -1,0 +1,348 @@
+{
+  "decks": [
+    {
+      "name": "Part 19: Working with Vector Databases",
+      "description": "Practical usage, embedding models, and performance optimization",
+      "cards": [
+        {
+          "id": "413",
+          "question": "How do you store vectors in a vector database?",
+          "answer": "Generate embeddings using an embedding model, then insert with metadata and IDs. Example workflow: convert text to vector with Sentence Transformers, insert into DB with ID and metadata (price, category, etc.). Batch inserts are more efficient for bulk data. Most DBs provide client libraries (Python, JS) for easy integration.",
+          "tags": [
+            "Vector DB",
+            "Operations"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "414",
+          "question": "What is a collection or index in vector databases?",
+          "answer": "A collection (or index) is a named group of vectors with the same dimensionality and configuration. Like a table in SQL. Collections isolate different datasets (e.g., separate collections for products, documents, images). Each collection has its own index structure and can have different settings.",
+          "tags": [
+            "Vector DB",
+            "Organization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "415",
+          "question": "What is the typical workflow for using a vector database?",
+          "answer": "1. Choose embedding model and dimension. 2. Create collection with config. 3. Generate embeddings for your data. 4. Insert vectors with IDs and metadata. 5. Build index (automatic or manual). 6. At query time: embed query, search for similar vectors, retrieve results with metadata. 7. Maintain: update/delete as data changes.",
+          "tags": [
+            "Vector DB",
+            "Workflow"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "416",
+          "question": "How do you generate embeddings for storage?",
+          "answer": "Use embedding models: OpenAI API (text-embedding-3-small), Sentence Transformers (all-MiniLM-L6-v2), Hugging Face models, or Ollama. Convert text/images to vectors: 'embedding = model.encode(text)'. Ensure consistency - use the same model for all data in a collection. Batch processing is more efficient for large datasets.",
+          "tags": [
+            "Vector DB",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "417",
+          "question": "What embedding models are commonly used? (OpenAI, Sentence Transformers, etc.)",
+          "answer": "OpenAI text-embedding-3-small/large: High quality, API-based, 1536 dims. Sentence Transformers (all-MiniLM-L6-v2, all-mpnet-base-v2): Open-source, run locally, 384-768 dims. Nomic embed-text: Open, long context. Cohere embed-v3: Multilingual. Ollama models: Local, convenient. Choice depends on quality needs, cost, and deployment constraints.",
+          "tags": [
+            "Embeddings",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "418",
+          "question": "What is the Sentence Transformers library?",
+          "answer": "Sentence Transformers is a Python library for generating sentence/text embeddings. Built on Transformers, provides pre-trained models optimized for semantic similarity. Easy API: 'model.encode(sentences)' returns embeddings. Popular models: all-MiniLM-L6-v2 (fast, good quality), all-mpnet-base-v2 (higher quality). Essential for building local embedding pipelines.",
+          "tags": [
+            "Embeddings",
+            "Libraries"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "419",
+          "question": "How do you choose an embedding model?",
+          "answer": "Consider: Quality vs speed (larger models = better but slower), dimensions (higher = more expressive but more storage), cost (API vs local), domain specificity (general vs specialized), deployment constraints (can you run locally?). For production: benchmark on your data. Common choice: OpenAI for quality, Sentence Transformers for local/cost-effective.",
+          "tags": [
+            "Embeddings",
+            "Selection"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "420",
+          "question": "Compare embedding models: nomic-embed-text vs text-embedding-3-small",
+          "answer": "nomic-embed-text: Open-source, 768 dims, 8192 token context, free to run locally, good quality. text-embedding-3-small: OpenAI API, 1536 dims, 8191 tokens, costs per token, excellent quality. Nomic: better for local deployment, cost control. OpenAI: better for quality-critical applications with API infrastructure. Both are strong choices for RAG.",
+          "tags": [
+            "Embeddings",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "421",
+          "question": "What is embedding dimension and why does it matter?",
+          "answer": "Dimension is the length of the embedding vector (number of elements). Higher dimensions can capture more nuance but require more storage and computation. 384: fast, compact, good for simple tasks. 768: balanced. 1536: high quality, detailed representation. Match dimension to your accuracy requirements and resource constraints.",
+          "tags": [
+            "Embeddings",
+            "Dimensions"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "422",
+          "question": "What are typical embedding dimensions? (384, 768, 1536, etc.)",
+          "answer": "Common dimensions: 384 (all-MiniLM-L6-v2, lightweight), 768 (BERT-base, all-mpnet-base-v2, balanced), 1536 (OpenAI text-embedding-3-small, high quality), 3072 (OpenAI text-embedding-3-large, maximum quality). Lower = faster and less storage. Higher = better semantic understanding. Choose based on quality-performance trade-off.",
+          "tags": [
+            "Embeddings",
+            "Dimensions"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "423",
+          "question": "Can you mix different embedding models in the same database?",
+          "answer": "Technically yes (use separate collections), but don't mix in the same collection. Vectors from different models are incomparable - they use different spaces and dimensions. If you need to switch models, re-embed all data. Use consistent models within each collection for valid similarity comparisons.",
+          "tags": [
+            "Vector DB",
+            "Best Practices"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "424",
+          "question": "What happens if you query with a different embedding model?",
+          "answer": "Results will be meaningless or random. Query and stored vectors must be from the same model to be comparable. Different models create different vector spaces - even for the same text, vectors are unrelated. Always use the same embedding model for indexing and querying. Store model info with your collection metadata.",
+          "tags": [
+            "Vector DB",
+            "Consistency"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "425",
+          "question": "What is vector normalization?",
+          "answer": "Normalization scales vectors to unit length (magnitude = 1) while preserving direction. For normalized vectors, cosine similarity = dot product (faster computation). Many embedding models produce normalized vectors by default. Normalization makes comparisons focus on direction rather than magnitude, which is usually desired for semantic similarity.",
+          "tags": [
+            "Vector DB",
+            "Preprocessing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "426",
+          "question": "Why normalize vectors before storing them?",
+          "answer": "Normalization enables using dot product instead of cosine similarity (2x faster computation). It focuses similarity on semantic direction rather than magnitude. Most modern embedding models output normalized vectors by default. Check your model's documentation - if not normalized, apply L2 normalization before storage for optimal performance.",
+          "tags": [
+            "Vector DB",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "427",
+          "question": "What is batch insertion in vector databases?",
+          "answer": "Batch insertion adds multiple vectors in one operation, much faster than inserting individually. Instead of 1000 separate inserts, batch 1000 vectors into one call. Most DBs support batches of hundreds or thousands. Essential for initial data loading and bulk updates. Significantly reduces network overhead and transaction costs.",
+          "tags": [
+            "Vector DB",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "428",
+          "question": "How do you update vectors in a vector database?",
+          "answer": "Most DBs support update operations: provide ID and new vector/metadata. Some require delete-then-insert. For content changes: re-embed updated text, update vector. Update is essential for keeping embeddings synchronized with source data. Implement update logic triggered by your data changes (database triggers, event streams).",
+          "tags": [
+            "Vector DB",
+            "Operations"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "429",
+          "question": "How do you delete vectors from a vector database?",
+          "answer": "Delete by ID or batch delete by IDs. Some DBs support delete by metadata filter (e.g., delete all vectors where category='old'). Important for data lifecycle management, privacy compliance (removing user data), and keeping index lean. Deleted space may require reindexing or compaction in some systems.",
+          "tags": [
+            "Vector DB",
+            "Operations"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "430",
+          "question": "What is vector database scalability?",
+          "answer": "Scalability is handling growing data volumes and query loads. Vertical: more powerful hardware. Horizontal: distribute across machines (sharding, replication). Key factors: index efficiency, distributed architecture, query parallelization. Managed DBs (Pinecone) handle this automatically. Self-hosted requires planning for sharding and load balancing.",
+          "tags": [
+            "Vector DB",
+            "Scalability"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "431",
+          "question": "What is sharding in vector databases?",
+          "answer": "Sharding distributes vectors across multiple machines/nodes. Each shard stores a subset of vectors. Queries search relevant shards in parallel. This enables horizontal scaling beyond single-machine limits. Essential for very large datasets (hundreds of millions of vectors). Managed DBs handle sharding automatically.",
+          "tags": [
+            "Vector DB",
+            "Scalability"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "432",
+          "question": "What is replication in vector databases?",
+          "answer": "Replication creates copies of data across multiple nodes for availability and read performance. If one node fails, others serve requests. Increases query throughput by distributing load. Trade-off: storage cost, consistency complexity. Essential for production systems requiring high availability.",
+          "tags": [
+            "Vector DB",
+            "Availability"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "433",
+          "question": "How do you handle vector database backups?",
+          "answer": "Backup strategies: periodic snapshots of index files, backup source data (can re-embed if needed), database dumps, replication for disaster recovery. For pgvector: standard Postgres backups. For managed DBs: check provider backup features. Critical: backup both vectors and metadata, test restore procedures.",
+          "tags": [
+            "Vector DB",
+            "Backup"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "434",
+          "question": "What are the cost considerations for vector databases?",
+          "answer": "Managed (Pinecone): monthly fee based on vectors, queries, and storage. Self-hosted: infrastructure costs (compute, storage), ops overhead. Embedding costs: API calls (OpenAI) vs local compute. Consider: scale (costs grow with data), query volume, embedding regeneration frequency. pgvector: lowest cost if using existing Postgres.",
+          "tags": [
+            "Vector DB",
+            "Cost"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "435",
+          "question": "How do you optimize vector database performance?",
+          "answer": "Index optimization: choose right algorithm (HNSW for quality, IVF for scale), tune parameters (ef_construction, M). Query optimization: batch queries, use metadata filters efficiently, cache frequent queries. Data optimization: appropriate dimensions, normalized vectors, clean metadata. Monitor: query latency, recall metrics, resource usage.",
+          "tags": [
+            "Vector DB",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "436",
+          "question": "What is the recall metric in vector search?",
+          "answer": "Recall measures what percentage of true nearest neighbors are found. 95% recall means the system finds 95 of the 100 most similar vectors. Higher recall = better quality but slower/more expensive. ANN algorithms trade recall for speed. Typical production: 90-99% recall. Measure by comparing ANN results to exact search on sample data.",
+          "tags": [
+            "Vector DB",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "437",
+          "question": "What is precision in vector search?",
+          "answer": "Precision measures what percentage of returned results are truly relevant. High precision = few false positives. In vector search, precision depends on embedding quality (do similar vectors represent similar concepts?) and retrieval threshold. Different from recall: precision is about result quality, recall is about completeness.",
+          "tags": [
+            "Vector DB",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "438",
+          "question": "How do you benchmark vector database performance?",
+          "answer": "Measure: query latency (milliseconds per query), throughput (queries per second), recall (percentage of true neighbors found), index build time, memory usage. Test with realistic data and query patterns. Vary parameters (k neighbors, filters) to understand trade-offs. Compare against requirements, not just absolute numbers. Popular tool: ann-benchmarks.",
+          "tags": [
+            "Vector DB",
+            "Benchmarking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

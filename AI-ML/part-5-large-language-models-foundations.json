@@ -1,0 +1,348 @@
+{
+  "decks": [
+    {
+      "name": "Part 5: Large Language Models Foundations",
+      "description": "LLM fundamentals - architecture, pre-training, and model properties",
+      "cards": [
+        {
+          "id": "86",
+          "question": "What is a Large Language Model (LLM)?",
+          "answer": "An LLM is a neural network trained on massive amounts of text data to understand and generate human language. They learn patterns, grammar, facts, and reasoning capabilities by predicting the next word in billions of sentences. Modern LLMs like GPT-4, Claude, or Llama have billions of parameters and can perform diverse language tasks from translation to coding without task-specific training.",
+          "tags": [
+            "LLM",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "87",
+          "question": "What does 'large' refer to in LLMs?",
+          "answer": "'Large' primarily refers to the number of parameters (billions) and the scale of training data (often trillions of tokens). It also encompasses model size in memory, computational requirements, and training costs. The scale enables emergence of capabilities like reasoning and few-shot learning that smaller models lack. Size generally correlates with capability, though efficiency improvements continue.",
+          "tags": [
+            "LLM",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "88",
+          "question": "What is the GPT architecture?",
+          "answer": "GPT (Generative Pre-trained Transformer) is a decoder-only transformer architecture that generates text autoregressively by predicting the next token based on previous tokens. It uses masked self-attention to prevent looking ahead. GPT models are pre-trained on massive text corpora to predict next tokens, then can be fine-tuned or prompted for specific tasks. This architecture excels at text generation and instruction following.",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "89",
+          "question": "What does GPT stand for and what does it mean?",
+          "answer": "GPT stands for Generative Pre-trained Transformer. 'Generative' means it creates new text, 'Pre-trained' indicates it learns from large unlabeled datasets before being adapted to specific tasks, and 'Transformer' refers to the neural architecture it uses. This combination of pre-training on broad data and fine-tuning or prompting for specific tasks is the foundation of modern LLMs.",
+          "tags": [
+            "LLM",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "90",
+          "question": "What is BERT and how does it differ from GPT?",
+          "answer": "BERT (Bidirectional Encoder Representations from Transformers) is an encoder-only model that processes text bidirectionally, seeing both left and right context simultaneously. Unlike GPT which generates text left-to-right, BERT is designed for understanding tasks like classification and question answering. BERT uses masked language modeling for pre-training, while GPT uses causal (next-token) prediction.",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "91",
+          "question": "What is the difference between autoregressive and autoencoding models?",
+          "answer": "Autoregressive models (like GPT) generate text sequentially, predicting each token based only on previous tokens, making them ideal for generation. Autoencoding models (like BERT) can see the entire sequence at once through bidirectional attention, making them better for understanding and classification tasks. Autoregressive models are causal (unidirectional), while autoencoding models are non-causal (bidirectional).",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "92",
+          "question": "What is masked language modeling?",
+          "answer": "Masked language modeling is a pre-training technique where random tokens in the input are masked (hidden), and the model learns to predict them using bidirectional context. For example, 'The cat [MASK] on the mat' trains the model to predict 'sat'. This is BERT's training objective, teaching the model to understand context from both directions, unlike causal language modeling which only uses left context.",
+          "tags": [
+            "LLM",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "93",
+          "question": "What is causal language modeling?",
+          "answer": "Causal language modeling trains models to predict the next token given only previous tokens, without seeing future context. This is the training objective for GPT-like models. For example, given 'The cat sat', predict 'on'. The 'causal' refers to using only past context, enforced by masked attention. This training naturally equips models for text generation and completion tasks.",
+          "tags": [
+            "LLM",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "94",
+          "question": "What is pre-training in the context of LLMs?",
+          "answer": "Pre-training is the initial phase where models learn general language understanding from massive unlabeled text corpora by predicting masked or next tokens. This unsupervised learning captures grammar, facts, reasoning patterns, and world knowledge. Pre-training is computationally expensive (requiring months on thousands of GPUs) but creates foundation models that can be adapted to many downstream tasks through fine-tuning or prompting.",
+          "tags": [
+            "LLM",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "95",
+          "question": "What kind of data are LLMs pre-trained on?",
+          "answer": "LLMs are pre-trained on diverse text from the internet including web pages, books, articles, code repositories, and Wikipedia. The data is typically filtered for quality and safety. For example, GPT-3 trained on ~500 billion tokens, newer models on trillions. This broad exposure enables models to handle varied topics and tasks, though it also means they absorb biases and inaccuracies from training data.",
+          "tags": [
+            "LLM",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "96",
+          "question": "What is the pre-training objective for models like GPT?",
+          "answer": "GPT models are pre-trained using causal language modeling: predicting the next token in a sequence given all previous tokens. The model processes text left-to-right and learns to minimize the prediction error across billions of examples. This simple objective teaches the model grammar, facts, reasoning, and even some coding ability, as successfully predicting next tokens requires understanding language structure and meaning.",
+          "tags": [
+            "LLM",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "97",
+          "question": "What are model parameters and how many do modern LLMs have?",
+          "answer": "Parameters are the learned weights and biases in the neural network that determine model behavior. Modern LLMs range from 1 billion parameters (small, like Llama 3.2 1B) to 175B (GPT-3) to over 1 trillion (GPT-4 estimated). More parameters generally mean better capabilities but require more memory and computation. Parameter count is a key indicator of model size and capacity.",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "98",
+          "question": "What is the context window or context length?",
+          "answer": "The context window is the maximum number of tokens a model can process at once, including both input and output. For example, GPT-3.5 has a 4K context, GPT-4 up to 128K, Claude 3 up to 200K tokens. Longer contexts allow processing more information but require more memory and computation. Context length limits how much text the model can consider when generating responses.",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "99",
+          "question": "What are tokens in LLMs and how do they relate to words?",
+          "answer": "Tokens are the basic units that LLMs process - they can be words, parts of words, or even individual characters depending on the tokenization scheme. Common words are typically one token, while uncommon words might be split into multiple tokens. For example, 'tokenization' might split into 'token' and 'ization'. On average, one token is roughly 0.75 words in English, or about 4 characters.",
+          "tags": [
+            "LLM",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "100",
+          "question": "Why do LLMs use subword tokenization?",
+          "answer": "Subword tokenization balances vocabulary size with representation capability. It handles rare words by breaking them into common pieces, avoids out-of-vocabulary issues, works across languages, and keeps vocabulary manageable (typically 30K-100K tokens). For example, 'unhappiness' might become ['un', 'happi', 'ness'], reusing common subwords. This is more efficient than word-level (huge vocabulary) or character-level (very long sequences) approaches.",
+          "tags": [
+            "LLM",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "101",
+          "question": "What is the relationship between parameters and model capabilities?",
+          "answer": "More parameters generally enable better performance, more nuanced understanding, and emergent capabilities like reasoning and few-shot learning that smaller models lack. However, returns diminish and efficiency matters - a well-trained 7B model can outperform a poorly-trained 70B model. Beyond parameters, factors like architecture, training data quality, and optimization techniques significantly affect capabilities.",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "102",
+          "question": "What is model size vs context length?",
+          "answer": "Model size (parameters) determines the model's capacity to learn patterns and knowledge, affecting intelligence and capability. Context length determines how much text the model can consider at once, affecting how much information it can work with in a single interaction. A large model with short context can be smart but forgetful, while a small model with long context can remember more but understand less.",
+          "tags": [
+            "LLM",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "103",
+          "question": "What is inference in the context of LLMs?",
+          "answer": "Inference is the process of using a trained model to generate outputs for new inputs - essentially running the model to get predictions or generate text. During inference, the model's parameters are frozen (not being updated). For LLMs, inference involves passing input tokens through the network and generating output tokens one at a time. Inference speed and cost are critical for production deployment.",
+          "tags": [
+            "LLM",
+            "Inference"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "104",
+          "question": "What are the computational requirements for running LLMs?",
+          "answer": "LLMs require significant memory to store parameters (billions of weights) and computation to process tokens. A 7B parameter model needs ~14GB memory in FP16, 70B needs ~140GB. GPUs are preferred for parallel processing. Larger models need multiple GPUs or quantization to reduce memory. Inference costs scale with model size and context length. Cloud APIs offset these requirements but add latency and cost.",
+          "tags": [
+            "LLM",
+            "Infrastructure"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "105",
+          "question": "What is quantization in LLMs?",
+          "answer": "Quantization reduces memory and computational requirements by representing model weights with fewer bits. Instead of 32-bit or 16-bit floating-point numbers, quantized models use 8-bit, 4-bit, or even lower precision. This can reduce model size by 4-8x with minimal quality loss. Quantization enables running larger models on consumer hardware, trading slight accuracy for significant efficiency gains.",
+          "tags": [
+            "LLM",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "106",
+          "question": "What is the difference between 16-bit, 8-bit, and 4-bit models?",
+          "answer": "These refer to the precision used to store model weights. 16-bit (FP16/BF16) is standard, providing good quality with moderate memory use. 8-bit quantization halves memory with minimal quality loss. 4-bit quantization quarters memory, enabling very large models on consumer hardware with slight quality degradation. For example, a 70B model needs ~140GB in 16-bit but only ~35GB in 4-bit.",
+          "tags": [
+            "LLM",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "107",
+          "question": "What is temperature in LLM text generation?",
+          "answer": "Temperature controls randomness in text generation. Lower temperature (0.1-0.5) makes output more deterministic and focused, choosing high-probability tokens. Higher temperature (0.8-1.5) increases randomness and creativity, allowing less likely tokens. Temperature 0 is greedy (always picks most likely token), while higher values enable more diverse and creative outputs. Typical values: 0.7 for balanced generation, 0.2 for factual tasks.",
+          "tags": [
+            "LLM",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "108",
+          "question": "Compare Llama 3.2 1B vs 3B models for production use",
+          "answer": "Llama 3.2 1B is faster, uses less memory (~2GB), and runs on modest hardware, suitable for latency-sensitive or resource-constrained applications with simpler tasks. The 3B model has better accuracy, understanding, and reasoning but needs ~6GB memory and more compute. Choose 1B for speed/cost optimization in straightforward tasks, 3B when quality and capabilities are more important than efficiency.",
+          "tags": [
+            "LLM",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "109",
+          "question": "What are top-k and top-p (nucleus) sampling?",
+          "answer": "Top-k sampling limits selection to the k most likely next tokens (e.g., top-k=50 considers only the 50 most probable tokens). Top-p (nucleus) sampling chooses from the smallest set of tokens whose cumulative probability exceeds p (e.g., top-p=0.9). Top-p is generally preferred as it adapts to probability distributions, while top-k uses a fixed cutoff. Both reduce randomness compared to pure sampling.",
+          "tags": [
+            "LLM",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "110",
+          "question": "What is greedy decoding vs sampling?",
+          "answer": "Greedy decoding always selects the most probable next token, producing deterministic but potentially repetitive output. Sampling randomly selects tokens based on their probabilities, introducing randomness and diversity. Greedy is faster and consistent but can be boring or get stuck in loops. Sampling with temperature/top-p creates more varied, natural outputs but is less predictable. Most applications use sampling with constraints.",
+          "tags": [
+            "LLM",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "111",
+          "question": "What is the difference between deterministic and stochastic generation?",
+          "answer": "Deterministic generation (temperature=0 or greedy decoding) always produces the same output for the same input, useful for reproducibility and consistency. Stochastic generation (temperature>0 with sampling) introduces randomness, producing different outputs each time, enabling creativity and diversity. Production systems often use deterministic for factual tasks and stochastic for creative applications, sometimes with fixed random seeds for controlled variability.",
+          "tags": [
+            "LLM",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

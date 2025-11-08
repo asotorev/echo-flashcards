@@ -1,0 +1,479 @@
+{
+  "decks": [
+    {
+      "name": "Part 20: LangChain Fundamentals",
+      "description": "Introduction to LangChain framework for building LLM applications",
+      "cards": [
+        {
+          "id": "439",
+          "question": "What is LangChain?",
+          "answer": "LangChain is a framework for developing applications powered by language models. It provides modular components (prompts, chains, agents, memory) and integrations (LLMs, vector stores, tools) that simplify building complex LLM workflows. Think of it as a toolkit that handles common patterns like RAG, conversational AI, and tool-using agents.",
+          "tags": [
+            "LangChain",
+            "Framework"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "440",
+          "question": "What problem does LangChain solve?",
+          "answer": "Building LLM apps requires: managing prompts, chaining operations, handling conversation memory, integrating vector stores, using tools, switching LLM providers. LangChain provides abstractions and patterns for these, so you don't build from scratch. It makes complex workflows (RAG, agents) composable and maintainable. Reduces boilerplate and promotes best practices.",
+          "tags": [
+            "LangChain",
+            "Problem Solving"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "441",
+          "question": "What are the core components of LangChain?",
+          "answer": "Models (LLM wrappers: OpenAI, Ollama, etc.). Prompts (templates and management). Chains (workflows connecting components). Agents (autonomous decision-makers). Memory (conversation history). Retrievers (document retrieval for RAG). Output Parsers (structured output). Tools (functions agents can use). These compose into complete applications.",
+          "tags": [
+            "LangChain",
+            "Components"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "442",
+          "question": "What programming languages does LangChain support?",
+          "answer": "Primary: Python (most mature, feature-complete). Also: JavaScript/TypeScript (LangChain.js, catching up in features). Python is recommended for most projects due to better ecosystem integration and more examples. JS is good for Node.js/web projects. Both maintained by LangChain team.",
+          "tags": [
+            "LangChain",
+            "Languages"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "443",
+          "question": "How do you install LangChain?",
+          "answer": "Basic: 'pip install langchain'. With integrations: 'pip install langchain-openai', 'pip install langchain-community' (community integrations). Modern approach: install specific integration packages you need instead of everything. For development: 'pip install langchain langchain-openai langchain-community chromadb' (common stack).",
+          "tags": [
+            "LangChain",
+            "Installation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "444",
+          "question": "What is the difference between langchain and langchain-core?",
+          "answer": "langchain-core: Minimal core abstractions and interfaces. langchain: Main package with common chains and agents. langchain-community: Community-contributed integrations. langchain-openai, langchain-anthropic, etc.: Specific provider integrations. Install core + what you need for lighter dependencies. Full langchain includes everything.",
+          "tags": [
+            "LangChain",
+            "Packages"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "445",
+          "question": "What are LangChain community packages?",
+          "answer": "langchain-community contains integrations contributed by the community: vector stores (Pinecone, Weaviate), LLM providers (Anthropic, Cohere), document loaders, retrievers, and tools. These are maintained separately from core LangChain. Install the specific community package you need or all via langchain-community.",
+          "tags": [
+            "LangChain",
+            "Community"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "446",
+          "question": "What is an LLM wrapper in LangChain?",
+          "answer": "LLM wrappers provide a unified interface to different language models. Instead of learning each provider's API, use LangChain's consistent interface. Example: OpenAI(), Ollama(), HuggingFaceHub() all share common methods (invoke, stream). This enables swapping LLMs without rewriting code - perfect for testing or multi-provider fallbacks.",
+          "tags": [
+            "LangChain",
+            "LLMs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "447",
+          "question": "What is a chat model in LangChain?",
+          "answer": "Chat models are LLMs designed for conversations with message-based input/output. They understand roles (system, user, assistant) and maintain conversation structure. Examples: ChatOpenAI, ChatOllama. Different from base LLM class (simple text in/out). Chat models are standard for conversational applications.",
+          "tags": [
+            "LangChain",
+            "Chat"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "448",
+          "question": "What's the difference between LLM and ChatModel classes?",
+          "answer": "LLM: takes string, returns string. Simple completion interface. ChatModel: takes list of messages (with roles), returns message. Conversation-aware. Most modern models are chat-based (GPT-4, Claude, Llama-chat). Use ChatModel for conversational apps, LLM for simple completion tasks. ChatModel is generally recommended.",
+          "tags": [
+            "LangChain",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "449",
+          "question": "How do you use OpenAI models with LangChain?",
+          "answer": "Install: 'pip install langchain-openai'. Import and instantiate: 'from langchain_openai import ChatOpenAI; llm = ChatOpenAI(model='gpt-4', api_key='...')'. Set API key via environment variable (OPENAI_API_KEY) or parameter. Use llm.invoke() for generation. Supports all OpenAI models and parameters (temperature, etc.).",
+          "tags": [
+            "LangChain",
+            "OpenAI"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "450",
+          "question": "How do you use Ollama with LangChain?",
+          "answer": "Install: 'pip install langchain-community'. Import: 'from langchain_community.llms import Ollama; llm = Ollama(model='llama3.2')'. Requires Ollama running locally (default localhost:11434). For chat: 'from langchain_community.chat_models import ChatOllama'. Automatically connects to local Ollama server. Great for local, private LLM applications.",
+          "tags": [
+            "LangChain",
+            "Ollama"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "451",
+          "question": "How do you use Hugging Face models with LangChain?",
+          "answer": "Install: 'pip install langchain-community'. Use HuggingFaceHub for API: 'from langchain_community.llms import HuggingFaceHub; llm = HuggingFaceHub(repo_id='model_name', huggingfacehub_api_token='...')'. Or HuggingFacePipeline for local: loads model with Transformers. Useful for open-source models or custom fine-tuned models.",
+          "tags": [
+            "LangChain",
+            "Hugging Face"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "452",
+          "question": "What is a prompt template in LangChain?",
+          "answer": "Prompt templates are reusable prompt structures with variables. Instead of string formatting, use PromptTemplate: 'PromptTemplate(template='Tell me about {topic}', input_variables=['topic'])'. Benefits: consistent formatting, easy modification, variable validation, composability. Essential for maintainable prompt engineering.",
+          "tags": [
+            "LangChain",
+            "Prompts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "453",
+          "question": "What is the PromptTemplate class?",
+          "answer": "PromptTemplate creates text prompts with variables: 'template = PromptTemplate.from_template('Write a {style} poem about {topic}')'. Use template.format(style='haiku', topic='AI') to create actual prompt. Supports validation, partial formatting, and composition. The foundation for structured prompt management in LangChain.",
+          "tags": [
+            "LangChain",
+            "Prompts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "454",
+          "question": "What is ChatPromptTemplate?",
+          "answer": "ChatPromptTemplate creates message-based prompts for chat models. Combines system, human, and AI messages: 'ChatPromptTemplate.from_messages([('system', 'You are helpful'), ('user', '{question}')])'. Each message has a role and content. This matches how chat models expect input. More powerful than simple text prompts for conversational applications.",
+          "tags": [
+            "LangChain",
+            "Prompts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "455",
+          "question": "What are message types in LangChain? (System, Human, AI)",
+          "answer": "SystemMessage: instructions about assistant behavior. HumanMessage: user input. AIMessage: assistant responses. FunctionMessage/ToolMessage: tool/function results. Each message type has specific meaning in conversations. Chat models use these to understand context and roles. Proper message types improve model responses.",
+          "tags": [
+            "LangChain",
+            "Messages"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "456",
+          "question": "What is a FewShotPromptTemplate?",
+          "answer": "FewShotPromptTemplate adds examples to prompts for few-shot learning. Provide example inputs and outputs, and the template includes them in prompts: 'FewShotPromptTemplate(examples=[{\"input\": \"hi\", \"output\": \"hello\"}], ...)'. Improves model responses by showing desired behavior. Useful for consistent formatting or specific output styles.",
+          "tags": [
+            "LangChain",
+            "Prompts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "457",
+          "question": "What is the difference between PromptTemplate and ChatPromptTemplate?",
+          "answer": "PromptTemplate: Single string prompt, for text completion LLMs. ChatPromptTemplate: Multiple messages with roles, for chat models. Chat templates are more structured and support conversation context better. Use ChatPromptTemplate for modern chat models (GPT-4, Claude), PromptTemplate for simple completion tasks or base models.",
+          "tags": [
+            "LangChain",
+            "Prompts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "458",
+          "question": "What are output parsers in LangChain?",
+          "answer": "Output parsers convert LLM string outputs to structured data. Instead of parsing strings manually, use parsers: StrOutputParser (clean string), JsonOutputParser (JSON objects), PydanticOutputParser (validated objects). They handle parsing, validation, and error recovery. Essential for reliable data extraction from LLM outputs.",
+          "tags": [
+            "LangChain",
+            "Parsing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "459",
+          "question": "What is the StrOutputParser?",
+          "answer": "StrOutputParser extracts string content from LLM responses, stripping metadata. It's the simplest parser: 'chain = prompt | llm | StrOutputParser()'. Useful when you just need the text output. Most common parser for basic applications. Returns clean string suitable for display or further processing.",
+          "tags": [
+            "LangChain",
+            "Parsing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "460",
+          "question": "What is the JsonOutputParser?",
+          "answer": "JsonOutputParser parses JSON from LLM output and returns Python dict. Handles common errors (markdown code blocks, extra text). Usage: Add JSON format instructions to prompt, use JsonOutputParser() at chain end. Enables structured data extraction for databases, APIs, or further processing. More reliable than manual JSON parsing.",
+          "tags": [
+            "LangChain",
+            "Parsing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "461",
+          "question": "What is the PydanticOutputParser?",
+          "answer": "PydanticOutputParser parses LLM output into Pydantic models (typed Python objects). Define a Pydantic schema, parser generates format instructions for prompt and validates output. Benefits: type safety, validation, auto-generated instructions. Essential for production apps needing reliable structured outputs. Catches errors early.",
+          "tags": [
+            "LangChain",
+            "Parsing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "462",
+          "question": "Why use output parsers instead of raw text?",
+          "answer": "Parsers provide: automatic format validation, error handling, type conversion, consistent processing. Raw text requires manual parsing (fragile, error-prone). Parsers handle edge cases (markdown, extra whitespace, format variations). They make code more maintainable and robust. Essential for production applications where reliability matters.",
+          "tags": [
+            "LangChain",
+            "Best Practices"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "463",
+          "question": "What is LCEL (LangChain Expression Language)?",
+          "answer": "LCEL is LangChain's declarative syntax for building chains using pipe operator (|). Example: 'chain = prompt | llm | parser'. It's cleaner than old Chain classes, supports streaming, parallel execution, and is more composable. Modern way to build LangChain applications. Think of it as Unix pipes for LLM workflows.",
+          "tags": [
+            "LangChain",
+            "LCEL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "464",
+          "question": "What is the pipe operator (|) in LCEL?",
+          "answer": "The pipe operator chains runnables: output of left becomes input of right. 'prompt | llm | parser' means: format prompt, pass to LLM, parse output. Similar to Unix pipes or method chaining. Makes chains readable and composable. Enables automatic features like streaming and async support.",
+          "tags": [
+            "LangChain",
+            "LCEL"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "465",
+          "question": "How do you chain components in LangChain?",
+          "answer": "Modern way (LCEL): Use pipe operator: 'chain = component1 | component2 | component3'. Legacy: Use Chain classes (LLMChain, SequentialChain). LCEL is preferred: more flexible, better streaming, cleaner syntax. Components must be runnables (have invoke/stream methods). Chain execution: result = chain.invoke(input).",
+          "tags": [
+            "LangChain",
+            "Chains"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "466",
+          "question": "What is a Runnable in LangChain?",
+          "answer": "Runnable is the base interface for chainable components. Any object with invoke(), stream(), and batch() methods. Prompts, models, parsers, retrievers, and custom functions can be runnables. This common interface enables composing different types of components into chains. Foundation of LCEL.",
+          "tags": [
+            "LangChain",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "467",
+          "question": "What is the invoke() method?",
+          "answer": "invoke() executes a chain/runnable with input and returns output. Synchronous, blocking call: 'result = chain.invoke({\"topic\": \"AI\"})'. The standard way to run chains. For asynchronous: ainvoke(). For streaming: stream(). invoke() is simple and works for most use cases.",
+          "tags": [
+            "LangChain",
+            "Execution"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "468",
+          "question": "What is the stream() method in LangChain?",
+          "answer": "stream() returns output incrementally as it's generated (token-by-token for LLMs): 'for chunk in chain.stream(input): print(chunk)'. Enables real-time display, better UX for long generations. Works automatically with streaming-capable models. For async: astream(). Essential for user-facing chat applications.",
+          "tags": [
+            "LangChain",
+            "Streaming"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "469",
+          "question": "What is a chain in LangChain?",
+          "answer": "A chain is a sequence of operations connected together. Modern chains use LCEL (pipe syntax). Legacy chains are classes (LLMChain, SequentialChain). Chains can be simple (prompt -> LLM -> parse) or complex (multi-step reasoning, retrieval, tool use). Chains make multi-step LLM workflows composable and maintainable.",
+          "tags": [
+            "LangChain",
+            "Chains"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "470",
+          "question": "What is LLMChain (legacy)?",
+          "answer": "LLMChain is the old way to combine prompt + LLM: 'LLMChain(llm=llm, prompt=prompt)'. Mostly replaced by LCEL: 'prompt | llm'. Still works but LCEL is preferred for new code. Legacy documentation shows LLMChain; modern approach is simpler and more powerful.",
+          "tags": [
+            "LangChain",
+            "Legacy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "471",
+          "question": "What is a sequential chain?",
+          "answer": "Sequential chain runs steps in order, passing output of each to the next. LCEL: automatically sequential with |. Legacy: SequentialChain or SimpleSequentialChain. Example: retrieve documents -> summarize -> answer question. Each step builds on previous results. Common pattern for multi-step reasoning.",
+          "tags": [
+            "LangChain",
+            "Chains"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "472",
+          "question": "What is the difference between SimpleSequentialChain and SequentialChain?",
+          "answer": "SimpleSequentialChain (legacy): passes single string between steps. SequentialChain (legacy): handles multiple inputs/outputs between steps. Both replaced by LCEL which is more flexible. Use LCEL with RunnablePassthrough for complex data flow. Legacy chains mainly for backward compatibility.",
+          "tags": [
+            "LangChain",
+            "Legacy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "473",
+          "question": "What is a SequentialChain and when should you use it?",
+          "answer": "SequentialChain (legacy) connects multiple chains where each step can have multiple inputs/outputs. Use cases: multi-step analysis, progressive refinement, complex workflows. Modern equivalent: LCEL with dictionaries and RunnablePassthrough. Use LCEL for new projects; SequentialChain for maintaining legacy code.",
+          "tags": [
+            "LangChain",
+            "Chains"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "474",
+          "question": "What is a SequentialChain and when should you use it?",
+          "answer": "SequentialChain (legacy) connects multiple chains where each step can have multiple inputs/outputs, unlike SimpleSequentialChain which only passes single strings. Modern equivalent is LCEL with dictionaries and RunnablePassthrough for complex data flow. Use for multi-step analysis or progressive refinement, but prefer LCEL for new projects.",
+          "tags": [
+            "LangChain",
+            "Chains",
+            "Legacy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,439 @@
+{
+  "decks": [
+    {
+      "name": "Part 18: Vector Databases Fundamentals",
+      "description": "Understanding vector databases for semantic search and RAG",
+      "cards": [
+        {
+          "id": "380",
+          "question": "What is a vector database?",
+          "answer": "A vector database stores and searches high-dimensional vector embeddings efficiently. Unlike traditional databases that search by exact matches, vector databases find similar vectors using distance metrics. They're essential for semantic search, recommendations, and RAG systems where you need to find conceptually similar content, not just keyword matches.",
+          "tags": [
+            "Vector DB",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "381",
+          "question": "How does a vector database differ from a traditional database?",
+          "answer": "Traditional DBs search by exact values or ranges (SQL WHERE clauses). Vector DBs search by similarity - finding vectors closest to a query vector in multi-dimensional space. Traditional: 'find records where city=Seattle'. Vector: 'find documents most similar to this concept'. Vector DBs use specialized indexes (HNSW, IVF) for fast approximate search.",
+          "tags": [
+            "Vector DB",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "382",
+          "question": "Why are vector databases important for AI applications?",
+          "answer": "AI models work with embeddings (dense vectors capturing meaning). Vector DBs enable: semantic search (find similar meanings, not keywords), RAG (retrieve relevant context for LLMs), recommendation systems, similarity detection, and image/audio search. They bridge the gap between unstructured data and AI models by making embeddings searchable.",
+          "tags": [
+            "Vector DB",
+            "AI"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "383",
+          "question": "What is a vector (embedding) in this context?",
+          "answer": "An embedding is a dense numerical representation of data (text, images, audio) as an array of floats. Example: [0.23, -0.45, 0.67, ...]. Similar concepts have similar vectors (close in vector space). Embedding models (like Sentence Transformers) convert content to vectors. Typical dimensions: 384, 768, or 1536.",
+          "tags": [
+            "Vector DB",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "384",
+          "question": "What is vector similarity search?",
+          "answer": "Similarity search finds vectors closest to a query vector using distance metrics (cosine similarity, euclidean distance). Instead of exact matches, it returns top-k most similar results. Example: query 'car financing' returns documents about 'auto loans' and 'vehicle payments' even without exact keywords. This powers semantic search in RAG.",
+          "tags": [
+            "Vector DB",
+            "Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "385",
+          "question": "What is the curse of dimensionality in vector search?",
+          "answer": "As dimensions increase, vectors become sparse in space and distances become less meaningful (all vectors seem equally far). This makes exact nearest neighbor search exponentially expensive. Solution: Approximate Nearest Neighbor (ANN) algorithms trade perfect accuracy for speed, which is acceptable for most applications.",
+          "tags": [
+            "Vector DB",
+            "Challenges"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "386",
+          "question": "What are the main operations in a vector database? (insert, search, delete)",
+          "answer": "Insert: Add vectors with metadata and IDs. Search: Find k nearest neighbors to query vector. Update: Modify vectors or metadata. Delete: Remove vectors by ID. Additional: bulk operations, filtering by metadata, hybrid search (vector + keyword). These enable building and maintaining searchable knowledge bases.",
+          "tags": [
+            "Vector DB",
+            "Operations"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "387",
+          "question": "What is ANN (Approximate Nearest Neighbor) search?",
+          "answer": "ANN finds approximately nearest neighbors quickly instead of exactly nearest (which is slow). It uses indexing algorithms (HNSW, IVF) that trade perfect accuracy for speed. For most applications, 95-99% accuracy is sufficient and provides 100-1000x speedup. Essential for large-scale vector search in production.",
+          "tags": [
+            "Vector DB",
+            "ANN"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "388",
+          "question": "Why is ANN used instead of exact nearest neighbor?",
+          "answer": "Exact search (brute force) requires comparing query to every vector - O(n) time, which is too slow for millions of vectors. ANN algorithms use indexes to search in O(log n) or O(sqrt(n)) time. For 1 million vectors, exact might take seconds; ANN takes milliseconds. Trade-off: 95% accuracy vs 100%, but massive speed gain.",
+          "tags": [
+            "Vector DB",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "389",
+          "question": "What is the trade-off between speed and accuracy in ANN?",
+          "answer": "ANN algorithms have tunable parameters: more index building time = faster/more accurate search. More memory = better accuracy. More computation at query time = higher recall. Typical settings achieve 95-99% recall (finding most true nearest neighbors) at 10-100x speedup. Fine-tune based on requirements.",
+          "tags": [
+            "Vector DB",
+            "Trade-offs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "390",
+          "question": "What are popular vector database solutions?",
+          "answer": "Standalone: Pinecone (managed), Qdrant (open-source), Weaviate (open-source), Milvus (open-source), Chroma (lightweight). Extensions: pgvector (Postgres), pgvector (Redis). Libraries: FAISS (Facebook). Each has trade-offs in features, performance, ease of use, and cost. Choice depends on scale, requirements, and infrastructure.",
+          "tags": [
+            "Vector DB",
+            "Solutions"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "391",
+          "question": "What is Pinecone?",
+          "answer": "Pinecone is a fully managed vector database service. It handles infrastructure, scaling, and optimization. Features: fast ANN search, metadata filtering, hybrid search, real-time updates. Pros: easy setup, no ops overhead, good performance. Cons: cloud-only, cost scales with usage. Popular for production RAG systems needing managed solution.",
+          "tags": [
+            "Vector DB",
+            "Pinecone"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "392",
+          "question": "What is Weaviate?",
+          "answer": "Weaviate is an open-source vector database with built-in vectorization (can generate embeddings for you). Features: RESTful/GraphQL API, hybrid search, multi-tenancy, horizontal scaling. Can run self-hosted or use Weaviate Cloud. Good for complex schemas and integrated embedding generation. Strong for enterprise use cases.",
+          "tags": [
+            "Vector DB",
+            "Weaviate"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "393",
+          "question": "What is Qdrant?",
+          "answer": "Qdrant is a high-performance open-source vector database written in Rust. Features: fast search, rich filtering, payload support, clustering. Offers managed cloud or self-hosted. Known for speed and efficiency. API is simple and well-documented. Good choice for performance-critical applications or those wanting self-hosted control.",
+          "tags": [
+            "Vector DB",
+            "Qdrant"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "394",
+          "question": "What is Milvus?",
+          "answer": "Milvus is an enterprise-grade open-source vector database optimized for massive scale (billions of vectors). Features: distributed architecture, multiple index types, GPU acceleration, Kubernetes-native. Complex to set up but highly scalable. Good for large enterprises with huge datasets and infrastructure resources.",
+          "tags": [
+            "Vector DB",
+            "Milvus"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "395",
+          "question": "What is Chroma?",
+          "answer": "Chroma is a lightweight, open-source embedding database designed for ease of use. Features: simple Python API, local/in-memory operation, minimal setup. Great for development and small-scale applications. Less feature-rich than enterprise solutions but perfect for prototyping RAG systems and learning.",
+          "tags": [
+            "Vector DB",
+            "Chroma"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "396",
+          "question": "What is FAISS?",
+          "answer": "FAISS (Facebook AI Similarity Search) is a library for efficient similarity search, not a full database. Extremely fast, supports GPU, multiple index types. Requires manual persistence and doesn't include database features (CRUD, metadata). Use as building block for custom solutions or when you need maximum search performance.",
+          "tags": [
+            "Vector DB",
+            "FAISS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "397",
+          "question": "How does FAISS differ from other vector databases?",
+          "answer": "FAISS is a library focused purely on similarity search algorithms, not a full database. No server, no persistent storage, no metadata management. You integrate it into your application. Other vector DBs are complete systems with APIs, persistence, and features. FAISS: maximum performance and control. Others: complete solution with less setup.",
+          "tags": [
+            "Vector DB",
+            "FAISS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "398",
+          "question": "What is pgvector (Postgres extension)?",
+          "answer": "pgvector adds vector operations to PostgreSQL. Store vectors as a column type, query with SQL. Pros: leverage existing Postgres infrastructure, combine vector and relational queries, no new database to manage. Cons: slower than specialized vector DBs for large scale. Excellent for small-to-medium datasets with existing Postgres.",
+          "tags": [
+            "Vector DB",
+            "pgvector"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "399",
+          "question": "When would you use pgvector vs a dedicated vector database?",
+          "answer": "Use pgvector when: already using Postgres, dataset < 1M vectors, want to combine vector and relational data in one database, prefer operational simplicity. Use dedicated DB when: scaling to millions of vectors, need maximum search performance, require advanced features (hybrid search, reranking), building vector-first application.",
+          "tags": [
+            "Vector DB",
+            "Decision"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "400",
+          "question": "Compare pgvector vs Pinecone vs Qdrant for production",
+          "answer": "pgvector: Best if using Postgres, simple ops, <1M vectors. Moderate performance. Pinecone: Managed, zero ops, good performance, scales well. Higher cost. Qdrant: Self-hosted or cloud, great performance, full control. Requires more setup. CarBrain recommendation: pgvector (already using Postgres, manageable scale, simpler architecture).",
+          "tags": [
+            "Vector DB",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "401",
+          "question": "Why is pgvector recommended for CarBrain specifically?",
+          "answer": "CarBrain already uses Postgres for vehicle data. pgvector keeps vectors alongside structured data (no separate database), simplifies architecture, reduces operational complexity, allows SQL queries combining vector similarity and filters (price, make, location). Vehicle inventory is manageable scale (<100K). Cost-effective (no additional DB service).",
+          "tags": [
+            "Vector DB",
+            "CarBrain"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "402",
+          "question": "What is a vector index?",
+          "answer": "A vector index is a data structure that organizes vectors for fast similarity search. Without indexes, search requires comparing to all vectors (slow). Indexes like HNSW create graph structures where similar vectors are connected, enabling fast traversal to nearest neighbors. Index quality determines search speed and accuracy.",
+          "tags": [
+            "Vector DB",
+            "Indexing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "403",
+          "question": "What are different indexing algorithms? (HNSW, IVF, etc.)",
+          "answer": "HNSW (Hierarchical Navigable Small World): Graph-based, excellent recall and speed. IVF (Inverted File): Clusters vectors, fast but lower recall. LSH (Locality-Sensitive Hashing): Probability-based, simple but less accurate. Product Quantization: Compresses vectors for memory efficiency. Choice depends on scale, accuracy requirements, and resources.",
+          "tags": [
+            "Vector DB",
+            "Algorithms"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "404",
+          "question": "What is HNSW (Hierarchical Navigable Small World)?",
+          "answer": "HNSW is a graph-based index algorithm providing excellent search quality and speed. It builds a hierarchical graph where each level has fewer nodes, enabling fast navigation from coarse to fine similarity. Widely used (Qdrant, Weaviate, pgvector) for balance of speed and accuracy. Trade-off: higher memory usage than some alternatives.",
+          "tags": [
+            "Vector DB",
+            "HNSW"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "405",
+          "question": "What is IVF (Inverted File Index)?",
+          "answer": "IVF clusters vectors using k-means, creating partitions. At search time, query only relevant clusters instead of all vectors. Pros: fast, memory-efficient. Cons: lower recall than HNSW, requires training. Good for very large datasets where speed is critical and slight accuracy loss is acceptable.",
+          "tags": [
+            "Vector DB",
+            "IVF"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "406",
+          "question": "Explain IVFFlat vs HNSW indexing in pgvector",
+          "answer": "IVFFlat: Faster build time, lower memory, faster search for very large datasets, but lower recall (might miss some similar vectors). HNSW: Slower build, more memory, slower for huge datasets, but better recall (finds more true neighbors). For CarBrain scale, HNSW recommended for better quality. IVFFlat for millions of vectors.",
+          "tags": [
+            "Vector DB",
+            "pgvector"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "407",
+          "question": "What is LSH (Locality-Sensitive Hashing)?",
+          "answer": "LSH uses hash functions where similar vectors hash to the same buckets. Search only vectors in the same/nearby buckets. Simple and fast but less accurate than graph-based methods. Good for extremely large datasets or when approximate results are sufficient. Less common in modern vector DBs due to better alternatives.",
+          "tags": [
+            "Vector DB",
+            "LSH"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "408",
+          "question": "What metrics can you use for vector similarity? (cosine, euclidean, dot product)",
+          "answer": "Cosine similarity: measures angle between vectors (0-1, higher is more similar), invariant to magnitude. Euclidean distance: geometric distance, affected by magnitude. Dot product: combines angle and magnitude. Choice affects results: cosine for normalized vectors (most common), euclidean for when magnitude matters.",
+          "tags": [
+            "Vector DB",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "409",
+          "question": "When should you use cosine vs euclidean distance?",
+          "answer": "Cosine: Use for normalized embeddings (like from Sentence Transformers), when direction matters more than magnitude, for text similarity. Euclidean: Use when absolute distances matter, for non-normalized data, some image embeddings. For most NLP/text applications, cosine is standard. Match the metric to your embedding model's training.",
+          "tags": [
+            "Vector DB",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "410",
+          "question": "What is metadata filtering in vector databases?",
+          "answer": "Metadata filtering combines vector similarity with attribute filters. Example: find similar vehicles WHERE price < 30000 AND make = 'Toyota'. This enables semantic search within subsets of data. Essential for practical applications where you need both semantic relevance and business logic constraints. Most modern vector DBs support rich metadata filtering.",
+          "tags": [
+            "Vector DB",
+            "Filtering"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "411",
+          "question": "What is hybrid search (vector + keyword)?",
+          "answer": "Hybrid search combines vector similarity with traditional keyword/BM25 search, merging results with weighted scores. This leverages semantic understanding (vectors) and exact term matching (keywords). Best of both worlds: handles both conceptual similarity and specific terminology. Essential for production search where users expect both behaviors.",
+          "tags": [
+            "Vector DB",
+            "Hybrid Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "412",
+          "question": "How do you choose the right vector database for your use case?",
+          "answer": "Consider: Scale (how many vectors?), existing infrastructure (can you add to Postgres?), operational complexity (managed vs self-hosted?), performance needs (queries/sec, latency), features (metadata, hybrid search), cost (cloud costs, ops overhead). For small-medium with Postgres: pgvector. Large scale with budget: Pinecone. Performance-critical self-hosted: Qdrant.",
+          "tags": [
+            "Vector DB",
+            "Decision"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

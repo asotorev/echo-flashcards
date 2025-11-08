@@ -1,0 +1,218 @@
+{
+  "decks": [
+    {
+      "name": "Part 10: Advanced RAG & Integration",
+      "description": "Advanced RAG techniques, evaluation, and production considerations",
+      "cards": [
+        {
+          "id": "189",
+          "question": "What is naive RAG vs advanced RAG?",
+          "answer": "Naive RAG simply retrieves chunks based on query similarity and passes them to the LLM. Advanced RAG includes query transformation, reranking, hybrid search, metadata filtering, and iterative retrieval. Naive RAG works for simple cases but struggles with complex queries, ambiguity, or multi-hop reasoning. Advanced techniques significantly improve retrieval quality and answer accuracy, essential for production systems.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "190",
+          "question": "What is query transformation/rewriting in RAG?",
+          "answer": "Query transformation rewrites user queries before retrieval to improve results. Techniques include expanding queries with synonyms, breaking complex questions into sub-questions, rephrasing for clarity, or generating hypothetical answers. For example, 'best deals' becomes 'affordable vehicles low price discount'. LLMs can rewrite queries using prompting. Query transformation addresses the vocabulary mismatch between how users ask and how documents are written.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "191",
+          "question": "What is HyDE (Hypothetical Document Embeddings)?",
+          "answer": "HyDE generates a hypothetical answer to the query using an LLM, then uses that answer's embedding for retrieval instead of the query embedding. Since the hypothetical answer resembles actual documents more than queries do, it often retrieves more relevant results. HyDE is counterintuitive but effective - it trades initial generation cost for better retrieval, especially useful when queries and documents have different styles.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "192",
+          "question": "What is reranking and why is it important?",
+          "answer": "Reranking re-scores initially retrieved documents using a more sophisticated but slower model to improve relevance. First-stage retrieval uses fast vector search to get top 50-100 candidates. Reranking applies a cross-encoder (considers query-document interaction) to select the best 5-10. Reranking significantly improves precision because cross-encoders better capture relevance than simple cosine similarity, worth the extra compute for the small candidate set.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "193",
+          "question": "What is multi-query retrieval?",
+          "answer": "Multi-query retrieval generates multiple variations of the original query, retrieves documents for each variation, and combines results. For example, 'affordable family car' spawns queries about 'budget SUV', 'economical minivan', 'low-cost vehicle for families'. This increases recall by capturing different phrasings and aspects. Results are typically deduplicated and merged, improving robustness to query phrasing and capturing diverse relevant information.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "194",
+          "question": "What is the lost-in-the-middle problem in RAG?",
+          "answer": "LLMs pay more attention to information at the beginning and end of prompts, potentially missing relevant information in the middle. When you retrieve 10 documents, crucial information in positions 4-7 may be overlooked. Solutions include reordering documents by relevance, placing most important content at start/end, or reducing the number of retrieved documents. This is an LLM limitation that RAG systems must account for.",
+          "tags": [
+            "RAG",
+            "Challenges"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "195",
+          "question": "How do you handle multi-hop reasoning in RAG?",
+          "answer": "Multi-hop questions require information from multiple sources ('What cars under $20K have the best MPG?'). Solutions include iterative retrieval (retrieve, generate partial answer, retrieve again based on findings), decomposing questions into sub-questions, using agent-based approaches where the LLM decides when to retrieve more information, or graph-based RAG tracking relationships. Simple RAG struggles with this - it requires orchestration.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "196",
+          "question": "What is agentic RAG?",
+          "answer": "Agentic RAG gives the LLM control over the retrieval process through tools and decision-making. The agent decides when to retrieve, what queries to use, and when enough information is gathered. This enables iterative refinement, multi-hop reasoning, and adaptive retrieval strategies. LangChain agents with retrieval tools exemplify this. Agentic RAG is more flexible but more complex and expensive than standard RAG.",
+          "tags": [
+            "RAG",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "197",
+          "question": "What are the trade-offs between RAG and fine-tuning?",
+          "answer": "RAG: better for dynamic data, cites sources, updates easily, works with limited training data, but adds latency and depends on retrieval quality. Fine-tuning: faster inference, learns behaviors/styles deeply, works offline, but requires retraining for updates, can't cite sources, and needs substantial training data. Often used together: fine-tune for domain knowledge and behavior, RAG for dynamic facts and grounding.",
+          "tags": [
+            "RAG",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "198",
+          "question": "Why is RAG better than fine-tuning for dynamic inventory data?",
+          "answer": "Vehicle inventory changes daily - cars sell, new arrivals, price updates. Fine-tuning would require daily retraining (expensive, impractical). RAG accesses the latest database directly, reflecting changes instantly. RAG can cite specific VINs and current prices. For CarBrain, RAG provides real-time accuracy without constant retraining. Fine-tuning is better for static domain knowledge (automotive terminology, buying process), RAG for current inventory state.",
+          "tags": [
+            "RAG",
+            "Use Case"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "199",
+          "question": "When would you use RAG + fine-tuning together?",
+          "answer": "Combine them when you need both specialized behavior and dynamic knowledge. Fine-tune for domain expertise, communication style, and instruction following. Use RAG for current facts, specific details, and citations. For CarBrain: fine-tune on automotive domain, sales conversations, and customer service interactions. Use RAG for real-time inventory, pricing, and vehicle specifications. This hybrid approach maximizes both capabilities.",
+          "tags": [
+            "RAG",
+            "Strategy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "200",
+          "question": "How do you evaluate RAG systems? (retrieval quality, generation quality)",
+          "answer": "Evaluate retrieval: precision (retrieved docs are relevant), recall (all relevant docs retrieved), MRR (mean reciprocal rank). Evaluate generation: accuracy (factually correct), faithfulness (grounded in context), completeness (answers the question), and human evaluation. Test end-to-end with real queries. Monitor failure modes (no retrieval, irrelevant retrieval, hallucination). A/B testing in production provides ultimate validation. Both retrieval and generation quality matter.",
+          "tags": [
+            "RAG",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "201",
+          "question": "What is faithfulness/groundedness in RAG responses?",
+          "answer": "Faithfulness means the answer is supported by the retrieved context - all claims can be traced to provided documents. A faithful answer doesn't add information beyond the context or contradict it. This prevents hallucination by keeping the LLM grounded in retrieved facts. Evaluate faithfulness by checking if each answer statement has supporting evidence in the context. Prompting techniques encourage faithfulness by instructing models to only use provided information.",
+          "tags": [
+            "RAG",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "202",
+          "question": "What are hallucinations and how does RAG help prevent them?",
+          "answer": "Hallucinations are when LLMs generate plausible but incorrect information. RAG reduces hallucinations by grounding responses in retrieved documents, providing factual context the model can reference. Prompts instruct models to answer only based on provided context. RAG can't eliminate hallucinations entirely - models may still misinterpret context or add unsupported details - but it significantly improves factual accuracy compared to pure generation.",
+          "tags": [
+            "RAG",
+            "Quality"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "203",
+          "question": "What are the main failure modes of RAG systems?",
+          "answer": "Retrieval failures: no relevant documents found, wrong documents retrieved, relevant info in middle of too many docs. Generation failures: ignoring context, hallucinating despite context, misinterpreting context, incomplete answers. System failures: chunking breaks important info, embedding model vocabulary mismatch, slow retrieval latency. Design systems to handle these gracefully, monitor for patterns, and continuously improve retrieval and prompting strategies.",
+          "tags": [
+            "RAG",
+            "Challenges"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "204",
+          "question": "How do you handle embedding sync when vehicles are added/updated?",
+          "answer": "Use incremental indexing: when vehicles are added/modified in the database, trigger embedding updates only for changed records. Delete old embeddings for updated vehicles, generate new embeddings, and insert them into the vector DB. Use database triggers or event streams (like Change Data Capture) to detect changes. Batch updates during low-traffic periods if latency isn't critical. This keeps embeddings synchronized with source data without full reindexing.",
+          "tags": [
+            "RAG",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "decks": [
+    {
+      "name": "Part 14: Advanced Transformers Usage",
+      "description": "Advanced features including training, PEFT, and optimization",
+      "cards": [
+        {
+          "id": "286",
+          "question": "What is the Trainer API in Transformers?",
+          "answer": "Trainer is a high-level API for training and fine-tuning models. It abstracts away training loops, handles distributed training, mixed precision, logging, checkpointing, and evaluation. You provide a model, dataset, and TrainingArguments, and Trainer handles the rest. It's the standard way to fine-tune models in Transformers.",
+          "tags": [
+            "Transformers",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "287",
+          "question": "What is TrainingArguments?",
+          "answer": "TrainingArguments is a configuration class specifying training parameters: learning rate, batch size, epochs, output directory, evaluation strategy, logging frequency, and more. It centralizes all training configuration in one object passed to the Trainer. This makes experiments reproducible and easy to modify.",
+          "tags": [
+            "Transformers",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "288",
+          "question": "How do you fine-tune a model using the Trainer?",
+          "answer": "Load model and tokenizer, prepare dataset, create TrainingArguments with hyperparameters, instantiate Trainer with model, training_args, and datasets, then call trainer.train(). Trainer handles the training loop, checkpointing, and logging. After training, save with model.save_pretrained().",
+          "tags": [
+            "Transformers",
+            "Fine-tuning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "289",
+          "question": "What is the PEFT library and how does it integrate with Transformers?",
+          "answer": "PEFT (Parameter-Efficient Fine-Tuning) is a library for techniques like LoRA that fine-tune models using minimal parameters. It integrates seamlessly with Transformers - wrap models with get_peft_model() to apply LoRA or other PEFT methods. This enables fine-tuning large models on consumer hardware by reducing memory requirements dramatically.",
+          "tags": [
+            "Transformers",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "290",
+          "question": "How do you apply LoRA to a model using PEFT?",
+          "answer": "Import LoraConfig from peft, create configuration (target_modules, rank, alpha), wrap model with get_peft_model(model, peft_config). Only LoRA parameters are trainable. After fine-tuning, save adapter weights separately (much smaller than full model). This makes fine-tuning memory-efficient and enables multiple adapters for one base model.",
+          "tags": [
+            "Transformers",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "291",
+          "question": "What is `peft_config`?",
+          "answer": "peft_config is a configuration object (like LoraConfig or PrefixTuningConfig) that defines PEFT method parameters: which layers to adapt, rank for LoRA, dropout rates, and task type. Different PEFT methods have different configs. This configuration is passed to get_peft_model() to create a trainable PEFT model.",
+          "tags": [
+            "Transformers",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "292",
+          "question": "What is `get_peft_model()`?",
+          "answer": "get_peft_model() wraps a base model with PEFT adapters, freezing original weights and adding trainable adapter parameters. Usage: 'peft_model = get_peft_model(model, peft_config)'. This creates a model where only adapter parameters are updated during training, drastically reducing memory and enabling efficient fine-tuning.",
+          "tags": [
+            "Transformers",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "293",
+          "question": "How do you save a PEFT model?",
+          "answer": "Call peft_model.save_pretrained('adapter_path') to save only adapter weights (typically few MB). The base model remains unchanged. To load later: load base model, then use PeftModel.from_pretrained(base_model, 'adapter_path'). This saves storage and enables sharing multiple adapters for the same base model.",
+          "tags": [
+            "Transformers",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "294",
+          "question": "How do you load and merge LoRA adapters?",
+          "answer": "Load base model, then PeftModel.from_pretrained(base_model, adapter_path) to load adapter. For inference, optionally merge adapter into base model with model.merge_and_unload() for faster inference without adapter overhead. Merged models behave like fully fine-tuned models but were created efficiently with LoRA.",
+          "tags": [
+            "Transformers",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "295",
+          "question": "What is the Accelerate library?",
+          "answer": "Accelerate is Hugging Face's library for distributed training and mixed precision without changing model code. It handles device placement, gradient accumulation, multi-GPU training, and mixed precision automatically. Use accelerate launch to run scripts on multiple GPUs or TPUs without manual parallelization code.",
+          "tags": [
+            "Transformers",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "296",
+          "question": "How does Accelerate help with distributed training?",
+          "answer": "Accelerate automatically distributes model and data across available GPUs/TPUs. It handles synchronization, gradient accumulation across devices, and device placement. You write code as if for single GPU, and Accelerate handles distribution. This simplifies scaling training from single GPU to multi-GPU or multi-node setups.",
+          "tags": [
+            "Transformers",
+            "Distributed"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "297",
+          "question": "What is gradient accumulation?",
+          "answer": "Gradient accumulation simulates larger batch sizes by accumulating gradients over multiple forward/backward passes before updating weights. This enables training with large effective batch sizes on limited GPU memory. For example, 4 accumulation steps with batch size 2 equals effective batch size of 8.",
+          "tags": [
+            "Transformers",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "298",
+          "question": "What is mixed precision training?",
+          "answer": "Mixed precision trains with a mix of FP16 and FP32: forward/backward passes in FP16 (faster, less memory), weight updates in FP32 (numerical stability). This provides FP16 speed benefits without numerical issues. Modern libraries like Accelerate and Trainer handle this automatically with minimal code changes.",
+          "tags": [
+            "Transformers",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "299",
+          "question": "What are the different attention implementations? (eager, sdpa, flash_attention_2)",
+          "answer": "Eager: Default PyTorch implementation, most compatible. SDPA (Scaled Dot Product Attention): PyTorch 2.0+ optimized implementation, 2-3x faster. Flash Attention 2: Memory-efficient attention with dramatic speedups (5-10x) and reduced memory. Flash Attention requires separate installation but offers best performance for long contexts.",
+          "tags": [
+            "Transformers",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "300",
+          "question": "What is Flash Attention and why is it faster?",
+          "answer": "Flash Attention is an optimized attention algorithm that reduces memory access and enables longer context windows. It processes attention in blocks, keeping data in fast GPU memory (SRAM) instead of slow memory (HBM). This provides 5-10x speedup and 10x memory reduction, enabling longer sequences and larger batch sizes.",
+          "tags": [
+            "Transformers",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "301",
+          "question": "What is the Optimum library?",
+          "answer": "Optimum extends Transformers with hardware-specific optimizations for Intel, AMD, NVIDIA, and other accelerators. It provides tools for model optimization, quantization, and exporting to deployment formats like ONNX. Optimum makes models run faster on specific hardware without changing model code.",
+          "tags": [
+            "Transformers",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "302",
+          "question": "What is ONNX Runtime and how does it relate to Transformers?",
+          "answer": "ONNX Runtime is a high-performance inference engine for ONNX models. Transformers models can be exported to ONNX format via Optimum for faster inference, especially on CPUs. ONNX Runtime applies optimizations like graph fusion and quantization. It's useful for production deployments where speed matters.",
+          "tags": [
+            "Transformers",
+            "Deployment"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "303",
+          "question": "How do you export a Transformers model to ONNX?",
+          "answer": "Use Optimum: 'from optimum.onnxruntime import ORTModelForSequenceClassification; ort_model = ORTModelForSequenceClassification.from_pretrained(model_name, export=True)'. This converts the model to ONNX format optimized for ONNX Runtime. The exported model has the same API as Transformers models but runs faster.",
+          "tags": [
+            "Transformers",
+            "Export"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "304",
+          "question": "What is model optimization in the Optimum library?",
+          "answer": "Optimum provides optimization techniques like graph optimization (removing redundant operations), quantization (reducing precision), operator fusion (combining operations), and hardware-specific tuning. These optimizations can significantly improve inference speed and reduce memory usage without changing model architecture or accuracy substantially.",
+          "tags": [
+            "Transformers",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "305",
+          "question": "What are safetensors and how do they differ from pickle files?",
+          "answer": "Safetensors is a secure, fast format for storing tensors, unlike pickle which can execute arbitrary code (security risk). Safetensors files load faster, support lazy loading (memory-efficient), and have built-in validation. Hugging Face is transitioning to safetensors as the default format for model weights over .bin pickle files.",
+          "tags": [
+            "Transformers",
+            "File Formats"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

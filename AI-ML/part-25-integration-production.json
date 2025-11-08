@@ -1,0 +1,584 @@
+{
+  "decks": [
+    {
+      "name": "Part 25: Integration & Production",
+      "description": "Production deployment, security, scaling, and operational considerations",
+      "cards": [
+        {
+          "id": "578",
+          "question": "How do you manage API keys in LangChain applications?",
+          "answer": "Use environment variables, never hardcode. Load with python-dotenv from .env file. Example: 'OPENAI_API_KEY=sk-...'. LangChain reads common env vars automatically. For multiple keys, use key rotation or provider abstraction layer. Never commit .env to git. Use secret management in production (AWS Secrets Manager, etc.).",
+          "tags": [
+            "LangChain",
+            "Security",
+            "API Keys"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "579",
+          "question": "What is environment variable management?",
+          "answer": "Environment variables store configuration separate from code. Load at runtime, different values per environment (dev/staging/prod). Manage API keys, database URLs, model names. Use .env files locally, cloud provider secrets in production. Prevents secrets in version control. Industry standard for configuration management.",
+          "tags": [
+            "Configuration",
+            "Security",
+            "DevOps"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "580",
+          "question": "What is the .env file approach?",
+          "answer": ".env file stores key-value pairs for environment variables. Load with 'from dotenv import load_dotenv; load_dotenv()'. Example: 'OPENAI_API_KEY=sk-abc123'. Add .env to .gitignore. Create .env.example with dummy values for documentation. Simple, widely used. Different .env files for different environments.",
+          "tags": [
+            "Configuration",
+            "Development",
+            "Best Practices"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "581",
+          "question": "What are LangChain model providers? (OpenAI, Anthropic, Cohere, etc.)",
+          "answer": "LangChain integrates with many LLM providers: OpenAI (GPT-4), Anthropic (Claude), Cohere, Google (PaLM), HuggingFace, Ollama, AWS Bedrock. Each has wrapper class with consistent interface. Switch providers by changing import and initialization. Enables multi-provider strategies, fallbacks, cost optimization.",
+          "tags": [
+            "LangChain",
+            "Providers",
+            "LLMs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "582",
+          "question": "How do you switch between different LLM providers?",
+          "answer": "Change model class: 'ChatOpenAI()' to 'ChatAnthropic()' or 'Ollama()'. Keep chain logic same - consistent interface. Use config/env vars to select provider at runtime. Example: 'llm = ChatOpenAI() if USE_OPENAI else Ollama()'. Enables A/B testing, cost optimization, avoiding vendor lock-in.",
+          "tags": [
+            "LangChain",
+            "Providers",
+            "Flexibility"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "583",
+          "question": "What is Clean Architecture's benefit for AI provider switching?",
+          "answer": "Clean Architecture isolates LLM provider in infrastructure layer behind interface. Domain layer doesn't know which provider used. Switch providers without changing business logic. Example: LLMService interface, OpenAIService and OllamaService implementations. Dependency injection selects provider. Testable with mock LLM.",
+          "tags": [
+            "Architecture",
+            "Clean Architecture",
+            "LangChain"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "584",
+          "question": "What is model fallback in production?",
+          "answer": "Model fallback uses backup LLM if primary fails. Example: GPT-4 fails, fallback to GPT-3.5 or Claude. Use .with_fallbacks([backup_llm]). Improves reliability - API outages don't break application. May use cheaper model as primary, expensive as fallback. Critical for production uptime.",
+          "tags": [
+            "LangChain",
+            "Production",
+            "Reliability"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "585",
+          "question": "How do you implement A/B testing with LangChain?",
+          "answer": "Route users to different chains/models randomly or by cohort. Track metrics per variant (quality, cost, latency). Example: 50% GPT-4, 50% Claude. Use feature flags or random selection. Measure user satisfaction, accuracy, cost. Compare in production with real traffic. Optimize based on data.",
+          "tags": [
+            "LangChain",
+            "Testing",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "586",
+          "question": "What metrics should you track in production?",
+          "answer": "Track: response latency, token usage/cost, error rate, user satisfaction, retrieval quality (RAG), cache hit rate, API success rate, concurrent users. Monitor trends over time. Set alerts for anomalies. Use metrics to optimize: reduce latency, lower costs, improve quality. Essential for production operations.",
+          "tags": [
+            "Production",
+            "Monitoring",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "587",
+          "question": "What is response latency and how to optimize it?",
+          "answer": "Response latency is time from request to response. Optimize: use faster models, reduce prompt size, cache common queries, use streaming for perceived speed, async processing, parallel tool calls. Measure p50, p95, p99. Target based on UX needs. Trade quality for speed if needed. Monitor and optimize continuously.",
+          "tags": [
+            "Performance",
+            "Optimization",
+            "Latency"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "588",
+          "question": "What is token usage tracking?",
+          "answer": "Token usage tracking counts tokens per request for cost management. Track input tokens, output tokens, total. Aggregate daily/monthly. Use callbacks or provider APIs. Set budgets and alerts. Identify expensive queries to optimize. Critical for controlling AI costs in production.",
+          "tags": [
+            "Cost Management",
+            "Monitoring",
+            "Tokens"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "589",
+          "question": "How do you implement logging in LangChain?",
+          "answer": "Use callbacks to log chain executions. Python logging module for application logs. Log: user queries, retrieved docs, LLM responses, errors, latency. Structured logging (JSON) for analysis. Send to centralized logging (CloudWatch, Datadog). Enable debugging and monitoring. Balance detail vs volume.",
+          "tags": [
+            "Logging",
+            "Monitoring",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "590",
+          "question": "What is conversation persistence?",
+          "answer": "Conversation persistence saves chat history to database so it survives app restarts. Store messages with session ID, load on reconnect. Users continue conversations later. Required for production chatbots. Use SQL, Redis, or document DB. Include message metadata, timestamps. Handle cleanup of old conversations.",
+          "tags": [
+            "LangChain",
+            "Memory",
+            "Persistence"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "591",
+          "question": "How do you store conversation history in databases?",
+          "answer": "Create table with session_id, role (user/assistant), message, timestamp. Save after each exchange. Load on session start. Example schema: conversations(id, session_id, role, content, created_at). Index by session_id for fast retrieval. Clean old sessions periodically. Use RedisChatMessageHistory or SQLChatMessageHistory from LangChain.",
+          "tags": [
+            "Database",
+            "Memory",
+            "LangChain"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "592",
+          "question": "What is session management in chatbots?",
+          "answer": "Session management identifies and tracks individual conversations. Assign unique session ID per user/conversation. Load history for session, isolate between users. Handle session expiry, cleanup. Map sessions to users if authenticated. Critical for multi-user chatbots. Use cookies, JWTs, or database lookups.",
+          "tags": [
+            "Chatbots",
+            "Sessions",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "593",
+          "question": "How do you handle concurrent users?",
+          "answer": "Use async processing (ainvoke), horizontal scaling (multiple instances), load balancer, queue for high load. Each user gets isolated session. Async enables handling many users per instance. Scale instances based on load. Monitor concurrency metrics. Use connection pooling for databases. Test under load.",
+          "tags": [
+            "Scaling",
+            "Concurrency",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "594",
+          "question": "What is load balancing for LLM applications?",
+          "answer": "Load balancer distributes requests across multiple application instances. Enables horizontal scaling. Use cloud load balancers (AWS ALB, GCP Load Balancer) or nginx. Sticky sessions if state is local. Health checks ensure instances are responsive. Scale instances based on load. Critical for high-traffic applications.",
+          "tags": [
+            "Scaling",
+            "Load Balancing",
+            "Infrastructure"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "595",
+          "question": "What are the scaling considerations for RAG systems?",
+          "answer": "Vector DB must scale with document count and query load. Use managed vector DBs (Pinecone) or scalable self-hosted (Qdrant cluster). Index build time vs query speed tradeoff. Embedding generation can be batched/parallelized. LLM calls are bottleneck - use caching, faster models. Monitor retrieval latency and index size.",
+          "tags": [
+            "RAG",
+            "Scaling",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "596",
+          "question": "How do you handle large document collections?",
+          "answer": "Batch process embeddings, use distributed vector DB, partition data by category/tenant, incremental indexing for updates. Asynchronous indexing separate from query serving. Use hierarchical retrieval or filtering to reduce search space. Monitor storage costs. Consider summarization for very large docs.",
+          "tags": [
+            "RAG",
+            "Scaling",
+            "Documents"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "597",
+          "question": "What is incremental indexing in vector databases?",
+          "answer": "Incremental indexing adds/updates documents without rebuilding entire index. Add new docs to existing index efficiently. Update: delete old version, insert new. Critical for dynamic knowledge bases (new products, updated docs). Background processing avoids query disruption. Track version/timestamp for freshness.",
+          "tags": [
+            "Vector Databases",
+            "Indexing",
+            "Updates"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "598",
+          "question": "How do you update a RAG knowledge base?",
+          "answer": "Detect changes (file modification, database update), re-chunk and embed changed documents, update vector DB (delete old, insert new). Webhook or polling for changes. Batch updates for efficiency. Maintain metadata for tracking. Consider versioning for rollback. Automate the pipeline for continuous updates.",
+          "tags": [
+            "RAG",
+            "Updates",
+            "Knowledge Management"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "599",
+          "question": "What is the cold start problem in RAG?",
+          "answer": "Cold start: first query after startup is slow due to loading embeddings/indexes. Mitigate: keep vector DB warm, preload on startup, use managed vector DB (always ready), cache frequently accessed data. More significant for large indexes. Consider lazy loading vs eager loading based on access patterns.",
+          "tags": [
+            "RAG",
+            "Performance",
+            "Cold Start"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "600",
+          "question": "How do you precompute embeddings?",
+          "answer": "Generate embeddings during indexing, not at query time. Query time: only embed the query. Document embeddings stored in vector DB. Batch process for efficiency. Schedule regular recomputation if embedding model changes. Precomputation essential for performance - avoids embedding large docs on every query.",
+          "tags": [
+            "RAG",
+            "Embeddings",
+            "Performance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "601",
+          "question": "What is embedding cache management?",
+          "answer": "Cache embeddings for frequently queried text to avoid recomputing. Store query -> embedding mapping. Invalidate on embedding model change. Balance cache size vs hit rate. Use LRU eviction. Helps when users ask similar questions. Separate from LLM response caching.",
+          "tags": [
+            "Embeddings",
+            "Caching",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "602",
+          "question": "How do you version control your models?",
+          "answer": "Track model name and version in config. Store in git, model registry, or database. Tag releases with model version used. Enables rollback, A/B testing, reproducibility. Document model changes. Use semantic versioning. Critical for debugging production issues and ensuring consistency.",
+          "tags": [
+            "MLOps",
+            "Version Control",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "603",
+          "question": "How do you version control your prompts?",
+          "answer": "Store prompts in git, tag versions, track changes. Use prompt management tools (LangSmith). Test prompt changes before deployment. Document rationale for changes. Enables rollback if new prompt degrades quality. Critical for reproducibility and debugging. Consider prompt templates as code.",
+          "tags": [
+            "Prompt Engineering",
+            "Version Control",
+            "MLOps"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "604",
+          "question": "What is prompt versioning strategy?",
+          "answer": "Version prompts like code: git commits, semantic versioning, changelog. Test in staging before production. Gradual rollout (canary, A/B test). Monitor metrics after changes. Keep history for rollback. Document expected behavior. Treat prompts as critical application logic requiring rigorous change management.",
+          "tags": [
+            "Prompt Engineering",
+            "Version Control",
+            "Strategy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "605",
+          "question": "How do you monitor hallucinations in production?",
+          "answer": "Use retrieval with sources, fact-checking against knowledge base, user feedback (thumbs up/down), manual review sampling, automated fact verification tools. Log when LLM deviates from sources. Monitor user corrections. Difficult to detect automatically - combine multiple approaches. Critical for trust.",
+          "tags": [
+            "LLM",
+            "Quality",
+            "Monitoring"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "606",
+          "question": "What is guardrails in LLM applications?",
+          "answer": "Guardrails are safety checks preventing harmful outputs. Examples: content filtering (toxicity, PII), output validation (format, length), prompt injection detection, topic constraints. Implemented as pre/post-processing. Tools: NeMo Guardrails, Guardrails AI. Critical for safe deployment, especially user-facing applications.",
+          "tags": [
+            "Safety",
+            "LLM",
+            "Security"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "607",
+          "question": "How do you implement content filtering?",
+          "answer": "Use moderation APIs (OpenAI Moderation), keyword filtering, ML classifiers for toxicity/hate speech. Check inputs and outputs. Block or flag violating content. Log incidents. Balance safety vs false positives. Adjust thresholds based on use case. Required for user-generated content and public applications.",
+          "tags": [
+            "Safety",
+            "Content Filtering",
+            "Moderation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "608",
+          "question": "What is PII detection and redaction?",
+          "answer": "PII (Personally Identifiable Information): names, emails, SSN, addresses. Detection: regex patterns, NER models, specialized tools (Presidio). Redaction: replace with placeholders, hash, or remove. Required for privacy compliance. Apply before logging or storing. Critical for GDPR, HIPAA compliance.",
+          "tags": [
+            "Privacy",
+            "Security",
+            "Compliance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "609",
+          "question": "How do you ensure data privacy in RAG systems?",
+          "answer": "Encrypt data at rest and in transit. Access control on documents and embeddings. Tenant isolation in multi-tenant systems. PII redaction before embedding. Audit logs for access. Comply with data residency requirements. Delete user data on request. Consider local/private models for sensitive data.",
+          "tags": [
+            "Privacy",
+            "RAG",
+            "Security"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "610",
+          "question": "What are compliance considerations? (GDPR, HIPAA, etc.)",
+          "answer": "GDPR: right to deletion, data minimization, consent. HIPAA: PHI protection, audit trails, encryption. Considerations: data location, user consent, data retention, access logs, vendor compliance. Use compliant infrastructure. Document data flows. Regular audits. Legal review required. Non-compliance has severe penalties.",
+          "tags": [
+            "Compliance",
+            "Privacy",
+            "Legal"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "611",
+          "question": "How do you implement user authentication?",
+          "answer": "Use auth libraries (Auth0, Firebase Auth, OAuth). JWT tokens for API access. Session management for web apps. Hash passwords, never store plain text. Multi-factor authentication for sensitive applications. Integrate with LangChain via middleware/decorators. Required for production applications with user accounts.",
+          "tags": [
+            "Authentication",
+            "Security",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "612",
+          "question": "How do you implement role-based access control?",
+          "answer": "Define roles (admin, user, viewer), assign permissions per role. Check permissions before operations. Example: only admins can update knowledge base. Store roles in database, check in API endpoints. Use decorators for route protection. Extend to document-level (can only access own data). Essential for multi-user applications.",
+          "tags": [
+            "Authorization",
+            "Security",
+            "RBAC"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "613",
+          "question": "What is multi-tenancy in LLM applications?",
+          "answer": "Multi-tenancy: multiple customers (tenants) using same application with isolated data. Each tenant has own documents, conversations, settings. Isolation at database/index level. Tenant ID in all queries. Prevents data leakage between customers. Required for SaaS LLM applications. Design for tenant isolation from start.",
+          "tags": [
+            "Multi-tenancy",
+            "Architecture",
+            "SaaS"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "614",
+          "question": "How do you isolate data between tenants in RAG?",
+          "answer": "Store tenant ID with every document. Filter vector DB queries by tenant ID. Separate namespaces/collections per tenant in vector DB. Validate tenant on every request. Never mix tenant data. Consider separate indexes for large tenants. Audit for data leakage. Critical for SaaS security.",
+          "tags": [
+            "Multi-tenancy",
+            "RAG",
+            "Security"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "615",
+          "question": "What are cost optimization strategies?",
+          "answer": "Use cheaper models when sufficient, cache aggressively, reduce prompt size, batch requests, use local models (Ollama), optimize chunk sizes, compress prompts, monitor and set budgets, prompt engineering to reduce tokens, async for efficiency. Measure cost per request. Continuous optimization as usage grows.",
+          "tags": [
+            "Cost Management",
+            "Optimization",
+            "Production"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "616",
+          "question": "When to use smaller models vs larger models?",
+          "answer": "Smaller models: simple tasks, low cost priority, high volume, latency-sensitive. Larger models: complex reasoning, high accuracy needs, low volume, quality critical. Examples: small for classification/extraction, large for creative writing/complex analysis. Test both, measure quality vs cost. Route by task complexity.",
+          "tags": [
+            "Model Selection",
+            "Cost Management",
+            "Trade-offs"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "617",
+          "question": "What is the build vs buy decision for LLM infrastructure?",
+          "answer": "Build (self-hosted): control, customization, data privacy, potentially lower long-term cost. Buy (cloud APIs): faster time to market, managed scaling, less ops burden, latest models. Consider: team expertise, scale, budget, privacy requirements. Hybrid common: cloud for now, migrate to self-hosted at scale.",
+          "tags": [
+            "Strategy",
+            "Infrastructure",
+            "Decision Making"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "618",
+          "question": "How do you evaluate ROI of LLM applications?",
+          "answer": "Calculate: value delivered (time saved, revenue generated, cost reduced) minus costs (API costs, development, infrastructure). Measure impact: user productivity, customer satisfaction, error reduction. Compare to alternatives. Track over time. Justify investment with metrics. Consider intangible benefits (innovation, competitive advantage).",
+          "tags": [
+            "Business",
+            "ROI",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

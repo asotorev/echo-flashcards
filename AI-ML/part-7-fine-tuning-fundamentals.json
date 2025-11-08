@@ -1,0 +1,335 @@
+{
+  "decks": [
+    {
+      "name": "Part 7: Fine-tuning Fundamentals",
+      "description": "Adapting pre-trained models to specific tasks and domains",
+      "cards": [
+        {
+          "id": "127",
+          "question": "What is fine-tuning in machine learning?",
+          "answer": "Fine-tuning adapts a pre-trained model to a specific task or domain by continuing training on task-specific data. Instead of random initialization, you start with learned weights from pre-training and update them on your dataset. This transfers general knowledge to specialized applications, requiring less data and computation than training from scratch while achieving better performance on the target task.",
+          "tags": [
+            "Fine-tuning",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "128",
+          "question": "Why would you fine-tune a pre-trained model instead of training from scratch?",
+          "answer": "Fine-tuning is faster (hours vs weeks), requires far less data (thousands vs billions of examples), needs less computational resources, and typically achieves better results by leveraging pre-learned patterns. Pre-trained models already understand language, so you only teach task-specific behavior. Training from scratch only makes sense when you need completely different capabilities or have proprietary requirements that pre-trained models can't satisfy.",
+          "tags": [
+            "Fine-tuning",
+            "Strategy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "129",
+          "question": "What does the fine-tuning process actually do to the model?",
+          "answer": "Fine-tuning adjusts the model's weights through additional training on domain or task-specific data, making it better at specific tasks while retaining general capabilities. It modifies how the model processes and generates text, teaching it new patterns, terminology, or output formats. The degree of change depends on learning rate, data amount, and training duration - from slight adaptations to significant specialization.",
+          "tags": [
+            "Fine-tuning",
+            "Process"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "130",
+          "question": "What is catastrophic forgetting in fine-tuning?",
+          "answer": "Catastrophic forgetting occurs when fine-tuning on specialized data causes the model to lose general capabilities learned during pre-training. For example, fine-tuning heavily on medical texts might degrade performance on everyday language. This is mitigated by using lower learning rates, smaller datasets, regularization techniques, or parameter-efficient methods like LoRA that update only a subset of weights.",
+          "tags": [
+            "Fine-tuning",
+            "Challenges"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "131",
+          "question": "What is the difference between continued pre-training and fine-tuning?",
+          "answer": "Continued pre-training extends language modeling training on domain-specific corpora to inject knowledge (like medical texts), maintaining the same objective (next-token prediction). Fine-tuning trains on task-specific input-output pairs to teach behaviors (like following instructions or classification). Continued pre-training adds knowledge, while fine-tuning teaches task performance. They're often used sequentially: continued pre-training for domain adaptation, then fine-tuning for task specialization.",
+          "tags": [
+            "Fine-tuning",
+            "Concepts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "132",
+          "question": "What types of tasks can you fine-tune an LLM for?",
+          "answer": "You can fine-tune for classification (sentiment, intent), named entity recognition, question answering, summarization, translation, instruction following, conversation, code generation, or any task with input-output pairs. Common applications include customer service chatbots, domain-specific Q&A, specialized writing assistants, or adapting tone/style. Fine-tuning works best when you have clear success criteria and representative training data.",
+          "tags": [
+            "Fine-tuning",
+            "Applications"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "133",
+          "question": "What kind of data do you need for fine-tuning?",
+          "answer": "You need input-output pairs that represent your target task. For instruction following: instructions and desired responses. For classification: texts and labels. For conversation: dialogue turns. Data should be high quality, representative of real use cases, and properly formatted. Quality matters more than quantity - 1000 excellent examples often outperform 10,000 noisy ones. Include diverse examples covering edge cases.",
+          "tags": [
+            "Fine-tuning",
+            "Data"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "134",
+          "question": "How much data is typically needed for effective fine-tuning?",
+          "answer": "This varies widely by task complexity. Simple tasks might need hundreds of examples, complex tasks thousands. For instruction tuning, 1K-10K quality examples can work well. For specialized domains, 10K-100K examples may be needed. Parameter-efficient methods like LoRA can work with less data. Start small, evaluate, and add more data if needed. Quality and diversity matter more than raw quantity.",
+          "tags": [
+            "Fine-tuning",
+            "Data"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "135",
+          "question": "What is the format of fine-tuning data for LLMs?",
+          "answer": "Most commonly JSONL (one JSON object per line) with fields for input/output or messages. For instruction tuning: {'instruction': '...', 'response': '...'}. For chat: {'messages': [{'role': 'user', 'content': '...'}, {'role': 'assistant', 'content': '...'}]}. OpenAI, Hugging Face, and other platforms have specific format requirements. Proper formatting ensures the model learns the correct input-output mapping.",
+          "tags": [
+            "Fine-tuning",
+            "Data"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "136",
+          "question": "What are instruction-following datasets?",
+          "answer": "These are collections of instructions paired with appropriate responses, used to teach models to follow human directions. Examples include Alpaca (52K instruction-response pairs), Dolly, FLAN. They cover diverse tasks like summarization, question answering, creative writing, and reasoning. Training on these datasets produces instruction-tuned models that are more helpful and better at understanding and executing user requests than base models.",
+          "tags": [
+            "Fine-tuning",
+            "Data"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "137",
+          "question": "What is supervised fine-tuning (SFT)?",
+          "answer": "SFT trains models on labeled input-output pairs using supervised learning, where the model learns to minimize the difference between its outputs and the provided labels. This is the standard fine-tuning approach, contrasting with reinforcement learning methods. SFT is simpler and more straightforward than RL-based approaches like RLHF, making it the go-to method for most fine-tuning tasks.",
+          "tags": [
+            "Fine-tuning",
+            "Methods"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "138",
+          "question": "What is the difference between full fine-tuning and partial fine-tuning?",
+          "answer": "Full fine-tuning updates all model parameters, achieving maximum adaptation but requiring significant compute and memory. Partial fine-tuning updates only some layers (like the last few) or uses techniques like LoRA to update a small subset of parameters. Partial methods are much more efficient, reduce overfitting risk, and often achieve comparable performance to full fine-tuning while being practical for large models.",
+          "tags": [
+            "Fine-tuning",
+            "Methods"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "139",
+          "question": "What are the computational costs of full fine-tuning?",
+          "answer": "Full fine-tuning of large models is expensive, requiring multiple high-end GPUs, significant memory (often hundreds of GB), and hours to days of training. For example, fine-tuning a 7B parameter model might need 80GB+ memory and take 10-20 hours on good hardware. Costs scale with model size, data amount, and training duration. This expense motivates parameter-efficient methods like LoRA.",
+          "tags": [
+            "Fine-tuning",
+            "Resources"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "140",
+          "question": "What is parameter-efficient fine-tuning (PEFT)?",
+          "answer": "PEFT methods fine-tune models by updating only a small fraction of parameters, drastically reducing memory and computational requirements. Instead of updating billions of weights, PEFT might update only millions. This makes fine-tuning large models practical on consumer hardware. Examples include LoRA, adapters, and prompt tuning. PEFT often achieves performance close to full fine-tuning with a fraction of the resources.",
+          "tags": [
+            "Fine-tuning",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "141",
+          "question": "Why is PEFT important for large models?",
+          "answer": "PEFT makes fine-tuning accessible for large models that would otherwise require impractical amounts of memory and compute. It enables running multiple task-specific adapters from a single base model, reduces storage (small adapter files vs full model copies), prevents catastrophic forgetting better, and allows fine-tuning on consumer hardware. For models like 70B parameters, PEFT is often the only practical fine-tuning approach.",
+          "tags": [
+            "Fine-tuning",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "142",
+          "question": "What is LoRA (Low-Rank Adaptation)?",
+          "answer": "LoRA fine-tunes models by adding small trainable matrices to existing layers while freezing original weights. It decomposes weight updates into low-rank matrices (much smaller than full weights), drastically reducing trainable parameters. For example, instead of updating 7 billion parameters, you might train only 4 million. LoRA is the most popular PEFT method, offering excellent efficiency-performance tradeoff.",
+          "tags": [
+            "Fine-tuning",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "143",
+          "question": "How does LoRA reduce the number of trainable parameters?",
+          "answer": "LoRA represents weight updates as the product of two small matrices (rank-decomposition) instead of updating full weight matrices. For a layer with dimensions 4096x4096, instead of training 16M parameters, LoRA with rank 8 trains only 65K parameters (4096x8 + 8x4096). This 250x reduction in parameters means 250x less memory for gradients and optimizer states, making training feasible on smaller hardware.",
+          "tags": [
+            "Fine-tuning",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "144",
+          "question": "What is the rank in LoRA and how do you choose it?",
+          "answer": "Rank determines the size of the LoRA adapter matrices - higher rank means more parameters and capacity but less efficiency. Common values are 4, 8, 16, or 32. Lower ranks (4-8) work for simple tasks and maximize efficiency. Higher ranks (16-64) handle complex tasks better but use more memory. Start with rank 8 as a default, increase if performance is insufficient, decrease if memory is limited. Task complexity guides the choice.",
+          "tags": [
+            "Fine-tuning",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "145",
+          "question": "What is QLoRA (Quantized LoRA)?",
+          "answer": "QLoRA combines LoRA with quantization, loading the base model in 4-bit precision while training LoRA adapters in higher precision. This dramatically reduces memory - fine-tuning a 65B model requires only ~48GB instead of 780GB. QLoRA democratizes fine-tuning of very large models, enabling training on consumer GPUs while maintaining quality close to full-precision LoRA. It's a breakthrough in accessibility.",
+          "tags": [
+            "Fine-tuning",
+            "LoRA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "146",
+          "question": "What are adapter layers in PEFT?",
+          "answer": "Adapter layers are small neural network modules inserted between existing transformer layers. Only adapters are trained while the base model freezes. They're typically bottleneck architectures (down-project, apply nonlinearity, up-project) that learn task-specific transformations. Adapters add minimal parameters (often <1% of model size), can be swapped for different tasks, and prevent catastrophic forgetting. They predate LoRA but are less popular now.",
+          "tags": [
+            "Fine-tuning",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "147",
+          "question": "What is prefix tuning?",
+          "answer": "Prefix tuning prepends trainable vectors (virtual tokens) to the input that condition the model's behavior without updating weights. These prefixes act like soft prompts optimized through backpropagation rather than discrete words. Only the prefix parameters are trained, making it very parameter-efficient. Prefix tuning is less popular than LoRA but useful when you want even more efficiency or to avoid any weight modifications.",
+          "tags": [
+            "Fine-tuning",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "148",
+          "question": "What is prompt tuning (different from prompt engineering)?",
+          "answer": "Prompt tuning learns continuous prompt embeddings through backpropagation, while prompt engineering manually crafts discrete text prompts. Prompt tuning treats prompts as trainable parameters optimized for the task, whereas prompt engineering uses trial-and-error with actual words. Prompt tuning is a PEFT method that can outperform manual prompts but requires training data and compute, unlike zero-cost prompt engineering.",
+          "tags": [
+            "Fine-tuning",
+            "PEFT"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "149",
+          "question": "What is the difference between LoRA and full fine-tuning in terms of results?",
+          "answer": "LoRA typically achieves 95-99% of full fine-tuning performance while using a fraction of resources. For many tasks, the difference is negligible. Full fine-tuning might have a slight edge on very complex tasks or when you have abundant resources, but LoRA's efficiency usually makes it the better choice. The performance gap has narrowed as LoRA techniques improve, making it the default for most practitioners.",
+          "tags": [
+            "Fine-tuning",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "150",
+          "question": "Can you fine-tune just specific layers of a model?",
+          "answer": "Yes, you can freeze most layers and train only the last few layers or specific components. This is common for transfer learning - early layers learn general features, later layers task-specific patterns. Training only final layers is faster and prevents overfitting, but might limit adaptation. The choice depends on how different your task is from pre-training. Very different tasks benefit from updating more layers.",
+          "tags": [
+            "Fine-tuning",
+            "Techniques"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "151",
+          "question": "What is multi-task fine-tuning?",
+          "answer": "Multi-task fine-tuning trains a model on multiple tasks simultaneously, mixing datasets during training. This can improve generalization, prevent overfitting to single tasks, and create more versatile models. However, it requires careful balancing of datasets and may not reach peak performance on any single task. It's useful when you need one model for several related tasks and when tasks can benefit from shared representations.",
+          "tags": [
+            "Fine-tuning",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

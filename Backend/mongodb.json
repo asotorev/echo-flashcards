@@ -1,0 +1,610 @@
+{
+  "decks": [
+    {
+      "name": "MongoDB",
+      "description": "Interview questions about MongoDB",
+      "cards": [
+        {
+          "id": "96",
+          "question": "What is MongoDB?",
+          "answer": "NoSQL document-oriented database storing data in flexible JSON-like documents (BSON).",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "97",
+          "question": "What is a document in MongoDB?",
+          "answer": "Basic unit of data, similar to JSON object.\n\n```javascript\n{\n  _id: ObjectId(\"507f1f77bcf86cd799439011\"),\n  name: \"John Doe\",\n  email: \"john@example.com\",\n  age: 30,\n  tags: [\"developer\", \"javascript\"]\n}\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "98",
+          "question": "What is a collection?",
+          "answer": "Group of documents, similar to a table in relational databases.\n\n```javascript\ndb.users.insertOne({\n  name: \"John\",\n  email: \"john@example.com\"\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "99",
+          "question": "What is BSON?",
+          "answer": "Binary JSON - MongoDB's data format, extends JSON with additional types.",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "100",
+          "question": "What is _id field?",
+          "answer": "Unique identifier automatically created for each document.\n\n```javascript\n// Auto-generated\n{ _id: ObjectId(\"507f191e810c19729de860ea\") }\n\n// Custom\n{ _id: \"user123\" }\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "101",
+          "question": "How do you create a database?",
+          "answer": "MongoDB creates database when you first store data.\n\n```javascript\nuse myDatabase;\ndb.users.insertOne({ name: \"John\" });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "102",
+          "question": "How do you insert documents?",
+          "answer": "```javascript\n// Insert one\ndb.users.insertOne({\n  name: \"John\",\n  email: \"john@example.com\"\n});\n\n// Insert many\ndb.users.insertMany([\n  { name: \"Jane\", email: \"jane@example.com\" },\n  { name: \"Bob\", email: \"bob@example.com\" }\n]);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "103",
+          "question": "How do you find documents?",
+          "answer": "```javascript\n// Find all\ndb.users.find();\n\n// Find with condition\ndb.users.find({ age: { $gte: 25 } });\n\n// Find one\ndb.users.findOne({ email: \"john@example.com\" });\n\n// Projection (select specific fields)\ndb.users.find({}, { name: 1, email: 1, _id: 0 });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "104",
+          "question": "What are comparison operators?",
+          "answer": "- `$eq`: equal\n- `$ne`: not equal\n- `$gt`: greater than\n- `$gte`: greater than or equal\n- `$lt`: less than\n- `$lte`: less than or equal\n- `$in`: matches any value in array\n- `$nin`: not in array\n\n```javascript\ndb.products.find({ price: { $gte: 100, $lte: 500 } });\ndb.users.find({ status: { $in: [\"active\", \"pending\"] } });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "105",
+          "question": "What are logical operators?",
+          "answer": "- `$and`: all conditions must be true\n- `$or`: at least one condition must be true\n- `$not`: inverts condition\n- `$nor`: none of conditions are true\n\n```javascript\ndb.users.find({\n  $and: [\n    { age: { $gte: 18 } },\n    { status: \"active\" }\n  ]\n});\n\ndb.products.find({\n  $or: [\n    { category: \"electronics\" },\n    { price: { $lt: 50 } }\n  ]\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "106",
+          "question": "How do you update documents?",
+          "answer": "```javascript\n// Update one\ndb.users.updateOne(\n  { email: \"john@example.com\" },\n  { $set: { age: 31 } }\n);\n\n// Update many\ndb.users.updateMany(\n  { status: \"inactive\" },\n  { $set: { deleted: true } }\n);\n\n// Replace one\ndb.users.replaceOne(\n  { _id: ObjectId(\"...\") },\n  { name: \"John\", email: \"new@example.com\" }\n);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "107",
+          "question": "What are update operators?",
+          "answer": "- `$set`: sets field value\n- `$unset`: removes field\n- `$inc`: increments value\n- `$mul`: multiplies value\n- `$rename`: renames field\n- `$push`: adds to array\n- `$pull`: removes from array\n\n```javascript\ndb.users.updateOne(\n  { _id: userId },\n  {\n    $set: { name: \"John\" },\n    $inc: { loginCount: 1 },\n    $push: { tags: \"premium\" }\n  }\n);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "108",
+          "question": "How do you delete documents?",
+          "answer": "```javascript\n// Delete one\ndb.users.deleteOne({ email: \"john@example.com\" });\n\n// Delete many\ndb.users.deleteMany({ status: \"inactive\" });\n\n// Delete all\ndb.users.deleteMany({});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "109",
+          "question": "What is an index in MongoDB?",
+          "answer": "Improves query performance by creating efficient data lookup structure.\n\n```javascript\n// Create index\ndb.users.createIndex({ email: 1 }); // ascending\ndb.users.createIndex({ age: -1 }); // descending\n\n// Compound index\ndb.users.createIndex({ lastName: 1, firstName: 1 });\n\n// Unique index\ndb.users.createIndex({ email: 1 }, { unique: true });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "110",
+          "question": "What types of indexes exist?",
+          "answer": "- Single field\n- Compound (multiple fields)\n- Multikey (array fields)\n- Text (full-text search)\n- Geospatial\n- Hashed\n\n```javascript\n// Text index\ndb.articles.createIndex({ content: \"text\" });\n\n// Geospatial index\ndb.places.createIndex({ location: \"2dsphere\" });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "111",
+          "question": "What is aggregation?",
+          "answer": "Processing data records and returning computed results.\n\n```javascript\ndb.orders.aggregate([\n  { $match: { status: \"completed\" } },\n  { $group: {\n      _id: \"$userId\",\n      totalSpent: { $sum: \"$total\" }\n  }},\n  { $sort: { totalSpent: -1 } },\n  { $limit: 10 }\n]);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "112",
+          "question": "What are common aggregation stages?",
+          "answer": "- `$match`: filters documents\n- `$group`: groups by expression\n- `$sort`: sorts documents\n- `$limit`: limits number of documents\n- `$skip`: skips documents\n- `$project`: reshapes documents\n- `$lookup`: left outer join\n- `$unwind`: deconstructs array",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "113",
+          "question": "What is $lookup?",
+          "answer": "Performs left outer join with another collection.\n\n```javascript\ndb.orders.aggregate([\n  {\n    $lookup: {\n      from: \"users\",\n      localField: \"userId\",\n      foreignField: \"_id\",\n      as: \"userDetails\"\n    }\n  }\n]);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "114",
+          "question": "What is $unwind?",
+          "answer": "Deconstructs array field into multiple documents.\n\n```javascript\ndb.posts.aggregate([\n  { $unwind: \"$tags\" },\n  { $group: { _id: \"$tags\", count: { $sum: 1 } } }\n]);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "115",
+          "question": "What is $group?",
+          "answer": "Groups documents by specified expression.\n\n```javascript\ndb.sales.aggregate([\n  {\n    $group: {\n      _id: \"$category\",\n      totalSales: { $sum: \"$amount\" },\n      avgPrice: { $avg: \"$price\" },\n      count: { $sum: 1 }\n    }\n  }\n]);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "116",
+          "question": "What are aggregation operators?",
+          "answer": "- `$sum`: calculates sum\n- `$avg`: calculates average\n- `$min`: finds minimum\n- `$max`: finds maximum\n- `$first`: first value\n- `$last`: last value\n- `$push`: creates array",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "117",
+          "question": "How do you perform text search?",
+          "answer": "```javascript\n// Create text index\ndb.articles.createIndex({ title: \"text\", content: \"text\" });\n\n// Search\ndb.articles.find({ $text: { $search: \"mongodb tutorial\" } });\n\n// With score\ndb.articles.find(\n  { $text: { $search: \"mongodb\" } },\n  { score: { $meta: \"textScore\" } }\n).sort({ score: { $meta: \"textScore\" } });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "118",
+          "question": "What is schema validation?",
+          "answer": "Enforcing document structure rules.\n\n```javascript\ndb.createCollection(\"users\", {\n  validator: {\n    $jsonSchema: {\n      bsonType: \"object\",\n      required: [\"email\", \"name\"],\n      properties: {\n        email: {\n          bsonType: \"string\",\n          pattern: \"^.+@.+$\"\n        },\n        age: {\n          bsonType: \"int\",\n          minimum: 0\n        }\n      }\n    }\n  }\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "119",
+          "question": "What are embedded documents?",
+          "answer": "Documents nested within other documents.\n\n```javascript\n{\n  name: \"John\",\n  address: {\n    street: \"123 Main St\",\n    city: \"NYC\",\n    zip: \"10001\"\n  }\n}\n\n// Query embedded\ndb.users.find({ \"address.city\": \"NYC\" });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "120",
+          "question": "What is referencing (normalization)?",
+          "answer": "Storing related data in separate collections.\n\n```javascript\n// Users collection\n{ _id: ObjectId(\"...\"), name: \"John\" }\n\n// Orders collection\n{ _id: ObjectId(\"...\"), userId: ObjectId(\"...\"), total: 100 }\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "121",
+          "question": "When to embed vs reference?",
+          "answer": "- **Embed**: one-to-one, one-to-few, data accessed together\n- **Reference**: one-to-many, many-to-many, large documents",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "122",
+          "question": "What is upsert?",
+          "answer": "Update if exists, insert if doesn't.\n\n```javascript\ndb.users.updateOne(\n  { email: \"john@example.com\" },\n  { $set: { name: \"John\", age: 30 } },\n  { upsert: true }\n);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "123",
+          "question": "What are transactions in MongoDB?",
+          "answer": "Multi-document ACID transactions (4.0+).\n\n```javascript\nconst session = db.getMongo().startSession();\nsession.startTransaction();\n\ntry {\n  db.accounts.updateOne(\n    { _id: 1 },\n    { $inc: { balance: -100 } },\n    { session }\n  );\n\n  db.accounts.updateOne(\n    { _id: 2 },\n    { $inc: { balance: 100 } },\n    { session }\n  );\n\n  session.commitTransaction();\n} catch (error) {\n  session.abortTransaction();\n} finally {\n  session.endSession();\n}\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "124",
+          "question": "What is sharding?",
+          "answer": "Horizontal scaling by distributing data across multiple servers.\n\n```javascript\n// Enable sharding on database\nsh.enableSharding(\"mydb\");\n\n// Shard collection\nsh.shardCollection(\"mydb.users\", { _id: \"hashed\" });\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "125",
+          "question": "What is replication?",
+          "answer": "Data redundancy across multiple servers for high availability.\n\n```javascript\n// Replica set with 3 nodes\nrs.initiate({\n  _id: \"myReplicaSet\",\n  members: [\n    { _id: 0, host: \"mongo1:27017\" },\n    { _id: 1, host: \"mongo2:27017\" },\n    { _id: 2, host: \"mongo3:27017\" }\n  ]\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "126",
+          "question": "What is the oplog?",
+          "answer": "Operation log recording all write operations for replication.\n\n```javascript\n// View oplog\nuse local;\ndb.oplog.rs.find().pretty();\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "127",
+          "question": "What are capped collections?",
+          "answer": "Fixed-size collections that maintain insertion order.\n\n```javascript\ndb.createCollection(\"logs\", {\n  capped: true,\n  size: 100000, // bytes\n  max: 1000 // max documents\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "128",
+          "question": "How do you handle pagination?",
+          "answer": "```javascript\n// Skip and limit (not efficient for large offsets)\ndb.users.find().skip(20).limit(10);\n\n// Range-based (more efficient)\ndb.users.find({ _id: { $gt: lastSeenId } }).limit(10);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "129",
+          "question": "What is the explain() method?",
+          "answer": "Shows query execution plan.\n\n```javascript\ndb.users.find({ age: { $gte: 25 } }).explain(\"executionStats\");\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "130",
+          "question": "What is the difference between find() and aggregate()?",
+          "answer": "- `find()`: simple queries, filtering, projection\n- `aggregate()`: complex transformations, grouping, joins",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "131",
+          "question": "How do you backup MongoDB?",
+          "answer": "```bash\n# Dump database\nmongodump --db mydb --out /backup\n\n# Restore database\nmongorestore --db mydb /backup/mydb\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "132",
+          "question": "What is GridFS?",
+          "answer": "System for storing files larger than 16MB (BSON limit).\n\n```javascript\nconst bucket = new mongodb.GridFSBucket(db);\nfs.createReadStream('file.pdf')\n  .pipe(bucket.openUploadStream('file.pdf'));\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "133",
+          "question": "What are MongoDB data modeling patterns?",
+          "answer": "- Embedding\n- Referencing\n- Bucketing (time-series)\n- Outlier pattern\n- Computed pattern\n- Subset pattern",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "134",
+          "question": "What is the bucket pattern?",
+          "answer": "Grouping related data into single document for efficiency.\n\n```javascript\n// Instead of one document per measurement\n{\n  sensor_id: 123,\n  measurements: [\n    { timestamp: ISODate(\"...\"), temp: 20.5 },\n    { timestamp: ISODate(\"...\"), temp: 21.0 }\n    // ... hourly measurements\n  ]\n}\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "135",
+          "question": "What is change streams?",
+          "answer": "Real-time notifications of data changes.\n\n```javascript\nconst changeStream = db.users.watch();\nchangeStream.on('change', (change) => {\n  console.log('Change detected:', change);\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "136",
+          "question": "How do you use Mongoose?",
+          "answer": "ODM (Object Document Mapper) for MongoDB in Node.js.\n\n```javascript\nconst mongoose = require('mongoose');\n\nconst userSchema = new mongoose.Schema({\n  name: String,\n  email: { type: String, unique: true },\n  age: Number\n});\n\nconst User = mongoose.model('User', userSchema);\n\nconst user = new User({ name: 'John', email: 'john@example.com' });\nawait user.save();\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "137",
+          "question": "What are Mongoose middleware?",
+          "answer": "Pre/post hooks for document lifecycle events.\n\n```javascript\nuserSchema.pre('save', async function(next) {\n  if (this.isModified('password')) {\n    this.password = await bcrypt.hash(this.password, 10);\n  }\n  next();\n});\n\nuserSchema.post('save', function(doc) {\n  console.log('User saved:', doc._id);\n});\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "138",
+          "question": "What is the difference between save() and insertOne()?",
+          "answer": "- `save()`: Mongoose method with middleware and validation\n- `insertOne()`: Native MongoDB driver method, no middleware",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "139",
+          "question": "How do you handle errors in MongoDB?",
+          "answer": "```javascript\ntry {\n  await db.users.insertOne({ email: \"duplicate@example.com\" });\n} catch (error) {\n  if (error.code === 11000) {\n    console.log('Duplicate key error');\n  }\n}\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "140",
+          "question": "What are write concerns?",
+          "answer": "Level of acknowledgment requested from MongoDB for write operations.\n\n```javascript\ndb.users.insertOne(\n  { name: \"John\" },\n  { writeConcern: { w: \"majority\", wtimeout: 5000 } }\n);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "141",
+          "question": "What are read preferences?",
+          "answer": "Controls which replica set members are read from.\n- `primary`: default, read from primary\n- `primaryPreferred`: prefer primary, fallback to secondary\n- `secondary`: read from secondary\n- `secondaryPreferred`: prefer secondary\n- `nearest`: read from lowest latency",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "142",
+          "question": "What is TTL index?",
+          "answer": "Automatically deletes documents after specified time.\n\n```javascript\ndb.sessions.createIndex(\n  { createdAt: 1 },\n  { expireAfterSeconds: 3600 } // 1 hour\n);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "143",
+          "question": "How do you perform bulk operations?",
+          "answer": "```javascript\nconst bulk = db.users.initializeUnorderedBulkOp();\nbulk.insert({ name: \"John\" });\nbulk.find({ name: \"Jane\" }).update({ $set: { age: 25 } });\nbulk.find({ status: \"inactive\" }).remove();\nbulk.execute();\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "144",
+          "question": "What is the aggregation $facet stage?",
+          "answer": "Processes multiple aggregation pipelines in single stage.\n\n```javascript\ndb.products.aggregate([\n  {\n    $facet: {\n      \"categorizedByPrice\": [\n        { $bucket: {\n            groupBy: \"$price\",\n            boundaries: [0, 50, 100, 200],\n            default: \"Other\"\n        }}\n      ],\n      \"topProducts\": [\n        { $sort: { sales: -1 } },\n        { $limit: 5 }\n      ]\n    }\n  }\n]);\n```",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "145",
+          "question": "What are best practices for MongoDB?",
+          "answer": "- Use indexes appropriately\n- Embed data accessed together\n- Limit document size (16MB max)\n- Use projection to limit returned fields\n- Avoid large arrays\n- Use connection pooling\n- Plan for sharding if needed\n- Regular backups\n- Monitor performance with explain()\n- Use appropriate read/write concerns",
+          "tags": [
+            "MongoDB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

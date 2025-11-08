@@ -1,0 +1,388 @@
+{
+  "decks": [
+    {
+      "name": "Part 23: LangChain RAG Implementation",
+      "description": "Vector database integration, embeddings, and advanced retrieval techniques",
+      "cards": [
+        {
+          "id": "526",
+          "question": "Explain ConversationalRetrievalQAChain in LangChain",
+          "answer": "ConversationalRetrievalQAChain handles multi-turn RAG conversations. Takes chat history, reformulates current question to be standalone, retrieves docs, generates answer. Maintains context across turns. Example: User 'Tell me about cars' then 'What colors?' - chain knows 'what' refers to cars. Essential for chatbot RAG applications.",
+          "tags": [
+            "LangChain",
+            "RAG",
+            "Conversation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "527",
+          "question": "What's the difference between RetrievalQA and ConversationalRetrievalChain?",
+          "answer": "RetrievalQA: single-turn, no memory, direct question answering. ConversationalRetrievalChain: multi-turn with memory, handles follow-ups, reformulates questions. Use RetrievalQA for one-off queries. Use Conversational for chat applications. Conversational adds overhead but essential for natural dialogue. Modern LCEL can build both patterns flexibly.",
+          "tags": [
+            "LangChain",
+            "RAG",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "528",
+          "question": "How do you integrate vector databases with LangChain?",
+          "answer": "Install vector DB client (chromadb, pinecone-client, faiss), create embeddings, initialize vector store with docs and embeddings. Example: 'Chroma.from_documents(docs, embeddings)'. Vector store provides .as_retriever() for RAG. LangChain supports Chroma, Pinecone, FAISS, Qdrant, Weaviate, pgvector. Consistent interface across providers.",
+          "tags": [
+            "LangChain",
+            "Vector Databases",
+            "Integration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "529",
+          "question": "How do you use Chroma with LangChain?",
+          "answer": "Install chromadb, import Chroma. Create: 'Chroma.from_documents(documents, embedding_function, persist_directory=\"./chroma_db\")'. Loads existing DB if directory exists. Get retriever: 'db.as_retriever()'. Simple, local, no setup. Good for development and small-scale production. Persists to disk for reuse across sessions.",
+          "tags": [
+            "LangChain",
+            "Chroma",
+            "Vector Databases"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "530",
+          "question": "How do you use Pinecone with LangChain?",
+          "answer": "Install pinecone-client, get API key, create index. Initialize: 'Pinecone.from_documents(docs, embeddings, index_name=\"my-index\")'. Cloud-hosted, scales well, production-ready. Requires API key and paid plan for larger usage. Better performance than local solutions at scale. Use for production RAG with large document collections.",
+          "tags": [
+            "LangChain",
+            "Pinecone",
+            "Vector Databases"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "531",
+          "question": "How do you use FAISS with LangChain?",
+          "answer": "Install faiss-cpu or faiss-gpu. Create: 'FAISS.from_documents(docs, embeddings)'. In-memory by default, can save: 'db.save_local(\"faiss_index\")' and load: 'FAISS.load_local(\"faiss_index\", embeddings)'. Fast, free, no external service. Good for moderate-size datasets. Facebook's library, highly optimized.",
+          "tags": [
+            "LangChain",
+            "FAISS",
+            "Vector Databases"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "532",
+          "question": "What is the from_documents() method?",
+          "answer": "from_documents() creates vector store from document list in one call. Automatically embeds all documents and stores them. Example: 'Chroma.from_documents(docs, embeddings)'. Convenience method - internally calls embed and insert. For large datasets, consider batching. Most common way to initialize vector store in LangChain.",
+          "tags": [
+            "LangChain",
+            "Vector Databases",
+            "Initialization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "533",
+          "question": "What is the from_texts() method?",
+          "answer": "from_texts() creates vector store from list of strings and optional metadata. Similar to from_documents but takes raw text. Example: 'Chroma.from_texts(texts=[\"text1\", \"text2\"], metadatas=[{\"source\": \"doc1\"}], embedding=embeddings)'. Useful when you already have processed text. Lower-level than from_documents.",
+          "tags": [
+            "LangChain",
+            "Vector Databases",
+            "Initialization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "534",
+          "question": "How do you create embeddings in LangChain?",
+          "answer": "Instantiate embedding class: 'OpenAIEmbeddings()', 'HuggingFaceEmbeddings()', or 'OllamaEmbeddings()'. Pass to vector store creation. Embeddings class handles API calls or local model inference. Example: 'embeddings = OpenAIEmbeddings(); Chroma.from_documents(docs, embeddings)'. Choose based on quality needs, cost, and latency.",
+          "tags": [
+            "LangChain",
+            "Embeddings",
+            "Configuration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "535",
+          "question": "What is the OpenAIEmbeddings class?",
+          "answer": "OpenAIEmbeddings uses OpenAI's embedding API (text-embedding-3-small by default). High quality, fast, requires API key and costs per token. Usage: 'OpenAIEmbeddings(model=\"text-embedding-3-large\")'. Good default for production. Consistent quality but ongoing API costs. Dimension: 1536 (small) or 3072 (large).",
+          "tags": [
+            "LangChain",
+            "Embeddings",
+            "OpenAI"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "536",
+          "question": "What is HuggingFaceEmbeddings?",
+          "answer": "HuggingFaceEmbeddings runs embedding models locally from Hugging Face. Free, private, no API calls. Usage: 'HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")'. Slower first run (downloads model), then fast. Good for privacy-sensitive applications or cost optimization. Many models available with different sizes/quality.",
+          "tags": [
+            "LangChain",
+            "Embeddings",
+            "Hugging Face"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "537",
+          "question": "What is OllamaEmbeddings?",
+          "answer": "OllamaEmbeddings uses Ollama's embedding models locally. Requires Ollama running. Usage: 'OllamaEmbeddings(model=\"nomic-embed-text\")'. Free, local, privacy-preserving. Integrates well if already using Ollama for LLMs. Easier setup than HuggingFace for some users. Good for fully local RAG stack.",
+          "tags": [
+            "LangChain",
+            "Embeddings",
+            "Ollama"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "538",
+          "question": "How do you perform similarity search with LangChain?",
+          "answer": "Call .similarity_search(query, k=4) on vector store. Returns k most similar documents. Example: 'docs = vectorstore.similarity_search(\"What is RAG?\", k=3)'. Returns Document objects with content and metadata. Underlying: embeds query, finds nearest neighbors in vector space. Core operation for RAG retrieval.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "539",
+          "question": "What is the similarity_search() method?",
+          "answer": "similarity_search(query, k) performs semantic search in vector database. Embeds query, finds k nearest document chunks. Returns list of Documents. Example: 'results = db.similarity_search(\"electric vehicles\", k=5)'. Main retrieval method for RAG. Works across all vector store implementations in LangChain.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "540",
+          "question": "What is similarity_search_with_score()?",
+          "answer": "similarity_search_with_score(query, k) returns documents with similarity scores. Scores indicate confidence/relevance. Example: '[(doc1, 0.92), (doc2, 0.87)]'. Useful for filtering low-confidence results or explaining retrieval. Threshold: only use docs above score threshold. Helps debug retrieval quality.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Scoring"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "541",
+          "question": "What is max_marginal_relevance_search()?",
+          "answer": "max_marginal_relevance_search(query, k) returns diverse results. Balances relevance to query with diversity from each other. Avoids redundant documents. Example: instead of 5 similar docs about same topic, returns 5 docs covering different aspects. Better coverage of topic. Slightly slower than similarity_search.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "MMR"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "542",
+          "question": "What is MMR (Maximal Marginal Relevance)?",
+          "answer": "MMR is algorithm balancing relevance and diversity. Iteratively selects documents: each new doc must be relevant to query AND different from already selected docs. Prevents retrieving near-duplicate information. Formula combines similarity to query and dissimilarity to selected docs. Results in more informative, diverse context for LLM.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Algorithm"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "543",
+          "question": "How do you add metadata to documents?",
+          "answer": "Set metadata dict when creating Document: 'Document(page_content=\"text\", metadata={\"source\": \"file.pdf\", \"page\": 1})'. Metadata automatically preserved through splitting and storage. Useful for filtering, source attribution, debugging. Common metadata: source file, page number, date, category. Retrievers can filter by metadata.",
+          "tags": [
+            "LangChain",
+            "Documents",
+            "Metadata"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "544",
+          "question": "How do you filter by metadata in retrieval?",
+          "answer": "Pass filter dict to retriever: 'retriever.get_relevant_documents(query, filter={\"source\": \"manual.pdf\"})'. Only searches documents matching filter. Combines semantic search with structured filtering. Example: retrieve from specific date range or department. Powerful for multi-tenant or categorized knowledge bases.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Filtering"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "545",
+          "question": "What is a MultiQueryRetriever?",
+          "answer": "MultiQueryRetriever generates multiple query variations, retrieves for each, combines results. LLM generates alternative phrasings of user question. Reduces impact of query formulation. Example: 'electric cars' also searches 'EVs', 'battery vehicles'. Better recall than single query. Costs extra LLM calls but improves retrieval coverage.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "546",
+          "question": "What is a ContextualCompressionRetriever?",
+          "answer": "ContextualCompressionRetriever retrieves documents then compresses them to relevant parts. Uses LLM to extract only relevant sentences. Reduces noise, fits more relevant info in context window. Example: retrieves 5 long docs, extracts only paragraphs answering question. Better than full docs for focused questions. Trades LLM cost for quality.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Compression"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "547",
+          "question": "What is a ParentDocumentRetriever?",
+          "answer": "ParentDocumentRetriever stores small chunks for retrieval but returns larger parent documents. Retrieves with precise chunks, provides context with full parent. Example: embed sentences, but return full paragraphs. Balances retrieval precision with context completeness. Good when chunks too small for LLM but needed for accurate search.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "Advanced"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "548",
+          "question": "What is a SelfQueryRetriever?",
+          "answer": "SelfQueryRetriever uses LLM to extract metadata filters from natural language query. User says 'documents from 2023 about cars' - LLM extracts filter {year: 2023} and semantic query 'cars'. Automatically applies structured filters. No manual query parsing needed. Enables natural language over structured metadata.",
+          "tags": [
+            "LangChain",
+            "Retrieval",
+            "NLP"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "549",
+          "question": "What is LangSmith?",
+          "answer": "LangSmith is LangChain's observability and debugging platform. Traces chain execution, logs inputs/outputs, measures latency and costs. Helps debug complex chains, optimize performance, monitor production. Web interface for viewing traces. Essential for production LangChain applications. Separate product, requires account.",
+          "tags": [
+            "LangChain",
+            "Tools",
+            "Observability"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "550",
+          "question": "What is tracing in LangChain?",
+          "answer": "Tracing records execution flow of chains. Captures each step: inputs, outputs, timing, errors. Enable with environment variable or callbacks. Shows which tools called, what LLM generated, how long each step took. Critical for debugging complex chains with agents/tools. LangSmith provides visualization of traces.",
+          "tags": [
+            "LangChain",
+            "Debugging",
+            "Tracing"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "551",
+          "question": "How do you debug LangChain applications?",
+          "answer": "Enable verbose mode (verbose=True), use LangSmith tracing, add print statements in custom functions, check intermediate outputs, use callbacks. Common issues: wrong documents retrieved, prompt formatting, tool selection errors. Inspect retriever results, check LLM inputs/outputs. LangSmith provides best debugging experience with visual traces.",
+          "tags": [
+            "LangChain",
+            "Debugging",
+            "Development"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "552",
+          "question": "What is LangServe?",
+          "answer": "LangServe deploys LangChain applications as REST APIs. Wraps chains/runnables in FastAPI endpoints automatically. Usage: 'add_routes(app, chain, path=\"/my-chain\")'. Provides /invoke, /stream, /batch endpoints. Simplifies deployment - no manual API writing. Includes automatic OpenAPI docs. Standard way to serve LangChain in production.",
+          "tags": [
+            "LangChain",
+            "Deployment",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

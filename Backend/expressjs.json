@@ -1,0 +1,250 @@
+{
+  "decks": [
+    {
+      "name": "Express.js",
+      "description": "Interview questions about Express.js",
+      "cards": [
+        {
+          "id": "26",
+          "question": "What is Express.js?",
+          "answer": "Minimal and flexible Node.js web application framework.\n\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/', (req, res) => {\n  res.send('Hello World');\n});\n\napp.listen(3000);\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "27",
+          "question": "What is middleware?",
+          "answer": "Functions with access to request, response, and next function.\n\n```javascript\napp.use((req, res, next) => {\n  console.log('middleware');\n  next();\n});\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "28",
+          "question": "What is `app.use()`?",
+          "answer": "Mounts middleware or router.\n\n```javascript\napp.use(express.json()); // parse JSON\napp.use('/api', apiRouter); // mount router\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "29",
+          "question": "What is the difference between `app.use()` and `app.get()`?",
+          "answer": "- `app.use()`: applies to all HTTP methods\n- `app.get()`: applies only to GET requests",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "30",
+          "question": "What is `req` object?",
+          "answer": "Request object containing HTTP request information.\n\n```javascript\nreq.params; // route parameters\nreq.query; // query string\nreq.body; // request body\nreq.headers; // headers\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "31",
+          "question": "What is `res` object?",
+          "answer": "Response object for sending HTTP response.\n\n```javascript\nres.send('text');\nres.json({ data: 'value' });\nres.status(404).send('Not Found');\nres.redirect('/home');\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "32",
+          "question": "What is routing?",
+          "answer": "Defining application endpoints and their handlers.\n\n```javascript\napp.get('/users', (req, res) => res.json(users));\napp.post('/users', (req, res) => res.json(newUser));\napp.put('/users/:id', (req, res) => res.json(updatedUser));\napp.delete('/users/:id', (req, res) => res.sendStatus(204));\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "33",
+          "question": "What are route parameters?",
+          "answer": "Dynamic URL segments.\n\n```javascript\napp.get('/users/:id', (req, res) => {\n  const userId = req.params.id;\n  res.json({ userId });\n});\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "34",
+          "question": "What is query string?",
+          "answer": "URL parameters after `?`.\n\n```javascript\n// GET /search?q=express&page=2\napp.get('/search', (req, res) => {\n  console.log(req.query.q); // \"express\"\n  console.log(req.query.page); // \"2\"\n});\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "35",
+          "question": "What is `express.json()`?",
+          "answer": "Middleware parsing JSON request bodies.\n\n```javascript\napp.use(express.json());\n\napp.post('/data', (req, res) => {\n  console.log(req.body); // parsed JSON\n});\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "36",
+          "question": "What is `express.urlencoded()`?",
+          "answer": "Middleware parsing URL-encoded request bodies.\n\n```javascript\napp.use(express.urlencoded({ extended: true }));\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "37",
+          "question": "What is `express.static()`?",
+          "answer": "Serves static files.\n\n```javascript\napp.use(express.static('public'));\n// serves files from /public directory\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "38",
+          "question": "What is `next()` function?",
+          "answer": "Passes control to next middleware.\n\n```javascript\napp.use((req, res, next) => {\n  console.log('first');\n  next(); // pass to next middleware\n});\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "39",
+          "question": "What is error handling middleware?",
+          "answer": "Middleware with 4 parameters for handling errors.\n\n```javascript\napp.use((err, req, res, next) => {\n  console.error(err.stack);\n  res.status(500).send('Error');\n});\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "40",
+          "question": "What is Router?",
+          "answer": "Modular route handlers.\n\n```javascript\nconst router = express.Router();\n\nrouter.get('/users', (req, res) => res.json(users));\nrouter.post('/users', (req, res) => res.json(newUser));\n\napp.use('/api', router);\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "41",
+          "question": "What is `app.route()`?",
+          "answer": "Chains route handlers for same path.\n\n```javascript\napp.route('/users')\n  .get((req, res) => res.json(users))\n  .post((req, res) => res.json(newUser));\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "42",
+          "question": "What is CORS?",
+          "answer": "Cross-Origin Resource Sharing. Use `cors` middleware.\n\n```javascript\nconst cors = require('cors');\napp.use(cors());\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "43",
+          "question": "What is rate limiting?",
+          "answer": "Limiting number of requests from client.\n\n```javascript\nconst rateLimit = require('express-rate-limit');\n\nconst limiter = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 100\n});\n\napp.use('/api', limiter);\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "44",
+          "question": "What is helmet?",
+          "answer": "Security middleware setting HTTP headers.\n\n```javascript\nconst helmet = require('helmet');\napp.use(helmet());\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "45",
+          "question": "What is morgan?",
+          "answer": "HTTP request logger middleware.\n\n```javascript\nconst morgan = require('morgan');\napp.use(morgan('combined'));\n```",
+          "tags": [
+            "Express"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "decks": [
+    {
+      "name": "TypeScript",
+      "description": "Interview questions about TypeScript",
+      "cards": [
+        {
+          "id": "71",
+          "question": "What is TypeScript?",
+          "answer": "Superset of JavaScript adding static typing, compiled to JavaScript.\n\n```typescript\nlet age: number = 25;\nlet name: string = \"John\";\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "72",
+          "question": "What are the benefits of TypeScript?",
+          "answer": "- Static typing catches errors at compile time\n- Better IDE support (autocomplete, refactoring)\n- Improved code documentation\n- Enhanced maintainability",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "73",
+          "question": "What are basic types in TypeScript?",
+          "answer": "`number`, `string`, `boolean`, `any`, `unknown`, `void`, `null`, `undefined`, `never`, `object`.\n\n```typescript\nlet num: number = 42;\nlet str: string = \"hello\";\nlet bool: boolean = true;\nlet anything: any = \"can be anything\";\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "74",
+          "question": "What is type inference?",
+          "answer": "TypeScript automatically determines variable types.\n\n```typescript\nlet x = 5; // inferred as number\nlet y = \"hello\"; // inferred as string\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "75",
+          "question": "What is the difference between `any` and `unknown`?",
+          "answer": "- `any`: disables type checking\n- `unknown`: type-safe, requires type checking before use\n\n```typescript\nlet a: any = 5;\na.foo(); // no error, but fails at runtime\n\nlet b: unknown = 5;\nb.foo(); // compile error\nif (typeof b === 'number') b.toFixed(); // OK\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "76",
+          "question": "What is a type annotation?",
+          "answer": "Explicit type declaration.\n\n```typescript\nlet name: string = \"John\";\nfunction greet(name: string): string {\n  return `Hello, ${name}`;\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "77",
+          "question": "What is an interface?",
+          "answer": "Defines structure of an object.\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n  email?: string; // optional\n}\n\nconst user: User = { id: 1, name: \"John\" };\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "78",
+          "question": "What is a type alias?",
+          "answer": "Creates new name for a type.\n\n```typescript\ntype UserID = string | number;\ntype Point = { x: number; y: number };\n\nlet id: UserID = 123;\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "79",
+          "question": "What is the difference between `interface` and `type`?",
+          "answer": "- Interface: can be extended, merged, better for objects\n- Type: more flexible, can represent unions, primitives\n\n```typescript\n// Interface\ninterface Animal { name: string; }\ninterface Dog extends Animal { breed: string; }\n\n// Type\ntype Animal = { name: string };\ntype Dog = Animal & { breed: string };\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "80",
+          "question": "What is a union type?",
+          "answer": "Variable can be one of several types.\n\n```typescript\nlet id: string | number;\nid = \"abc\"; // OK\nid = 123; // OK\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "81",
+          "question": "What is an intersection type?",
+          "answer": "Combines multiple types.\n\n```typescript\ntype Person = { name: string };\ntype Employee = { employeeId: number };\ntype Staff = Person & Employee;\n\nconst staff: Staff = { name: \"John\", employeeId: 123 };\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "82",
+          "question": "What is a literal type?",
+          "answer": "Exact value as type.\n\n```typescript\nlet direction: \"left\" | \"right\" | \"up\" | \"down\";\ndirection = \"left\"; // OK\ndirection = \"forward\"; // Error\n\ntype Status = \"pending\" | \"approved\" | \"rejected\";\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "83",
+          "question": "What is the `void` type?",
+          "answer": "Represents absence of value (function returns nothing).\n\n```typescript\nfunction log(message: string): void {\n  console.log(message);\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "84",
+          "question": "What is the `never` type?",
+          "answer": "Represents values that never occur (functions that never return).\n\n```typescript\nfunction throwError(message: string): never {\n  throw new Error(message);\n}\n\nfunction infiniteLoop(): never {\n  while (true) {}\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "85",
+          "question": "What is type assertion?",
+          "answer": "Telling compiler to treat value as specific type.\n\n```typescript\nlet value: any = \"hello\";\nlet length: number = (value as string).length;\n// or\nlet length2: number = (<string>value).length;\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "86",
+          "question": "What is a tuple?",
+          "answer": "Array with fixed length and types.\n\n```typescript\nlet tuple: [string, number] = [\"John\", 25];\ntuple[0] // string\ntuple[1] // number\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "87",
+          "question": "What is an enum?",
+          "answer": "Named set of constants.\n\n```typescript\nenum Color {\n  Red,\n  Green,\n  Blue\n}\n\nlet c: Color = Color.Green; // 1\n\nenum Status {\n  Active = \"ACTIVE\",\n  Inactive = \"INACTIVE\"\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "88",
+          "question": "What is a generic?",
+          "answer": "Reusable component working with multiple types.\n\n```typescript\nfunction identity<T>(arg: T): T {\n  return arg;\n}\n\nidentity<number>(5);\nidentity<string>(\"hello\");\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "89",
+          "question": "What is a generic constraint?",
+          "answer": "Limiting generic types.\n\n```typescript\ninterface HasLength {\n  length: number;\n}\n\nfunction logLength<T extends HasLength>(arg: T): void {\n  console.log(arg.length);\n}\n\nlogLength(\"hello\"); // OK\nlogLength([1, 2, 3]); // OK\nlogLength(123); // Error\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "90",
+          "question": "What is the `keyof` operator?",
+          "answer": "Gets union of object's keys.\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n}\n\ntype UserKeys = keyof User; // \"id\" | \"name\"\n\nfunction getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {\n  return obj[key];\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "91",
+          "question": "What is `typeof` in TypeScript?",
+          "answer": "Gets type of a variable.\n\n```typescript\nlet user = { name: \"John\", age: 25 };\ntype User = typeof user; // { name: string; age: number }\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "92",
+          "question": "What is an index signature?",
+          "answer": "Dynamic property names.\n\n```typescript\ninterface StringMap {\n  [key: string]: string;\n}\n\nconst map: StringMap = {\n  name: \"John\",\n  city: \"NYC\"\n};\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "93",
+          "question": "What is a mapped type?",
+          "answer": "Transforms properties of existing type.\n\n```typescript\ntype Readonly<T> = {\n  readonly [P in keyof T]: T[P];\n};\n\ninterface User {\n  name: string;\n  age: number;\n}\n\ntype ReadonlyUser = Readonly<User>;\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "94",
+          "question": "What is `Partial<T>`?",
+          "answer": "Makes all properties optional.\n\n```typescript\ninterface User {\n  name: string;\n  age: number;\n}\n\ntype PartialUser = Partial<User>;\n// { name?: string; age?: number; }\n\nfunction updateUser(user: User, updates: Partial<User>) {\n  return { ...user, ...updates };\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "95",
+          "question": "What is `Required<T>`?",
+          "answer": "Makes all properties required.\n\n```typescript\ninterface User {\n  name?: string;\n  age?: number;\n}\n\ntype RequiredUser = Required<User>;\n// { name: string; age: number; }\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "96",
+          "question": "What is `Pick<T, K>`?",
+          "answer": "Selects subset of properties.\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n}\n\ntype UserPreview = Pick<User, \"id\" | \"name\">;\n// { id: number; name: string; }\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "97",
+          "question": "What is `Omit<T, K>`?",
+          "answer": "Excludes properties.\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n  password: string;\n}\n\ntype PublicUser = Omit<User, \"password\">;\n// { id: number; name: string; }\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "98",
+          "question": "What is `Record<K, T>`?",
+          "answer": "Creates object type with specific keys and value type.\n\n```typescript\ntype Roles = \"admin\" | \"user\" | \"guest\";\ntype Permissions = Record<Roles, string[]>;\n\nconst perms: Permissions = {\n  admin: [\"read\", \"write\", \"delete\"],\n  user: [\"read\", \"write\"],\n  guest: [\"read\"]\n};\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "99",
+          "question": "What is `Readonly<T>`?",
+          "answer": "Makes all properties read-only.\n\n```typescript\ninterface User {\n  name: string;\n  age: number;\n}\n\nconst user: Readonly<User> = { name: \"John\", age: 25 };\nuser.name = \"Jane\"; // Error\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "100",
+          "question": "What is function type?",
+          "answer": "Type definition for functions.\n\n```typescript\ntype MathOperation = (a: number, b: number) => number;\n\nconst add: MathOperation = (a, b) => a + b;\nconst subtract: MathOperation = (a, b) => a - b;\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "101",
+          "question": "What are optional parameters?",
+          "answer": "Parameters that may be omitted.\n\n```typescript\nfunction greet(name: string, greeting?: string): string {\n  return `${greeting || \"Hello\"}, ${name}`;\n}\n\ngreet(\"John\"); // \"Hello, John\"\ngreet(\"John\", \"Hi\"); // \"Hi, John\"\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "102",
+          "question": "What are default parameters?",
+          "answer": "Parameters with default values.\n\n```typescript\nfunction greet(name: string, greeting: string = \"Hello\"): string {\n  return `${greeting}, ${name}`;\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "103",
+          "question": "What is a rest parameter type?",
+          "answer": "Array of remaining arguments.\n\n```typescript\nfunction sum(...numbers: number[]): number {\n  return numbers.reduce((a, b) => a + b, 0);\n}\n\nsum(1, 2, 3, 4);\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "104",
+          "question": "What is function overloading?",
+          "answer": "Multiple function signatures.\n\n```typescript\nfunction getValue(id: number): string;\nfunction getValue(name: string): number;\nfunction getValue(value: number | string): string | number {\n  if (typeof value === \"number\") return \"id: \" + value;\n  return value.length;\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "105",
+          "question": "What is a class in TypeScript?",
+          "answer": "Blueprint for creating objects with type safety.\n\n```typescript\nclass Person {\n  name: string;\n  age: number;\n\n  constructor(name: string, age: number) {\n    this.name = name;\n    this.age = age;\n  }\n\n  greet(): string {\n    return `Hello, ${this.name}`;\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "106",
+          "question": "What are access modifiers?",
+          "answer": "`public`, `private`, `protected` control property/method access.\n\n```typescript\nclass Person {\n  public name: string; // accessible everywhere\n  private ssn: string; // only within class\n  protected age: number; // within class and subclasses\n\n  constructor(name: string, ssn: string, age: number) {\n    this.name = name;\n    this.ssn = ssn;\n    this.age = age;\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "107",
+          "question": "What is `readonly` modifier?",
+          "answer": "Properties that cannot be modified after initialization.\n\n```typescript\nclass Person {\n  readonly id: number;\n\n  constructor(id: number) {\n    this.id = id;\n  }\n}\n\nconst person = new Person(1);\nperson.id = 2; // Error\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "108",
+          "question": "What is an abstract class?",
+          "answer": "Base class that cannot be instantiated.\n\n```typescript\nabstract class Animal {\n  abstract makeSound(): void;\n\n  move(): void {\n    console.log(\"moving\");\n  }\n}\n\nclass Dog extends Animal {\n  makeSound(): void {\n    console.log(\"bark\");\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "109",
+          "question": "What is a type guard?",
+          "answer": "Runtime check that narrows type.\n\n```typescript\nfunction isString(value: unknown): value is string {\n  return typeof value === \"string\";\n}\n\nfunction process(value: string | number) {\n  if (isString(value)) {\n    console.log(value.toUpperCase()); // string\n  } else {\n    console.log(value.toFixed(2)); // number\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "110",
+          "question": "What is the `in` operator type guard?",
+          "answer": "Checks if property exists.\n\n```typescript\ninterface Cat { meow(): void; }\ninterface Dog { bark(): void; }\n\nfunction makeSound(animal: Cat | Dog) {\n  if (\"meow\" in animal) {\n    animal.meow();\n  } else {\n    animal.bark();\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "111",
+          "question": "What is `instanceof` type guard?",
+          "answer": "Checks if object is instance of class.\n\n```typescript\nclass Dog {\n  bark() { console.log(\"woof\"); }\n}\n\nfunction handle(animal: Dog | Cat) {\n  if (animal instanceof Dog) {\n    animal.bark();\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "112",
+          "question": "What is a discriminated union?",
+          "answer": "Union with common property for type narrowing.\n\n```typescript\ninterface Success {\n  type: \"success\";\n  data: string;\n}\n\ninterface Error {\n  type: \"error\";\n  message: string;\n}\n\ntype Result = Success | Error;\n\nfunction handle(result: Result) {\n  if (result.type === \"success\") {\n    console.log(result.data); // Success type\n  } else {\n    console.log(result.message); // Error type\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "113",
+          "question": "What is namespace?",
+          "answer": "Organize code into logical groups.\n\n```typescript\nnamespace Utils {\n  export function log(msg: string) {\n    console.log(msg);\n  }\n}\n\nUtils.log(\"hello\");\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "114",
+          "question": "What is a module?",
+          "answer": "File with imports/exports.\n\n```typescript\n// math.ts\nexport function add(a: number, b: number): number {\n  return a + b;\n}\n\n// app.ts\nimport { add } from './math';\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "115",
+          "question": "What is a decorator?",
+          "answer": "Function that modifies class/method/property.\n\n```typescript\nfunction log(target: any, key: string) {\n  console.log(`${key} was called`);\n}\n\nclass Calculator {\n  @log\n  add(a: number, b: number) {\n    return a + b;\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "116",
+          "question": "What is `strict` mode in tsconfig?",
+          "answer": "Enables all strict type checking options.\n\n```json\n{\n  \"compilerOptions\": {\n    \"strict\": true\n  }\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "117",
+          "question": "What is `strictNullChecks`?",
+          "answer": "`null` and `undefined` are not assignable to other types.\n\n```typescript\n// strictNullChecks: true\nlet name: string = null; // Error\n\nlet name: string | null = null; // OK\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "118",
+          "question": "What is non-null assertion operator?",
+          "answer": "Tells compiler value is not null/undefined.\n\n```typescript\nfunction process(value?: string) {\n  console.log(value!.length); // asserts value is not null/undefined\n}\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "119",
+          "question": "What is optional chaining in TypeScript?",
+          "answer": "Safely access nested properties.\n\n```typescript\ninterface User {\n  address?: {\n    city?: string;\n  };\n}\n\nconst user: User = {};\nconst city = user.address?.city; // undefined (no error)\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "120",
+          "question": "What is nullish coalescing in TypeScript?",
+          "answer": "Default value for null/undefined.\n\n```typescript\nconst value: string | null = null;\nconst result = value ?? \"default\"; // \"default\"\n\nconst zero = 0 ?? 42; // 0 (not 42)\n```",
+          "tags": [
+            "TypeScript"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

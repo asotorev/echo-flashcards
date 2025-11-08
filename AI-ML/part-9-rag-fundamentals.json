@@ -1,0 +1,296 @@
+{
+  "decks": [
+    {
+      "name": "Part 9: RAG Fundamentals",
+      "description": "Retrieval-Augmented Generation basics - architecture, components, and implementation",
+      "cards": [
+        {
+          "id": "167",
+          "question": "What is Retrieval-Augmented Generation (RAG)?",
+          "answer": "RAG enhances LLM responses by retrieving relevant information from external knowledge sources before generating answers. It combines information retrieval (finding relevant documents) with text generation (producing answers using retrieved context). RAG allows models to access up-to-date information, cite sources, and answer questions about private data without retraining, solving the knowledge cutoff and hallucination problems.",
+          "tags": [
+            "RAG",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "168",
+          "question": "What problem does RAG solve that fine-tuning doesn't?",
+          "answer": "RAG provides access to dynamic, frequently-changing information without retraining. Fine-tuning bakes knowledge into weights, requiring retraining for updates. RAG can cite sources, handle vast knowledge bases too large to fit in parameters, and update knowledge instantly by changing the retrieval corpus. For CarBrain's constantly changing vehicle inventory, RAG is ideal since fine-tuning would require daily retraining.",
+          "tags": [
+            "RAG",
+            "Comparison"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "169",
+          "question": "Why can't LLMs just use their training data for specific questions?",
+          "answer": "LLMs don't have direct access to training data - they only have patterns learned and compressed into parameters. They can't retrieve specific facts or cite sources. Training data is also static (fixed at training time) and can't be updated. Additionally, LLMs may hallucinate or misremember information. RAG solves this by explicitly retrieving relevant information, ensuring responses are grounded in actual documents.",
+          "tags": [
+            "RAG",
+            "Concepts"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "170",
+          "question": "What is the knowledge cutoff problem and how does RAG address it?",
+          "answer": "Knowledge cutoff is the date when model training data ends - models don't know about events after that date. GPT-4's cutoff is April 2023, so it doesn't know about later events. RAG solves this by retrieving current information from updated knowledge bases. Instead of relying on stale parameters, RAG pulls fresh data at query time, making models always current.",
+          "tags": [
+            "RAG",
+            "Problems"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "171",
+          "question": "What are the main components of a RAG system?",
+          "answer": "RAG systems have three main components: 1) Knowledge base (documents or data to retrieve from), 2) Retrieval system (finds relevant information, typically using embeddings and vector search), and 3) Generation model (LLM that uses retrieved context to answer questions). Additional components include embedding models, vector databases, rerankers, and orchestration logic to connect everything.",
+          "tags": [
+            "RAG",
+            "Architecture"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "172",
+          "question": "How does a basic RAG pipeline work step-by-step?",
+          "answer": "1) User asks a question. 2) Question is embedded into a vector. 3) Vector search finds relevant document chunks. 4) Retrieved chunks are combined with the question into a prompt. 5) LLM generates an answer using both the question and retrieved context. 6) Answer is returned to user. The key is that retrieval happens before generation, grounding the response in actual documents.",
+          "tags": [
+            "RAG",
+            "Process"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "173",
+          "question": "What is the retrieval step in RAG?",
+          "answer": "Retrieval finds the most relevant documents or chunks for a given query. The query is converted to an embedding vector, which is compared to pre-computed document embeddings using similarity search (typically cosine similarity). The top-k most similar documents are selected. Good retrieval is critical - if relevant information isn't retrieved, the LLM can't use it to generate accurate answers.",
+          "tags": [
+            "RAG",
+            "Retrieval"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "174",
+          "question": "What is the augmentation step in RAG?",
+          "answer": "Augmentation combines the user's query with retrieved documents into a prompt for the LLM. This typically involves formatting retrieved chunks, adding instructions like 'Answer based only on the following context,' and constructing a complete prompt. The augmentation step bridges retrieval and generation, presenting information to the LLM in a way that encourages accurate, grounded responses.",
+          "tags": [
+            "RAG",
+            "Process"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "175",
+          "question": "What is the generation step in RAG?",
+          "answer": "Generation is where the LLM produces an answer using the augmented prompt containing both the query and retrieved context. The LLM synthesizes information from retrieved documents, potentially combining multiple sources, to answer the question. Good prompting encourages citing sources, admitting when information is insufficient, and staying grounded in provided context rather than hallucinating.",
+          "tags": [
+            "RAG",
+            "Generation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "176",
+          "question": "What are embeddings in the context of RAG?",
+          "answer": "Embeddings are vector representations of text that capture semantic meaning, enabling similarity-based search. In RAG, both documents and queries are converted to embeddings. Documents with similar meanings have similar vectors, allowing retrieval of semantically relevant content even when exact keywords don't match. For example, 'affordable sedan' can retrieve documents about 'budget-friendly cars' through semantic similarity.",
+          "tags": [
+            "RAG",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "177",
+          "question": "Explain the two-phase embedding process: indexing vs query-time",
+          "answer": "Indexing phase (offline): Documents are chunked, embedded, and stored in a vector database. This happens once or when documents change. Query-time phase (online): User query is embedded using the same model, then compared against stored embeddings to find matches. Separating these phases allows fast query response since documents are pre-processed. Only the query embedding and search happen in real-time.",
+          "tags": [
+            "RAG",
+            "Process"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "178",
+          "question": "What is a vector database and why is it used in RAG?",
+          "answer": "A vector database efficiently stores and searches high-dimensional embeddings using specialized indexing algorithms. Unlike traditional databases that match exact values, vector DBs find approximate nearest neighbors based on similarity. This enables fast semantic search across millions of documents. Popular options include pgvector, Pinecone, Qdrant, and Chroma. For CarBrain, pgvector integrates with existing PostgreSQL infrastructure.",
+          "tags": [
+            "RAG",
+            "Vector DB"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "179",
+          "question": "What is semantic search vs keyword search?",
+          "answer": "Keyword search matches exact words or stems, missing synonyms and context. Semantic search uses embeddings to find conceptually similar content regardless of exact wording. For example, searching 'reliable vehicle' with semantic search finds documents about 'dependable cars' or 'trustworthy automobiles'. Semantic search is more robust to vocabulary mismatch and better captures user intent, making it ideal for RAG systems.",
+          "tags": [
+            "RAG",
+            "Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "180",
+          "question": "How do you convert text into embeddings?",
+          "answer": "Use an embedding model (neural network trained to create semantic vectors) that takes text as input and outputs a fixed-size vector. Models like Sentence-BERT, OpenAI's text-embedding-ada-002, or Ollama's nomic-embed-text process text through transformer layers and pool the output into a single vector. The same model must be used consistently for both indexing documents and embedding queries to ensure vector compatibility.",
+          "tags": [
+            "RAG",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "181",
+          "question": "What are embedding models?",
+          "answer": "Embedding models are specialized neural networks trained to convert text into dense vector representations that capture semantic meaning. They're typically based on transformers and trained using contrastive learning on large text corpora. Popular models include sentence-transformers (open source), OpenAI embeddings (API), and nomic-embed-text (available via Ollama). Model choice affects retrieval quality, speed, and dimension size.",
+          "tags": [
+            "RAG",
+            "Embeddings"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "182",
+          "question": "What is cosine similarity and how is it used in vector search?",
+          "answer": "Cosine similarity measures the angle between two vectors, ranging from -1 to 1 (1 being identical direction). It focuses on orientation rather than magnitude, making it robust to document length. In RAG, cosine similarity compares the query embedding to document embeddings - higher scores indicate more semantic similarity. It's the most common similarity metric because it's computationally efficient and effective for high-dimensional semantic vectors.",
+          "tags": [
+            "RAG",
+            "Search"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "183",
+          "question": "What is chunking in RAG?",
+          "answer": "Chunking splits large documents into smaller segments before embedding and storing them. This is necessary because LLMs have context limits and embedding models work better on focused text. Chunks become the retrieval units - you retrieve relevant chunks, not entire documents. Chunk size balances completeness (larger chunks have more context) against precision (smaller chunks are more focused). Typical sizes are 200-1000 tokens.",
+          "tags": [
+            "RAG",
+            "Chunking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "184",
+          "question": "Why do we need to chunk documents?",
+          "answer": "Documents are often too long for embedding models or LLM context windows. Chunking enables retrieving only relevant portions rather than entire documents, improving precision and reducing noise. Smaller chunks create more focused embeddings that better represent specific concepts. Chunking also allows fitting more retrieved information into the LLM's context window by selecting only the most relevant chunks from potentially many documents.",
+          "tags": [
+            "RAG",
+            "Chunking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "185",
+          "question": "What are different chunking strategies?",
+          "answer": "Fixed-size chunking splits text every N tokens/characters (simple but may break context). Sentence-based chunking uses sentence boundaries (maintains readability). Paragraph-based chunking preserves document structure. Semantic chunking groups related content (most sophisticated). Recursive chunking tries larger chunks first, splitting if needed. The choice depends on document structure and use case - structured content benefits from semantic chunking, while uniform content works with fixed-size.",
+          "tags": [
+            "RAG",
+            "Chunking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "186",
+          "question": "How does chunk size affect RAG performance?",
+          "answer": "Smaller chunks (100-300 tokens) are more precise, matching specific concepts but may lack context. Larger chunks (500-1000 tokens) provide more context but may be less focused and reduce the number of diverse sources you can include. Very large chunks approach full documents. Optimal size depends on your documents and queries - technical Q&A benefits from smaller chunks, while broad topics need larger chunks for context.",
+          "tags": [
+            "RAG",
+            "Chunking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "187",
+          "question": "What is chunk overlap and why might you use it?",
+          "answer": "Chunk overlap repeats the last N tokens of one chunk at the start of the next chunk. This prevents information split across chunk boundaries from being lost. For example, a sentence spanning two chunks would be complete in at least one of them. Typical overlap is 10-20% of chunk size. Overlap increases storage and processing but improves retrieval quality by ensuring complete context around all content.",
+          "tags": [
+            "RAG",
+            "Chunking"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "188",
+          "question": "What is cosine similarity and why is it used for retrieval?",
+          "answer": "Cosine similarity measures vector alignment by calculating the cosine of the angle between vectors, producing values from -1 to 1. It's ideal for RAG because it captures semantic similarity regardless of vector magnitude, making it insensitive to document length. It's computationally efficient for high-dimensional spaces and has nice mathematical properties. Values near 1 indicate high similarity, near 0 indicate orthogonality, and near -1 indicate opposite meanings.",
+          "tags": [
+            "RAG",
+            "Similarity"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

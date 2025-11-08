@@ -1,0 +1,400 @@
+{
+  "decks": [
+    {
+      "name": "Part 12: Transformers Library Fundamentals",
+      "description": "Core concepts of the Hugging Face Transformers library for working with models",
+      "cards": [
+        {
+          "id": "231",
+          "question": "What is the Transformers library?",
+          "answer": "Transformers is Hugging Face's flagship open-source library providing state-of-the-art pre-trained models for NLP, vision, and audio tasks. It offers a unified API for thousands of models, handles downloading and caching, and supports PyTorch and TensorFlow backends. It's the standard tool for working with modern ML models.",
+          "tags": [
+            "Transformers",
+            "Library"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "232",
+          "question": "What programming language is Transformers built for?",
+          "answer": "Transformers is built for Python, the dominant language in machine learning. The library is distributed via pip and designed to work seamlessly with Python's scientific computing ecosystem (NumPy, pandas) and deep learning frameworks (PyTorch, TensorFlow).",
+          "tags": [
+            "Transformers",
+            "Python"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "233",
+          "question": "What deep learning frameworks does Transformers support?",
+          "answer": "Transformers supports both PyTorch and TensorFlow as backends. Most models are available in both frameworks, and the API is largely framework-agnostic. You can often switch between frameworks by changing a single parameter. PyTorch is more commonly used in research, while TensorFlow has strong production tooling.",
+          "tags": [
+            "Transformers",
+            "Frameworks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "234",
+          "question": "What is the difference between PyTorch and TensorFlow backends?",
+          "answer": "PyTorch offers dynamic computation graphs, more Pythonic API, and is favored in research. TensorFlow uses static graphs (with eager mode), has better production deployment tools (TensorFlow Serving, TensorFlow Lite), and stronger mobile/edge support. Transformers abstracts many differences, but some advanced features are framework-specific.",
+          "tags": [
+            "Transformers",
+            "Frameworks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "235",
+          "question": "How do you install the Transformers library?",
+          "answer": "Install via pip: 'pip install transformers' for the base library. For PyTorch support: 'pip install transformers torch'. For TensorFlow: 'pip install transformers tensorflow'. You can also install specific extras like 'pip install transformers[torch,sentencepiece]' for additional dependencies.",
+          "tags": [
+            "Transformers",
+            "Installation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "236",
+          "question": "What is the `pipeline` API in Transformers?",
+          "answer": "Pipeline is a high-level API for common tasks that abstracts model loading, tokenization, inference, and decoding into a single function call. It's the easiest way to use Transformers: 'pipeline('sentiment-analysis')'. Pipelines handle all preprocessing and postprocessing, making them ideal for quick prototyping and simple use cases.",
+          "tags": [
+            "Transformers",
+            "API"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "237",
+          "question": "What tasks does the pipeline API support?",
+          "answer": "Pipelines support dozens of tasks: text generation, text classification, question answering, summarization, translation, named entity recognition, sentiment analysis, zero-shot classification, image classification, object detection, automatic speech recognition, and more. Each task has optimized defaults for models and processing.",
+          "tags": [
+            "Transformers",
+            "Pipeline"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "238",
+          "question": "What is the `AutoModel` class?",
+          "answer": "AutoModel is a generic class that automatically loads the correct model architecture based on the model name or path. Instead of knowing whether to use BertModel or GPT2Model, you use AutoModel.from_pretrained() and it figures out the architecture. This makes code more flexible and model-agnostic.",
+          "tags": [
+            "Transformers",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "239",
+          "question": "What is the `AutoTokenizer` class?",
+          "answer": "AutoTokenizer automatically loads the appropriate tokenizer for a model. Different models use different tokenization strategies (WordPiece, BPE, SentencePiece), and AutoTokenizer handles this complexity. Use AutoTokenizer.from_pretrained() with the same model name to get the matching tokenizer.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "240",
+          "question": "Why use Auto classes instead of specific model classes?",
+          "answer": "Auto classes make code model-agnostic and easier to maintain. You can swap models by changing the model name without rewriting code. They automatically handle architecture differences and ensure tokenizer-model compatibility. This is especially useful when experimenting with different models or building flexible applications.",
+          "tags": [
+            "Transformers",
+            "Best Practices"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "241",
+          "question": "What is the difference between `AutoModelForCausalLM` and `AutoModelForSeq2SeqLM`?",
+          "answer": "AutoModelForCausalLM is for autoregressive models (GPT, Llama) that generate text left-to-right, predicting the next token. AutoModelForSeq2SeqLM is for encoder-decoder models (T5, BART) that encode input and decode output, used for translation or summarization where input and output are distinct sequences.",
+          "tags": [
+            "Transformers",
+            "Models"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "242",
+          "question": "What is `AutoModelForSequenceClassification`?",
+          "answer": "AutoModelForSequenceClassification loads models for classifying entire sequences into categories (sentiment analysis, topic classification, spam detection). It adds a classification head on top of the base model that outputs class probabilities. These models are typically fine-tuned on labeled classification datasets.",
+          "tags": [
+            "Transformers",
+            "Classification"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "243",
+          "question": "What is `AutoModelForTokenClassification`?",
+          "answer": "AutoModelForTokenClassification is for tagging each token in a sequence (named entity recognition, part-of-speech tagging). Unlike sequence classification which outputs one label per input, token classification outputs a label for each token, identifying spans of text like names, locations, or organizations.",
+          "tags": [
+            "Transformers",
+            "NER"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "244",
+          "question": "What is `AutoModelForQuestionAnswering`?",
+          "answer": "AutoModelForQuestionAnswering loads models that extract answer spans from context passages. Given a question and context, these models predict start and end positions of the answer within the context. They're used in QA systems where answers exist in provided documents rather than being generated freely.",
+          "tags": [
+            "Transformers",
+            "QA"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "245",
+          "question": "How do you load a model from Hugging Face Hub using Transformers?",
+          "answer": "Use from_pretrained() with the model name: 'model = AutoModel.from_pretrained('bert-base-uncased')'. The library downloads the model from the Hub, caches it locally, and returns a ready-to-use model object. You can specify additional parameters like device, dtype, or use_auth_token for private models.",
+          "tags": [
+            "Transformers",
+            "Loading"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "246",
+          "question": "What is the `from_pretrained()` method?",
+          "answer": "from_pretrained() is the standard method for loading pre-trained models and tokenizers. It handles downloading files from the Hub or loading from local cache, initializing the model with pre-trained weights, and loading configuration. It's the entry point for using existing models in Transformers.",
+          "tags": [
+            "Transformers",
+            "Loading"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "247",
+          "question": "What happens when you call `from_pretrained()` for the first time?",
+          "answer": "The library downloads model files (weights, config, tokenizer files) from the Hugging Face Hub and caches them in a local directory (typically ~/.cache/huggingface/hub/). Subsequent calls use the cached version, avoiding re-downloading. You'll see progress bars showing download status for large models.",
+          "tags": [
+            "Transformers",
+            "Caching"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "248",
+          "question": "Where are Hugging Face models cached locally?",
+          "answer": "Models are cached in ~/.cache/huggingface/hub/ on Linux/Mac or C:\\Users\\username\\.cache\\huggingface\\hub\\ on Windows. This directory stores all downloaded models, datasets, and related files. You can change the cache location by setting the HF_HOME environment variable.",
+          "tags": [
+            "Transformers",
+            "Caching"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "249",
+          "question": "How do you clear the Hugging Face cache?",
+          "answer": "Manually delete files from the cache directory or use the huggingface-cli: 'huggingface-cli delete-cache'. This is useful when disk space is limited or you want to re-download corrupted files. Be cautious as this removes all cached models and you'll need to re-download them.",
+          "tags": [
+            "Transformers",
+            "Maintenance"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "250",
+          "question": "What is the `config.json` file in a model repository?",
+          "answer": "config.json stores model architecture configuration: number of layers, hidden size, attention heads, vocabulary size, and other hyperparameters. This file defines the model structure before weights are loaded. It also includes metadata like model type and version.",
+          "tags": [
+            "Transformers",
+            "Configuration"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "251",
+          "question": "What is a tokenizer and why is it model-specific?",
+          "answer": "A tokenizer converts text into token IDs that models process. Tokenizers are model-specific because they're trained on the same vocabulary as the model. Using a mismatched tokenizer produces IDs the model doesn't understand, leading to nonsense outputs. Always use the tokenizer that corresponds to your model.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "252",
+          "question": "What files are needed to fully load a model? (config, weights, tokenizer)",
+          "answer": "You need config.json (architecture definition), model weight files (pytorch_model.bin or model.safetensors), tokenizer files (tokenizer.json, vocab files), and special_tokens_map.json. These files work together to recreate the exact model and its preprocessing pipeline.",
+          "tags": [
+            "Transformers",
+            "Files"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "253",
+          "question": "What is the `tokenizer.json` file?",
+          "answer": "tokenizer.json contains the tokenizer's configuration and vocabulary in a fast, standardized format. It's used by the fast tokenizers (Rust-based) in Transformers, which are significantly faster than Python-based tokenizers. This file includes the tokenization algorithm, vocabulary, and normalization rules.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "254",
+          "question": "What is `special_tokens_map.json`?",
+          "answer": "special_tokens_map.json defines special tokens used by the model: [CLS] for classification, [SEP] for separating sequences, [PAD] for padding, [UNK] for unknown tokens, [MASK] for masked language modeling. Different models use different special tokens, and this file ensures correct mapping.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "255",
+          "question": "What are special tokens in tokenizers? (CLS, SEP, PAD, etc.)",
+          "answer": "[CLS]: Start of sequence for classification. [SEP]: Separates multiple sequences. [PAD]: Pads shorter sequences in batches. [UNK]: Unknown/out-of-vocabulary tokens. [MASK]: Used in masked language modeling. [BOS]/[EOS]: Beginning/end of sequence in generative models. Each special token has specific meaning for model processing.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "256",
+          "question": "What is padding in tokenization?",
+          "answer": "Padding adds special [PAD] tokens to shorter sequences so all sequences in a batch have the same length (required for efficient batched processing). Attention masks tell the model to ignore padding tokens. You can pad to the longest sequence in the batch or to a fixed maximum length.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "257",
+          "question": "What is truncation in tokenization?",
+          "answer": "Truncation cuts sequences that exceed the model's maximum length. Models have fixed context windows (like 512 or 4096 tokens), and longer inputs must be truncated. You can truncate from the right (default), left, or both sides depending on your use case.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "258",
+          "question": "What is attention masking?",
+          "answer": "Attention masks are binary tensors indicating which tokens should be attended to (1) and which should be ignored (0). Padding tokens get mask value 0 so the model doesn't process them. This prevents padding from affecting the model's understanding of the actual content.",
+          "tags": [
+            "Transformers",
+            "Attention"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "259",
+          "question": "What is the maximum sequence length for a model?",
+          "answer": "Maximum sequence length is the longest input a model can process, determined by its positional encoding design. Common values: BERT (512), GPT-2 (1024), Llama-2 (4096), GPT-4 (128K). Longer sequences require more memory and computation. Some models support extending context length through techniques like RoPE scaling.",
+          "tags": [
+            "Transformers",
+            "Limits"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "260",
+          "question": "How do you tokenize text using Transformers?",
+          "answer": "Load tokenizer: 'tokenizer = AutoTokenizer.from_pretrained(model_name)'. Tokenize: 'encoded = tokenizer(text, padding=True, truncation=True, return_tensors='pt')'. This returns input_ids (token IDs) and attention_mask. You can also decode back to text: 'tokenizer.decode(token_ids)'.",
+          "tags": [
+            "Transformers",
+            "Tokenization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

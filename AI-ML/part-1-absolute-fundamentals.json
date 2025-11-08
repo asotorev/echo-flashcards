@@ -1,0 +1,271 @@
+{
+  "decks": [
+    {
+      "name": "Part 1: Absolute Fundamentals",
+      "description": "Core AI and ML concepts - the foundation of machine learning",
+      "cards": [
+        {
+          "id": "1",
+          "question": "What is artificial intelligence in the simplest terms?",
+          "answer": "AI is the ability of machines to perform tasks that typically require human intelligence, such as recognizing images, understanding speech, making decisions, or learning from experience. It's about creating computer systems that can solve problems and adapt without being explicitly programmed for every scenario.",
+          "tags": [
+            "AI",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "2",
+          "question": "What's the difference between AI, machine learning, and deep learning?",
+          "answer": "AI is the broadest concept (any technique enabling machines to mimic human intelligence), ML is a subset of AI where machines learn from data without explicit programming, and deep learning is a subset of ML using neural networks with many layers. Think of them as nested: Deep Learning \u2282 Machine Learning \u2282 Artificial Intelligence.",
+          "tags": [
+            "AI",
+            "ML",
+            "Deep Learning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "3",
+          "question": "What does it mean for a machine to 'learn'?",
+          "answer": "A machine 'learns' by finding patterns in data through mathematical optimization. It starts with random guesses, measures how wrong those guesses are, and adjusts its internal parameters to make better predictions. This process repeats thousands of times until the machine can make accurate predictions on new, unseen data.",
+          "tags": [
+            "ML",
+            "Learning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "4",
+          "question": "What is a dataset and why is it fundamental to ML?",
+          "answer": "A dataset is a collection of examples used to train and test ML models. It's fundamental because machine learning is data-driven - models learn patterns from these examples. Without sufficient quality data, even the best algorithms cannot learn meaningful patterns or make accurate predictions.",
+          "tags": [
+            "ML",
+            "Data"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "5",
+          "question": "What are features and labels in machine learning?",
+          "answer": "Features are the input variables or characteristics that describe each example in your data (like house size, bedrooms, location). Labels are the output or target values you want to predict (like house price). In supervised learning, you provide both features and labels during training so the model learns the relationship between them.",
+          "tags": [
+            "ML",
+            "Supervised Learning"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "6",
+          "question": "What's the difference between input and output in an ML model?",
+          "answer": "Input is what you feed into the model (the features/data), and output is what the model predicts or produces (the result). For example, in image classification, the input is pixel values of an image, and the output is the predicted category like 'cat' or 'dog'. The model is the function that transforms inputs into outputs.",
+          "tags": [
+            "ML",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "7",
+          "question": "What is a prediction vs ground truth?",
+          "answer": "A prediction is what your model outputs based on its learned patterns, while ground truth is the actual correct answer from your dataset. For example, if a model predicts a house price of $300K but the actual sale price (ground truth) was $320K, the prediction error is $20K. We compare predictions to ground truth to evaluate model performance.",
+          "tags": [
+            "ML",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "8",
+          "question": "What does 'training a model' actually mean?",
+          "answer": "Training a model means feeding it data and letting it adjust its internal parameters to minimize prediction errors. The model makes predictions, calculates how wrong they are using a loss function, and updates its parameters using optimization algorithms like gradient descent. This cycle repeats over many iterations until the model learns the underlying patterns in the data.",
+          "tags": [
+            "ML",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "9",
+          "question": "What is a loss function and why do we need it?",
+          "answer": "A loss function (or cost function) measures how wrong your model's predictions are compared to the actual values. It converts prediction errors into a single number that the model tries to minimize during training. Common examples include Mean Squared Error for regression (measuring average squared differences) and Cross-Entropy for classification (measuring probability distribution differences).",
+          "tags": [
+            "ML",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "10",
+          "question": "What is gradient descent in simple terms?",
+          "answer": "Gradient descent is an optimization algorithm that finds the best model parameters by iteratively moving in the direction that reduces the loss function. Imagine you're blindfolded on a hill trying to reach the bottom - you feel the slope and take small steps downhill. The 'gradient' is the slope direction, and 'descent' means moving down to minimize the loss.",
+          "tags": [
+            "ML",
+            "Optimization"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "11",
+          "question": "What are model weights and biases?",
+          "answer": "Weights are the learned parameters that determine how much influence each input feature has on the output. Biases are additional parameters that allow the model to shift its predictions up or down. Together, they define the model's learned function: output = (weight \u00d7 input) + bias. During training, these values are adjusted to minimize prediction errors.",
+          "tags": [
+            "ML",
+            "Neural Networks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "12",
+          "question": "What's the difference between a model and an algorithm?",
+          "answer": "An algorithm is the procedure or set of rules used to solve a problem (like gradient descent or decision tree algorithm). A model is the specific result you get after applying that algorithm to data - it's the trained system with learned parameters that makes predictions. Algorithm is the recipe, model is the baked cake.",
+          "tags": [
+            "ML",
+            "Fundamentals"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "13",
+          "question": "What is the difference between classification and regression?",
+          "answer": "Classification predicts discrete categories or classes (like spam/not spam, cat/dog/bird), while regression predicts continuous numerical values (like house prices, temperature, stock prices). Classification outputs labels or probabilities for predefined categories, whereas regression outputs numbers that can take any value within a range.",
+          "tags": [
+            "ML",
+            "Tasks"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "14",
+          "question": "What are hyperparameters vs parameters?",
+          "answer": "Parameters are internal model variables learned automatically from data during training (like neural network weights). Hyperparameters are external configuration settings you choose before training that control the learning process itself (like learning rate, number of layers, or batch size). You tune hyperparameters to improve model performance.",
+          "tags": [
+            "ML",
+            "Training"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "15",
+          "question": "Why do we split data into training and testing sets?",
+          "answer": "We split data to evaluate how well the model generalizes to unseen data. Training set is used to teach the model patterns, testing set is held back to measure performance on new data. This prevents overfitting - if you test on training data, you can't tell if the model truly learned patterns or just memorized the training examples.",
+          "tags": [
+            "ML",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "16",
+          "question": "What is overfitting? Give a real-world analogy.",
+          "answer": "Overfitting is when a model learns the training data too well, including its noise and peculiarities, failing to generalize to new data. Real-world analogy: A student who memorizes specific exam questions but can't apply concepts to new problems. The model has high training accuracy but poor test accuracy because it's too specialized to the training examples.",
+          "tags": [
+            "ML",
+            "Overfitting"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "17",
+          "question": "What is underfitting? How does it differ from overfitting?",
+          "answer": "Underfitting is when a model is too simple to capture the underlying patterns in the data, performing poorly on both training and test data. Unlike overfitting (too complex, memorizes training data), underfitting models are too basic to even learn the training data well. It's like trying to fit a straight line to data that curves - you need a more complex model.",
+          "tags": [
+            "ML",
+            "Underfitting"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "18",
+          "question": "What is the bias-variance tradeoff?",
+          "answer": "The bias-variance tradeoff describes the balance between a model's ability to fit training data (bias) and its sensitivity to variations in that data (variance). High bias = underfitting (too simple, misses patterns), high variance = overfitting (too complex, captures noise). The goal is finding the sweet spot where total error (bias\u00b2 + variance + irreducible error) is minimized.",
+          "tags": [
+            "ML",
+            "Theory"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "19",
+          "question": "What is cross-validation and why is it useful?",
+          "answer": "Cross-validation is a technique to assess model performance by splitting data into multiple folds, training on some folds and testing on others, then rotating which folds are used for testing. K-fold CV (typically 5 or 10 folds) gives more reliable performance estimates than a single train-test split and helps detect if your model is overfitting to a particular data split.",
+          "tags": [
+            "ML",
+            "Evaluation"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        },
+        {
+          "id": "20",
+          "question": "What are evaluation metrics? Name a few common ones.",
+          "answer": "Evaluation metrics quantify how well your model performs. For classification: accuracy (% correct), precision (of positive predictions, how many are correct), recall (of actual positives, how many were found), F1-score (harmonic mean of precision and recall). For regression: MSE (average squared error), MAE (average absolute error), R\u00b2 (proportion of variance explained).",
+          "tags": [
+            "ML",
+            "Metrics"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
