@@ -1,0 +1,404 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #100 - Same Tree",
+      "description": "Check if two binary trees are structurally identical with same node values",
+      "cards": [
+        {
+          "id": "leetcode_100_same_tree",
+          "question": "Same Tree: Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.",
+          "solutions": [
+            {
+              "name": "Depth First Search",
+              "type": "optimal",
+              "explanation": "Use recursive DFS to compare trees node by node. Base case returns true if both nodes are null. Check if both nodes exist and have equal values, then recursively compare left and right subtrees. Returns false if structure differs or values mismatch. Clean recursive solution with O(h) space for call stack.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as optional TreeNode and returns boolean",
+                    "Check if p does not exist and q does not exist using not operator",
+                    "If both null, return True as same empty trees",
+                    "Check if p exists and q exists and p dot val equals q dot val",
+                    "If both exist with same value, return result of isSameTree with p dot left and q dot left and isSameTree with p dot right and q dot right using and operator",
+                    "If not matching, return False"
+                  ],
+                  "codeLines": [
+                    "def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:",
+                    "    if not p and not q:",
+                    "        return True",
+                    "    if p and q and p.val == q.val:",
+                    "        return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)",
+                    "    else:",
+                    "        return False"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as parameters with opening brace",
+                    "Check if p does not exist and q does not exist using negation operator with opening brace",
+                    "If both null, return true as same empty trees",
+                    "Close the if block with closing brace",
+                    "Check if p exists and q exists and p dot val equals q dot val with opening brace",
+                    "If both exist with same value, return result of isSameTree with p dot left and q dot left and isSameTree with p dot right and q dot right using and operator",
+                    "Close the if block with closing brace and add else with opening brace",
+                    "If not matching, return false",
+                    "Close the else block with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isSameTree(p, q) {",
+                    "    if (!p && !q) {",
+                    "        return true;",
+                    "    }",
+                    "    if (p && q && p.val === q.val) {",
+                    "        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);",
+                    "    } else {",
+                    "        return false;",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as pointers to TreeNode and returns bool with opening brace",
+                    "Check if p equals nil and q equals nil with opening brace",
+                    "If both nil, return true as same empty trees",
+                    "Close the if block with closing brace",
+                    "Check if p is not nil and q is not nil and p dot Val equals q dot Val with opening brace",
+                    "If both exist with same value, return result of isSameTree with p dot Left and q dot Left and isSameTree with p dot Right and q dot Right using and operator",
+                    "Close the if block with closing brace",
+                    "If not matching, return false",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isSameTree(p *TreeNode, q *TreeNode) bool {",
+                    "    if p == nil && q == nil {",
+                    "        return true",
+                    "    }",
+                    "    if p != nil && q != nil && p.Val == q.Val {",
+                    "        return isSameTree(p.Left, q.Left) && isSameTree(p.Right, q.Right)",
+                    "    }",
+                    "    return false",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is minimum number of nodes between two trees, visits each node once",
+              "spaceComplexity": "O(h)",
+              "spaceDescription": "Recursion stack space proportional to tree height h, O(log n) for balanced tree, O(n) worst case for skewed tree",
+              "exampleWalkthrough": "Given p=[1,2,3] and q=[1,2,3]: isSameTree(1,1): values equal. Check left: isSameTree(2,2): values equal, both leaves return true. Check right: isSameTree(3,3): values equal, both leaves return true. All match, return true.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Iterative DFS",
+              "type": "optimal",
+              "explanation": "Use stack to perform iterative DFS comparing node pairs. Initialize stack with root pair. Pop pairs, check if both null (continue), if one null or values differ (return false), otherwise push left and right child pairs to stack. Process until stack empty. Avoids recursion with explicit stack.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as optional TreeNode and returns boolean",
+                    "Initialize stack as list with tuple of p and q as initial pair",
+                    "Start while loop that continues while stack is not empty",
+                    "Pop node1 and node2 from stack using tuple unpacking",
+                    "Check if node1 does not exist and node2 does not exist using not operator",
+                    "If both null, continue to next iteration",
+                    "Check if node1 does not exist or node2 does not exist or node1 dot val not equals node2 dot val",
+                    "If mismatch found, return False",
+                    "Append tuple of node1 dot right and node2 dot right to stack",
+                    "Append tuple of node1 dot left and node2 dot left to stack",
+                    "Return True if loop completes as trees are same"
+                  ],
+                  "codeLines": [
+                    "def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:",
+                    "    stack = [(p, q)]",
+                    "    while stack:",
+                    "        node1, node2 = stack.pop()",
+                    "        if not node1 and not node2:",
+                    "            continue",
+                    "        if not node1 or not node2 or node1.val != node2.val:",
+                    "            return False",
+                    "        stack.append((node1.right, node2.right))",
+                    "        stack.append((node1.left, node2.left))",
+                    "    return True"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as parameters with opening brace",
+                    "Initialize stack as array with array containing p and q as initial pair",
+                    "Start while loop that continues while stack dot length is greater than zero with opening brace",
+                    "Pop pair from stack and destructure into node1 and node2",
+                    "Check if node1 does not exist and node2 does not exist using negation operator with opening brace",
+                    "If both null, continue to next iteration",
+                    "Close the if block with closing brace",
+                    "Check if node1 does not exist or node2 does not exist or node1 dot val not equals node2 dot val with opening brace",
+                    "If mismatch found, return false",
+                    "Close the if block with closing brace",
+                    "Push array of node1 dot right and node2 dot right to stack",
+                    "Push array of node1 dot left and node2 dot left to stack",
+                    "Close the while loop with closing brace",
+                    "Return true if loop completes as trees are same",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isSameTree(p, q) {",
+                    "    const stack = [[p, q]];",
+                    "    while (stack.length > 0) {",
+                    "        const [node1, node2] = stack.pop();",
+                    "        if (!node1 && !node2) {",
+                    "            continue;",
+                    "        }",
+                    "        if (!node1 || !node2 || node1.val !== node2.val) {",
+                    "            return false;",
+                    "        }",
+                    "        stack.push([node1.right, node2.right]);",
+                    "        stack.push([node1.left, node2.left]);",
+                    "    }",
+                    "    return true;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define type Pair as struct with opening brace",
+                    "Declare p as pointer to TreeNode field",
+                    "Declare q as pointer to TreeNode field",
+                    "Close struct with closing brace",
+                    "Define function isSameTree that accepts p and q as pointers to TreeNode and returns bool with opening brace",
+                    "Initialize stack as slice of Pair with Pair containing p and q as initial pair",
+                    "Start for loop that continues while length of stack is greater than zero with opening brace",
+                    "Get n as length of stack",
+                    "Get pair from end of stack at index n minus one",
+                    "Update stack to slice from index zero to n minus one to remove last element",
+                    "Get node1 as pair dot p",
+                    "Get node2 as pair dot q",
+                    "Check if node1 equals nil and node2 equals nil with opening brace",
+                    "If both nil, continue to next iteration",
+                    "Close the if block with closing brace",
+                    "Check if node1 equals nil or node2 equals nil or node1 dot Val not equals node2 dot Val with opening brace",
+                    "If mismatch found, return false",
+                    "Close the if block with closing brace",
+                    "Append Pair with node1 dot Right and node2 dot Right to stack",
+                    "Append Pair with node1 dot Left and node2 dot Left to stack",
+                    "Close the for loop with closing brace",
+                    "Return true if loop completes as trees are same",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "type Pair struct {",
+                    "    p *TreeNode",
+                    "    q *TreeNode",
+                    "}",
+                    "func isSameTree(p *TreeNode, q *TreeNode) bool {",
+                    "    stack := []Pair{{p, q}}",
+                    "    for len(stack) > 0 {",
+                    "        n := len(stack)",
+                    "        pair := stack[n-1]",
+                    "        stack = stack[:n-1]",
+                    "        node1 := pair.p",
+                    "        node2 := pair.q",
+                    "        if node1 == nil && node2 == nil {",
+                    "            continue",
+                    "        }",
+                    "        if node1 == nil || node2 == nil || node1.Val != node2.Val {",
+                    "            return false",
+                    "        }",
+                    "        stack = append(stack, Pair{node1.Right, node2.Right})",
+                    "        stack = append(stack, Pair{node1.Left, node2.Left})",
+                    "    }",
+                    "    return true",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is minimum number of nodes between two trees, visits each node once",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Stack stores node pairs, worst case O(n) for all nodes in unbalanced tree",
+              "exampleWalkthrough": "Given p=[1,2,3] and q=[1,2,3]: Stack=[(1,1)]. Pop (1,1): values match, push [(1.right,1.right),(1.left,1.left)]=[(3,3),(2,2)]. Pop (2,2): match, both leaves. Pop (3,3): match, both leaves. Stack empty, return true.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Breadth First Search",
+              "type": "optimal",
+              "explanation": "Use two queues for level-order traversal of both trees simultaneously. Process nodes level by level, checking if corresponding nodes match. If both null continue, if one null or values differ return false, otherwise add children to respective queues. Complete traversal confirms trees are identical.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Import deque from collections module",
+                    "Define function isSameTree that accepts p and q as optional TreeNode and returns boolean",
+                    "Create q1 as deque with p as initial element",
+                    "Create q2 as deque with q as initial element",
+                    "Start while loop that continues while q1 and q2 are not empty",
+                    "Iterate through range of length of q1 to process current level",
+                    "Pop nodeP from left of q1 using popleft method",
+                    "Pop nodeQ from left of q2 using popleft method",
+                    "Check if nodeP is None and nodeQ is None",
+                    "If both None, continue to next iteration",
+                    "Check if nodeP is None or nodeQ is None or nodeP dot val not equals nodeQ dot val",
+                    "If mismatch found, return False",
+                    "Append nodeP dot left to q1",
+                    "Append nodeP dot right to q1",
+                    "Append nodeQ dot left to q2",
+                    "Append nodeQ dot right to q2",
+                    "Return True if loop completes as trees are same"
+                  ],
+                  "codeLines": [
+                    "from collections import deque",
+                    "def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:",
+                    "    q1 = deque([p])",
+                    "    q2 = deque([q])",
+                    "    while q1 and q2:",
+                    "        for _ in range(len(q1)):",
+                    "            nodeP = q1.popleft()",
+                    "            nodeQ = q2.popleft()",
+                    "            if nodeP is None and nodeQ is None:",
+                    "                continue",
+                    "            if nodeP is None or nodeQ is None or nodeP.val != nodeQ.val:",
+                    "                return False",
+                    "            q1.append(nodeP.left)",
+                    "            q1.append(nodeP.right)",
+                    "            q2.append(nodeQ.left)",
+                    "            q2.append(nodeQ.right)",
+                    "    return True"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as parameters with opening brace",
+                    "Create q1 as array with p as initial element",
+                    "Create q2 as array with q as initial element",
+                    "Start while loop that continues while q1 dot length and q2 dot length are greater than zero with opening brace",
+                    "Get qLen as length of q1 to fix iteration count for current level",
+                    "Iterate from zero to qLen to process current level with opening brace",
+                    "Remove and get nodeP from front of q1 using shift method",
+                    "Remove and get nodeQ from front of q2 using shift method",
+                    "Check if nodeP equals null and nodeQ equals null with opening brace",
+                    "If both null, continue to next iteration",
+                    "Close the if block with closing brace",
+                    "Check if nodeP equals null or nodeQ equals null or nodeP dot val not equals nodeQ dot val with opening brace",
+                    "If mismatch found, return false",
+                    "Close the if block with closing brace",
+                    "Push nodeP dot left to q1",
+                    "Push nodeP dot right to q1",
+                    "Push nodeQ dot left to q2",
+                    "Push nodeQ dot right to q2",
+                    "Close the for loop with closing brace",
+                    "Close the while loop with closing brace",
+                    "Return true if loop completes as trees are same",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isSameTree(p, q) {",
+                    "    const q1 = [p];",
+                    "    const q2 = [q];",
+                    "    while (q1.length && q2.length) {",
+                    "        const qLen = q1.length;",
+                    "        for (let i = 0; i < qLen; i++) {",
+                    "            const nodeP = q1.shift();",
+                    "            const nodeQ = q2.shift();",
+                    "            if (nodeP === null && nodeQ === null) {",
+                    "                continue;",
+                    "            }",
+                    "            if (nodeP === null || nodeQ === null || nodeP.val !== nodeQ.val) {",
+                    "                return false;",
+                    "            }",
+                    "            q1.push(nodeP.left);",
+                    "            q1.push(nodeP.right);",
+                    "            q2.push(nodeQ.left);",
+                    "            q2.push(nodeQ.right);",
+                    "        }",
+                    "    }",
+                    "    return true;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isSameTree that accepts p and q as pointers to TreeNode and returns bool with opening brace",
+                    "Create q1 as slice of pointers to TreeNode with p as initial element",
+                    "Create q2 as slice of pointers to TreeNode with q as initial element",
+                    "Start for loop that continues while length of q1 and length of q2 are greater than zero with opening brace",
+                    "Get qLen as length of q1 to fix iteration count for current level",
+                    "Iterate from zero to qLen to process current level with opening brace",
+                    "Get nodeP from front of q1 at index zero",
+                    "Update q1 to slice from index one to end to remove front element",
+                    "Get nodeQ from front of q2 at index zero",
+                    "Update q2 to slice from index one to end to remove front element",
+                    "Check if nodeP equals nil and nodeQ equals nil with opening brace",
+                    "If both nil, continue to next iteration",
+                    "Close the if block with closing brace",
+                    "Check if nodeP equals nil or nodeQ equals nil or nodeP dot Val not equals nodeQ dot Val with opening brace",
+                    "If mismatch found, return false",
+                    "Close the if block with closing brace",
+                    "Append nodeP dot Left to q1",
+                    "Append nodeP dot Right to q1",
+                    "Append nodeQ dot Left to q2",
+                    "Append nodeQ dot Right to q2",
+                    "Close the for loop with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return true if loop completes as trees are same",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isSameTree(p *TreeNode, q *TreeNode) bool {",
+                    "    q1 := []*TreeNode{p}",
+                    "    q2 := []*TreeNode{q}",
+                    "    for len(q1) > 0 && len(q2) > 0 {",
+                    "        qLen := len(q1)",
+                    "        for i := 0; i < qLen; i++ {",
+                    "            nodeP := q1[0]",
+                    "            q1 = q1[1:]",
+                    "            nodeQ := q2[0]",
+                    "            q2 = q2[1:]",
+                    "            if nodeP == nil && nodeQ == nil {",
+                    "                continue",
+                    "            }",
+                    "            if nodeP == nil || nodeQ == nil || nodeP.Val != nodeQ.Val {",
+                    "                return false",
+                    "            }",
+                    "            q1 = append(q1, nodeP.Left)",
+                    "            q1 = append(q1, nodeP.Right)",
+                    "            q2 = append(q2, nodeQ.Left)",
+                    "            q2 = append(q2, nodeQ.Right)",
+                    "        }",
+                    "    }",
+                    "    return true",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is minimum number of nodes between two trees, visits each node once in level-order",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Queues store nodes at current level, worst case O(n) for complete tree with n/2 nodes at last level",
+              "exampleWalkthrough": "Given p=[1,2,3] and q=[1,2,3]: q1=[1], q2=[1]. Level 0: nodeP=1, nodeQ=1, values match, q1=[2,3], q2=[2,3]. Level 1: (2,2) match, (3,3) match, add null children. Level 2: all nulls, skip. Return true.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "binary-tree",
+            "depth-first-search",
+            "breadth-first-search",
+            "recursion",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
