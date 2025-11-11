@@ -249,7 +249,7 @@
                     "Define function isAnagram that accepts two strings s and t",
                     "Check if length of s does not equal length of t",
                     "If lengths differ, return False immediately",
-                    "Return whether sorted s equals sorted t"
+                    "Sort string s into alphabetical order, sort string t into alphabetical order, compare if they are equal, and return the result"
                   ],
                   "codeLines": [
                     "def isAnagram(s, t):",
@@ -265,7 +265,7 @@
                     "Check if length of s does not equal length of t",
                     "If lengths differ, return false immediately",
                     "Close the if statement with closing brace",
-                    "Return whether s split to array sorted and joined equals t split to array sorted and joined",
+                    "Split string s into array of characters, sort the array alphabetically, join back into string, do the same for string t, compare if equal, and return the result",
                     "Close function with closing brace"
                   ],
                   "codeLines": [
@@ -286,9 +286,9 @@
                     "Close the if block with closing brace",
                     "Convert string s to slice of runes and assign to sRunes",
                     "Convert string t to slice of runes and assign to tRunes",
-                    "Sort sRunes using sort Slice with function comparing i and j returning sRunes at i less than sRunes at j",
-                    "Sort tRunes using sort Slice with function comparing i and j returning tRunes at i less than tRunes at j",
-                    "Return whether string of sRunes equals string of tRunes",
+                    "Sort sRunes using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if sRunes at i is less than sRunes at j",
+                    "Sort tRunes using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if tRunes at i is less than tRunes at j",
+                    "Convert sRunes back to string, convert tRunes back to string, compare if they are equal, and return the result",
                     "Close function with closing brace"
                   ],
                   "codeLines": [
