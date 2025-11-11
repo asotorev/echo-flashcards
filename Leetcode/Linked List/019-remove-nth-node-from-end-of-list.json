@@ -1,0 +1,510 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #19 - Remove Nth Node From End of List",
+      "description": "Remove the nth node from the end of a linked list in one pass",
+      "cards": [
+        {
+          "id": "leetcode_19_remove_nth_node_from_end_of_list",
+          "question": "Remove Nth Node From End of List: Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+          "solutions": [
+            {
+              "name": "Two Pointers",
+              "type": "optimal",
+              "explanation": "Use two pointers with a gap of n nodes between them. Move both pointers until the fast pointer reaches the end. The slow pointer will be at the node before the one to remove. Use dummy node to handle edge case of removing head. Most efficient with single pass and O(1) space.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Create dummy node with next pointing to head to handle edge cases",
+                    "Initialize left pointer to dummy",
+                    "Initialize right pointer to head",
+                    "Start for loop that repeats n times to create gap of n nodes",
+                    "Move right pointer one step forward by setting right to right dot next",
+                    "Start while loop that continues while right is not None",
+                    "Move left pointer one step forward by setting left to left dot next",
+                    "Move right pointer one step forward by setting right to right dot next",
+                    "Skip the nth node from end by setting left dot next to left dot next dot next",
+                    "Return dummy dot next as the new head"
+                  ],
+                  "codeLines": [
+                    "def removeNthFromEnd(head, n):",
+                    "    dummy = ListNode(0, head)",
+                    "    left = dummy",
+                    "    right = head",
+                    "    for _ in range(n):",
+                    "        right = right.next",
+                    "    while right:",
+                    "        left = left.next",
+                    "        right = right.next",
+                    "    left.next = left.next.next",
+                    "    return dummy.next"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Create dummy node with next pointing to head to handle edge cases",
+                    "Declare left pointer initialized to dummy",
+                    "Declare right pointer initialized to head",
+                    "Start for loop that repeats while n is greater than zero decrementing n",
+                    "Move right pointer one step forward by setting right to right dot next",
+                    "Decrement n by one",
+                    "Close the for loop with closing brace",
+                    "Start while loop that continues while right is not null",
+                    "Move left pointer one step forward by setting left to left dot next",
+                    "Move right pointer one step forward by setting right to right dot next",
+                    "Close the while loop with closing brace",
+                    "Skip the nth node from end by setting left dot next to left dot next dot next",
+                    "Return dummy dot next as the new head",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function removeNthFromEnd(head, n) {",
+                    "    const dummy = new ListNode(0, head);",
+                    "    let left = dummy;",
+                    "    let right = head;",
+                    "    for (; n > 0; n--) {",
+                    "        right = right.next;",
+                    "    }",
+                    "    while (right) {",
+                    "        left = left.next;",
+                    "        right = right.next;",
+                    "    }",
+                    "    left.next = left.next.next;",
+                    "    return dummy.next;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head pointer to ListNode and integer n and returns pointer to ListNode",
+                    "Create dummy node with Next pointing to head to handle edge cases",
+                    "Initialize left pointer to address of dummy",
+                    "Initialize right pointer to head",
+                    "Start for loop that continues while n is greater than zero decrementing n",
+                    "Move right pointer one step forward by setting right to right dot Next",
+                    "Decrement n by one",
+                    "Close the for loop with closing brace",
+                    "Start for loop that continues while right is not nil",
+                    "Move left pointer one step forward by setting left to left dot Next",
+                    "Move right pointer one step forward by setting right to right dot Next",
+                    "Close the for loop with closing brace",
+                    "Skip the nth node from end by setting left dot Next to left dot Next dot Next",
+                    "Return dummy dot Next as the new head",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func removeNthFromEnd(head *ListNode, n int) *ListNode {",
+                    "    dummy := &ListNode{Next: head}",
+                    "    left := dummy",
+                    "    right := head",
+                    "    for n > 0 {",
+                    "        right = right.Next",
+                    "        n--",
+                    "    }",
+                    "    for right != nil {",
+                    "        left = left.Next",
+                    "        right = right.Next",
+                    "    }",
+                    "    left.Next = left.Next.Next",
+                    "    return dummy.Next",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Single pass through the list where n is the number of nodes",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only two pointers and dummy node",
+              "exampleWalkthrough": "Given list 1→2→3→4→5 and n=2: Create gap of 2: right at 3. Move both: left at 3, right at null. Skip node 4: 3→5. Result: 1→2→3→5.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Iteration (Two Pass)",
+              "type": "optimal",
+              "explanation": "First pass counts the total number of nodes, second pass navigates to the node before the one to remove. Simple two-pass approach with O(1) space but requires traversing the list twice.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Initialize N to zero to count total nodes",
+                    "Initialize cur to head for traversal",
+                    "Start while loop that continues while cur is not None",
+                    "Increment N by one",
+                    "Move cur forward by setting cur to cur dot next",
+                    "Calculate removeIndex as N minus n to get position from start",
+                    "Check if removeIndex equals zero indicating removing head",
+                    "If true, return head dot next as new head",
+                    "Set cur to head for second traversal",
+                    "Start for loop with i from zero to N minus one",
+                    "Check if i plus one equals removeIndex indicating found node before target",
+                    "If true, skip target node by setting cur dot next to cur dot next dot next and break",
+                    "Move cur forward by setting cur to cur dot next",
+                    "Return head"
+                  ],
+                  "codeLines": [
+                    "def removeNthFromEnd(head, n):",
+                    "    N = 0",
+                    "    cur = head",
+                    "    while cur:",
+                    "        N += 1",
+                    "        cur = cur.next",
+                    "    removeIndex = N - n",
+                    "    if removeIndex == 0:",
+                    "        return head.next",
+                    "    cur = head",
+                    "    for i in range(N - 1):",
+                    "        if (i + 1) == removeIndex:",
+                    "            cur.next = cur.next.next",
+                    "            break",
+                    "        cur = cur.next",
+                    "    return head"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Declare N initialized to zero to count total nodes",
+                    "Declare cur initialized to head for traversal",
+                    "Start while loop that continues while cur is not null",
+                    "Increment N by one",
+                    "Move cur forward by setting cur to cur dot next",
+                    "Close the while loop with closing brace",
+                    "Declare constant removeIndex as N minus n to get position from start",
+                    "Check if removeIndex equals zero indicating removing head",
+                    "If true, return head dot next as new head",
+                    "Close the if block with closing brace",
+                    "Set cur to head for second traversal",
+                    "Start for loop with i from zero while i less than N minus one incrementing i",
+                    "Check if i plus one equals removeIndex indicating found node before target",
+                    "If true, skip target node by setting cur dot next to cur dot next dot next and break",
+                    "Close the if block with closing brace",
+                    "Move cur forward by setting cur to cur dot next",
+                    "Close the for loop with closing brace",
+                    "Return head",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function removeNthFromEnd(head, n) {",
+                    "    let N = 0;",
+                    "    let cur = head;",
+                    "    while (cur) {",
+                    "        N++;",
+                    "        cur = cur.next;",
+                    "    }",
+                    "    const removeIndex = N - n;",
+                    "    if (removeIndex === 0) {",
+                    "        return head.next;",
+                    "    }",
+                    "    cur = head;",
+                    "    for (let i = 0; i < N - 1; i++) {",
+                    "        if ((i + 1) === removeIndex) {",
+                    "            cur.next = cur.next.next;",
+                    "            break;",
+                    "        }",
+                    "        cur = cur.next;",
+                    "    }",
+                    "    return head;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head pointer to ListNode and integer n and returns pointer to ListNode",
+                    "Initialize N to zero to count total nodes",
+                    "Initialize cur to head for traversal",
+                    "Start for loop that continues while cur is not nil",
+                    "Increment N by one",
+                    "Move cur forward by setting cur to cur dot Next",
+                    "Close the for loop with closing brace",
+                    "Calculate removeIndex as N minus n to get position from start",
+                    "Check if removeIndex equals zero indicating removing head",
+                    "If true, return head dot Next as new head",
+                    "Close the if block with closing brace",
+                    "Set cur to head for second traversal",
+                    "Start for loop with i from zero while i less than N minus one incrementing i",
+                    "Check if i plus one equals removeIndex indicating found node before target",
+                    "If true, skip target node by setting cur dot Next to cur dot Next dot Next and break",
+                    "Close the if block with closing brace",
+                    "Move cur forward by setting cur to cur dot Next",
+                    "Close the for loop with closing brace",
+                    "Return head",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func removeNthFromEnd(head *ListNode, n int) *ListNode {",
+                    "    N := 0",
+                    "    cur := head",
+                    "    for cur != nil {",
+                    "        N++",
+                    "        cur = cur.Next",
+                    "    }",
+                    "    removeIndex := N - n",
+                    "    if removeIndex == 0 {",
+                    "        return head.Next",
+                    "    }",
+                    "    cur = head",
+                    "    for i := 0; i < N-1; i++ {",
+                    "        if (i + 1) == removeIndex {",
+                    "            cur.Next = cur.Next.Next",
+                    "            break",
+                    "        }",
+                    "        cur = cur.Next",
+                    "    }",
+                    "    return head",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Two passes through the list: first to count nodes, second to remove target",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only counter and pointer variables",
+              "exampleWalkthrough": "Given list 1→2→3→4→5 and n=2: First pass: N=5. removeIndex=5-2=3. Second pass: i=2, found node 3 before target 4. Skip: 3→5. Result: 1→2→3→5.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Recursion",
+              "type": "alternative",
+              "explanation": "Recursively traverse to the end, then count backwards during backtracking. When count reaches zero, skip that node. Uses call stack to track position from end.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Define nested function rec that accepts head and list containing counter n",
+                    "Check if head is None indicating reached end",
+                    "If true, return None as base case",
+                    "Recursively call rec with head dot next and n, assign result to head dot next",
+                    "Decrement first element of n list by one to count from end",
+                    "Check if first element of n list equals zero indicating found target node",
+                    "If true, return head dot next to skip current node",
+                    "Otherwise return head to keep current node",
+                    "Call rec with head and list containing n to start recursion and return result"
+                  ],
+                  "codeLines": [
+                    "def removeNthFromEnd(head, n):",
+                    "    def rec(head, n):",
+                    "        if not head:",
+                    "            return None",
+                    "        head.next = rec(head.next, n)",
+                    "        n[0] -= 1",
+                    "        if n[0] == 0:",
+                    "            return head.next",
+                    "        return head",
+                    "    return rec(head, [n])"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Define nested function rec that accepts head and object containing counter n",
+                    "Check if head is null indicating reached end",
+                    "If true, return null as base case",
+                    "Close the if block with closing brace",
+                    "Recursively call rec with head dot next and counter object, assign result to head dot next",
+                    "Decrement counter dot n by one to count from end",
+                    "Check if counter dot n equals zero indicating found target node",
+                    "If true, return head dot next to skip current node",
+                    "Close the if block with closing brace",
+                    "Otherwise return head to keep current node",
+                    "Close the rec function with closing brace",
+                    "Call rec with head and object containing n to start recursion and return result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function removeNthFromEnd(head, n) {",
+                    "    function rec(head, counter) {",
+                    "        if (!head) {",
+                    "            return null;",
+                    "        }",
+                    "        head.next = rec(head.next, counter);",
+                    "        counter.n--;",
+                    "        if (counter.n === 0) {",
+                    "            return head.next;",
+                    "        }",
+                    "        return head;",
+                    "    }",
+                    "    return rec(head, { n });",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define helper function rec that accepts head pointer to ListNode and pointer to integer n and returns pointer to ListNode",
+                    "Check if head is nil indicating reached end",
+                    "If true, return nil as base case",
+                    "Close the if block with closing brace",
+                    "Recursively call rec with head dot Next and n, assign result to head dot Next",
+                    "Dereference pointer n and decrement by one to count from end",
+                    "Check if dereferenced n equals zero indicating found target node",
+                    "If true, return head dot Next to skip current node",
+                    "Close the if block with closing brace",
+                    "Otherwise return head to keep current node",
+                    "Close the rec function with closing brace",
+                    "Define function removeNthFromEnd that accepts head pointer to ListNode and integer n and returns pointer to ListNode",
+                    "Call rec with head and address of n to start recursion and return result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func rec(head *ListNode, n *int) *ListNode {",
+                    "    if head == nil {",
+                    "        return nil",
+                    "    }",
+                    "    head.Next = rec(head.Next, n)",
+                    "    (*n)--",
+                    "    if *n == 0 {",
+                    "        return head.Next",
+                    "    }",
+                    "    return head",
+                    "}",
+                    "func removeNthFromEnd(head *ListNode, n int) *ListNode {",
+                    "    return rec(head, &n)",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Single pass through list during recursion and backtracking",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Recursion call stack depth equals number of nodes",
+              "exampleWalkthrough": "Given list 1→2→3→4→5 and n=2: Recurse to end. Backtrack: n=1 at 5, n=2 at 4. n=2 decrements to 0 at 4, return 4.next=5. Result: 1→2→3→5.",
+              "displayOrder": 3
+            },
+            {
+              "name": "Brute Force (Array)",
+              "type": "alternative",
+              "explanation": "Store all nodes in an array for direct index access. Calculate the index to remove from end, then update pointers. Simple but uses extra O(n) space.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Initialize empty list nodes to store node references",
+                    "Initialize cur to head for traversal",
+                    "Start while loop that continues while cur is not None",
+                    "Append cur to nodes list",
+                    "Move cur forward by setting cur to cur dot next",
+                    "Calculate removeIndex as length of nodes minus n to get index to remove",
+                    "Check if removeIndex equals zero indicating removing head",
+                    "If true, return head dot next as new head",
+                    "Skip target node by setting nodes at removeIndex minus one dot next to nodes at removeIndex dot next",
+                    "Return head"
+                  ],
+                  "codeLines": [
+                    "def removeNthFromEnd(head, n):",
+                    "    nodes = []",
+                    "    cur = head",
+                    "    while cur:",
+                    "        nodes.append(cur)",
+                    "        cur = cur.next",
+                    "    removeIndex = len(nodes) - n",
+                    "    if removeIndex == 0:",
+                    "        return head.next",
+                    "    nodes[removeIndex - 1].next = nodes[removeIndex].next",
+                    "    return head"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head of linked list and integer n",
+                    "Declare constant nodes as empty array to store node references",
+                    "Declare cur initialized to head for traversal",
+                    "Start while loop that continues while cur is not null",
+                    "Push cur to nodes array",
+                    "Move cur forward by setting cur to cur dot next",
+                    "Close the while loop with closing brace",
+                    "Declare constant removeIndex as length of nodes minus n to get index to remove",
+                    "Check if removeIndex equals zero indicating removing head",
+                    "If true, return head dot next as new head",
+                    "Close the if block with closing brace",
+                    "Skip target node by setting nodes at removeIndex minus one dot next to nodes at removeIndex dot next",
+                    "Return head",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function removeNthFromEnd(head, n) {",
+                    "    const nodes = [];",
+                    "    let cur = head;",
+                    "    while (cur) {",
+                    "        nodes.push(cur);",
+                    "        cur = cur.next;",
+                    "    }",
+                    "    const removeIndex = nodes.length - n;",
+                    "    if (removeIndex === 0) {",
+                    "        return head.next;",
+                    "    }",
+                    "    nodes[removeIndex - 1].next = nodes[removeIndex].next;",
+                    "    return head;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function removeNthFromEnd that accepts head pointer to ListNode and integer n and returns pointer to ListNode",
+                    "Declare nodes as empty slice of pointers to ListNode to store node references",
+                    "Initialize cur to head for traversal",
+                    "Start for loop that continues while cur is not nil",
+                    "Append cur to nodes slice",
+                    "Move cur forward by setting cur to cur dot Next",
+                    "Close the for loop with closing brace",
+                    "Calculate removeIndex as length of nodes minus n to get index to remove",
+                    "Check if removeIndex equals zero indicating removing head",
+                    "If true, return head dot Next as new head",
+                    "Close the if block with closing brace",
+                    "Skip target node by setting nodes at removeIndex minus one dot Next to nodes at removeIndex dot Next",
+                    "Return head",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func removeNthFromEnd(head *ListNode, n int) *ListNode {",
+                    "    nodes := []*ListNode{}",
+                    "    cur := head",
+                    "    for cur != nil {",
+                    "        nodes = append(nodes, cur)",
+                    "        cur = cur.Next",
+                    "    }",
+                    "    removeIndex := len(nodes) - n",
+                    "    if removeIndex == 0 {",
+                    "        return head.Next",
+                    "    }",
+                    "    nodes[removeIndex-1].Next = nodes[removeIndex].Next",
+                    "    return head",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Single pass to build array, then constant time index access for removal",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Extra space needed to store all node references in array",
+              "exampleWalkthrough": "Given list 1→2→3→4→5 and n=2: Store in array [1,2,3,4,5]. removeIndex=5-2=3. Skip: nodes[2].next = nodes[4] → 3→5. Result: 1→2→3→5.",
+              "displayOrder": 4
+            }
+          ],
+          "tags": [
+            "linked-list",
+            "two-pointers",
+            "recursion",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
