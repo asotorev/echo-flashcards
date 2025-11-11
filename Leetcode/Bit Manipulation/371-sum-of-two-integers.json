@@ -1,0 +1,299 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #371 - Sum of Two Integers",
+      "description": "Calculate the sum of two integers without using the + or - operators",
+      "cards": [
+        {
+          "id": "leetcode_371_sum_of_two_integers",
+          "question": "Sum of Two Integers: Given two integers a and b, return the sum of the two integers without using the operators + and -.",
+          "solutions": [
+            {
+              "name": "Bit Manipulation (Optimal)",
+              "type": "optimal",
+              "explanation": "Use XOR to calculate sum without carry, and AND with left shift to calculate carry. Repeat until no carry remains. Handle negative numbers by masking to 32 bits.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
+                    "Initialize max_int to hex 7FFFFFFF as maximum positive integer",
+                    "Loop while b is not equal to zero",
+                    "AND a with b to find common one bits, left shift by one to get carry, and assign to carry",
+                    "XOR a with b to add without carry, AND with mask to keep thirty-two bits, and assign to a",
+                    "AND carry with mask to keep thirty-two bits, and assign to b",
+                    "Check if a is less than or equal to max_int, if true return a, otherwise invert XOR of a with mask to get negative representation, and return result"
+                  ],
+                  "codeLines": [
+                    "def getSum(a, b):",
+                    "    mask = 0xFFFFFFFF",
+                    "    max_int = 0x7FFFFFFF",
+                    "    while b != 0:",
+                    "        carry = (a & b) << 1",
+                    "        a = (a ^ b) & mask",
+                    "        b = carry & mask",
+                    "    return a if a <= max_int else ~(a ^ mask)"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
+                    "Initialize maxInt to hex 7FFFFFFF as maximum positive integer",
+                    "Loop while b is not equal to zero",
+                    "AND a with b to find common one bits, left shift by one to get carry, AND with mask, and assign to carry",
+                    "XOR a with b to add without carry, AND with mask to keep thirty-two bits, and assign to a",
+                    "Assign carry to b",
+                    "Close the while loop with closing brace",
+                    "Check if a is less than or equal to maxInt, if true return a, otherwise invert XOR of a with mask using tilde, and return result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function getSum(a, b) {",
+                    "    const mask = 0xFFFFFFFF;",
+                    "    const maxInt = 0x7FFFFFFF;",
+                    "    while (b !== 0) {",
+                    "        const carry = ((a & b) << 1) & mask;",
+                    "        a = (a ^ b) & mask;",
+                    "        b = carry;",
+                    "    }",
+                    "    return a <= maxInt ? a : ~(a ^ mask);",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b and returns int",
+                    "Convert a to unsigned 32-bit integer and assign to aUint",
+                    "Convert b to unsigned 32-bit integer and assign to bUint",
+                    "Loop while bUint is not equal to zero",
+                    "AND aUint with bUint to find common one bits, left shift by one to get carry, and assign to carry",
+                    "XOR aUint with bUint to add without carry, and assign to aUint",
+                    "Assign carry to bUint",
+                    "Close the for loop with closing brace",
+                    "Convert aUint to signed 32-bit integer and return result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func getSum(a int, b int) int {",
+                    "    aUint := uint32(a)",
+                    "    bUint := uint32(b)",
+                    "    for bUint != 0 {",
+                    "        carry := (aUint & bUint) << 1",
+                    "        aUint = aUint ^ bUint",
+                    "        bUint = carry",
+                    "    }",
+                    "    return int(int32(aUint))",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(1)",
+              "timeDescription": "Constant time as we iterate at most 32 times for 32-bit integers",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only a few variables",
+              "exampleWalkthrough": "Given a=1 (binary 01) and b=2 (binary 10): First iteration: carry=(1&2)<<1=0, a=1^2=3, b=0. Loop exits. Return 3.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Bit Manipulation",
+              "type": "alternative",
+              "explanation": "Process each of the 32 bits individually. For each bit position, calculate the current bit using XOR of both bits and carry, then update carry for the next position. Handle negative results at the end.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b",
+                    "Initialize carry to zero",
+                    "Initialize res to zero",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
+                    "Loop through range from zero to thirty-two",
+                    "Right shift a by i bits, AND with one to extract bit at position i, and assign to a_bit",
+                    "Right shift b by i bits, AND with one to extract bit at position i, and assign to b_bit",
+                    "XOR a_bit with b_bit, XOR with carry to get current bit, and assign to cur_bit",
+                    "Add a_bit, b_bit, and carry together, check if sum is greater than or equal to two to determine new carry, and assign to carry",
+                    "Check if cur_bit is non-zero",
+                    "If true, left shift one by i bits, OR with res to set that bit, and assign to res",
+                    "Check if res is greater than hex 7FFFFFFF",
+                    "If true, XOR res with mask, invert the result using tilde, and assign to res to convert to negative",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def getSum(a, b):",
+                    "    carry = 0",
+                    "    res = 0",
+                    "    mask = 0xFFFFFFFF",
+                    "    for i in range(32):",
+                    "        a_bit = (a >> i) & 1",
+                    "        b_bit = (b >> i) & 1",
+                    "        cur_bit = a_bit ^ b_bit ^ carry",
+                    "        carry = (a_bit + b_bit + carry) >= 2",
+                    "        if cur_bit:",
+                    "            res |= (1 << i)",
+                    "    if res > 0x7FFFFFFF:",
+                    "        res = ~(res ^ mask)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b",
+                    "Initialize carry to zero",
+                    "Initialize res to zero",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i",
+                    "Unsigned right shift a by i bits, AND with one to extract bit at position i, and assign to aBit",
+                    "Unsigned right shift b by i bits, AND with one to extract bit at position i, and assign to bBit",
+                    "XOR aBit with bBit, XOR with carry to get current bit, and assign to curBit",
+                    "Add aBit, bBit, and carry together, check if sum is greater than or equal to two to get boolean, convert to number, and assign to carry",
+                    "Check if curBit is non-zero",
+                    "If true, left shift one by i bits, OR with res to set that bit, and assign to res",
+                    "Close the if statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "Check if res is greater than hex 7FFFFFFF",
+                    "If true, XOR res with mask, invert the result using tilde, and assign to res to convert to negative",
+                    "Close the if statement with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function getSum(a, b) {",
+                    "    let carry = 0;",
+                    "    let res = 0;",
+                    "    const mask = 0xFFFFFFFF;",
+                    "    for (let i = 0; i < 32; i++) {",
+                    "        const aBit = (a >>> i) & 1;",
+                    "        const bBit = (b >>> i) & 1;",
+                    "        const curBit = aBit ^ bBit ^ carry;",
+                    "        carry = Number((aBit + bBit + carry) >= 2);",
+                    "        if (curBit) {",
+                    "            res |= (1 << i);",
+                    "        }",
+                    "    }",
+                    "    if (res > 0x7FFFFFFF) {",
+                    "        res = ~(res ^ mask);",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b and returns int",
+                    "Initialize carry to zero",
+                    "Declare res as unsigned 32-bit integer initialized to zero",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i",
+                    "Convert a to unsigned 32-bit integer, right shift by i bits, AND with one to extract bit, and assign to aBit",
+                    "Convert b to unsigned 32-bit integer, right shift by i bits, AND with one to extract bit, and assign to bBit",
+                    "XOR aBit with bBit, XOR with carry to get current bit, and assign to curBit",
+                    "Check if aBit plus bBit plus carry is greater than or equal to two",
+                    "If true, set carry to one",
+                    "Close the if block with closing brace",
+                    "If false, set carry to zero",
+                    "Close the else block with closing brace",
+                    "Check if curBit equals one",
+                    "If true, left shift one by i bits as unsigned 32-bit integer, OR with res to set that bit, and assign to res",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Convert res to signed 32-bit integer, then to int, and return result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func getSum(a int, b int) int {",
+                    "    carry := 0",
+                    "    var res uint32 = 0",
+                    "    for i := 0; i < 32; i++ {",
+                    "        aBit := (uint32(a) >> i) & 1",
+                    "        bBit := (uint32(b) >> i) & 1",
+                    "        curBit := aBit ^ bBit ^ uint32(carry)",
+                    "        if aBit + bBit + uint32(carry) >= 2 {",
+                    "            carry = 1",
+                    "        } else {",
+                    "            carry = 0",
+                    "        }",
+                    "        if curBit == 1 {",
+                    "            res |= uint32(1 << i)",
+                    "        }",
+                    "    }",
+                    "    return int(int32(res))",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(1)",
+              "timeDescription": "Constant time with exactly 32 iterations for 32-bit integers",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only a few variables",
+              "exampleWalkthrough": "Given a=1 (binary 01) and b=2 (binary 10): i=0: a_bit=1, b_bit=0, cur_bit=1^0^0=1, carry=(1+0+0)>=2=0, res|=1. i=1: a_bit=0, b_bit=1, cur_bit=0^1^0=1, carry=(0+1+0)>=2=0, res|=2. Result: res=3.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Brute Force",
+              "type": "naive",
+              "explanation": "Simply use the built-in addition operator. This is the trivial solution that the problem explicitly asks to avoid, but included for completeness.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b",
+                    "Add a and b together and return the result"
+                  ],
+                  "codeLines": [
+                    "def getSum(a, b):",
+                    "    return a + b"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b",
+                    "Add a and b together and return the result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function getSum(a, b) {",
+                    "    return a + b;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function getSum that accepts integers a and b and returns int",
+                    "Add a and b together and return the result",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func getSum(a int, b int) int {",
+                    "    return a + b",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(1)",
+              "timeDescription": "Constant time using built-in addition operator",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space with no extra variables needed",
+              "exampleWalkthrough": "Given a=1 and b=2: Simply add 1 + 2 = 3. Return 3.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "bit-manipulation",
+            "math",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
