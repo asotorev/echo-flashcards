@@ -1,0 +1,348 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #78 - Subsets",
+      "description": "Generate all possible subsets (power set) of an array",
+      "cards": [
+        {
+          "id": "leetcode_78_subsets",
+          "question": "Subsets: Given an integer array nums of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets. Return the solution in any order.",
+          "solutions": [
+            {
+              "name": "Backtracking",
+              "type": "optimal",
+              "explanation": "Use recursive backtracking to explore all subset possibilities. At each index, make two recursive choices: include current element or exclude it. Base case when index reaches array length, add current subset copy to result. Include element by appending to subset, recurse, then backtrack by popping. Then recurse without including element. Generates all 2^n subsets. O(n*2^n) time for generating and copying subsets.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as list of integers and returns list of lists of integers",
+                    "Initialize res as empty list for storing all subsets",
+                    "Initialize subset as empty list for building current subset",
+                    "Define nested function dfs that accepts i as parameter for current index",
+                    "Check if i is greater than or equal to length of nums",
+                    "If reached end, append copy of subset to res using subset dot copy",
+                    "If reached end, return to backtrack",
+                    "Append nums at i to subset to include current element",
+                    "Recursively call dfs with i plus one to explore with element",
+                    "Pop from subset to backtrack and remove current element",
+                    "Recursively call dfs with i plus one to explore without element",
+                    "Call dfs with zero to start recursion from first index",
+                    "Return res as all generated subsets"
+                  ],
+                  "codeLines": [
+                    "def subsets(nums: List[int]) -> List[List[int]]:",
+                    "    res = []",
+                    "    subset = []",
+                    "    def dfs(i):",
+                    "        if i >= len(nums):",
+                    "            res.append(subset.copy())",
+                    "            return",
+                    "        subset.append(nums[i])",
+                    "        dfs(i + 1)",
+                    "        subset.pop()",
+                    "        dfs(i + 1)",
+                    "    dfs(0)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as parameter with opening brace",
+                    "Initialize res as empty array for storing all subsets using const",
+                    "Initialize subset as empty array for building current subset using const",
+                    "Define nested function dfs that accepts i as parameter for current index with opening brace",
+                    "Check if i is greater than or equal to nums dot length with opening brace",
+                    "If reached end, push spread of subset into array to res for copy",
+                    "If reached end, return to backtrack",
+                    "Close the if block with closing brace",
+                    "Push nums at i to subset to include current element",
+                    "Recursively call dfs with i plus one to explore with element",
+                    "Pop from subset to backtrack and remove current element",
+                    "Recursively call dfs with i plus one to explore without element",
+                    "Close nested function with closing brace",
+                    "Call dfs with zero to start recursion from first index",
+                    "Return res as all generated subsets",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function subsets(nums) {",
+                    "    const res = [];",
+                    "    const subset = [];",
+                    "    function dfs(i) {",
+                    "        if (i >= nums.length) {",
+                    "            res.push([...subset]);",
+                    "            return;",
+                    "        }",
+                    "        subset.push(nums[i]);",
+                    "        dfs(i + 1);",
+                    "        subset.pop();",
+                    "        dfs(i + 1);",
+                    "    }",
+                    "    dfs(0);",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as slice of int and returns slice of slices of int with opening brace",
+                    "Initialize res as empty slice of slices of int for storing all subsets",
+                    "Initialize subset as empty slice of int for building current subset",
+                    "Declare variable dfs as function that accepts int",
+                    "Assign anonymous recursive function to dfs with opening brace",
+                    "Check if i is greater than or equal to length of nums with opening brace",
+                    "If reached end, create copy as make slice of int with length of subset",
+                    "If reached end, use copy built-in to copy subset to copy slice",
+                    "If reached end, append copy to res",
+                    "If reached end, return to backtrack",
+                    "Close the if block with closing brace",
+                    "Append nums at i to subset to include current element",
+                    "Recursively call dfs with i plus one to explore with element",
+                    "Update subset to slice from zero to length minus one to pop last element",
+                    "Recursively call dfs with i plus one to explore without element",
+                    "Close anonymous function with closing brace",
+                    "Call dfs with zero to start recursion from first index",
+                    "Return res as all generated subsets",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func subsets(nums []int) [][]int {",
+                    "    res := [][]int{}",
+                    "    subset := []int{}",
+                    "    var dfs func(int)",
+                    "    dfs = func(i int) {",
+                    "        if i >= len(nums) {",
+                    "            cpy := make([]int, len(subset))",
+                    "            copy(cpy, subset)",
+                    "            res = append(res, cpy)",
+                    "            return",
+                    "        }",
+                    "        subset = append(subset, nums[i])",
+                    "        dfs(i + 1)",
+                    "        subset = subset[:len(subset)-1]",
+                    "        dfs(i + 1)",
+                    "    }",
+                    "    dfs(0)",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n * 2^n)",
+              "timeDescription": "Generate 2^n subsets, each requiring O(n) time to copy to result array",
+              "spaceComplexity": "O(n) extra, O(2^n) output",
+              "spaceDescription": "Recursion stack depth O(n), subset array O(n), output stores 2^n subsets totaling O(n*2^n) elements",
+              "exampleWalkthrough": "Given nums=[1,2,3]: Start dfs(0). Include 1: subset=[1], dfs(1). Include 2: subset=[1,2], dfs(2). Include 3: subset=[1,2,3], add to res. Backtrack, exclude 3: subset=[1,2], add to res. Backtrack to dfs(1), exclude 2: subset=[1], dfs(2). Include 3: subset=[1,3], add. Exclude 3: subset=[1], add. Continue pattern for all combinations. Result: [[1,2,3],[1,2],[1,3],[1],[2,3],[2],[3],[]].",
+              "displayOrder": 1
+            },
+            {
+              "name": "Iteration",
+              "type": "optimal",
+              "explanation": "Build subsets iteratively without recursion. Start with empty subset in result. For each number in array, create new subsets by adding number to all existing subsets, then add these new subsets to result. Each iteration doubles number of subsets. After processing all numbers, have complete power set. Clean iterative approach using list comprehension. O(n*2^n) time, O(2^n) space for output.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as list of integers and returns list of lists of integers",
+                    "Initialize res as list containing empty list as starting subset",
+                    "Iterate through nums with for loop using num as variable",
+                    "Add to res using plus equals with list comprehension of subset plus list containing num for each subset in res",
+                    "Return res as all generated subsets"
+                  ],
+                  "codeLines": [
+                    "def subsets(nums: List[int]) -> List[List[int]]:",
+                    "    res = [[]]",
+                    "    for num in nums:",
+                    "        res += [subset + [num] for subset in res]",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as parameter with opening brace",
+                    "Initialize res as array containing empty array as starting subset using let",
+                    "Iterate through nums with for-of using num as variable with opening brace",
+                    "Get newSubsets as res dot map with callback that returns spread of subset plus num using const",
+                    "Push spread of newSubsets to res to add all new subsets",
+                    "Close the for loop with closing brace",
+                    "Return res as all generated subsets",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function subsets(nums) {",
+                    "    let res = [[]];",
+                    "    for (const num of nums) {",
+                    "        const newSubsets = res.map(subset => [...subset, num]);",
+                    "        res.push(...newSubsets);",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as slice of int and returns slice of slices of int with opening brace",
+                    "Initialize res as slice of slices of int containing empty slice as starting subset",
+                    "Iterate through nums with range using num as variable with opening brace",
+                    "Get n as length of res to avoid modifying while iterating",
+                    "Iterate from zero to n with index i with opening brace",
+                    "Create newSubset as make slice of int with length of res at i plus one",
+                    "Use copy to copy res at i to newSubset",
+                    "Set newSubset at last index to num",
+                    "Append newSubset to res",
+                    "Close the for loop with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return res as all generated subsets",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func subsets(nums []int) [][]int {",
+                    "    res := [][]int{{}}",
+                    "    for _, num := range nums {",
+                    "        n := len(res)",
+                    "        for i := 0; i < n; i++ {",
+                    "            newSubset := make([]int, len(res[i])+1)",
+                    "            copy(newSubset, res[i])",
+                    "            newSubset[len(newSubset)-1] = num",
+                    "            res = append(res, newSubset)",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n * 2^n)",
+              "timeDescription": "Process n numbers, each iteration processes and copies existing subsets which double each time, resulting in 2^n total subsets each of average size n/2",
+              "spaceComplexity": "O(n) extra, O(2^n) output",
+              "spaceDescription": "Temporary storage for new subsets is O(n) per iteration, output stores 2^n subsets",
+              "exampleWalkthrough": "Given nums=[1,2,3]: Start res=[[]]. Process 1: create [[],[1]] by adding 1 to []. Process 2: create [[],[1],[2],[1,2]] by adding 2 to existing. Process 3: create [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]] by adding 3 to all existing. Result contains all 8 subsets of power set.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Bit Manipulation",
+              "type": "optimal",
+              "explanation": "Use binary representation to generate subsets. For n elements, iterate through all numbers from 0 to 2^n-1. Each number's binary representation indicates which elements to include (1) or exclude (0). For each number, check each bit position; if bit is set, include corresponding element in subset. Generates all subsets in lexicographic order based on binary counting. O(n*2^n) time, elegant mathematical approach.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as list of integers and returns list of lists of integers",
+                    "Get n as length of nums",
+                    "Initialize res as empty list for all subsets",
+                    "Iterate from zero to one left shift n using range with index i",
+                    "Create subset using list comprehension of nums at j for j in range of n if i bitwise and one left shift j is truthy",
+                    "Append subset to res",
+                    "Return res as all generated subsets"
+                  ],
+                  "codeLines": [
+                    "def subsets(nums: List[int]) -> List[List[int]]:",
+                    "    n = len(nums)",
+                    "    res = []",
+                    "    for i in range(1 << n):",
+                    "        subset = [nums[j] for j in range(n) if (i & (1 << j))]",
+                    "        res.append(subset)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as parameter with opening brace",
+                    "Get n as nums dot length using const",
+                    "Initialize res as empty array for all subsets using const",
+                    "Iterate from zero to one left shift n with index i with opening brace",
+                    "Initialize subset as empty array using const",
+                    "Iterate from zero to n with index j with opening brace",
+                    "Check if i bitwise and one left shift j is truthy with opening brace",
+                    "If bit is set, push nums at j to subset",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Push subset to res",
+                    "Close the for loop with closing brace",
+                    "Return res as all generated subsets",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function subsets(nums) {",
+                    "    const n = nums.length;",
+                    "    const res = [];",
+                    "    for (let i = 0; i < (1 << n); i++) {",
+                    "        const subset = [];",
+                    "        for (let j = 0; j < n; j++) {",
+                    "            if (i & (1 << j)) {",
+                    "                subset.push(nums[j]);",
+                    "            }",
+                    "        }",
+                    "        res.push(subset);",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function subsets that accepts nums as slice of int and returns slice of slices of int with opening brace",
+                    "Get n as length of nums",
+                    "Initialize res as empty slice of slices of int for all subsets",
+                    "Iterate from zero to one left shift n with index i with opening brace",
+                    "Initialize subset as empty slice of int",
+                    "Iterate from zero to n with index j with opening brace",
+                    "Check if i bitwise and one left shift j is not equal to zero with opening brace",
+                    "If bit is set, append nums at j to subset",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Append subset to res",
+                    "Close the for loop with closing brace",
+                    "Return res as all generated subsets",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func subsets(nums []int) [][]int {",
+                    "    n := len(nums)",
+                    "    res := [][]int{}",
+                    "    for i := 0; i < (1 << n); i++ {",
+                    "        subset := []int{}",
+                    "        for j := 0; j < n; j++ {",
+                    "            if (i & (1 << j)) != 0 {",
+                    "                subset = append(subset, nums[j])",
+                    "            }",
+                    "        }",
+                    "        res = append(res, subset)",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n * 2^n)",
+              "timeDescription": "Iterate through 2^n numbers, for each check n bits and build subset, resulting in O(n*2^n) total operations",
+              "spaceComplexity": "O(n) extra, O(2^n) output",
+              "spaceDescription": "Temporary subset array of size O(n), output stores 2^n subsets",
+              "exampleWalkthrough": "Given nums=[1,2,3], n=3: i=0 (000): no bits set, subset=[]. i=1 (001): bit 0 set, subset=[1]. i=2 (010): bit 1 set, subset=[2]. i=3 (011): bits 0,1 set, subset=[1,2]. i=4 (100): bit 2 set, subset=[3]. i=5 (101): bits 0,2 set, subset=[1,3]. i=6 (110): bits 1,2 set, subset=[2,3]. i=7 (111): all bits set, subset=[1,2,3]. Result: all 8 subsets.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "array",
+            "backtracking",
+            "bit-manipulation",
+            "recursion",
+            "power-set",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

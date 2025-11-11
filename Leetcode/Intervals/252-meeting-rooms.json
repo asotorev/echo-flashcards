@@ -1,0 +1,240 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #252 - Meeting Rooms",
+      "description": "Determine if a person can attend all meetings without conflicts",
+      "cards": [
+        {
+          "id": "leetcode_252_meeting_rooms",
+          "question": "Meeting Rooms: Given an array of meeting time intervals where intervals[i] = [starti, endi], determine if a person could attend all meetings.",
+          "solutions": [
+            {
+              "name": "Brute Force",
+              "type": "brute-force",
+              "explanation": "Check every pair of intervals for overlap. For each interval i, compare with all subsequent intervals j. Two intervals overlap if minimum of their ends is greater than maximum of their starts (they share some time). If any overlap found, return false. If all pairs checked without overlap, return true. Simple but inefficient. O(n^2) time checking all pairs.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function canAttendMeetings that accepts intervals as list of Interval objects and returns boolean",
+                    "Get n as length of intervals",
+                    "Iterate through range of n with index i",
+                    "Get A as intervals at i for first interval",
+                    "Iterate from i plus one to n using range with index j",
+                    "Get B as intervals at j for second interval",
+                    "Check if min of A dot end and B dot end greater than max of A dot start and B dot start",
+                    "If overlap detected, return False",
+                    "Return True if no overlaps found"
+                  ],
+                  "codeLines": [
+                    "def canAttendMeetings(intervals: List[Interval]) -> bool:",
+                    "    n = len(intervals)",
+                    "    for i in range(n):",
+                    "        A = intervals[i]",
+                    "        for j in range(i + 1, n):",
+                    "            B = intervals[j]",
+                    "            if min(A.end, B.end) > max(A.start, B.start):",
+                    "                return False",
+                    "    return True"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function canAttendMeetings that accepts intervals as parameter with opening brace",
+                    "Get n as intervals dot length using const",
+                    "Iterate from zero to n with index i with opening brace",
+                    "Get A as intervals at i for first interval using const",
+                    "Iterate from i plus one to n with index j with opening brace",
+                    "Get B as intervals at j for second interval using const",
+                    "Check if Math dot min of A dot end and B dot end greater than Math dot max of A dot start and B dot start with opening brace",
+                    "If overlap detected, return false",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return true if no overlaps found",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function canAttendMeetings(intervals) {",
+                    "    const n = intervals.length;",
+                    "    for (let i = 0; i < n; i++) {",
+                    "        const A = intervals[i];",
+                    "        for (let j = i + 1; j < n; j++) {",
+                    "            const B = intervals[j];",
+                    "            if (Math.min(A.end, B.end) > Math.max(A.start, B.start)) {",
+                    "                return false;",
+                    "            }",
+                    "        }",
+                    "    }",
+                    "    return true;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define type Interval as struct with Start and End as int fields",
+                    "Define function canAttendMeetings that accepts intervals as slice of Interval and returns bool with opening brace",
+                    "Get n as length of intervals",
+                    "Iterate from zero to n with index i with opening brace",
+                    "Get A as intervals at i for first interval",
+                    "Iterate from i plus one to n with index j with opening brace",
+                    "Get B as intervals at j for second interval",
+                    "Get minEnd as A dot End if A dot End less than B dot End else B dot End",
+                    "Get maxStart as A dot Start if A dot Start greater than B dot Start else B dot Start",
+                    "Check if minEnd greater than maxStart with opening brace",
+                    "If overlap detected, return false",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return true if no overlaps found",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "type Interval struct { Start, End int }",
+                    "func canAttendMeetings(intervals []Interval) bool {",
+                    "    n := len(intervals)",
+                    "    for i := 0; i < n; i++ {",
+                    "        A := intervals[i]",
+                    "        for j := i + 1; j < n; j++ {",
+                    "            B := intervals[j]",
+                    "            minEnd := A.End",
+                    "            if B.End < minEnd { minEnd = B.End }",
+                    "            maxStart := A.Start",
+                    "            if B.Start > maxStart { maxStart = B.Start }",
+                    "            if minEnd > maxStart {",
+                    "                return false",
+                    "            }",
+                    "        }",
+                    "    }",
+                    "    return true",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^2)",
+              "timeDescription": "Nested loops check all pairs of intervals, resulting in n*(n-1)/2 comparisons which is O(n^2)",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Only uses constant extra space for loop variables and interval references",
+              "exampleWalkthrough": "Given intervals=[[0,30],[5,10],[15,20]]: Compare [0,30] with [5,10]: min(30,10)=10 > max(0,5)=5, overlap detected. Return false immediately. Person cannot attend all meetings as first and second conflict.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Sorting",
+              "type": "optimal",
+              "explanation": "Sort intervals by start time first. After sorting, only need to check adjacent intervals for overlap. If previous interval's end is greater than current interval's start, they overlap. If we find overlap, return false. Otherwise return true after checking all adjacent pairs. Sorting ensures we process intervals in chronological order. Much more efficient than brute force. O(n log n) time from sorting.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function canAttendMeetings that accepts intervals as list of Interval objects and returns boolean",
+                    "Sort intervals in place using sort with key as lambda i returning i dot start",
+                    "Iterate from one to length of intervals using range with index i",
+                    "Get i1 as intervals at i minus one for previous interval",
+                    "Get i2 as intervals at i for current interval",
+                    "Check if i1 dot end greater than i2 dot start",
+                    "If overlap detected, return False",
+                    "Return True if no overlaps found"
+                  ],
+                  "codeLines": [
+                    "def canAttendMeetings(intervals: List[Interval]) -> bool:",
+                    "    intervals.sort(key=lambda i: i.start)",
+                    "    for i in range(1, len(intervals)):",
+                    "        i1 = intervals[i - 1]",
+                    "        i2 = intervals[i]",
+                    "        if i1.end > i2.start:",
+                    "            return False",
+                    "    return True"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function canAttendMeetings that accepts intervals as parameter with opening brace",
+                    "Sort intervals in place using sort with callback comparing a dot start with b dot start",
+                    "Iterate from one to intervals dot length with index i with opening brace",
+                    "Get i1 as intervals at i minus one for previous interval using const",
+                    "Get i2 as intervals at i for current interval using const",
+                    "Check if i1 dot end greater than i2 dot start with opening brace",
+                    "If overlap detected, return false",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return true if no overlaps found",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function canAttendMeetings(intervals) {",
+                    "    intervals.sort((a, b) => a.start - b.start);",
+                    "    for (let i = 1; i < intervals.length; i++) {",
+                    "        const i1 = intervals[i - 1];",
+                    "        const i2 = intervals[i];",
+                    "        if (i1.end > i2.start) {",
+                    "            return false;",
+                    "        }",
+                    "    }",
+                    "    return true;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Import sort package",
+                    "Define type Interval as struct with Start and End as int fields",
+                    "Define function canAttendMeetings that accepts intervals as slice of Interval and returns bool with opening brace",
+                    "Sort intervals in place using sort dot Slice with intervals and callback comparing Start fields",
+                    "Iterate from one to length of intervals with index i with opening brace",
+                    "Get i1 as intervals at i minus one for previous interval",
+                    "Get i2 as intervals at i for current interval",
+                    "Check if i1 dot End greater than i2 dot Start with opening brace",
+                    "If overlap detected, return false",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return true if no overlaps found",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "import \"sort\"",
+                    "type Interval struct { Start, End int }",
+                    "func canAttendMeetings(intervals []Interval) bool {",
+                    "    sort.Slice(intervals, func(i, j int) bool {",
+                    "        return intervals[i].Start < intervals[j].Start",
+                    "    })",
+                    "    for i := 1; i < len(intervals); i++ {",
+                    "        i1 := intervals[i-1]",
+                    "        i2 := intervals[i]",
+                    "        if i1.End > i2.Start {",
+                    "            return false",
+                    "        }",
+                    "    }",
+                    "    return true",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "Sorting intervals by start time takes O(n log n), then single pass through sorted intervals takes O(n), dominated by sorting",
+              "spaceComplexity": "O(1) or O(n)",
+              "spaceDescription": "Only uses constant extra space for loop variables, sorting may use O(1) to O(n) depending on algorithm",
+              "exampleWalkthrough": "Given intervals=[[0,30],[5,10],[15,20]]: Sort by start: [[0,30],[5,10],[15,20]] (already sorted). Check [0,30] vs [5,10]: 30>5, overlap. Return false. Person cannot attend meetings. Example 2: [[7,10],[2,4]] sorted becomes [[2,4],[7,10]]. Check [2,4] vs [7,10]: 4<=7, no overlap. Return true. Can attend all meetings.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "array",
+            "intervals",
+            "sorting",
+            "greedy",
+            "scheduling",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
