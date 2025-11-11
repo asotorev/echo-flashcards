@@ -1,0 +1,278 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #875 - Koko Eating Bananas",
+      "description": "Find minimum eating speed to finish all banana piles within given hours",
+      "cards": [
+        {
+          "id": "leetcode_875_koko_eating_bananas",
+          "question": "Koko Eating Bananas: Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.",
+          "solutions": [
+            {
+              "name": "Binary Search",
+              "type": "optimal",
+              "explanation": "Use binary search on the possible eating speeds from 1 to max pile size. For each speed, calculate total hours needed. If feasible within h hours, try smaller speed. Otherwise, increase speed. Optimal approach avoiding linear search.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function minEatingSpeed that accepts array piles and integer h",
+                    "Import math module for ceiling function",
+                    "Initialize l to one and r to maximum value in piles array",
+                    "Initialize res to r as default result",
+                    "Start while loop that continues while l is less than or equal to r",
+                    "Calculate midpoint k by adding l to r and dividing by two using integer division",
+                    "Initialize totalTime to zero",
+                    "Start for loop iterating through each pile p in piles",
+                    "Calculate ceiling of p divided by k, add to totalTime",
+                    "Check if totalTime is less than or equal to h",
+                    "If feasible, update res to k and set r to k minus one to search for smaller speed",
+                    "Otherwise time exceeded",
+                    "Set l to k plus one to search for larger speed",
+                    "After loop ends, return res as minimum eating speed"
+                  ],
+                  "codeLines": [
+                    "def minEatingSpeed(piles, h):",
+                    "    import math",
+                    "    l, r = 1, max(piles)",
+                    "    res = r",
+                    "    while l <= r:",
+                    "        k = (l + r) // 2",
+                    "        totalTime = 0",
+                    "        for p in piles:",
+                    "            totalTime += math.ceil(p / k)",
+                    "        if totalTime <= h:",
+                    "            res = k",
+                    "            r = k - 1",
+                    "        else:",
+                    "            l = k + 1",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function minEatingSpeed that accepts array piles and integer h",
+                    "Declare l initialized to one and r initialized to maximum value in piles using Math max with spread operator",
+                    "Declare res initialized to r as default result",
+                    "Start while loop that continues while l is less than or equal to r",
+                    "Declare constant k by floor dividing l plus r by two",
+                    "Declare totalTime initialized to zero",
+                    "Start for loop iterating through each pile p in piles",
+                    "Calculate ceiling of p divided by k, add to totalTime",
+                    "Close the for loop with closing brace",
+                    "Check if totalTime is less than or equal to h",
+                    "If feasible, update res to k and set r to k minus one to search for smaller speed",
+                    "Close the if block with closing brace",
+                    "Otherwise time exceeded",
+                    "Set l to k plus one to search for larger speed",
+                    "Close the else block with closing brace",
+                    "Close the while loop with closing brace",
+                    "After loop ends, return res as minimum eating speed",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function minEatingSpeed(piles, h) {",
+                    "    let l = 1, r = Math.max(...piles);",
+                    "    let res = r;",
+                    "    while (l <= r) {",
+                    "        const k = Math.floor((l + r) / 2);",
+                    "        let totalTime = 0;",
+                    "        for (const p of piles) {",
+                    "            totalTime += Math.ceil(p / k);",
+                    "        }",
+                    "        if (totalTime <= h) {",
+                    "            res = k;",
+                    "            r = k - 1;",
+                    "        } else {",
+                    "            l = k + 1;",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function minEatingSpeed that accepts slice of integers piles and integer h and returns int",
+                    "Initialize l to one and r to zero",
+                    "Start for loop iterating through each pile p in piles using range with blank identifier for index",
+                    "Check if p is greater than r",
+                    "If greater, set r to p to track maximum pile size",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Initialize res to r as default result",
+                    "Start for loop that continues while l is less than or equal to r",
+                    "Calculate midpoint k by adding l to r and dividing by two using integer division",
+                    "Initialize totalTime to zero",
+                    "Start nested for loop iterating through each pile p in piles using range with blank identifier for index",
+                    "Convert p to float64, divide by k as float64, calculate ceiling, convert to int, and add to totalTime",
+                    "Close the nested for loop with closing brace",
+                    "Check if totalTime is less than or equal to h",
+                    "If feasible, update res to k and set r to k minus one to search for smaller speed",
+                    "Close the if block with closing brace",
+                    "Otherwise time exceeded",
+                    "Set l to k plus one to search for larger speed",
+                    "Close the else block with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "After loop ends, return res as minimum eating speed",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func minEatingSpeed(piles []int, h int) int {",
+                    "    l, r := 1, 0",
+                    "    for _, p := range piles {",
+                    "        if p > r {",
+                    "            r = p",
+                    "        }",
+                    "    }",
+                    "    res := r",
+                    "    for l <= r {",
+                    "        k := (l + r) / 2",
+                    "        totalTime := 0",
+                    "        for _, p := range piles {",
+                    "            totalTime += int(math.Ceil(float64(p) / float64(k)))",
+                    "        }",
+                    "        if totalTime <= h {",
+                    "            res = k",
+                    "            r = k - 1",
+                    "        } else {",
+                    "            l = k + 1",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n * log m)",
+              "timeDescription": "Binary search on speed range log m iterations, each checking n piles where m is max pile size",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only variables for search pointers and time calculation",
+              "exampleWalkthrough": "Given piles=[3,6,7,11] and h=8: Max=11, search range [1,11]. Try k=6: hours = ceil(3/6)+ceil(6/6)+ceil(7/6)+ceil(11/6) = 1+1+2+2 = 6 <= 8, feasible. Try k=3: hours = 1+2+3+4 = 10 > 8, not feasible. Try k=4: hours = 1+2+2+3 = 8 <= 8, feasible. Answer is 4.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Brute Force",
+              "type": "alternative",
+              "explanation": "Try every eating speed starting from 1 and incrementing until finding the first speed that allows finishing within h hours. Simple but inefficient as it checks each speed linearly.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function minEatingSpeed that accepts array piles and integer h",
+                    "Import math module for ceiling function",
+                    "Initialize speed to one",
+                    "Start infinite while loop",
+                    "Initialize totalTime to zero",
+                    "Start for loop iterating through each pile in piles",
+                    "Calculate ceiling of pile divided by speed, add to totalTime",
+                    "Check if totalTime is less than or equal to h",
+                    "If feasible, return speed as minimum eating speed found",
+                    "Increment speed by one to try next speed"
+                  ],
+                  "codeLines": [
+                    "def minEatingSpeed(piles, h):",
+                    "    import math",
+                    "    speed = 1",
+                    "    while True:",
+                    "        totalTime = 0",
+                    "        for pile in piles:",
+                    "            totalTime += math.ceil(pile / speed)",
+                    "        if totalTime <= h:",
+                    "            return speed",
+                    "        speed += 1"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function minEatingSpeed that accepts array piles and integer h",
+                    "Declare speed initialized to one",
+                    "Start infinite while loop with true condition",
+                    "Declare totalTime initialized to zero",
+                    "Start for loop iterating through each pile in piles",
+                    "Calculate ceiling of pile divided by speed, add to totalTime",
+                    "Close the for loop with closing brace",
+                    "Check if totalTime is less than or equal to h",
+                    "If feasible, return speed as minimum eating speed found",
+                    "Close the if block with closing brace",
+                    "Increment speed by one to try next speed",
+                    "Close the while loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function minEatingSpeed(piles, h) {",
+                    "    let speed = 1;",
+                    "    while (true) {",
+                    "        let totalTime = 0;",
+                    "        for (const pile of piles) {",
+                    "            totalTime += Math.ceil(pile / speed);",
+                    "        }",
+                    "        if (totalTime <= h) {",
+                    "            return speed;",
+                    "        }",
+                    "        speed++;",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function minEatingSpeed that accepts slice of integers piles and integer h and returns int",
+                    "Initialize speed to one",
+                    "Start infinite for loop",
+                    "Initialize totalTime to zero",
+                    "Start nested for loop iterating through each pile in piles using range with blank identifier for index",
+                    "Convert pile to float64, divide by speed as float64, calculate ceiling, convert to int, and add to totalTime",
+                    "Close the nested for loop with closing brace",
+                    "Check if totalTime is less than or equal to h",
+                    "If feasible, return speed as minimum eating speed found",
+                    "Close the if block with closing brace",
+                    "Increment speed by one to try next speed",
+                    "Close the infinite for loop with closing brace",
+                    "Return speed as fallback",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func minEatingSpeed(piles []int, h int) int {",
+                    "    speed := 1",
+                    "    for {",
+                    "        totalTime := 0",
+                    "        for _, pile := range piles {",
+                    "            totalTime += int(math.Ceil(float64(pile) / float64(speed)))",
+                    "        }",
+                    "        if totalTime <= h {",
+                    "            return speed",
+                    "        }",
+                    "        speed += 1",
+                    "    }",
+                    "    return speed",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m * n)",
+              "timeDescription": "Must try up to m speeds in worst case, checking n piles each time where m is max pile size",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only variables for speed and time calculation",
+              "exampleWalkthrough": "Given piles=[3,6,7,11] and h=8: Try speed=1: hours=3+6+7+11=27 > 8. Try speed=2: hours=2+3+4+6=15 > 8. Try speed=3: hours=1+2+3+4=10 > 8. Try speed=4: hours=1+2+2+3=8 <= 8, return 4.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "binary-search",
+            "array",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
