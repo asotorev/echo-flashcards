@@ -1,0 +1,371 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #66 - Plus One",
+      "description": "Increment a large integer represented as an array of digits by one",
+      "cards": [
+        {
+          "id": "leetcode_066_plus_one",
+          "question": "Plus One: You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading zeros. Increment the large integer by one and return the resulting array of digits.",
+          "solutions": [
+            {
+              "name": "Iteration - II",
+              "type": "optimal",
+              "explanation": "Iterate backwards through the digits. If a digit is less than 9, increment it and return immediately. If it is 9, set it to 0 and continue to the next digit. If all digits are 9, prepend 1 to the array of zeros. Most elegant solution with minimal operations.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function plusOne that accepts digits",
+                    "Get length of digits, assign to n",
+                    "Loop with i from n minus one down to zero with step negative one",
+                    "If element at index i in digits is less than nine",
+                    "Increment element at index i in digits by one",
+                    "Return digits",
+                    "Set element at index i in digits to zero",
+                    "Return list containing one concatenated with digits"
+                  ],
+                  "codeLines": [
+                    "def plusOne(self, digits: List[int]) -> List[int]:",
+                    "    n = len(digits)",
+                    "    for i in range(n - 1, -1, -1):",
+                    "        if digits[i] < 9:",
+                    "            digits[i] += 1",
+                    "            return digits",
+                    "        digits[i] = 0",
+                    "    return [1] + digits"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function plusOne that accepts digits",
+                    "Get length of digits, assign to n",
+                    "Start for loop with i from n minus one while i greater than or equal to zero decrementing i",
+                    "If element at index i in digits is less than nine",
+                    "Increment element at index i in digits by one",
+                    "Return digits",
+                    "Close the if block with closing brace",
+                    "Set element at index i in digits to zero",
+                    "Close the for loop with closing brace",
+                    "Return array containing one concatenated with digits",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function plusOne(digits) {",
+                    "    const n = digits.length;",
+                    "    for (let i = n - 1; i >= 0; i--) {",
+                    "        if (digits[i] < 9) {",
+                    "            digits[i]++;",
+                    "            return digits;",
+                    "        }",
+                    "        digits[i] = 0;",
+                    "    }",
+                    "    return [1].concat(digits);",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function plusOne that accepts slice of integers digits and returns slice of integers",
+                    "Get length of digits, assign to n",
+                    "Loop with i from n minus one while i greater than or equal to zero decrementing i",
+                    "If element at index i in digits is less than nine",
+                    "Increment element at index i in digits by one",
+                    "Return digits",
+                    "Close the if block with closing brace",
+                    "Set element at index i in digits to zero",
+                    "Close the for loop with closing brace",
+                    "Return slice containing one with all elements of digits appended",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func plusOne(digits []int) []int {",
+                    "    n := len(digits)",
+                    "    for i := n - 1; i >= 0; i-- {",
+                    "        if digits[i] < 9 {",
+                    "            digits[i]++",
+                    "            return digits",
+                    "        }",
+                    "        digits[i] = 0",
+                    "    }",
+                    "    return append([]int{1}, digits...)",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of digits, as we may need to traverse all digits in worst case when all are nines",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for creating a new array only when all digits are nines and we need to prepend one",
+              "exampleWalkthrough": "Given [1,2,9]: i=2, digits[2]=9 so set to 0 -> [1,2,0]. i=1, digits[1]=2<9 so increment to 3 and return [1,3,0]. Given [9,9,9]: All set to 0 -> [0,0,0], then prepend 1 -> [1,0,0,0].",
+              "displayOrder": 1
+            },
+            {
+              "name": "Iteration - I",
+              "type": "alternative",
+              "explanation": "Reverse the array to process from least significant digit. Use a carry variable to track when we need to continue adding. Process each digit, handling nines by setting to zero and continuing. Reverse back at the end. Works but less elegant due to double reversal.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function plusOne that accepts digits",
+                    "Initialize one to one",
+                    "Initialize i to zero",
+                    "Reverse digits in place",
+                    "Loop while one is truthy",
+                    "If i is less than length of digits",
+                    "If element at index i in digits equals nine",
+                    "Set element at index i in digits to zero",
+                    "Otherwise",
+                    "Increment element at index i in digits by one",
+                    "Set one to zero",
+                    "Otherwise",
+                    "Append one to digits",
+                    "Set one to zero",
+                    "Increment i by one",
+                    "Reverse digits in place",
+                    "Return digits"
+                  ],
+                  "codeLines": [
+                    "def plusOne(self, digits: List[int]) -> List[int]:",
+                    "    one = 1",
+                    "    i = 0",
+                    "    digits.reverse()",
+                    "    while one:",
+                    "        if i < len(digits):",
+                    "            if digits[i] == 9:",
+                    "                digits[i] = 0",
+                    "            else:",
+                    "                digits[i] += 1",
+                    "                one = 0",
+                    "        else:",
+                    "            digits.append(one)",
+                    "            one = 0",
+                    "        i += 1",
+                    "    digits.reverse()",
+                    "    return digits"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function plusOne that accepts digits",
+                    "Initialize one to one and i to zero",
+                    "Reverse digits in place using reverse method",
+                    "Loop while one is truthy",
+                    "If i is less than length of digits",
+                    "If element at index i in digits equals nine",
+                    "Set element at index i in digits to zero",
+                    "Close the if block with closing brace followed by else",
+                    "Increment element at index i in digits by one",
+                    "Set one to zero",
+                    "Close the else block with closing brace",
+                    "Close the inner if block with closing brace followed by else",
+                    "Push one to digits",
+                    "Set one to zero",
+                    "Close the else block with closing brace",
+                    "Increment i by one",
+                    "Close the while loop with closing brace",
+                    "Reverse digits in place using reverse method",
+                    "Return digits",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function plusOne(digits) {",
+                    "    let one = 1, i = 0;",
+                    "    digits.reverse();",
+                    "    while (one) {",
+                    "        if (i < digits.length) {",
+                    "            if (digits[i] === 9) {",
+                    "                digits[i] = 0;",
+                    "            } else {",
+                    "                digits[i]++;",
+                    "                one = 0;",
+                    "            }",
+                    "        } else {",
+                    "            digits.push(one);",
+                    "            one = 0;",
+                    "        }",
+                    "        i++;",
+                    "    }",
+                    "    digits.reverse();",
+                    "    return digits;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function plusOne that accepts slice of integers digits and returns slice of integers",
+                    "Initialize one to one",
+                    "Initialize i to zero",
+                    "Loop with left from zero and right from length of digits minus one while left less than right incrementing left and decrementing right",
+                    "Swap element at left with element at right in digits to reverse",
+                    "Close the for loop with closing brace",
+                    "Loop while one not equals zero",
+                    "If i is less than length of digits",
+                    "If element at index i in digits equals nine",
+                    "Set element at index i in digits to zero",
+                    "Close the if block with closing brace followed by else",
+                    "Increment element at index i in digits by one",
+                    "Set one to zero",
+                    "Close the else block with closing brace",
+                    "Close the inner if block with closing brace followed by else",
+                    "Append one to digits, assign result to digits",
+                    "Set one to zero",
+                    "Close the else block with closing brace",
+                    "Increment i by one",
+                    "Close the while loop with closing brace",
+                    "Loop with left from zero and right from length of digits minus one while left less than right incrementing left and decrementing right",
+                    "Swap element at left with element at right in digits to reverse",
+                    "Close the for loop with closing brace",
+                    "Return digits",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func plusOne(digits []int) []int {",
+                    "    one := 1",
+                    "    i := 0",
+                    "    for left, right := 0, len(digits) - 1; left < right; left, right = left + 1, right - 1 {",
+                    "        digits[left], digits[right] = digits[right], digits[left]",
+                    "    }",
+                    "    for one != 0 {",
+                    "        if i < len(digits) {",
+                    "            if digits[i] == 9 {",
+                    "                digits[i] = 0",
+                    "            } else {",
+                    "                digits[i]++",
+                    "                one = 0",
+                    "            }",
+                    "        } else {",
+                    "            digits = append(digits, one)",
+                    "            one = 0",
+                    "        }",
+                    "        i++",
+                    "    }",
+                    "    for left, right := 0, len(digits) - 1; left < right; left, right = left + 1, right - 1 {",
+                    "        digits[left], digits[right] = digits[right], digits[left]",
+                    "    }",
+                    "    return digits",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of digits, as we reverse twice and potentially traverse all digits",
+              "spaceComplexity": "O(1) or O(n)",
+              "spaceDescription": "Constant extra space for variables in Python as reverse is in-place, but O(n) in languages where reverse creates a new array",
+              "exampleWalkthrough": "Given [1,2,9]: Reverse to [9,2,1]. Process 9: set to 0, carry continues. Process 2: increment to 3, carry stops. Reverse to [1,3,0]. Given [9,9]: Reverse to [9,9]. Both become 0, append 1 -> [0,0,1]. Reverse to [1,0,0].",
+              "displayOrder": 2
+            },
+            {
+              "name": "Recursion",
+              "type": "alternative",
+              "explanation": "Base case: empty array returns [1]. If last digit is less than 9, increment and return. Otherwise, recursively call on all digits except the last, then append 0. Uses array slicing which creates new arrays at each recursive level.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function plusOne that accepts digits",
+                    "If digits is empty",
+                    "Return list containing one",
+                    "If last element of digits is less than nine",
+                    "Increment last element of digits by one",
+                    "Return digits",
+                    "Otherwise",
+                    "Get digits excluding last element, call plusOne recursively with it, concatenate with list containing zero, return result"
+                  ],
+                  "codeLines": [
+                    "def plusOne(self, digits: List[int]) -> List[int]:",
+                    "    if not digits:",
+                    "        return [1]",
+                    "    if digits[-1] < 9:",
+                    "        digits[-1] += 1",
+                    "        return digits",
+                    "    else:",
+                    "        return self.plusOne(digits[:-1]) + [0]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function plusOne that accepts digits",
+                    "If length of digits is falsy",
+                    "Return array containing one",
+                    "Close the if statement with closing brace",
+                    "If last element of digits is less than nine",
+                    "Increment last element of digits by one",
+                    "Return digits",
+                    "Close the if block with closing brace followed by else",
+                    "Get digits excluding last element using slice, call plusOne recursively with it, concatenate with array containing zero, return result",
+                    "Close the else block with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function plusOne(digits) {",
+                    "    if (!digits.length) {",
+                    "        return [1];",
+                    "    }",
+                    "    if (digits[digits.length - 1] < 9) {",
+                    "        digits[digits.length - 1]++;",
+                    "        return digits;",
+                    "    } else {",
+                    "        return plusOne(digits.slice(0, -1)).concat([0]);",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function plusOne that accepts slice of integers digits and returns slice of integers",
+                    "If length of digits equals zero",
+                    "Return integer slice containing one",
+                    "Close the if statement with closing brace",
+                    "If last element of digits is less than nine",
+                    "Increment last element of digits by one",
+                    "Return digits",
+                    "Close the if block with closing brace followed by else",
+                    "Get digits excluding last element, call plusOne recursively with it, append zero to result, return it",
+                    "Close the else block with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func plusOne(digits []int) []int {",
+                    "    if len(digits) == 0 {",
+                    "        return []int{1}",
+                    "    }",
+                    "    if digits[len(digits) - 1] < 9 {",
+                    "        digits[len(digits) - 1]++",
+                    "        return digits",
+                    "    } else {",
+                    "        return append(plusOne(digits[:len(digits) - 1]), 0)",
+                    "    }",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of digits, as we make at most n recursive calls in worst case when all are nines",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for the recursion call stack and new arrays created by slicing at each level",
+              "exampleWalkthrough": "Given [1,2,9]: last=9, so call plusOne([1,2]). In recursive call, last=2<9, increment to 3, return [1,3]. Original call appends 0: [1,3,0]. Given [9]: last=9, call plusOne([]). Base case returns [1]. Append 0: [1,0].",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "array",
+            "math",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

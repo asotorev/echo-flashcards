@@ -1,0 +1,447 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #338 - Counting Bits",
+      "description": "Generate an array where each index i contains the count of 1 bits in the binary representation of i",
+      "cards": [
+        {
+          "id": "leetcode_338_counting_bits",
+          "question": "Counting Bits: Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.",
+          "solutions": [
+            {
+              "name": "Bit Manipulation (Optimal)",
+              "type": "optimal",
+              "explanation": "Use dynamic programming with right shift pattern. The count of 1s in i equals the count in i divided by 2 plus the last bit of i. This gives O(n) time by reusing previous results.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array dp of size n plus one initialized with zeros",
+                    "Loop through range from zero to n plus one",
+                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i",
+                    "Return dp"
+                  ],
+                  "codeLines": [
+                    "def countBits(n):",
+                    "    dp = [0] * (n + 1)",
+                    "    for i in range(n + 1):",
+                    "        dp[i] = dp[i >> 1] + (i & 1)",
+                    "    return dp"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array dp of size n plus one filled with zeros",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i",
+                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i",
+                    "Close the for loop with closing brace",
+                    "Return dp",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function countBits(n) {",
+                    "    const dp = new Array(n + 1).fill(0);",
+                    "    for (let i = 0; i <= n; i++) {",
+                    "        dp[i] = dp[i >> 1] + (i & 1);",
+                    "    }",
+                    "    return dp;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n and returns slice of integers",
+                    "Create slice dp of size n plus one initialized with zeros using make",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i",
+                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i",
+                    "Close the for loop with closing brace",
+                    "Return dp",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func countBits(n int) []int {",
+                    "    dp := make([]int, n + 1)",
+                    "    for i := 0; i <= n; i++ {",
+                    "        dp[i] = dp[i >> 1] + (i & 1)",
+                    "    }",
+                    "    return dp",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as we iterate through numbers 0 to n once, with O(1) lookup for each",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space, O(n) for the output array which is required",
+              "exampleWalkthrough": "Given n=5: dp=[0,0,0,0,0,0]. i=0: dp[0>>1]+(0&1)=0+0=0. i=1: dp[0]+(1&1)=0+1=1. i=2: dp[1]+(0&1)=1+0=1. i=3: dp[1]+(1&1)=1+1=2. i=4: dp[2]+(0&1)=1+0=1. i=5: dp[2]+(1&1)=1+1=2. Return [0,1,1,2,1,2].",
+              "displayOrder": 1
+            },
+            {
+              "name": "Bit Manipulation (DP)",
+              "type": "optimal",
+              "explanation": "Use dynamic programming with offset pattern. Track powers of 2 as offsets. The count for i equals 1 plus the count at i minus offset. This reuses previous calculations for O(n) time.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array dp of size n plus one initialized with zeros",
+                    "Initialize offset to one",
+                    "Loop through range from one to n plus one",
+                    "Check if offset times two equals i",
+                    "If true, update offset to i as we reached next power of two",
+                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i",
+                    "Return dp"
+                  ],
+                  "codeLines": [
+                    "def countBits(n):",
+                    "    dp = [0] * (n + 1)",
+                    "    offset = 1",
+                    "    for i in range(1, n + 1):",
+                    "        if offset * 2 == i:",
+                    "            offset = i",
+                    "        dp[i] = 1 + dp[i - offset]",
+                    "    return dp"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array dp of size n plus one filled with zeros",
+                    "Initialize offset to one",
+                    "Start for loop with i from one while i less than or equal to n incrementing i",
+                    "Check if offset times two equals i",
+                    "If true, update offset to i as we reached next power of two",
+                    "Close the if statement with closing brace",
+                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i",
+                    "Close the for loop with closing brace",
+                    "Return dp",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function countBits(n) {",
+                    "    const dp = new Array(n + 1).fill(0);",
+                    "    let offset = 1;",
+                    "    for (let i = 1; i <= n; i++) {",
+                    "        if (offset * 2 === i) {",
+                    "            offset = i;",
+                    "        }",
+                    "        dp[i] = 1 + dp[i - offset];",
+                    "    }",
+                    "    return dp;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n and returns slice of integers",
+                    "Create slice dp of size n plus one initialized with zeros using make",
+                    "Initialize offset to one",
+                    "Start for loop with i from one while i less than or equal to n incrementing i",
+                    "Check if offset times two equals i",
+                    "If true, update offset to i as we reached next power of two",
+                    "Close the if block with closing brace",
+                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i",
+                    "Close the for loop with closing brace",
+                    "Return dp",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func countBits(n int) []int {",
+                    "    dp := make([]int, n + 1)",
+                    "    offset := 1",
+                    "    for i := 1; i <= n; i++ {",
+                    "        if offset * 2 == i {",
+                    "            offset = i",
+                    "        }",
+                    "        dp[i] = 1 + dp[i - offset]",
+                    "    }",
+                    "    return dp",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as we iterate through numbers 1 to n once, with O(1) lookup for each",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space, O(n) for the output array which is required",
+              "exampleWalkthrough": "Given n=5: dp=[0,0,0,0,0,0], offset=1. i=1: dp[1]=1+dp[0]=1. i=2: offset becomes 2, dp[2]=1+dp[0]=1. i=3: dp[3]=1+dp[1]=2. i=4: offset becomes 4, dp[4]=1+dp[0]=1. i=5: dp[5]=1+dp[1]=2. Return [0,1,1,2,1,2].",
+              "displayOrder": 2
+            },
+            {
+              "name": "Bit Manipulation - II",
+              "type": "alternative",
+              "explanation": "For each number, use the n AND n minus one trick to count set bits. This removes one set bit per iteration until the number becomes zero.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array res of size n plus one initialized with zeros",
+                    "Loop through range from one to n plus one",
+                    "Assign value i to variable num",
+                    "Loop while num is not equal to zero",
+                    "Increment res at index i by one",
+                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def countBits(n):",
+                    "    res = [0] * (n + 1)",
+                    "    for i in range(1, n + 1):",
+                    "        num = i",
+                    "        while num != 0:",
+                    "            res[i] += 1",
+                    "            num &= (num - 1)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array res of size n plus one filled with zeros",
+                    "Start for loop with i from one while i less than or equal to n incrementing i",
+                    "Assign value i to variable num",
+                    "Loop while num is not equal to zero",
+                    "Increment res at index i by one",
+                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit",
+                    "Close the while loop with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function countBits(n) {",
+                    "    const res = new Array(n + 1).fill(0);",
+                    "    for (let i = 1; i <= n; i++) {",
+                    "        let num = i;",
+                    "        while (num !== 0) {",
+                    "            res[i]++;",
+                    "            num &= (num - 1);",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n and returns slice of integers",
+                    "Create slice res of size n plus one initialized with zeros using make",
+                    "Start for loop with i from one while i less than or equal to n incrementing i",
+                    "Assign value i to variable num",
+                    "Loop while num is not equal to zero",
+                    "Increment res at index i by one",
+                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit",
+                    "Close the for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func countBits(n int) []int {",
+                    "    res := make([]int, n + 1)",
+                    "    for i := 1; i <= n; i++ {",
+                    "        num := i",
+                    "        for num != 0 {",
+                    "            res[i]++",
+                    "            num &= (num - 1)",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "For each of n numbers, we count bits which takes O(log n) time on average",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space, O(n) for the output array which is required",
+              "exampleWalkthrough": "Given n=5: res=[0,0,0,0,0,0]. i=1 (binary 1): num=1, one iteration, res[1]=1. i=2 (binary 10): num=2, one iteration, res[2]=1. i=3 (binary 11): num=3, two iterations, res[3]=2. i=4 (binary 100): num=4, one iteration, res[4]=1. i=5 (binary 101): num=5, two iterations, res[5]=2. Return [0,1,1,2,1,2].",
+              "displayOrder": 3
+            },
+            {
+              "name": "Bit Manipulation - I",
+              "type": "alternative",
+              "explanation": "For each number from 0 to n, check all 32 bit positions by ANDing with left-shifted 1. Count how many positions have set bits.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create empty array res",
+                    "Loop through each num in range from zero to n plus one",
+                    "Initialize one to zero to count set bits",
+                    "Loop through range from zero to thirty-two for each bit position",
+                    "Left shift one by i bits, AND with num, check if result is non-zero",
+                    "If non-zero, increment one by one",
+                    "Append one to res array",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def countBits(n):",
+                    "    res = []",
+                    "    for num in range(n + 1):",
+                    "        one = 0",
+                    "        for i in range(32):",
+                    "            if num & (1 << i):",
+                    "                one += 1",
+                    "        res.append(one)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create empty array res",
+                    "Start for loop with num from zero while num less than or equal to n incrementing num",
+                    "Initialize one to zero to count set bits",
+                    "Start inner for loop with i from zero while i less than thirty-two incrementing i",
+                    "Left shift one by i bits, AND with num, check if result is non-zero",
+                    "If non-zero, increment one by one",
+                    "Close the if statement with closing brace",
+                    "Close the inner for loop with closing brace",
+                    "Push one to res array",
+                    "Close the outer for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function countBits(n) {",
+                    "    const res = [];",
+                    "    for (let num = 0; num <= n; num++) {",
+                    "        let one = 0;",
+                    "        for (let i = 0; i < 32; i++) {",
+                    "            if (num & (1 << i)) {",
+                    "                one++;",
+                    "            }",
+                    "        }",
+                    "        res.push(one);",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n and returns slice of integers",
+                    "Create empty slice res",
+                    "Start for loop with num from zero while num less than or equal to n incrementing num",
+                    "Initialize one to zero to count set bits",
+                    "Start inner for loop with i from zero while i less than thirty-two incrementing i",
+                    "Left shift one by i bits, AND with num, check if result is not equal to zero",
+                    "If not zero, increment one by one",
+                    "Close the if block with closing brace",
+                    "Close the inner for loop with closing brace",
+                    "Append one to res slice",
+                    "Close the outer for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func countBits(n int) []int {",
+                    "    res := []int{}",
+                    "    for num := 0; num <= n; num++ {",
+                    "        one := 0",
+                    "        for i := 0; i < 32; i++ {",
+                    "            if num & (1 << i) != 0 {",
+                    "                one++",
+                    "            }",
+                    "        }",
+                    "        res = append(res, one)",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "For each of n numbers, we check 32 bit positions which is O(log n) where log n is the number of bits",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space, O(n) for the output array which is required",
+              "exampleWalkthrough": "Given n=2: For num=0 (binary 0000): check all 32 bits, none set, append 0. For num=1 (binary 0001): check all 32 bits, position 0 set, append 1. For num=2 (binary 0010): check all 32 bits, position 1 set, append 1. Return [0,1,1].",
+              "displayOrder": 4
+            },
+            {
+              "name": "In-Built Function",
+              "type": "alternative",
+              "explanation": "Use language built-in functions to convert each number to binary and count the 1s. Simple one-liner but less educational and still O(n log n).",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create list comprehension that iterates i from zero to n plus one, converts i to binary string using bin, counts occurrences of character one, and return the list"
+                  ],
+                  "codeLines": [
+                    "def countBits(n):",
+                    "    return [bin(i).count('1') for i in range(n + 1)]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n",
+                    "Create array from zero to n using Array from with length n plus one and mapping function with parameters underscore and i, convert i to binary string using toString with base two, match all occurrences of character one using regex, get length of matches or zero if no matches, and return the array",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function countBits(n) {",
+                    "    return Array.from({ length: n + 1 }, (_, i) => (i.toString(2).match(/1/g) || []).length);",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function countBits that accepts integer n and returns slice of integers",
+                    "Create slice res of size n plus one initialized with zeros using make",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i",
+                    "Convert i to unsigned integer, pass to bits OnesCount function from math slash bits package, and store result in res at index i",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func countBits(n int) []int {",
+                    "    res := make([]int, n + 1)",
+                    "    for i := 0; i <= n; i++ {",
+                    "        res[i] = bits.OnesCount(uint(i))",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "For each of n numbers, converting to binary and counting takes O(log n) time",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space, O(n) for the output array which is required",
+              "exampleWalkthrough": "Given n=2: Convert 0 to binary '0', count '1's: 0. Convert 1 to binary '1', count '1's: 1. Convert 2 to binary '10', count '1's: 1. Return [0,1,1].",
+              "displayOrder": 5
+            }
+          ],
+          "tags": [
+            "bit-manipulation",
+            "dynamic-programming",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

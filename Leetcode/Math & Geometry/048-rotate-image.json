@@ -1,0 +1,340 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #48 - Rotate Image",
+      "description": "Rotate a 2D matrix 90 degrees clockwise in-place",
+      "cards": [
+        {
+          "id": "leetcode_048_rotate_image",
+          "question": "Rotate Image: You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees clockwise. You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.",
+          "solutions": [
+            {
+              "name": "Reverse And Transpose",
+              "type": "optimal",
+              "explanation": "Reverse the matrix vertically, then transpose it. Reversing flips rows upside down, and transposing swaps rows with columns. These two operations combined achieve a 90-degree clockwise rotation. Most elegant solution.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function rotate that accepts matrix",
+                    "Reverse the matrix in place",
+                    "Loop through range from zero to length of matrix with index i",
+                    "Loop through range from i plus one to length of matrix with index j",
+                    "Swap matrix at i j with matrix at j i to transpose"
+                  ],
+                  "codeLines": [
+                    "def rotate(matrix):",
+                    "    matrix.reverse()",
+                    "    for i in range(len(matrix)):",
+                    "        for j in range(i + 1, len(matrix)):",
+                    "            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function rotate that accepts matrix",
+                    "Reverse the matrix in place using reverse method",
+                    "Start for loop with i from zero while i less than length of matrix incrementing i",
+                    "Start inner for loop with j from i plus one while j less than length of matrix incrementing j",
+                    "Swap matrix at i j with matrix at j i using array destructuring to transpose",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function rotate(matrix) {",
+                    "    matrix.reverse();",
+                    "    for (let i = 0; i < matrix.length; i++) {",
+                    "        for (let j = i + 1; j < matrix.length; j++) {",
+                    "            [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function rotate that accepts 2D slice of integers matrix",
+                    "Get length of matrix and assign to n",
+                    "Loop with i from zero and j from n minus one while i less than j incrementing i and decrementing j",
+                    "Swap matrix at i with matrix at j to reverse",
+                    "Close the for loop with closing brace",
+                    "Loop with i from zero while i less than n incrementing i",
+                    "Loop with j from i plus one while j less than n incrementing j",
+                    "Swap matrix at i j with matrix at j i to transpose",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func rotate(matrix [][]int) {",
+                    "    n := len(matrix)",
+                    "    for i, j := 0, n - 1; i < j; i, j = i + 1, j - 1 {",
+                    "        matrix[i], matrix[j] = matrix[j], matrix[i]",
+                    "    }",
+                    "    for i := 0; i < n; i++ {",
+                    "        for j := i + 1; j < n; j++ {",
+                    "            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^2)",
+              "timeDescription": "Quadratic time as we visit each of n squared elements once during reverse and once during transpose",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space as rotation is done in-place with only swap operations",
+              "exampleWalkthrough": "Given [[1,2,3],[4,5,6],[7,8,9]]: After reverse: [[7,8,9],[4,5,6],[1,2,3]]. After transpose: [[7,4,1],[8,5,2],[9,6,3]]. Result is 90-degree clockwise rotation.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Rotate By Four Cells",
+              "type": "optimal",
+              "explanation": "Process the matrix in concentric layers from outside to inside. For each layer, rotate groups of four cells at a time by performing a cyclic swap: top-left to top-right, top-right to bottom-right, bottom-right to bottom-left, bottom-left to top-left.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function rotate that accepts matrix",
+                    "Initialize l to zero and r to length of matrix minus one",
+                    "Loop while l is less than r",
+                    "Loop through range from zero to r minus l with index i",
+                    "Assign l to top and r to bottom",
+                    "Get matrix at top l plus i and save as topLeft",
+                    "Move matrix at bottom minus i l into matrix at top l plus i",
+                    "Move matrix at bottom r minus i into matrix at bottom minus i l",
+                    "Move matrix at top plus i r into matrix at bottom r minus i",
+                    "Move topLeft into matrix at top plus i r",
+                    "Decrement r by one",
+                    "Increment l by one"
+                  ],
+                  "codeLines": [
+                    "def rotate(matrix):",
+                    "    l, r = 0, len(matrix) - 1",
+                    "    while l < r:",
+                    "        for i in range(r - l):",
+                    "            top, bottom = l, r",
+                    "            topLeft = matrix[top][l + i]",
+                    "            matrix[top][l + i] = matrix[bottom - i][l]",
+                    "            matrix[bottom - i][l] = matrix[bottom][r - i]",
+                    "            matrix[bottom][r - i] = matrix[top + i][r]",
+                    "            matrix[top + i][r] = topLeft",
+                    "        r -= 1",
+                    "        l += 1"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function rotate that accepts matrix",
+                    "Initialize l to zero and r to length of matrix minus one",
+                    "Loop while l is less than r",
+                    "Loop with i from zero while i less than r minus l incrementing i",
+                    "Assign l to top and r to bottom",
+                    "Get matrix at top l plus i and save as topLeft",
+                    "Move matrix at bottom minus i l into matrix at top l plus i",
+                    "Move matrix at bottom r minus i into matrix at bottom minus i l",
+                    "Move matrix at top plus i r into matrix at bottom r minus i",
+                    "Move topLeft into matrix at top plus i r",
+                    "Close the for loop with closing brace",
+                    "Decrement r by one",
+                    "Increment l by one",
+                    "Close the while loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function rotate(matrix) {",
+                    "    let l = 0, r = matrix.length - 1;",
+                    "    while (l < r) {",
+                    "        for (let i = 0; i < r - l; i++) {",
+                    "            const top = l, bottom = r;",
+                    "            const topLeft = matrix[top][l + i];",
+                    "            matrix[top][l + i] = matrix[bottom - i][l];",
+                    "            matrix[bottom - i][l] = matrix[bottom][r - i];",
+                    "            matrix[bottom][r - i] = matrix[top + i][r];",
+                    "            matrix[top + i][r] = topLeft;",
+                    "        }",
+                    "        r--;",
+                    "        l++;",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function rotate that accepts 2D slice of integers matrix",
+                    "Initialize l to zero and r to length of matrix minus one",
+                    "Loop while l is less than r",
+                    "Loop with i from zero while i less than r minus l incrementing i",
+                    "Assign l to top and r to bottom",
+                    "Get matrix at top l plus i and save as topLeft",
+                    "Move matrix at bottom minus i l into matrix at top l plus i",
+                    "Move matrix at bottom r minus i into matrix at bottom minus i l",
+                    "Move matrix at top plus i r into matrix at bottom r minus i",
+                    "Move topLeft into matrix at top plus i r",
+                    "Close the for loop with closing brace",
+                    "Decrement r by one",
+                    "Increment l by one",
+                    "Close the for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func rotate(matrix [][]int) {",
+                    "    l, r := 0, len(matrix) - 1",
+                    "    for l < r {",
+                    "        for i := 0; i < r - l; i++ {",
+                    "            top, bottom := l, r",
+                    "            topLeft := matrix[top][l + i]",
+                    "            matrix[top][l + i] = matrix[bottom - i][l]",
+                    "            matrix[bottom - i][l] = matrix[bottom][r - i]",
+                    "            matrix[bottom][r - i] = matrix[top + i][r]",
+                    "            matrix[top + i][r] = topLeft",
+                    "        }",
+                    "        r--",
+                    "        l++",
+                    "    }",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^2)",
+              "timeDescription": "Quadratic time as we visit each element once in the rotation process",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space as rotation is done in-place with only a single temporary variable",
+              "exampleWalkthrough": "Given 3x3 matrix [[1,2,3],[4,5,6],[7,8,9]]: Layer 0 (l=0, r=2): Rotate outer ring: Save 1, move 7→1, move 9→7, move 3→9, move saved 1→3. Then 2→4, 8→2, 6→8, 4→6. Center element 5 unchanged. Result: [[7,4,1],[8,5,2],[9,6,3]].",
+              "displayOrder": 2
+            },
+            {
+              "name": "Brute Force",
+              "type": "naive",
+              "explanation": "Create a new rotated matrix where each element at position (i, j) is moved to position (j, n-1-i). Then copy the rotated matrix back to the original. Uses extra space but straightforward to understand.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function rotate that accepts matrix",
+                    "Get length of matrix and assign to n",
+                    "Create 2D list rotated as n by n matrix filled with zeros",
+                    "Loop through range from zero to n with index i",
+                    "Loop through range from zero to n with index j",
+                    "Get matrix at i j, assign to rotated at j n minus one minus i",
+                    "Loop through range from zero to n with index i",
+                    "Loop through range from zero to n with index j",
+                    "Get rotated at i j, assign to matrix at i j"
+                  ],
+                  "codeLines": [
+                    "def rotate(matrix):",
+                    "    n = len(matrix)",
+                    "    rotated = [[0] * n for _ in range(n)]",
+                    "    for i in range(n):",
+                    "        for j in range(n):",
+                    "            rotated[j][n - 1 - i] = matrix[i][j]",
+                    "    for i in range(n):",
+                    "        for j in range(n):",
+                    "            matrix[i][j] = rotated[i][j]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function rotate that accepts matrix",
+                    "Get length of matrix and assign to n",
+                    "Create rotated as array from object with length n and mapping function that creates array of n zeros",
+                    "Start for loop with i from zero while i less than n incrementing i",
+                    "Start inner for loop with j from zero while j less than n incrementing j",
+                    "Get matrix at i j, assign to rotated at j n minus one minus i",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Start for loop with i from zero while i less than n incrementing i",
+                    "Start inner for loop with j from zero while j less than n incrementing j",
+                    "Get rotated at i j, assign to matrix at i j",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function rotate(matrix) {",
+                    "    const n = matrix.length;",
+                    "    const rotated = Array.from({ length: n }, () => Array(n).fill(0));",
+                    "    for (let i = 0; i < n; i++) {",
+                    "        for (let j = 0; j < n; j++) {",
+                    "            rotated[j][n - 1 - i] = matrix[i][j];",
+                    "        }",
+                    "    }",
+                    "    for (let i = 0; i < n; i++) {",
+                    "        for (let j = 0; j < n; j++) {",
+                    "            matrix[i][j] = rotated[i][j];",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function rotate that accepts 2D slice of integers matrix",
+                    "Get length of matrix and assign to n",
+                    "Create rotated as 2D slice using make with n rows",
+                    "Loop with i from zero while i less than n incrementing i",
+                    "Create rotated at i as slice using make with n columns",
+                    "Close the for loop with closing brace",
+                    "Loop with i from zero while i less than n incrementing i",
+                    "Loop with j from zero while j less than n incrementing j",
+                    "Get matrix at i j, assign to rotated at j n minus one minus i",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Loop with i from zero while i less than n incrementing i",
+                    "Loop with j from zero while j less than n incrementing j",
+                    "Get rotated at i j, assign to matrix at i j",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func rotate(matrix [][]int) {",
+                    "    n := len(matrix)",
+                    "    rotated := make([][]int, n)",
+                    "    for i := 0; i < n; i++ {",
+                    "        rotated[i] = make([]int, n)",
+                    "    }",
+                    "    for i := 0; i < n; i++ {",
+                    "        for j := 0; j < n; j++ {",
+                    "            rotated[j][n - 1 - i] = matrix[i][j]",
+                    "        }",
+                    "    }",
+                    "    for i := 0; i < n; i++ {",
+                    "        for j := 0; j < n; j++ {",
+                    "            matrix[i][j] = rotated[i][j]",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^2)",
+              "timeDescription": "Quadratic time as we iterate through all n squared elements twice, once to fill rotated matrix and once to copy back",
+              "spaceComplexity": "O(n^2)",
+              "spaceDescription": "Quadratic space for the additional n by n rotated matrix",
+              "exampleWalkthrough": "Given [[1,2,3],[4,5,6],[7,8,9]]: Create new 3x3 matrix. Map positions: (0,0)→(0,2)=1, (0,1)→(1,2)=2, (0,2)→(2,2)=3, (1,0)→(0,1)=4, etc. Result in rotated: [[7,4,1],[8,5,2],[9,6,3]]. Copy back to original matrix.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "matrix",
+            "array",
+            "math",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

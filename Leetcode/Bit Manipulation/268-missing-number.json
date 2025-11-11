@@ -1,0 +1,356 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #268 - Missing Number",
+      "description": "Find the missing number in an array containing n distinct numbers in the range [0, n]",
+      "cards": [
+        {
+          "id": "leetcode_268_missing_number",
+          "question": "Missing Number: Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.",
+          "solutions": [
+            {
+              "name": "Math",
+              "type": "optimal",
+              "explanation": "Use the mathematical formula: expected sum minus actual sum equals missing number. The expected sum of 0 to n is n times n plus one divided by two, but we can calculate the difference iteratively to avoid integer overflow.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Get length of nums and assign to res",
+                    "Loop through range from zero to length of nums",
+                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def missingNumber(nums):",
+                    "    res = len(nums)",
+                    "    for i in range(len(nums)):",
+                    "        res += i - nums[i]",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Get length of nums and assign to res",
+                    "Start for loop with i from zero while i less than length of nums incrementing i",
+                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function missingNumber(nums) {",
+                    "    let res = nums.length;",
+                    "    for (let i = 0; i < nums.length; i++) {",
+                    "        res += i - nums[i];",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts slice of integers nums and returns int",
+                    "Get length of nums and assign to res",
+                    "Start for loop with i from zero while i less than length of nums incrementing i",
+                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func missingNumber(nums []int) int {",
+                    "    res := len(nums)",
+                    "    for i := 0; i < len(nums); i++ {",
+                    "        res += i - nums[i]",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as we traverse the array once",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only a single variable",
+              "exampleWalkthrough": "Given nums=[3,0,1]: res=3 (length). i=0: res+=0-3=-3, res=0. i=1: res+=1-0=1, res=1. i=2: res+=2-1=1, res=2. Return 2.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Bitwise XOR",
+              "type": "optimal",
+              "explanation": "XOR has the property that a XOR a equals zero and a XOR zero equals a. XOR all indices 0 to n with all array values. Duplicate values cancel out, leaving only the missing number.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Get length of nums and assign to n",
+                    "Initialize xorr to n",
+                    "Loop through range from zero to n",
+                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr",
+                    "Return xorr"
+                  ],
+                  "codeLines": [
+                    "def missingNumber(nums):",
+                    "    n = len(nums)",
+                    "    xorr = n",
+                    "    for i in range(n):",
+                    "        xorr ^= i ^ nums[i]",
+                    "    return xorr"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Get length of nums and assign to n",
+                    "Initialize xorr to n",
+                    "Start for loop with i from zero while i less than n incrementing i",
+                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr",
+                    "Close the for loop with closing brace",
+                    "Return xorr",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function missingNumber(nums) {",
+                    "    let n = nums.length;",
+                    "    let xorr = n;",
+                    "    for (let i = 0; i < n; i++) {",
+                    "        xorr ^= i ^ nums[i];",
+                    "    }",
+                    "    return xorr;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts slice of integers nums and returns int",
+                    "Get length of nums and assign to n",
+                    "Initialize xorr to n",
+                    "Start for loop with i from zero while i less than n incrementing i",
+                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr",
+                    "Close the for loop with closing brace",
+                    "Return xorr",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func missingNumber(nums []int) int {",
+                    "    n := len(nums)",
+                    "    xorr := n",
+                    "    for i := 0; i < n; i++ {",
+                    "        xorr ^= i ^ nums[i]",
+                    "    }",
+                    "    return xorr",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as we traverse the array once",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only a single variable",
+              "exampleWalkthrough": "Given nums=[3,0,1]: xorr=3. i=0: xorr^=0^3=0, xorr=0. i=1: xorr^=1^0=1, xorr=1. i=2: xorr^=2^1=3, xorr=2. Return 2 (the missing number).",
+              "displayOrder": 2
+            },
+            {
+              "name": "Hash Set",
+              "type": "alternative",
+              "explanation": "Store all numbers in a hash set for O(1) lookup. Then iterate from 0 to n and return the first number not found in the set.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Convert nums to set and assign to num_set",
+                    "Get length of nums and assign to n",
+                    "Loop through range from zero to n plus one",
+                    "Check if i is not in num_set",
+                    "If not in set, return i"
+                  ],
+                  "codeLines": [
+                    "def missingNumber(nums):",
+                    "    num_set = set(nums)",
+                    "    n = len(nums)",
+                    "    for i in range(n + 1):",
+                    "        if i not in num_set:",
+                    "            return i"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Create new Set from nums and assign to numSet",
+                    "Get length of nums and assign to n",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i",
+                    "Check if numSet does not have i using has method",
+                    "If not in set, return i",
+                    "Close the if statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function missingNumber(nums) {",
+                    "    const numSet = new Set(nums);",
+                    "    const n = nums.length;",
+                    "    for (let i = 0; i <= n; i++) {",
+                    "        if (!numSet.has(i)) {",
+                    "            return i;",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts slice of integers nums and returns int",
+                    "Create map numSet with integer keys and boolean values using make",
+                    "Loop through nums using range to get each num, ignoring index",
+                    "Set numSet at num to true",
+                    "Close the for loop with closing brace",
+                    "Get length of nums and assign to n",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i",
+                    "Check if numSet at i is false or not present",
+                    "If not in map, return i",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return zero as fallback",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func missingNumber(nums []int) int {",
+                    "    numSet := make(map[int]bool)",
+                    "    for _, num := range nums {",
+                    "        numSet[num] = true",
+                    "    }",
+                    "    n := len(nums)",
+                    "    for i := 0; i <= n; i++ {",
+                    "        if !numSet[i] {",
+                    "            return i",
+                    "        }",
+                    "    }",
+                    "    return 0",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time for creating the set and checking each number",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space to store all n numbers in the hash set",
+              "exampleWalkthrough": "Given nums=[3,0,1]: Create set {3,0,1}. Check 0 (in set), 1 (in set), 2 (not in set). Return 2.",
+              "displayOrder": 3
+            },
+            {
+              "name": "Sorting",
+              "type": "alternative",
+              "explanation": "Sort the array so numbers are in order. Then iterate and return the first index where the value does not match the index. If all match, the missing number is n.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Get length of nums and assign to n",
+                    "Sort nums in place",
+                    "Loop through range from zero to n",
+                    "Check if element nums at i does not equal i",
+                    "If not equal, return i",
+                    "Return n"
+                  ],
+                  "codeLines": [
+                    "def missingNumber(nums):",
+                    "    n = len(nums)",
+                    "    nums.sort()",
+                    "    for i in range(n):",
+                    "        if nums[i] != i:",
+                    "            return i",
+                    "    return n"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts array nums",
+                    "Get length of nums and assign to n",
+                    "Sort nums in place using sort with comparison function that takes a and b and returns a minus b",
+                    "Start for loop with i from zero while i less than n incrementing i",
+                    "Check if element nums at i does not equal i",
+                    "If not equal, return i",
+                    "Close the if statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return n",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function missingNumber(nums) {",
+                    "    const n = nums.length;",
+                    "    nums.sort((a, b) => a - b);",
+                    "    for (let i = 0; i < n; i++) {",
+                    "        if (nums[i] !== i) {",
+                    "            return i;",
+                    "        }",
+                    "    }",
+                    "    return n;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function missingNumber that accepts slice of integers nums and returns int",
+                    "Get length of nums and assign to n",
+                    "Sort nums in place using sort Ints",
+                    "Start for loop with i from zero while i less than n incrementing i",
+                    "Check if element nums at i does not equal i",
+                    "If not equal, return i",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return n",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func missingNumber(nums []int) int {",
+                    "    n := len(nums)",
+                    "    sort.Ints(nums)",
+                    "    for i := 0; i < n; i++ {",
+                    "        if nums[i] != i {",
+                    "            return i",
+                    "        }",
+                    "    }",
+                    "    return n",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "Logarithmic time due to sorting the array where n is the length",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space if the sorting algorithm is in-place, or O(n) depending on the sorting implementation",
+              "exampleWalkthrough": "Given nums=[3,0,1]: After sorting [0,1,3]. i=0: nums[0]=0 matches. i=1: nums[1]=1 matches. i=2: nums[2]=3 does not match 2. Return 2.",
+              "displayOrder": 4
+            }
+          ],
+          "tags": [
+            "array",
+            "bit-manipulation",
+            "hash-set",
+            "sorting",
+            "math",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
