@@ -1,0 +1,371 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #226 - Invert Binary Tree",
+      "description": "Invert a binary tree by swapping left and right children at every node",
+      "cards": [
+        {
+          "id": "leetcode_226_invert_binary_tree",
+          "question": "Invert Binary Tree: Given the root of a binary tree, invert the tree, and return its root. Inverting a binary tree means swapping the left and right children of all nodes in the tree.",
+          "solutions": [
+            {
+              "name": "Breadth First Search",
+              "type": "optimal",
+              "explanation": "Use BFS with queue to traverse tree level by level. For each node, swap its left and right children, then add children to queue for processing. Process all nodes until queue is empty. Returns inverted tree. Iterative approach with O(n) space for queue in worst case of complete tree.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Import deque from collections module",
+                    "Define function invertTree that accepts root as optional TreeNode and returns optional TreeNode",
+                    "Check if root does not exist using not operator",
+                    "If root is None, return None",
+                    "Create queue as deque with root as initial element",
+                    "Start while loop that continues while queue is not empty",
+                    "Pop node from left of queue using popleft method",
+                    "Swap node dot left and node dot right using tuple unpacking",
+                    "Check if node dot left exists",
+                    "If exists, append node dot left to queue",
+                    "Check if node dot right exists",
+                    "If exists, append node dot right to queue",
+                    "Return root as inverted tree"
+                  ],
+                  "codeLines": [
+                    "from collections import deque",
+                    "def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:",
+                    "    if not root:",
+                    "        return None",
+                    "    queue = deque([root])",
+                    "    while queue:",
+                    "        node = queue.popleft()",
+                    "        node.left, node.right = node.right, node.left",
+                    "        if node.left:",
+                    "            queue.append(node.left)",
+                    "        if node.right:",
+                    "            queue.append(node.right)",
+                    "    return root"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as parameter with opening brace",
+                    "Check if root does not exist using negation operator with opening brace",
+                    "If root is null, return null",
+                    "Close the if block with closing brace",
+                    "Create queue as array with root as initial element",
+                    "Start while loop that continues while queue dot length is greater than zero with opening brace",
+                    "Remove and get node from front of queue using shift method",
+                    "Swap node dot left and node dot right using destructuring assignment with array",
+                    "Check if node dot left exists with opening brace",
+                    "If exists, push node dot left to queue",
+                    "Close the if block with closing brace",
+                    "Check if node dot right exists with opening brace",
+                    "If exists, push node dot right to queue",
+                    "Close the if block with closing brace",
+                    "Close the while loop with closing brace",
+                    "Return root as inverted tree",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function invertTree(root) {",
+                    "    if (!root) {",
+                    "        return null;",
+                    "    }",
+                    "    const queue = [root];",
+                    "    while (queue.length > 0) {",
+                    "        const node = queue.shift();",
+                    "        [node.left, node.right] = [node.right, node.left];",
+                    "        if (node.left) {",
+                    "            queue.push(node.left);",
+                    "        }",
+                    "        if (node.right) {",
+                    "            queue.push(node.right);",
+                    "        }",
+                    "    }",
+                    "    return root;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as pointer to TreeNode and returns pointer to TreeNode with opening brace",
+                    "Check if root equals nil with opening brace",
+                    "If root is nil, return nil",
+                    "Close the if block with closing brace",
+                    "Create queue as slice of pointers to TreeNode with root as initial element",
+                    "Start for loop that continues while length of queue is greater than zero with opening brace",
+                    "Get node from front of queue at index zero",
+                    "Update queue to slice from index one to end to remove front element",
+                    "Swap node dot Left and node dot Right using simultaneous assignment",
+                    "Check if node dot Left is not nil with opening brace",
+                    "If exists, append node dot Left to queue",
+                    "Close the if block with closing brace",
+                    "Check if node dot Right is not nil with opening brace",
+                    "If exists, append node dot Right to queue",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return root as inverted tree",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func invertTree(root *TreeNode) *TreeNode {",
+                    "    if root == nil {",
+                    "        return nil",
+                    "    }",
+                    "    queue := []*TreeNode{root}",
+                    "    for len(queue) > 0 {",
+                    "        node := queue[0]",
+                    "        queue = queue[1:]",
+                    "        node.Left, node.Right = node.Right, node.Left",
+                    "        if node.Left != nil {",
+                    "            queue = append(queue, node.Left)",
+                    "        }",
+                    "        if node.Right != nil {",
+                    "            queue = append(queue, node.Right)",
+                    "        }",
+                    "    }",
+                    "    return root",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as each node is visited exactly once during level-order traversal",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Queue stores nodes at current level, worst case O(n) for complete binary tree with n/2 nodes at last level",
+              "exampleWalkthrough": "Given tree [4,2,7,1,3,6,9]: Queue starts with [4]. Process 4: swap children, queue=[2,7]. Process 2: swap children, queue=[7,1,3]. Process 7: swap children, queue=[1,3,6,9]. Continue until queue empty. Result: [4,7,2,9,6,3,1].",
+              "displayOrder": 1
+            },
+            {
+              "name": "Depth First Search",
+              "type": "optimal",
+              "explanation": "Use recursive DFS to traverse tree. Base case returns None for null nodes. For each node, swap left and right children, then recursively invert left and right subtrees. Clean recursive solution that processes tree top-down. Uses O(n) space for recursion stack in worst case of skewed tree.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as optional TreeNode and returns optional TreeNode",
+                    "Check if root does not exist using not operator",
+                    "If root is None, return None as base case",
+                    "Swap root dot left and root dot right using tuple unpacking",
+                    "Recursively call invertTree with root dot left to invert left subtree",
+                    "Recursively call invertTree with root dot right to invert right subtree",
+                    "Return root as inverted tree"
+                  ],
+                  "codeLines": [
+                    "def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:",
+                    "    if not root:",
+                    "        return None",
+                    "    root.left, root.right = root.right, root.left",
+                    "    invertTree(root.left)",
+                    "    invertTree(root.right)",
+                    "    return root"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as parameter with opening brace",
+                    "Check if root does not exist using negation operator with opening brace",
+                    "If root is null, return null as base case",
+                    "Close the if block with closing brace",
+                    "Swap root dot left and root dot right using destructuring assignment with array",
+                    "Recursively call invertTree with root dot left to invert left subtree",
+                    "Recursively call invertTree with root dot right to invert right subtree",
+                    "Return root as inverted tree",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function invertTree(root) {",
+                    "    if (!root) {",
+                    "        return null;",
+                    "    }",
+                    "    [root.left, root.right] = [root.right, root.left];",
+                    "    invertTree(root.left);",
+                    "    invertTree(root.right);",
+                    "    return root;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as pointer to TreeNode and returns pointer to TreeNode with opening brace",
+                    "Check if root equals nil with opening brace",
+                    "If root is nil, return nil as base case",
+                    "Close the if block with closing brace",
+                    "Swap root dot Left and root dot Right using simultaneous assignment",
+                    "Recursively call invertTree with root dot Left to invert left subtree",
+                    "Recursively call invertTree with root dot Right to invert right subtree",
+                    "Return root as inverted tree",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func invertTree(root *TreeNode) *TreeNode {",
+                    "    if root == nil {",
+                    "        return nil",
+                    "    }",
+                    "    root.Left, root.Right = root.Right, root.Left",
+                    "    invertTree(root.Left)",
+                    "    invertTree(root.Right)",
+                    "    return root",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as each node is visited exactly once during depth-first traversal",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Recursion stack space proportional to tree height, O(n) worst case for skewed tree, O(log n) average for balanced tree",
+              "exampleWalkthrough": "Given tree [4,2,7,1,3,6,9]: Invert(4): swap children [4,7,2]. Invert(7): swap children [7,9,6]. Invert(9): null children, return. Invert(6): null children, return. Invert(2): swap children [2,3,1]. Continue recursively. Result: [4,7,2,9,6,3,1].",
+              "displayOrder": 2
+            },
+            {
+              "name": "Iterative DFS",
+              "type": "optimal",
+              "explanation": "Use iterative DFS with stack to avoid recursion. Push root to stack, then repeatedly pop node, swap its children, and push children to stack. Similar to BFS but uses stack (LIFO) instead of queue (FIFO), resulting in depth-first processing. Same O(n) time and space as other approaches but iterative.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as optional TreeNode and returns optional TreeNode",
+                    "Check if root does not exist using not operator",
+                    "If root is None, return None",
+                    "Create stack as list with root as initial element",
+                    "Start while loop that continues while stack is not empty",
+                    "Pop node from end of stack using pop method",
+                    "Swap node dot left and node dot right using tuple unpacking",
+                    "Check if node dot left exists",
+                    "If exists, append node dot left to stack",
+                    "Check if node dot right exists",
+                    "If exists, append node dot right to stack",
+                    "Return root as inverted tree"
+                  ],
+                  "codeLines": [
+                    "def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:",
+                    "    if not root:",
+                    "        return None",
+                    "    stack = [root]",
+                    "    while stack:",
+                    "        node = stack.pop()",
+                    "        node.left, node.right = node.right, node.left",
+                    "        if node.left:",
+                    "            stack.append(node.left)",
+                    "        if node.right:",
+                    "            stack.append(node.right)",
+                    "    return root"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as parameter with opening brace",
+                    "Check if root does not exist using negation operator with opening brace",
+                    "If root is null, return null",
+                    "Close the if block with closing brace",
+                    "Create stack as array with root as initial element",
+                    "Start while loop that continues while stack dot length is greater than zero with opening brace",
+                    "Remove and get node from end of stack using pop method",
+                    "Swap node dot left and node dot right using destructuring assignment with array",
+                    "Check if node dot left exists with opening brace",
+                    "If exists, push node dot left to stack",
+                    "Close the if block with closing brace",
+                    "Check if node dot right exists with opening brace",
+                    "If exists, push node dot right to stack",
+                    "Close the if block with closing brace",
+                    "Close the while loop with closing brace",
+                    "Return root as inverted tree",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function invertTree(root) {",
+                    "    if (!root) {",
+                    "        return null;",
+                    "    }",
+                    "    const stack = [root];",
+                    "    while (stack.length > 0) {",
+                    "        const node = stack.pop();",
+                    "        [node.left, node.right] = [node.right, node.left];",
+                    "        if (node.left) {",
+                    "            stack.push(node.left);",
+                    "        }",
+                    "        if (node.right) {",
+                    "            stack.push(node.right);",
+                    "        }",
+                    "    }",
+                    "    return root;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function invertTree that accepts root as pointer to TreeNode and returns pointer to TreeNode with opening brace",
+                    "Check if root equals nil with opening brace",
+                    "If root is nil, return nil",
+                    "Close the if block with closing brace",
+                    "Create stack as slice of pointers to TreeNode with root as initial element",
+                    "Start for loop that continues while length of stack is greater than zero with opening brace",
+                    "Get n as length of stack",
+                    "Get node from end of stack at index n minus one",
+                    "Update stack to slice from index zero to n minus one to remove last element",
+                    "Swap node dot Left and node dot Right using simultaneous assignment",
+                    "Check if node dot Left is not nil with opening brace",
+                    "If exists, append node dot Left to stack",
+                    "Close the if block with closing brace",
+                    "Check if node dot Right is not nil with opening brace",
+                    "If exists, append node dot Right to stack",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return root as inverted tree",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func invertTree(root *TreeNode) *TreeNode {",
+                    "    if root == nil {",
+                    "        return nil",
+                    "    }",
+                    "    stack := []*TreeNode{root}",
+                    "    for len(stack) > 0 {",
+                    "        n := len(stack)",
+                    "        node := stack[n-1]",
+                    "        stack = stack[:n-1]",
+                    "        node.Left, node.Right = node.Right, node.Left",
+                    "        if node.Left != nil {",
+                    "            stack = append(stack, node.Left)",
+                    "        }",
+                    "        if node.Right != nil {",
+                    "            stack = append(stack, node.Right)",
+                    "        }",
+                    "    }",
+                    "    return root",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as each node is visited exactly once during depth-first traversal",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Stack stores nodes along current path, worst case O(n) for skewed tree",
+              "exampleWalkthrough": "Given tree [4,2,7,1,3,6,9]: Stack=[4]. Pop 4, swap, stack=[7,2]. Pop 2, swap, stack=[7,3,1]. Pop 1, swap, stack=[7,3]. Pop 3, swap, stack=[7]. Pop 7, swap, stack=[9,6]. Continue until stack empty. Result: [4,7,2,9,6,3,1].",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "binary-tree",
+            "depth-first-search",
+            "breadth-first-search",
+            "recursion",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
