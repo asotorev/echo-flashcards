@@ -1,0 +1,407 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #136 - Single Number",
+      "description": "Find the single element in an array where every other element appears twice",
+      "cards": [
+        {
+          "id": "leetcode_136_single_number",
+          "question": "Single Number: Given a non-empty array of integers nums where every element appears twice except for one, find that single one. You must implement a solution with linear runtime complexity and use only constant extra space.",
+          "solutions": [
+            {
+              "name": "Bit Manipulation",
+              "type": "optimal",
+              "explanation": "Use XOR operation which has the property that a XOR a equals zero and a XOR zero equals a. XORing all numbers cancels out duplicates leaving only the single number.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Initialize variable res to zero",
+                    "Loop through each number in nums",
+                    "XOR num with res and assign result back to res",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def singleNumber(nums):",
+                    "    res = 0",
+                    "    for num in nums:",
+                    "        res = num ^ res",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Initialize variable res to zero",
+                    "Start for loop iterating through each num in nums",
+                    "XOR num with res and assign result back to res",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function singleNumber(nums) {",
+                    "    let res = 0;",
+                    "    for (const num of nums) {",
+                    "        res = num ^ res;",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts slice of integers nums and returns int",
+                    "Initialize variable res to zero",
+                    "Loop through nums using range to get each num, ignoring index",
+                    "XOR num with res and assign result back to res",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func singleNumber(nums []int) int {",
+                    "    res := 0",
+                    "    for _, num := range nums {",
+                    "        res = num ^ res",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time because we traverse the array once",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space because we only use a single variable to store the result",
+              "exampleWalkthrough": "Given array [4, 1, 2, 1, 2]: res=0, XOR 4 gives 4, XOR 1 gives 5, XOR 2 gives 7, XOR 1 gives 6, XOR 2 gives 4. Return 4.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Hash Set",
+              "type": "alternative",
+              "explanation": "Use a set to track numbers. If a number is already in the set, remove it (found its pair). If not in set, add it. The remaining element is the single number.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Create empty set called seen",
+                    "Loop through each number in nums",
+                    "Check if num exists in seen set",
+                    "If num exists in seen, remove num from seen",
+                    "If num does not exist, add num to seen",
+                    "Convert seen set to list, get element at index zero, and return it"
+                  ],
+                  "codeLines": [
+                    "def singleNumber(nums):",
+                    "    seen = set()",
+                    "    for num in nums:",
+                    "        if num in seen:",
+                    "            seen.remove(num)",
+                    "        else:",
+                    "            seen.add(num)",
+                    "    return list(seen)[0]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Create new Set object called seen",
+                    "Start for loop iterating through each num in nums",
+                    "Check if seen has num using has method",
+                    "If num exists, delete num from seen using delete method",
+                    "Close the if statement with closing brace",
+                    "If num does not exist, add num to seen using add method",
+                    "Close the else statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "Convert seen to array using Array from, get element at index zero, and return it",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function singleNumber(nums) {",
+                    "    const seen = new Set();",
+                    "    for (const num of nums) {",
+                    "        if (seen.has(num)) {",
+                    "            seen.delete(num);",
+                    "        } else {",
+                    "            seen.add(num);",
+                    "        }",
+                    "    }",
+                    "    return Array.from(seen)[0];",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts slice of integers nums and returns int",
+                    "Create map seen with integer keys and boolean values using make",
+                    "Loop through nums using range to get each num, ignoring index",
+                    "Check if seen at num is true",
+                    "If true, delete num from seen map",
+                    "Close the if block with closing brace",
+                    "If false, set seen at num to true",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Loop through seen map using range to get each num key",
+                    "Return num as it is the only remaining element",
+                    "Close the for loop with closing brace",
+                    "Return zero as fallback",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func singleNumber(nums []int) int {",
+                    "    seen := make(map[int]bool)",
+                    "    for _, num := range nums {",
+                    "        if seen[num] {",
+                    "            delete(seen, num)",
+                    "        } else {",
+                    "            seen[num] = true",
+                    "        }",
+                    "    }",
+                    "    for num := range seen {",
+                    "        return num",
+                    "    }",
+                    "    return 0",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time because we traverse the array once with constant time set operations",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space because in the worst case we might store half the elements in the set",
+              "exampleWalkthrough": "Given array [4, 1, 2, 1, 2]: seen={}, add 4 gives {4}, add 1 gives {4,1}, add 2 gives {4,1,2}, remove 1 gives {4,2}, remove 2 gives {4}. Return 4.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Sorting",
+              "type": "alternative",
+              "explanation": "Sort the array so duplicate elements are adjacent. Iterate through pairs, if a pair matches skip both, otherwise return the non-matching element.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Sort array nums in place",
+                    "Initialize variable i to zero",
+                    "Loop while i is less than length of nums minus one",
+                    "Check if element at i equals element at i plus one",
+                    "If equal, increment i by two to skip the pair",
+                    "If not equal, return element at index i as it is the single number",
+                    "After loop, return element at index i"
+                  ],
+                  "codeLines": [
+                    "def singleNumber(nums):",
+                    "    nums.sort()",
+                    "    i = 0",
+                    "    while i < len(nums) - 1:",
+                    "        if nums[i] == nums[i + 1]:",
+                    "            i += 2",
+                    "        else:",
+                    "            return nums[i]",
+                    "    return nums[i]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Sort array nums in place using sort with comparison function that takes a and b and returns a minus b",
+                    "Initialize variable i to zero",
+                    "Loop while i is less than length of nums minus one",
+                    "Check if element at i equals element at i plus one",
+                    "If equal, increment i by two to skip the pair",
+                    "Close the if statement with closing brace",
+                    "If not equal, return element at index i as it is the single number",
+                    "Close the else statement with closing brace",
+                    "Close the while loop with closing brace",
+                    "After loop, return element at index i",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function singleNumber(nums) {",
+                    "    nums.sort((a, b) => a - b);",
+                    "    let i = 0;",
+                    "    while (i < nums.length - 1) {",
+                    "        if (nums[i] === nums[i + 1]) {",
+                    "            i += 2;",
+                    "        } else {",
+                    "            return nums[i];",
+                    "        }",
+                    "    }",
+                    "    return nums[i];",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts slice of integers nums and returns int",
+                    "Sort array nums in place using sort Ints",
+                    "Initialize variable i to zero",
+                    "Loop while i is less than length of nums minus one",
+                    "Check if element at i equals element at i plus one",
+                    "If equal, increment i by two to skip the pair",
+                    "Close the if block with closing brace",
+                    "If not equal, return element at index i as it is the single number",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After loop, return element at index i",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func singleNumber(nums []int) int {",
+                    "    sort.Ints(nums)",
+                    "    i := 0",
+                    "    for i < len(nums) - 1 {",
+                    "        if nums[i] == nums[i + 1] {",
+                    "            i += 2",
+                    "        } else {",
+                    "            return nums[i]",
+                    "        }",
+                    "    }",
+                    "    return nums[i]",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "Logarithmic time due to sorting the array where n is the length",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space if the sorting algorithm is in-place, or O(n) depending on the sorting implementation",
+              "exampleWalkthrough": "Given array [4, 1, 2, 1, 2]: After sorting [1, 1, 2, 2, 4]. Compare pairs: (1,1) match skip to i=2, (2,2) match skip to i=4, i=4 exceeds loop condition. Return nums[4]=4.",
+              "displayOrder": 3
+            },
+            {
+              "name": "Brute Force",
+              "type": "naive",
+              "explanation": "For each element, check against all other elements to see if a duplicate exists. If no duplicate is found, that element is the single number.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Loop through array indices from zero to length of nums",
+                    "Initialize flag to True to track if current number is unique",
+                    "Loop through array indices from zero to length of nums for comparison",
+                    "Check if index i is not equal to j and element at i equals element at j",
+                    "If duplicate found, set flag to False",
+                    "Exit the inner loop with break",
+                    "Check if flag is still True meaning no duplicate was found",
+                    "If flag is True, return element at index i"
+                  ],
+                  "codeLines": [
+                    "def singleNumber(nums):",
+                    "    for i in range(len(nums)):",
+                    "        flag = True",
+                    "        for j in range(len(nums)):",
+                    "            if i != j and nums[i] == nums[j]:",
+                    "                flag = False",
+                    "                break",
+                    "        if flag:",
+                    "            return nums[i]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts array nums",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i",
+                    "Initialize flag to true to track if current number is unique",
+                    "Start inner loop with j from zero while j less than length of nums incrementing j",
+                    "Check if index i is not equal to j and element at i equals element at j",
+                    "If duplicate found, set flag to false",
+                    "Exit the inner loop with break",
+                    "Close the if statement with closing brace",
+                    "Close the inner for loop with closing brace",
+                    "Check if flag is still true meaning no duplicate was found",
+                    "If flag is true, return element at index i",
+                    "Close the if statement with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function singleNumber(nums) {",
+                    "    for (let i = 0; i < nums.length; i++) {",
+                    "        let flag = true;",
+                    "        for (let j = 0; j < nums.length; j++) {",
+                    "            if (i !== j && nums[i] === nums[j]) {",
+                    "                flag = false;",
+                    "                break;",
+                    "            }",
+                    "        }",
+                    "        if (flag) {",
+                    "            return nums[i];",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function singleNumber that accepts slice of integers nums and returns int",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i",
+                    "Initialize flag to true to track if current number is unique",
+                    "Start inner loop with j from zero while j less than length of nums incrementing j",
+                    "Check if index i is not equal to j and element at i equals element at j",
+                    "If duplicate found, set flag to false",
+                    "Exit the inner loop with break",
+                    "Close the if block with closing brace",
+                    "Close the inner for loop with closing brace",
+                    "Check if flag is still true meaning no duplicate was found",
+                    "If flag is true, return element at index i",
+                    "Close the if block with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Return zero as fallback",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func singleNumber(nums []int) int {",
+                    "    for i := 0; i < len(nums); i++ {",
+                    "        flag := true",
+                    "        for j := 0; j < len(nums); j++ {",
+                    "            if i != j && nums[i] == nums[j] {",
+                    "                flag = false",
+                    "                break",
+                    "            }",
+                    "        }",
+                    "        if flag {",
+                    "            return nums[i]",
+                    "        }",
+                    "    }",
+                    "    return 0",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^2)",
+              "timeDescription": "Quadratic time because we check every element against every other element using nested loops",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space because we only use a fixed amount of extra variables",
+              "exampleWalkthrough": "Given array [4, 1, 2, 1, 2]: Check 4 against all: no match found, return 4.",
+              "displayOrder": 4
+            }
+          ],
+          "tags": [
+            "bit-manipulation",
+            "array",
+            "hash-set",
+            "sorting",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
