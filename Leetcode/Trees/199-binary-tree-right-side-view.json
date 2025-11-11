@@ -1,0 +1,293 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #199 - Binary Tree Right Side View",
+      "description": "Return values of nodes visible from right side of binary tree",
+      "cards": [
+        {
+          "id": "leetcode_199_binary_tree_right_side_view",
+          "question": "Binary Tree Right Side View: Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.",
+          "solutions": [
+            {
+              "name": "Depth First Search",
+              "type": "optimal",
+              "explanation": "Use recursive DFS traversing right subtree before left. Track depth and result array. When visiting a depth for first time, add node value to result (rightmost node at that level). Process right child first to ensure rightmost nodes are visited before left siblings at same level. O(n) time and space for traversing all nodes.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function rightSideView that accepts root as optional TreeNode and returns list of integers",
+                    "Initialize res as empty list to store right side view values",
+                    "Define nested function dfs that accepts node and depth as parameters",
+                    "Check if node does not exist using not operator",
+                    "If node is None, return None as base case",
+                    "Check if depth equals length of res",
+                    "If true, append node dot val to res as first node seen at this depth",
+                    "Recursively call dfs with node dot right and depth plus one to process right subtree first",
+                    "Recursively call dfs with node dot left and depth plus one to process left subtree second",
+                    "Call dfs with root and zero to start traversal",
+                    "Return res as right side view"
+                  ],
+                  "codeLines": [
+                    "def rightSideView(root: Optional[TreeNode]) -> List[int]:",
+                    "    res = []",
+                    "    def dfs(node, depth):",
+                    "        if not node:",
+                    "            return None",
+                    "        if depth == len(res):",
+                    "            res.append(node.val)",
+                    "        dfs(node.right, depth + 1)",
+                    "        dfs(node.left, depth + 1)",
+                    "    dfs(root, 0)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function rightSideView that accepts root as parameter with opening brace",
+                    "Initialize res as empty array to store right side view values",
+                    "Define nested function dfs that accepts node and depth as parameters with opening brace",
+                    "Check if node does not exist using negation operator with opening brace",
+                    "If node is null, return null as base case",
+                    "Close the if block with closing brace",
+                    "Check if depth equals length of res with opening brace",
+                    "If true, push node dot val to res as first node seen at this depth",
+                    "Close the if block with closing brace",
+                    "Recursively call dfs with node dot right and depth plus one to process right subtree first",
+                    "Recursively call dfs with node dot left and depth plus one to process left subtree second",
+                    "Close nested function with closing brace",
+                    "Call dfs with root and zero to start traversal",
+                    "Return res as right side view",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function rightSideView(root) {",
+                    "    const res = [];",
+                    "    function dfs(node, depth) {",
+                    "        if (!node) {",
+                    "            return null;",
+                    "        }",
+                    "        if (depth === res.length) {",
+                    "            res.push(node.val);",
+                    "        }",
+                    "        dfs(node.right, depth + 1);",
+                    "        dfs(node.left, depth + 1);",
+                    "    }",
+                    "    dfs(root, 0);",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function rightSideView that accepts root as pointer to TreeNode and returns slice of int with opening brace",
+                    "Initialize res as empty slice of int to store right side view values",
+                    "Declare variable dfs as function that accepts pointer to TreeNode and int depth",
+                    "Assign anonymous recursive function to dfs with opening brace",
+                    "Check if node equals nil with opening brace",
+                    "If node is nil, return as base case",
+                    "Close the if block with closing brace",
+                    "Check if depth equals length of res with opening brace",
+                    "If true, append node dot Val to res as first node seen at this depth",
+                    "Close the if block with closing brace",
+                    "Recursively call dfs with node dot Right and depth plus one to process right subtree first",
+                    "Recursively call dfs with node dot Left and depth plus one to process left subtree second",
+                    "Close anonymous function with closing brace",
+                    "Call dfs with root and zero to start traversal",
+                    "Return res as right side view",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func rightSideView(root *TreeNode) []int {",
+                    "    res := []int{}",
+                    "    var dfs func(*TreeNode, int)",
+                    "    dfs = func(node *TreeNode, depth int) {",
+                    "        if node == nil {",
+                    "            return",
+                    "        }",
+                    "        if depth == len(res) {",
+                    "            res = append(res, node.Val)",
+                    "        }",
+                    "        dfs(node.Right, depth+1)",
+                    "        dfs(node.Left, depth+1)",
+                    "    }",
+                    "    dfs(root, 0)",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as each node is visited exactly once during depth-first traversal",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Recursion stack proportional to tree height, O(h) typically, O(n) worst case for skewed tree, plus result array",
+              "exampleWalkthrough": "Given tree [1,2,3,null,5,null,4]: dfs(1,0): res=[1]. dfs(3,1): res=[1,3]. dfs(4,2): res=[1,3,4]. dfs(2,1): depth already in res, skip. dfs(5,2): depth already in res, skip. Return [1,3,4] showing nodes visible from right.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Breadth First Search",
+              "type": "optimal",
+              "explanation": "Use BFS with queue for level-order traversal. For each level, track rightmost non-null node. Process all nodes at current level, updating rightSide variable with each valid node. After processing level, add rightSide value to result. Natural approach for right side view as rightmost node at each level is exactly what we want. O(n) time and space.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Import deque from collections module",
+                    "Define function rightSideView that accepts root as optional TreeNode and returns list of integers",
+                    "Initialize res as empty list to store right side view values",
+                    "Create q as deque with root as initial element",
+                    "Start while loop that continues while q is not empty",
+                    "Initialize rightSide to None to track rightmost node at current level",
+                    "Get qLen as length of q to fix iteration count for current level",
+                    "Iterate from zero to qLen using range with index i",
+                    "Pop node from left of q using popleft method",
+                    "Check if node exists",
+                    "If node exists, set rightSide to node",
+                    "If node exists, append node dot left to q",
+                    "If node exists, append node dot right to q",
+                    "Check if rightSide exists",
+                    "If rightSide has value, append rightSide dot val to res",
+                    "Return res as right side view"
+                  ],
+                  "codeLines": [
+                    "from collections import deque",
+                    "def rightSideView(root: Optional[TreeNode]) -> List[int]:",
+                    "    res = []",
+                    "    q = deque([root])",
+                    "    while q:",
+                    "        rightSide = None",
+                    "        qLen = len(q)",
+                    "        for i in range(qLen):",
+                    "            node = q.popleft()",
+                    "            if node:",
+                    "                rightSide = node",
+                    "                q.append(node.left)",
+                    "                q.append(node.right)",
+                    "        if rightSide:",
+                    "            res.append(rightSide.val)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function rightSideView that accepts root as parameter with opening brace",
+                    "Initialize res as empty array to store right side view values",
+                    "Create q as array with root as initial element",
+                    "Start while loop that continues while q dot length is greater than zero with opening brace",
+                    "Initialize rightSide to null to track rightmost node at current level",
+                    "Get qLen as length of q to fix iteration count for current level",
+                    "Iterate from zero to qLen with index i with opening brace",
+                    "Remove and get node from front of q using shift method",
+                    "Check if node exists with opening brace",
+                    "If node exists, set rightSide to node",
+                    "If node exists, push node dot left to q",
+                    "If node exists, push node dot right to q",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Check if rightSide exists with opening brace",
+                    "If rightSide has value, push rightSide dot val to res",
+                    "Close the if block with closing brace",
+                    "Close the while loop with closing brace",
+                    "Return res as right side view",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function rightSideView(root) {",
+                    "    const res = [];",
+                    "    const q = [root];",
+                    "    while (q.length > 0) {",
+                    "        let rightSide = null;",
+                    "        const qLen = q.length;",
+                    "        for (let i = 0; i < qLen; i++) {",
+                    "            const node = q.shift();",
+                    "            if (node) {",
+                    "                rightSide = node;",
+                    "                q.push(node.left);",
+                    "                q.push(node.right);",
+                    "            }",
+                    "        }",
+                    "        if (rightSide) {",
+                    "            res.push(rightSide.val);",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function rightSideView that accepts root as pointer to TreeNode and returns slice of int with opening brace",
+                    "Initialize res as empty slice of int to store right side view values",
+                    "Create q as slice of pointers to TreeNode with root as initial element",
+                    "Start for loop that continues while length of q is greater than zero with opening brace",
+                    "Declare rightSide as pointer to TreeNode initialized to nil to track rightmost node at current level",
+                    "Get qLen as length of q to fix iteration count for current level",
+                    "Iterate from zero to qLen with index i with opening brace",
+                    "Get node from front of q at index zero",
+                    "Update q to slice from index one to end to remove front element",
+                    "Check if node is not nil with opening brace",
+                    "If node exists, set rightSide to node",
+                    "If node exists, append node dot Left to q",
+                    "If node exists, append node dot Right to q",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Check if rightSide is not nil with opening brace",
+                    "If rightSide has value, append rightSide dot Val to res",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return res as right side view",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func rightSideView(root *TreeNode) []int {",
+                    "    res := []int{}",
+                    "    q := []*TreeNode{root}",
+                    "    for len(q) > 0 {",
+                    "        var rightSide *TreeNode = nil",
+                    "        qLen := len(q)",
+                    "        for i := 0; i < qLen; i++ {",
+                    "            node := q[0]",
+                    "            q = q[1:]",
+                    "            if node != nil {",
+                    "                rightSide = node",
+                    "                q = append(q, node.Left)",
+                    "                q = append(q, node.Right)",
+                    "            }",
+                    "        }",
+                    "        if rightSide != nil {",
+                    "            res = append(res, rightSide.Val)",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as each node is visited exactly once during level-order traversal",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Queue stores nodes at current level, worst case O(n) for complete tree, plus result array",
+              "exampleWalkthrough": "Given tree [1,2,3,null,5,null,4]: q=[1]. Level 0: rightSide=1, q=[2,3], res=[1]. Level 1: process 2,3, rightSide=3, q=[null,5,null,4], res=[1,3]. Level 2: process nulls and valid nodes, rightSide=4, q=[], res=[1,3,4]. Return [1,3,4].",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "binary-tree",
+            "breadth-first-search",
+            "depth-first-search",
+            "tree",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
