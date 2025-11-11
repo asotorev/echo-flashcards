@@ -1,0 +1,331 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #242 - Valid Anagram",
+      "description": "Check if two strings are anagrams of each other",
+      "cards": [
+        {
+          "id": "leetcode_242_valid_anagram",
+          "question": "Valid Anagram: Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word formed by rearranging the letters of another word using all original letters exactly once.",
+          "solutions": [
+            {
+              "name": "Hash Table (Array)",
+              "type": "optimal",
+              "explanation": "Use a fixed-size array of 26 integers to count character frequencies. Increment for characters in s, decrement for characters in t. If all counts are zero, strings are anagrams. Most space-efficient for lowercase letters.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return False immediately",
+                    "Create array count of 26 zeros for each lowercase letter",
+                    "Loop through indices from zero to length of s",
+                    "Increment count at index of character s at i minus character a",
+                    "Decrement count at index of character t at i minus character a",
+                    "Loop through each value in the count array",
+                    "Check if current value is not equal to zero",
+                    "If not zero, return False as frequencies do not match",
+                    "After all checks, return True"
+                  ],
+                  "codeLines": [
+                    "def isAnagram(s, t):",
+                    "  if len(s) != len(t):",
+                    "    return False",
+                    "  count = [0] * 26",
+                    "  for i in range(len(s)):",
+                    "    count[ord(s[i]) - ord('a')] += 1",
+                    "    count[ord(t[i]) - ord('a')] -= 1",
+                    "  for val in count:",
+                    "    if val != 0:",
+                    "      return False",
+                    "  return True"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return false immediately",
+                    "Close the if statement with closing brace",
+                    "Create constant count as new array of 26 elements filled with zero",
+                    "Start for loop with i from zero while i less than length of s incrementing i",
+                    "Increment count at index of char code of s at i minus char code of a",
+                    "Decrement count at index of char code of t at i minus char code of a",
+                    "Close the for loop with closing brace",
+                    "Start for loop iterating through each value of count array",
+                    "Check if current value is not equal to zero",
+                    "If not zero, return false as frequencies do not match",
+                    "Close the if statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "After all checks, return true",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isAnagram(s, t) {",
+                    "  if (s.length !== t.length) {",
+                    "    return false;",
+                    "  }",
+                    "  const count = new Array(26).fill(0);",
+                    "  for (let i = 0; i < s.length; i++) {",
+                    "    count[s.charCodeAt(i) - 'a'.charCodeAt(0)]++;",
+                    "    count[t.charCodeAt(i) - 'a'.charCodeAt(0)]--;",
+                    "  }",
+                    "  for (const val of count) {",
+                    "    if (val !== 0) {",
+                    "      return false;",
+                    "    }",
+                    "  }",
+                    "  return true;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t and returns bool",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return false immediately",
+                    "Close the if block with closing brace",
+                    "Declare count as array of 26 integers initialized to zero",
+                    "Start for loop with i from zero while i less than length of s incrementing i",
+                    "Increment count at index of byte s at i minus byte of character a",
+                    "Decrement count at index of byte t at i minus byte of character a",
+                    "Close the for loop with closing brace",
+                    "Start for loop iterating through each value in count array using range",
+                    "Check if current value is not equal to zero",
+                    "If not zero, return false as frequencies do not match",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After all checks, return true",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isAnagram(s string, t string) bool {",
+                    "  if len(s) != len(t) {",
+                    "    return false",
+                    "  }",
+                    "  count := [26]int{}",
+                    "  for i := 0; i < len(s); i++ {",
+                    "    count[s[i]-'a']++",
+                    "    count[t[i]-'a']--",
+                    "  }",
+                    "  for _, val := range count {",
+                    "    if val != 0 {",
+                    "      return false",
+                    "    }",
+                    "  }",
+                    "  return true",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the length of the strings (assuming equal length)",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space with fixed array of 26 integers for lowercase letters",
+              "exampleWalkthrough": "Given s='anagram' and t='nagaram': Initialize count=[0]*26. Process pairs: a(+1,-1), n(+1,-1), a(+1,-1), g(+1,-1), r(+1,-1), a(+1,-1), m(+1,-1). All counts remain 0. Return true.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Hash Map (Two Dictionaries)",
+              "type": "optimal",
+              "explanation": "Count the frequency of each character in both strings using separate hash maps, then compare the two maps. If they are equal, the strings are anagrams.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return False immediately",
+                    "Create two empty dictionaries countS and countT",
+                    "Loop through indices from zero to length of s",
+                    "Set countS at s of i to one plus get countS at s of i with default zero",
+                    "Set countT at t of i to one plus get countT at t of i with default zero",
+                    "Return whether countS equals countT"
+                  ],
+                  "codeLines": [
+                    "def isAnagram(s, t):",
+                    "  if len(s) != len(t):",
+                    "    return False",
+                    "  countS, countT = {}, {}",
+                    "  for i in range(len(s)):",
+                    "    countS[s[i]] = 1 + countS.get(s[i], 0)",
+                    "    countT[t[i]] = 1 + countT.get(t[i], 0)",
+                    "  return countS == countT"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return false immediately",
+                    "Close the if statement with closing brace",
+                    "Create two empty objects countS and countT",
+                    "Start for loop with i from zero while i less than length of s incrementing i",
+                    "Set countS at s of i to one plus countS at s of i or zero if undefined",
+                    "Set countT at t of i to one plus countT at t of i or zero if undefined",
+                    "Close the for loop with closing brace",
+                    "Return whether JSON stringified countS equals JSON stringified countT",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isAnagram(s, t) {",
+                    "  if (s.length !== t.length) {",
+                    "    return false;",
+                    "  }",
+                    "  const countS = {}, countT = {};",
+                    "  for (let i = 0; i < s.length; i++) {",
+                    "    countS[s[i]] = 1 + (countS[s[i]] || 0);",
+                    "    countT[t[i]] = 1 + (countT[t[i]] || 0);",
+                    "  }",
+                    "  return JSON.stringify(countS) === JSON.stringify(countT);",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t and returns bool",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return false immediately",
+                    "Close the if block with closing brace",
+                    "Declare countS and countT as maps with rune keys and int values using make",
+                    "Start for loop with i from zero while i less than length of s incrementing i",
+                    "Increment countS at rune of s at i",
+                    "Increment countT at rune of t at i",
+                    "Close the for loop with closing brace",
+                    "Check if length of countS does not equal length of countT",
+                    "If lengths differ, return false",
+                    "Close the if block with closing brace",
+                    "Start for loop iterating through each char and count in countS using range",
+                    "Check if countT at char does not equal count",
+                    "If not equal, return false",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After all checks, return true",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isAnagram(s string, t string) bool {",
+                    "  if len(s) != len(t) {",
+                    "    return false",
+                    "  }",
+                    "  countS, countT := make(map[rune]int), make(map[rune]int)",
+                    "  for i := 0; i < len(s); i++ {",
+                    "    countS[rune(s[i])]++",
+                    "    countT[rune(t[i])]++",
+                    "  }",
+                    "  if len(countS) != len(countT) {",
+                    "    return false",
+                    "  }",
+                    "  for char, count := range countS {",
+                    "    if countT[char] != count {",
+                    "      return false",
+                    "    }",
+                    "  }",
+                    "  return true",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the length of the strings, traverse each string once",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space since at most 26 different lowercase letters can be stored",
+              "exampleWalkthrough": "Given s='anagram' and t='nagaram': Build countS={a:3, n:1, g:1, r:1, m:1}. Build countT={n:1, a:3, g:1, r:1, m:1}. Maps are equal, return true.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Sorting",
+              "type": "alternative",
+              "explanation": "Sort both strings and compare them. If sorted strings are equal, they are anagrams. Simple but less efficient due to sorting overhead.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return False immediately",
+                    "Return whether sorted s equals sorted t"
+                  ],
+                  "codeLines": [
+                    "def isAnagram(s, t):",
+                    "  if len(s) != len(t):",
+                    "    return False",
+                    "  return sorted(s) == sorted(t)"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return false immediately",
+                    "Close the if statement with closing brace",
+                    "Return whether s split to array sorted and joined equals t split to array sorted and joined",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isAnagram(s, t) {",
+                    "  if (s.length !== t.length) {",
+                    "    return false;",
+                    "  }",
+                    "  return s.split('').sort().join('') === t.split('').sort().join('');",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isAnagram that accepts two strings s and t and returns bool",
+                    "Check if length of s does not equal length of t",
+                    "If lengths differ, return false immediately",
+                    "Close the if block with closing brace",
+                    "Convert string s to slice of runes and assign to sRunes",
+                    "Convert string t to slice of runes and assign to tRunes",
+                    "Sort sRunes using sort Slice with function comparing i and j returning sRunes at i less than sRunes at j",
+                    "Sort tRunes using sort Slice with function comparing i and j returning tRunes at i less than tRunes at j",
+                    "Return whether string of sRunes equals string of tRunes",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isAnagram(s string, t string) bool {",
+                    "  if len(s) != len(t) {",
+                    "    return false",
+                    "  }",
+                    "  sRunes := []rune(s)",
+                    "  tRunes := []rune(t)",
+                    "  sort.Slice(sRunes, func(i, j int) bool { return sRunes[i] < sRunes[j] })",
+                    "  sort.Slice(tRunes, func(i, j int) bool { return tRunes[i] < tRunes[j] })",
+                    "  return string(sRunes) == string(tRunes)",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "Logarithmic time due to sorting both strings where n is the length",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Space depends on sorting algorithm, typically O(n) for creating sorted copies",
+              "exampleWalkthrough": "Given s='anagram' and t='nagaram': Sort s to get 'aaagmnr', sort t to get 'aaagmnr'. They match, return true.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "strings",
+            "hash-map",
+            "sorting",
+            "array",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
