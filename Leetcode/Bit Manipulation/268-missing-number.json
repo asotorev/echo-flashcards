@@ -16,11 +16,11 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Get length of nums and assign to res",
-                    "Loop through range from zero to length of nums",
-                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res",
-                    "Return res"
+                    "Define function missingNumber that accepts array nums.",
+                    "Get length of nums and assign to res.",
+                    "Loop through range from zero to length of nums.",
+                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def missingNumber(nums):",
@@ -33,13 +33,13 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Get length of nums and assign to res",
-                    "Start for loop with i from zero while i less than length of nums incrementing i",
-                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts array nums.",
+                    "Get length of nums and assign to res.",
+                    "Start for loop with i from zero while i less than length of nums incrementing i.",
+                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function missingNumber(nums) {",
@@ -54,13 +54,13 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function missingNumber that accepts slice of integers nums and returns int",
-                    "Get length of nums and assign to res",
-                    "Start for loop with i from zero while i less than length of nums incrementing i",
-                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts slice of integers nums and returns int.",
+                    "Get length of nums and assign to res.",
+                    "Start for loop with i from zero while i less than length of nums incrementing i.",
+                    "Get index i, get element nums at i, subtract nums at i from i, add result to res, and assign back to res.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func missingNumber(nums []int) int {",
@@ -88,12 +88,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Get length of nums and assign to n",
-                    "Initialize xorr to n",
-                    "Loop through range from zero to n",
-                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr",
-                    "Return xorr"
+                    "Define function missingNumber that accepts array nums.",
+                    "Get length of nums and assign to n.",
+                    "Initialize xorr to n.",
+                    "Loop through range from zero to n.",
+                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr.",
+                    "Return xorr."
                   ],
                   "codeLines": [
                     "def missingNumber(nums):",
@@ -107,14 +107,14 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Get length of nums and assign to n",
-                    "Initialize xorr to n",
-                    "Start for loop with i from zero while i less than n incrementing i",
-                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr",
-                    "Close the for loop with closing brace",
-                    "Return xorr",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts array nums.",
+                    "Get length of nums and assign to n.",
+                    "Initialize xorr to n.",
+                    "Start for loop with i from zero while i less than n incrementing i.",
+                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr.",
+                    "Close the for loop with closing brace.",
+                    "Return xorr.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function missingNumber(nums) {",
@@ -130,14 +130,14 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function missingNumber that accepts slice of integers nums and returns int",
-                    "Get length of nums and assign to n",
-                    "Initialize xorr to n",
-                    "Start for loop with i from zero while i less than n incrementing i",
-                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr",
-                    "Close the for loop with closing brace",
-                    "Return xorr",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts slice of integers nums and returns int.",
+                    "Get length of nums and assign to n.",
+                    "Initialize xorr to n.",
+                    "Start for loop with i from zero while i less than n incrementing i.",
+                    "Get index i, XOR with element nums at i, XOR result with xorr, and assign back to xorr.",
+                    "Close the for loop with closing brace.",
+                    "Return xorr.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func missingNumber(nums []int) int {",
@@ -166,12 +166,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Convert nums to set and assign to num_set",
-                    "Get length of nums and assign to n",
-                    "Loop through range from zero to n plus one",
-                    "Check if i is not in num_set",
-                    "If not in set, return i"
+                    "Define function missingNumber that accepts array nums.",
+                    "Convert nums to set and assign to num_set.",
+                    "Get length of nums and assign to n.",
+                    "Loop through range from zero to n plus one.",
+                    "Check if i is not in num_set.",
+                    "If not in set, return i."
                   ],
                   "codeLines": [
                     "def missingNumber(nums):",
@@ -185,15 +185,15 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Create new Set from nums and assign to numSet",
-                    "Get length of nums and assign to n",
-                    "Start for loop with i from zero while i less than or equal to n incrementing i",
-                    "Check if numSet does not have i using has method",
-                    "If not in set, return i",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts array nums.",
+                    "Create new Set from nums and assign to numSet.",
+                    "Get length of nums and assign to n.",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i.",
+                    "Check if numSet does not have i using has method.",
+                    "If not in set, return i.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function missingNumber(nums) {",
@@ -210,19 +210,19 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function missingNumber that accepts slice of integers nums and returns int",
-                    "Create map numSet with integer keys and boolean values using make",
-                    "Loop through nums using range to get each num, ignoring index",
-                    "Set numSet at num to true",
-                    "Close the for loop with closing brace",
-                    "Get length of nums and assign to n",
-                    "Start for loop with i from zero while i less than or equal to n incrementing i",
-                    "Check if numSet at i is false or not present",
-                    "If not in map, return i",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return zero as fallback",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts slice of integers nums and returns int.",
+                    "Create map numSet with integer keys and boolean values using make.",
+                    "Loop through nums using range to get each num, ignoring index.",
+                    "Set numSet at num to true.",
+                    "Close the for loop with closing brace.",
+                    "Get length of nums and assign to n.",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i.",
+                    "Check if numSet at i is false or not present.",
+                    "If not in map, return i.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return zero as fallback.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func missingNumber(nums []int) int {",
@@ -256,13 +256,13 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Get length of nums and assign to n",
-                    "Sort nums in place",
-                    "Loop through range from zero to n",
-                    "Check if element nums at i does not equal i",
-                    "If not equal, return i",
-                    "Return n"
+                    "Define function missingNumber that accepts array nums.",
+                    "Get length of nums and assign to n.",
+                    "Sort nums in place.",
+                    "Loop through range from zero to n.",
+                    "Check if element nums at i does not equal i.",
+                    "If not equal, return i.",
+                    "Return n."
                   ],
                   "codeLines": [
                     "def missingNumber(nums):",
@@ -277,16 +277,16 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function missingNumber that accepts array nums",
-                    "Get length of nums and assign to n",
-                    "Sort nums in place using sort with comparison function that takes a and b and returns a minus b",
-                    "Start for loop with i from zero while i less than n incrementing i",
-                    "Check if element nums at i does not equal i",
-                    "If not equal, return i",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return n",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts array nums.",
+                    "Get length of nums and assign to n.",
+                    "Sort nums in place using sort with comparison function that takes a and b and returns a minus b.",
+                    "Start for loop with i from zero while i less than n incrementing i.",
+                    "Check if element nums at i does not equal i.",
+                    "If not equal, return i.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return n.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function missingNumber(nums) {",
@@ -304,16 +304,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function missingNumber that accepts slice of integers nums and returns int",
-                    "Get length of nums and assign to n",
-                    "Sort nums in place using sort Ints",
-                    "Start for loop with i from zero while i less than n incrementing i",
-                    "Check if element nums at i does not equal i",
-                    "If not equal, return i",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return n",
-                    "Close function with closing brace"
+                    "Define function missingNumber that accepts slice of integers nums and returns int.",
+                    "Get length of nums and assign to n.",
+                    "Sort nums in place using sort Ints.",
+                    "Start for loop with i from zero while i less than n incrementing i.",
+                    "Check if element nums at i does not equal i.",
+                    "If not equal, return i.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return n.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func missingNumber(nums []int) int {",

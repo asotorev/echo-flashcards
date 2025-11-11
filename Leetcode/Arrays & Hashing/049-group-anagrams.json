@@ -16,14 +16,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function groupAnagrams that accepts array of strings strs",
-                    "Create empty dictionary res to store groups of anagrams",
-                    "Loop through each string s in strs",
-                    "Create list count of 26 zeros for character frequencies",
-                    "Loop through each character c in string s",
-                    "Get character c, calculate its alphabetical position by subtracting ordinal of a, use that as index in count array, and increment by one",
-                    "Convert count list to tuple to make it hashable, use as key in res, get existing list defaulting to empty list, append string s to it, and store back in res",
-                    "Get all values from res dictionary which are the grouped anagram lists, convert to list, and return it"
+                    "Define function groupAnagrams that accepts array of strings strs.",
+                    "Create empty dictionary res to store groups of anagrams.",
+                    "Loop through each string s in strs.",
+                    "Create list count of 26 zeros for character frequencies.",
+                    "Loop through each character c in string s.",
+                    "Get character c, calculate its alphabetical position by subtracting ordinal of a, use that as index in count array, and increment by one.",
+                    "Convert count list to tuple to make it hashable, use as key in res, get existing list defaulting to empty list, append string s to it, and store back in res.",
+                    "Get all values from res dictionary which are the grouped anagram lists, convert to list, and return it."
                   ],
                   "codeLines": [
                     "def groupAnagrams(strs):",
@@ -39,19 +39,19 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function groupAnagrams that accepts array of strings strs",
-                    "Create new Map object res to store groups of anagrams with string keys",
-                    "Loop through each string s in strs",
-                    "Create array count of 26 zeros for character frequencies",
-                    "Loop through each character c in string s",
-                    "Get character code of c, subtract character code of a to get alphabetical position, use that as index in count array, and increment by one",
-                    "Close the inner for loop with closing brace",
-                    "Convert count array to string using join with commas as separator to create hashable key",
-                    "Check if res has key using the has method, if not initialize with empty array using set method",
-                    "Get array at key from res using get method and push string s to it",
-                    "Close the outer for loop with closing brace",
-                    "Get all values from res Map using values method, spread into array, and return it",
-                    "Close function with closing brace"
+                    "Define function groupAnagrams that accepts array of strings strs.",
+                    "Create new Map object res to store groups of anagrams with string keys.",
+                    "Loop through each string s in strs.",
+                    "Create array count of 26 zeros for character frequencies.",
+                    "Loop through each character c in string s.",
+                    "Get character code of c, subtract character code of a to get alphabetical position, use that as index in count array, and increment by one.",
+                    "Close the inner for loop with closing brace.",
+                    "Convert count array to string using join with commas as separator to create hashable key.",
+                    "Check if res has key using the has method, if not initialize with empty array using set method.",
+                    "Get array at key from res using get method and push string s to it.",
+                    "Close the outer for loop with closing brace.",
+                    "Get all values from res Map using values method, spread into array, and return it.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function groupAnagrams(strs) {",
@@ -72,21 +72,21 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function groupAnagrams that accepts slice of strings strs and returns slice of slice of strings",
-                    "Create map res with keys of type array of 26 integers and values of type slice of strings using make",
-                    "Loop through strs using range to get each string s ignoring the index",
-                    "Declare count as array of 26 integers initialized to zero",
-                    "Loop through string s using range to get each rune c ignoring the index",
-                    "Get rune c, subtract rune a to get alphabetical position, use that as index in count array, and increment by one",
-                    "Use count array as key in res map, get existing slice, append string s to it, and store back in res at key count",
-                    "Close the inner for loop with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "Declare result as empty slice of slice of strings",
-                    "Loop through res map using range to get each group value ignoring the key",
-                    "Append current group to result slice",
-                    "Close the for loop with closing brace",
-                    "Return result",
-                    "Close function with closing brace"
+                    "Define function groupAnagrams that accepts slice of strings strs and returns slice of slice of strings.",
+                    "Create map res with keys of type array of 26 integers and values of type slice of strings using make.",
+                    "Loop through strs using range to get each string s ignoring the index.",
+                    "Declare count as array of 26 integers initialized to zero.",
+                    "Loop through string s using range to get each rune c ignoring the index.",
+                    "Get rune c, subtract rune a to get alphabetical position, use that as index in count array, and increment by one.",
+                    "Use count array as key in res map, get existing slice, append string s to it, and store back in res at key count.",
+                    "Close the inner for loop with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "Declare result as empty slice of slice of strings.",
+                    "Loop through res map using range to get each group value ignoring the key.",
+                    "Append current group to result slice.",
+                    "Close the for loop with closing brace.",
+                    "Return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func groupAnagrams(strs []string) [][]string {",
@@ -122,12 +122,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function groupAnagrams that accepts array of strings strs",
-                    "Create empty dictionary res to store groups of anagrams",
-                    "Loop through each string s in strs",
-                    "Sort string s into alphabetical order, join characters back into string, and store as sortedS",
-                    "Use sortedS as key in res, get existing list defaulting to empty list, append string s to it, and store back in res",
-                    "Get all values from res dictionary which are the grouped anagram lists, convert to list, and return it"
+                    "Define function groupAnagrams that accepts array of strings strs.",
+                    "Create empty dictionary res to store groups of anagrams.",
+                    "Loop through each string s in strs.",
+                    "Sort string s into alphabetical order, join characters back into string, and store as sortedS.",
+                    "Use sortedS as key in res, get existing list defaulting to empty list, append string s to it, and store back in res.",
+                    "Get all values from res dictionary which are the grouped anagram lists, convert to list, and return it."
                   ],
                   "codeLines": [
                     "def groupAnagrams(strs):",
@@ -141,15 +141,15 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function groupAnagrams that accepts array of strings strs",
-                    "Create new Map object res to store groups of anagrams",
-                    "Loop through each string s in strs",
-                    "Split string s into array of characters, sort the array alphabetically, join back into string, and store as sortedS",
-                    "Check if res has sortedS as key using the has method, if not initialize with empty array using set method",
-                    "Get array at key sortedS from res using get method and push string s to it",
-                    "Close the for loop with closing brace",
-                    "Get all values from res Map using values method, spread into array, and return it",
-                    "Close function with closing brace"
+                    "Define function groupAnagrams that accepts array of strings strs.",
+                    "Create new Map object res to store groups of anagrams.",
+                    "Loop through each string s in strs.",
+                    "Split string s into array of characters, sort the array alphabetically, join back into string, and store as sortedS.",
+                    "Check if res has sortedS as key using the has method, if not initialize with empty array using set method.",
+                    "Get array at key sortedS from res using get method and push string s to it.",
+                    "Close the for loop with closing brace.",
+                    "Get all values from res Map using values method, spread into array, and return it.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function groupAnagrams(strs) {",
@@ -166,23 +166,23 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function groupAnagrams that accepts slice of strings strs and returns slice of slice of strings",
-                    "Create map res with string keys and slice of strings values using make",
-                    "Loop through strs using range to get each string s ignoring the index",
-                    "Call sortString function with s as argument and store returned sorted string as sortedS",
-                    "Use sortedS as key in res map, get existing slice, append string s to it, and store back in res at key sortedS",
-                    "Close the for loop with closing brace",
-                    "Declare result as empty slice of slice of strings",
-                    "Loop through res map using range to get each group value ignoring the key",
-                    "Append current group to result slice",
-                    "Close the for loop with closing brace",
-                    "Return result",
-                    "Close function with closing brace",
-                    "Define helper function sortString that accepts string s and returns string",
-                    "Convert string s to slice of runes and store as characters",
-                    "Sort characters slice using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if characters at i is less than characters at j",
-                    "Convert characters slice back to string and return it",
-                    "Close function with closing brace"
+                    "Define function groupAnagrams that accepts slice of strings strs and returns slice of slice of strings.",
+                    "Create map res with string keys and slice of strings values using make.",
+                    "Loop through strs using range to get each string s ignoring the index.",
+                    "Call sortString function with s as argument and store returned sorted string as sortedS.",
+                    "Use sortedS as key in res map, get existing slice, append string s to it, and store back in res at key sortedS.",
+                    "Close the for loop with closing brace.",
+                    "Declare result as empty slice of slice of strings.",
+                    "Loop through res map using range to get each group value ignoring the key.",
+                    "Append current group to result slice.",
+                    "Close the for loop with closing brace.",
+                    "Return result.",
+                    "Close function with closing brace.",
+                    "Define helper function sortString that accepts string s and returns string.",
+                    "Convert string s to slice of runes and store as characters.",
+                    "Sort characters slice using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if characters at i is less than characters at j.",
+                    "Convert characters slice back to string and return it.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func groupAnagrams(strs []string) [][]string {",

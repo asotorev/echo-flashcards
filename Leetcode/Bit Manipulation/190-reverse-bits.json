@@ -16,14 +16,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function reverseBits that accepts integer n",
-                    "Assign n to variable res",
-                    "Right shift res by sixteen bits, OR with left shift res by sixteen bits ANDed with hex FFFFFFFF mask, and assign to res to swap sixteen-bit halves",
-                    "AND res with hex mask ff00ff00 to isolate certain bytes, right shift by eight, OR with res ANDed with hex mask 00ff00ff then left shifted by eight, and assign to res to swap eight-bit groups",
-                    "AND res with hex mask f0f0f0f0 to isolate certain nibbles, right shift by four, OR with res ANDed with hex mask 0f0f0f0f then left shifted by four, and assign to res to swap four-bit groups",
-                    "AND res with hex mask cccccccc to isolate certain two-bit pairs, right shift by two, OR with res ANDed with hex mask 33333333 then left shifted by two, and assign to res to swap two-bit groups",
-                    "AND res with hex mask aaaaaaaa to isolate certain single bits, right shift by one, OR with res ANDed with hex mask 55555555 then left shifted by one, and assign to res to swap individual bits",
-                    "AND res with hex FFFFFFFF mask and return result to ensure thirty-two bit output"
+                    "Define function reverseBits that accepts integer n.",
+                    "Assign n to variable res.",
+                    "Right shift res by sixteen bits, OR with left shift res by sixteen bits ANDed with hex FFFFFFFF mask, and assign to res to swap sixteen-bit halves.",
+                    "AND res with hex mask ff00ff00 to isolate certain bytes, right shift by eight, OR with res ANDed with hex mask 00ff00ff then left shifted by eight, and assign to res to swap eight-bit groups.",
+                    "AND res with hex mask f0f0f0f0 to isolate certain nibbles, right shift by four, OR with res ANDed with hex mask 0f0f0f0f then left shifted by four, and assign to res to swap four-bit groups.",
+                    "AND res with hex mask cccccccc to isolate certain two-bit pairs, right shift by two, OR with res ANDed with hex mask 33333333 then left shifted by two, and assign to res to swap two-bit groups.",
+                    "AND res with hex mask aaaaaaaa to isolate certain single bits, right shift by one, OR with res ANDed with hex mask 55555555 then left shifted by one, and assign to res to swap individual bits.",
+                    "AND res with hex FFFFFFFF mask and return result to ensure thirty-two bit output."
                   ],
                   "codeLines": [
                     "def reverseBits(n):",
@@ -39,15 +39,15 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function reverseBits that accepts integer n",
-                    "Assign n to variable res",
-                    "Right shift res by sixteen bits using unsigned shift, OR with left shift res by sixteen bits ANDed with hex FFFFFFFF mask, and assign to res to swap sixteen-bit halves",
-                    "AND res with hex mask ff00ff00 to isolate certain bytes, unsigned right shift by eight, OR with res ANDed with hex mask 00ff00ff then left shifted by eight, AND with hex FFFFFFFF, and assign to res to swap eight-bit groups",
-                    "AND res with hex mask f0f0f0f0 to isolate certain nibbles, unsigned right shift by four, OR with res ANDed with hex mask 0f0f0f0f then left shifted by four, AND with hex FFFFFFFF, and assign to res to swap four-bit groups",
-                    "AND res with hex mask cccccccc to isolate certain two-bit pairs, unsigned right shift by two, OR with res ANDed with hex mask 33333333 then left shifted by two, AND with hex FFFFFFFF, and assign to res to swap two-bit groups",
-                    "AND res with hex mask aaaaaaaa to isolate certain single bits, unsigned right shift by one, OR with res ANDed with hex mask 55555555 then left shifted by one, AND with hex FFFFFFFF, and assign to res to swap individual bits",
-                    "Unsigned right shift res by zero to ensure thirty-two bit unsigned output and return result",
-                    "Close function with closing brace"
+                    "Define function reverseBits that accepts integer n.",
+                    "Assign n to variable res.",
+                    "Right shift res by sixteen bits using unsigned shift, OR with left shift res by sixteen bits ANDed with hex FFFFFFFF mask, and assign to res to swap sixteen-bit halves.",
+                    "AND res with hex mask ff00ff00 to isolate certain bytes, unsigned right shift by eight, OR with res ANDed with hex mask 00ff00ff then left shifted by eight, AND with hex FFFFFFFF, and assign to res to swap eight-bit groups.",
+                    "AND res with hex mask f0f0f0f0 to isolate certain nibbles, unsigned right shift by four, OR with res ANDed with hex mask 0f0f0f0f then left shifted by four, AND with hex FFFFFFFF, and assign to res to swap four-bit groups.",
+                    "AND res with hex mask cccccccc to isolate certain two-bit pairs, unsigned right shift by two, OR with res ANDed with hex mask 33333333 then left shifted by two, AND with hex FFFFFFFF, and assign to res to swap two-bit groups.",
+                    "AND res with hex mask aaaaaaaa to isolate certain single bits, unsigned right shift by one, OR with res ANDed with hex mask 55555555 then left shifted by one, AND with hex FFFFFFFF, and assign to res to swap individual bits.",
+                    "Unsigned right shift res by zero to ensure thirty-two bit unsigned output and return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function reverseBits(n) {",
@@ -64,15 +64,15 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function reverseBits that accepts unsigned 32-bit integer n and returns unsigned 32-bit integer",
-                    "Assign n to variable res",
-                    "Right shift res by sixteen bits, OR with left shift res by sixteen bits, and assign to res to swap sixteen-bit halves",
-                    "AND res with hex mask ff00ff00 to isolate certain bytes, right shift by eight, OR with res ANDed with hex mask 00ff00ff then left shifted by eight, and assign to res to swap eight-bit groups",
-                    "AND res with hex mask f0f0f0f0 to isolate certain nibbles, right shift by four, OR with res ANDed with hex mask 0f0f0f0f then left shifted by four, and assign to res to swap four-bit groups",
-                    "AND res with hex mask cccccccc to isolate certain two-bit pairs, right shift by two, OR with res ANDed with hex mask 33333333 then left shifted by two, and assign to res to swap two-bit groups",
-                    "AND res with hex mask aaaaaaaa to isolate certain single bits, right shift by one, OR with res ANDed with hex mask 55555555 then left shifted by one, and assign to res to swap individual bits",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function reverseBits that accepts unsigned 32-bit integer n and returns unsigned 32-bit integer.",
+                    "Assign n to variable res.",
+                    "Right shift res by sixteen bits, OR with left shift res by sixteen bits, and assign to res to swap sixteen-bit halves.",
+                    "AND res with hex mask ff00ff00 to isolate certain bytes, right shift by eight, OR with res ANDed with hex mask 00ff00ff then left shifted by eight, and assign to res to swap eight-bit groups.",
+                    "AND res with hex mask f0f0f0f0 to isolate certain nibbles, right shift by four, OR with res ANDed with hex mask 0f0f0f0f then left shifted by four, and assign to res to swap four-bit groups.",
+                    "AND res with hex mask cccccccc to isolate certain two-bit pairs, right shift by two, OR with res ANDed with hex mask 33333333 then left shifted by two, and assign to res to swap two-bit groups.",
+                    "AND res with hex mask aaaaaaaa to isolate certain single bits, right shift by one, OR with res ANDed with hex mask 55555555 then left shifted by one, and assign to res to swap individual bits.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func reverseBits(n uint32) uint32 {",
@@ -102,12 +102,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function reverseBits that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Loop through range from zero to thirty-two",
-                    "Right shift n by i bits, AND with one to extract bit at position i, and store as bit",
-                    "Left shift bit by thirty-one minus i to position it in reversed location, add to res, and assign back to res",
-                    "Return res"
+                    "Define function reverseBits that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Loop through range from zero to thirty-two.",
+                    "Right shift n by i bits, AND with one to extract bit at position i, and store as bit.",
+                    "Left shift bit by thirty-one minus i to position it in reversed location, add to res, and assign back to res.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def reverseBits(n):",
@@ -121,14 +121,14 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function reverseBits that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Unsigned right shift n by i bits, AND with one to extract bit at position i, and store as bit",
-                    "Left shift bit by thirty-one minus i to position it in reversed location, add to res, and assign back to res",
-                    "Close the for loop with closing brace",
-                    "Unsigned right shift res by zero to ensure thirty-two bit unsigned integer and return result",
-                    "Close function with closing brace"
+                    "Define function reverseBits that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Unsigned right shift n by i bits, AND with one to extract bit at position i, and store as bit.",
+                    "Left shift bit by thirty-one minus i to position it in reversed location, add to res, and assign back to res.",
+                    "Close the for loop with closing brace.",
+                    "Unsigned right shift res by zero to ensure thirty-two bit unsigned integer and return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function reverseBits(n) {",
@@ -144,14 +144,14 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function reverseBits that accepts unsigned 32-bit integer n and returns unsigned 32-bit integer",
-                    "Declare variable res as unsigned 32-bit integer initialized to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Right shift n by i bits, AND with one to extract bit at position i, and store as bit",
-                    "Left shift bit by thirty-one minus i to position it in reversed location, add to res using OR assignment",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function reverseBits that accepts unsigned 32-bit integer n and returns unsigned 32-bit integer.",
+                    "Declare variable res as unsigned 32-bit integer initialized to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Right shift n by i bits, AND with one to extract bit at position i, and store as bit.",
+                    "Left shift bit by thirty-one minus i to position it in reversed location, add to res using OR assignment.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func reverseBits(n uint32) uint32 {",
@@ -180,17 +180,17 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function reverseBits that accepts integer n",
-                    "Initialize empty string binary",
-                    "Loop through range from zero to thirty-two",
-                    "Left shift one by i bits, AND with n, check if result is non-zero",
-                    "If non-zero, concatenate string one to binary",
-                    "If zero, concatenate string zero to binary",
-                    "Initialize res to zero",
-                    "Loop through enumerate of reversed binary string to get index i and bit character",
-                    "Check if bit equals string one",
-                    "If true, left shift one by i bits, OR with res, and assign back to res to set that bit",
-                    "Return res"
+                    "Define function reverseBits that accepts integer n.",
+                    "Initialize empty string binary.",
+                    "Loop through range from zero to thirty-two.",
+                    "Left shift one by i bits, AND with n, check if result is non-zero.",
+                    "If non-zero, concatenate string one to binary.",
+                    "If zero, concatenate string zero to binary.",
+                    "Initialize res to zero.",
+                    "Loop through enumerate of reversed binary string to get index i and bit character.",
+                    "Check if bit equals string one.",
+                    "If true, left shift one by i bits, OR with res, and assign back to res to set that bit.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def reverseBits(n):",
@@ -210,24 +210,24 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function reverseBits that accepts integer n",
-                    "Initialize empty string binary",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Left shift one by i bits, AND with n, check if result is non-zero",
-                    "If non-zero, concatenate string one to binary",
-                    "Close the if statement with closing brace",
-                    "If zero, concatenate string zero to binary",
-                    "Close the else statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Initialize res to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Get character from reversed binary string at index i using charAt on split reversed and joined string, store as bit",
-                    "Check if bit equals string one",
-                    "If true, left shift one by i bits, OR with res, and assign back to res to set that bit",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Unsigned right shift res by zero to ensure thirty-two bit unsigned integer and return result",
-                    "Close function with closing brace"
+                    "Define function reverseBits that accepts integer n.",
+                    "Initialize empty string binary.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Left shift one by i bits, AND with n, check if result is non-zero.",
+                    "If non-zero, concatenate string one to binary.",
+                    "Close the if statement with closing brace.",
+                    "If zero, concatenate string zero to binary.",
+                    "Close the else statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Initialize res to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Get character from reversed binary string at index i using charAt on split reversed and joined string, store as bit.",
+                    "Check if bit equals string one.",
+                    "If true, left shift one by i bits, OR with res, and assign back to res to set that bit.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Unsigned right shift res by zero to ensure thirty-two bit unsigned integer and return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function reverseBits(n) {",
@@ -253,24 +253,24 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function reverseBits that accepts unsigned 32-bit integer n and returns unsigned 32-bit integer",
-                    "Initialize empty string binary",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Left shift one by i bits, AND with n, check if result is not equal to zero",
-                    "If not zero, concatenate string one to binary",
-                    "Close the if block with closing brace",
-                    "If zero, concatenate string zero to binary",
-                    "Close the else block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Declare variable res as unsigned 32-bit integer initialized to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Subtract i from thirty-one to get reversed index, access binary string at that index, store as bit",
-                    "Check if bit equals byte value of character one",
-                    "If true, left shift one by i bits as unsigned 32-bit integer, OR with res, and assign back to res to set that bit",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function reverseBits that accepts unsigned 32-bit integer n and returns unsigned 32-bit integer.",
+                    "Initialize empty string binary.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Left shift one by i bits, AND with n, check if result is not equal to zero.",
+                    "If not zero, concatenate string one to binary.",
+                    "Close the if block with closing brace.",
+                    "If zero, concatenate string zero to binary.",
+                    "Close the else block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Declare variable res as unsigned 32-bit integer initialized to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Subtract i from thirty-one to get reversed index, access binary string at that index, store as bit.",
+                    "Check if bit equals byte value of character one.",
+                    "If true, left shift one by i bits as unsigned 32-bit integer, OR with res, and assign back to res to set that bit.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func reverseBits(n uint32) uint32 {",

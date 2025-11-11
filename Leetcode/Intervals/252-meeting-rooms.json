@@ -16,15 +16,15 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function canAttendMeetings that accepts intervals as list of Interval objects and returns boolean",
-                    "Get n as length of intervals",
-                    "Iterate through range of n with index i",
-                    "Get A as intervals at i for first interval",
-                    "Iterate from i plus one to n using range with index j",
-                    "Get B as intervals at j for second interval",
-                    "Check if min of A dot end and B dot end greater than max of A dot start and B dot start",
-                    "If overlap detected, return False",
-                    "Return True if no overlaps found"
+                    "Define function canAttendMeetings that accepts intervals as list of Interval objects and returns boolean.",
+                    "Get n as length of intervals.",
+                    "Iterate through range of n with index i.",
+                    "Get A as intervals at i for first interval.",
+                    "Iterate from i plus one to n using range with index j.",
+                    "Get B as intervals at j for second interval.",
+                    "Check if min of A dot end and B dot end greater than max of A dot start and B dot start.",
+                    "If overlap detected, return False.",
+                    "Return True if no overlaps found."
                   ],
                   "codeLines": [
                     "def canAttendMeetings(intervals: List[Interval]) -> bool:",
@@ -41,19 +41,19 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function canAttendMeetings that accepts intervals as parameter with opening brace",
-                    "Get n as intervals dot length using const",
-                    "Iterate from zero to n with index i with opening brace",
-                    "Get A as intervals at i for first interval using const",
-                    "Iterate from i plus one to n with index j with opening brace",
-                    "Get B as intervals at j for second interval using const",
-                    "Check if Math dot min of A dot end and B dot end greater than Math dot max of A dot start and B dot start with opening brace",
-                    "If overlap detected, return false",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return true if no overlaps found",
-                    "Close function with closing brace"
+                    "Define function canAttendMeetings that accepts intervals as parameter with opening brace.",
+                    "Get n as intervals dot length using const.",
+                    "Iterate from zero to n with index i with opening brace.",
+                    "Get A as intervals at i for first interval using const.",
+                    "Iterate from i plus one to n with index j with opening brace.",
+                    "Get B as intervals at j for second interval using const.",
+                    "Check if Math dot min of A dot end and B dot end greater than Math dot max of A dot start and B dot start with opening brace.",
+                    "If overlap detected, return false.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return true if no overlaps found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function canAttendMeetings(intervals) {",
@@ -74,22 +74,22 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define type Interval as struct with Start and End as int fields",
-                    "Define function canAttendMeetings that accepts intervals as slice of Interval and returns bool with opening brace",
-                    "Get n as length of intervals",
-                    "Iterate from zero to n with index i with opening brace",
-                    "Get A as intervals at i for first interval",
-                    "Iterate from i plus one to n with index j with opening brace",
-                    "Get B as intervals at j for second interval",
-                    "Get minEnd as A dot End if A dot End less than B dot End else B dot End",
-                    "Get maxStart as A dot Start if A dot Start greater than B dot Start else B dot Start",
-                    "Check if minEnd greater than maxStart with opening brace",
-                    "If overlap detected, return false",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return true if no overlaps found",
-                    "Close function with closing brace"
+                    "Define type Interval as struct with Start and End as int fields.",
+                    "Define function canAttendMeetings that accepts intervals as slice of Interval and returns bool with opening brace.",
+                    "Get n as length of intervals.",
+                    "Iterate from zero to n with index i with opening brace.",
+                    "Get A as intervals at i for first interval.",
+                    "Iterate from i plus one to n with index j with opening brace.",
+                    "Get B as intervals at j for second interval.",
+                    "Get minEnd as A dot End if A dot End less than B dot End else B dot End.",
+                    "Get maxStart as A dot Start if A dot Start greater than B dot Start else B dot Start.",
+                    "Check if minEnd greater than maxStart with opening brace.",
+                    "If overlap detected, return false.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return true if no overlaps found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "type Interval struct { Start, End int }",
@@ -128,14 +128,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function canAttendMeetings that accepts intervals as list of Interval objects and returns boolean",
-                    "Sort intervals in place using sort with key as lambda i returning i dot start",
-                    "Iterate from one to length of intervals using range with index i",
-                    "Get i1 as intervals at i minus one for previous interval",
-                    "Get i2 as intervals at i for current interval",
-                    "Check if i1 dot end greater than i2 dot start",
-                    "If overlap detected, return False",
-                    "Return True if no overlaps found"
+                    "Define function canAttendMeetings that accepts intervals as list of Interval objects and returns boolean.",
+                    "Sort intervals in place using sort with key as lambda i returning i dot start.",
+                    "Iterate from one to length of intervals using range with index i.",
+                    "Get i1 as intervals at i minus one for previous interval.",
+                    "Get i2 as intervals at i for current interval.",
+                    "Check if i1 dot end greater than i2 dot start.",
+                    "If overlap detected, return False.",
+                    "Return True if no overlaps found."
                   ],
                   "codeLines": [
                     "def canAttendMeetings(intervals: List[Interval]) -> bool:",
@@ -151,17 +151,17 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function canAttendMeetings that accepts intervals as parameter with opening brace",
-                    "Sort intervals in place using sort with callback comparing a dot start with b dot start",
-                    "Iterate from one to intervals dot length with index i with opening brace",
-                    "Get i1 as intervals at i minus one for previous interval using const",
-                    "Get i2 as intervals at i for current interval using const",
-                    "Check if i1 dot end greater than i2 dot start with opening brace",
-                    "If overlap detected, return false",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return true if no overlaps found",
-                    "Close function with closing brace"
+                    "Define function canAttendMeetings that accepts intervals as parameter with opening brace.",
+                    "Sort intervals in place using sort with callback comparing a dot start with b dot start.",
+                    "Iterate from one to intervals dot length with index i with opening brace.",
+                    "Get i1 as intervals at i minus one for previous interval using const.",
+                    "Get i2 as intervals at i for current interval using const.",
+                    "Check if i1 dot end greater than i2 dot start with opening brace.",
+                    "If overlap detected, return false.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return true if no overlaps found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function canAttendMeetings(intervals) {",
@@ -180,19 +180,19 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Import sort package",
-                    "Define type Interval as struct with Start and End as int fields",
-                    "Define function canAttendMeetings that accepts intervals as slice of Interval and returns bool with opening brace",
-                    "Sort intervals in place using sort dot Slice with intervals and callback comparing Start fields",
-                    "Iterate from one to length of intervals with index i with opening brace",
-                    "Get i1 as intervals at i minus one for previous interval",
-                    "Get i2 as intervals at i for current interval",
-                    "Check if i1 dot End greater than i2 dot Start with opening brace",
-                    "If overlap detected, return false",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return true if no overlaps found",
-                    "Close function with closing brace"
+                    "Import sort package.",
+                    "Define type Interval as struct with Start and End as int fields.",
+                    "Define function canAttendMeetings that accepts intervals as slice of Interval and returns bool with opening brace.",
+                    "Sort intervals in place using sort dot Slice with intervals and callback comparing Start fields.",
+                    "Iterate from one to length of intervals with index i with opening brace.",
+                    "Get i1 as intervals at i minus one for previous interval.",
+                    "Get i2 as intervals at i for current interval.",
+                    "Check if i1 dot End greater than i2 dot Start with opening brace.",
+                    "If overlap detected, return false.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return true if no overlaps found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "import \"sort\"",

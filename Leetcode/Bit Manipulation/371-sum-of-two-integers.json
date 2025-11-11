@@ -16,14 +16,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b",
-                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
-                    "Initialize max_int to hex 7FFFFFFF as maximum positive integer",
-                    "Loop while b is not equal to zero",
-                    "AND a with b to find common one bits, left shift by one to get carry, and assign to carry",
-                    "XOR a with b to add without carry, AND with mask to keep thirty-two bits, and assign to a",
-                    "AND carry with mask to keep thirty-two bits, and assign to b",
-                    "Check if a is less than or equal to max_int, if true return a, otherwise invert XOR of a with mask to get negative representation, and return result"
+                    "Define function getSum that accepts integers a and b.",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations.",
+                    "Initialize max_int to hex 7FFFFFFF as maximum positive integer.",
+                    "Loop while b is not equal to zero.",
+                    "AND a with b to find common one bits, left shift by one to get carry, and assign to carry.",
+                    "XOR a with b to add without carry, AND with mask to keep thirty-two bits, and assign to a.",
+                    "AND carry with mask to keep thirty-two bits, and assign to b.",
+                    "Check if a is less than or equal to max_int, if true return a, otherwise invert XOR of a with mask to get negative representation, and return result."
                   ],
                   "codeLines": [
                     "def getSum(a, b):",
@@ -39,16 +39,16 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b",
-                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
-                    "Initialize maxInt to hex 7FFFFFFF as maximum positive integer",
-                    "Loop while b is not equal to zero",
-                    "AND a with b to find common one bits, left shift by one to get carry, AND with mask, and assign to carry",
-                    "XOR a with b to add without carry, AND with mask to keep thirty-two bits, and assign to a",
-                    "Assign carry to b",
-                    "Close the while loop with closing brace",
-                    "Check if a is less than or equal to maxInt, if true return a, otherwise invert XOR of a with mask using tilde, and return result",
-                    "Close function with closing brace"
+                    "Define function getSum that accepts integers a and b.",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations.",
+                    "Initialize maxInt to hex 7FFFFFFF as maximum positive integer.",
+                    "Loop while b is not equal to zero.",
+                    "AND a with b to find common one bits, left shift by one to get carry, AND with mask, and assign to carry.",
+                    "XOR a with b to add without carry, AND with mask to keep thirty-two bits, and assign to a.",
+                    "Assign carry to b.",
+                    "Close the while loop with closing brace.",
+                    "Check if a is less than or equal to maxInt, if true return a, otherwise invert XOR of a with mask using tilde, and return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function getSum(a, b) {",
@@ -66,16 +66,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b and returns int",
-                    "Convert a to unsigned 32-bit integer and assign to aUint",
-                    "Convert b to unsigned 32-bit integer and assign to bUint",
-                    "Loop while bUint is not equal to zero",
-                    "AND aUint with bUint to find common one bits, left shift by one to get carry, and assign to carry",
-                    "XOR aUint with bUint to add without carry, and assign to aUint",
-                    "Assign carry to bUint",
-                    "Close the for loop with closing brace",
-                    "Convert aUint to signed 32-bit integer and return result",
-                    "Close function with closing brace"
+                    "Define function getSum that accepts integers a and b and returns int.",
+                    "Convert a to unsigned 32-bit integer and assign to aUint.",
+                    "Convert b to unsigned 32-bit integer and assign to bUint.",
+                    "Loop while bUint is not equal to zero.",
+                    "AND aUint with bUint to find common one bits, left shift by one to get carry, and assign to carry.",
+                    "XOR aUint with bUint to add without carry, and assign to aUint.",
+                    "Assign carry to bUint.",
+                    "Close the for loop with closing brace.",
+                    "Convert aUint to signed 32-bit integer and return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func getSum(a int, b int) int {",
@@ -106,20 +106,20 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b",
-                    "Initialize carry to zero",
-                    "Initialize res to zero",
-                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
-                    "Loop through range from zero to thirty-two",
-                    "Right shift a by i bits, AND with one to extract bit at position i, and assign to a_bit",
-                    "Right shift b by i bits, AND with one to extract bit at position i, and assign to b_bit",
-                    "XOR a_bit with b_bit, XOR with carry to get current bit, and assign to cur_bit",
-                    "Add a_bit, b_bit, and carry together, check if sum is greater than or equal to two to determine new carry, and assign to carry",
-                    "Check if cur_bit is non-zero",
-                    "If true, left shift one by i bits, OR with res to set that bit, and assign to res",
-                    "Check if res is greater than hex 7FFFFFFF",
-                    "If true, XOR res with mask, invert the result using tilde, and assign to res to convert to negative",
-                    "Return res"
+                    "Define function getSum that accepts integers a and b.",
+                    "Initialize carry to zero.",
+                    "Initialize res to zero.",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations.",
+                    "Loop through range from zero to thirty-two.",
+                    "Right shift a by i bits, AND with one to extract bit at position i, and assign to a_bit.",
+                    "Right shift b by i bits, AND with one to extract bit at position i, and assign to b_bit.",
+                    "XOR a_bit with b_bit, XOR with carry to get current bit, and assign to cur_bit.",
+                    "Add a_bit, b_bit, and carry together, check if sum is greater than or equal to two to determine new carry, and assign to carry.",
+                    "Check if cur_bit is non-zero.",
+                    "If true, left shift one by i bits, OR with res to set that bit, and assign to res.",
+                    "Check if res is greater than hex 7FFFFFFF.",
+                    "If true, XOR res with mask, invert the result using tilde, and assign to res to convert to negative.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def getSum(a, b):",
@@ -141,24 +141,24 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b",
-                    "Initialize carry to zero",
-                    "Initialize res to zero",
-                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Unsigned right shift a by i bits, AND with one to extract bit at position i, and assign to aBit",
-                    "Unsigned right shift b by i bits, AND with one to extract bit at position i, and assign to bBit",
-                    "XOR aBit with bBit, XOR with carry to get current bit, and assign to curBit",
-                    "Add aBit, bBit, and carry together, check if sum is greater than or equal to two to get boolean, convert to number, and assign to carry",
-                    "Check if curBit is non-zero",
-                    "If true, left shift one by i bits, OR with res to set that bit, and assign to res",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Check if res is greater than hex 7FFFFFFF",
-                    "If true, XOR res with mask, invert the result using tilde, and assign to res to convert to negative",
-                    "Close the if statement with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function getSum that accepts integers a and b.",
+                    "Initialize carry to zero.",
+                    "Initialize res to zero.",
+                    "Initialize mask to hex FFFFFFFF for thirty-two bit operations.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Unsigned right shift a by i bits, AND with one to extract bit at position i, and assign to aBit.",
+                    "Unsigned right shift b by i bits, AND with one to extract bit at position i, and assign to bBit.",
+                    "XOR aBit with bBit, XOR with carry to get current bit, and assign to curBit.",
+                    "Add aBit, bBit, and carry together, check if sum is greater than or equal to two to get boolean, convert to number, and assign to carry.",
+                    "Check if curBit is non-zero.",
+                    "If true, left shift one by i bits, OR with res to set that bit, and assign to res.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Check if res is greater than hex 7FFFFFFF.",
+                    "If true, XOR res with mask, invert the result using tilde, and assign to res to convert to negative.",
+                    "Close the if statement with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function getSum(a, b) {",
@@ -184,24 +184,24 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b and returns int",
-                    "Initialize carry to zero",
-                    "Declare res as unsigned 32-bit integer initialized to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Convert a to unsigned 32-bit integer, right shift by i bits, AND with one to extract bit, and assign to aBit",
-                    "Convert b to unsigned 32-bit integer, right shift by i bits, AND with one to extract bit, and assign to bBit",
-                    "XOR aBit with bBit, XOR with carry to get current bit, and assign to curBit",
-                    "Check if aBit plus bBit plus carry is greater than or equal to two",
-                    "If true, set carry to one",
-                    "Close the if block with closing brace",
-                    "If false, set carry to zero",
-                    "Close the else block with closing brace",
-                    "Check if curBit equals one",
-                    "If true, left shift one by i bits as unsigned 32-bit integer, OR with res to set that bit, and assign to res",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Convert res to signed 32-bit integer, then to int, and return result",
-                    "Close function with closing brace"
+                    "Define function getSum that accepts integers a and b and returns int.",
+                    "Initialize carry to zero.",
+                    "Declare res as unsigned 32-bit integer initialized to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Convert a to unsigned 32-bit integer, right shift by i bits, AND with one to extract bit, and assign to aBit.",
+                    "Convert b to unsigned 32-bit integer, right shift by i bits, AND with one to extract bit, and assign to bBit.",
+                    "XOR aBit with bBit, XOR with carry to get current bit, and assign to curBit.",
+                    "Check if aBit plus bBit plus carry is greater than or equal to two.",
+                    "If true, set carry to one.",
+                    "Close the if block with closing brace.",
+                    "If false, set carry to zero.",
+                    "Close the else block with closing brace.",
+                    "Check if curBit equals one.",
+                    "If true, left shift one by i bits as unsigned 32-bit integer, OR with res to set that bit, and assign to res.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Convert res to signed 32-bit integer, then to int, and return result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func getSum(a int, b int) int {",
@@ -240,8 +240,8 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b",
-                    "Add a and b together and return the result"
+                    "Define function getSum that accepts integers a and b.",
+                    "Add a and b together and return the result."
                   ],
                   "codeLines": [
                     "def getSum(a, b):",
@@ -251,9 +251,9 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b",
-                    "Add a and b together and return the result",
-                    "Close function with closing brace"
+                    "Define function getSum that accepts integers a and b.",
+                    "Add a and b together and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function getSum(a, b) {",
@@ -264,9 +264,9 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function getSum that accepts integers a and b and returns int",
-                    "Add a and b together and return the result",
-                    "Close function with closing brace"
+                    "Define function getSum that accepts integers a and b and returns int.",
+                    "Add a and b together and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func getSum(a int, b int) int {",
