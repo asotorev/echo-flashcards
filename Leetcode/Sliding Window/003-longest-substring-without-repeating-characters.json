@@ -1,0 +1,390 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #3 - Longest Substring Without Repeating Characters",
+      "description": "Find the length of the longest substring without repeating characters",
+      "cards": [
+        {
+          "id": "leetcode_3_longest_substring_without_repeating_characters",
+          "question": "Longest Substring Without Repeating Characters: Given a string s, find the length of the longest substring without repeating characters.",
+          "solutions": [
+            {
+              "name": "Sliding Window (Optimal)",
+              "type": "optimal",
+              "explanation": "Use a hash map to store the most recent index of each character. When we encounter a duplicate, jump the left pointer to the position after the previous occurrence. This eliminates unnecessary iterations and achieves O(n) time with at most n operations.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s",
+                    "Create empty dictionary mp to store character to index mapping",
+                    "Initialize variable l to zero for left pointer and variable res to zero for result",
+                    "Create empty line",
+                    "Loop through indices from zero to length of s",
+                    "Check if character s at r exists in mp",
+                    "Get maximum of mp at s at r plus one and l and store back in l",
+                    "Store r in mp at key s at r",
+                    "Check if r minus l plus one is greater than res",
+                    "If greater, set res to r minus l plus one",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def lengthOfLongestSubstring(s):",
+                    "    mp = {}",
+                    "    l, res = 0, 0",
+                    "    ",
+                    "    for r in range(len(s)):",
+                    "        if s[r] in mp:",
+                    "            l = max(mp[s[r]] + 1, l)",
+                    "        mp[s[r]] = r",
+                    "        if r - l + 1 > res:",
+                    "            res = r - l + 1",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s",
+                    "Create new Map object mp to store character to index mapping",
+                    "Initialize variable l to zero for left pointer and variable res to zero for result",
+                    "Create empty line",
+                    "Loop with r from zero while r less than length of s incrementing r",
+                    "Check if mp has character s at r using the has method",
+                    "Get maximum of mp get s at r plus one and l using Math max and store back in l",
+                    "Close the if statement with closing brace",
+                    "Store r in mp at key s at r using set method",
+                    "Check if r minus l plus one is greater than res",
+                    "If greater, set res to r minus l plus one",
+                    "Close the if statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function lengthOfLongestSubstring(s) {",
+                    "    const mp = new Map();",
+                    "    let l = 0, res = 0;",
+                    "    ",
+                    "    for (let r = 0; r < s.length; r++) {",
+                    "        if (mp.has(s[r])) {",
+                    "            l = Math.max(mp.get(s[r]) + 1, l);",
+                    "        }",
+                    "        mp.set(s[r], r);",
+                    "        if (r - l + 1 > res) {",
+                    "            res = r - l + 1;",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s and returns integer",
+                    "Create map mp with byte keys and integer values using make",
+                    "Initialize variable l to zero for left pointer and variable res to zero for result",
+                    "Create empty line",
+                    "Loop with r from zero while r less than length of s incrementing r",
+                    "Check if character s at r exists in mp by retrieving value idx and existence flag found",
+                    "Call max with idx plus one and l and store back in l",
+                    "Close the if block with closing brace",
+                    "Store r in mp at key s at r",
+                    "Check if r minus l plus one is greater than res",
+                    "If greater, set res to r minus l plus one",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func lengthOfLongestSubstring(s string) int {",
+                    "    mp := make(map[byte]int)",
+                    "    l, res := 0, 0",
+                    "",
+                    "    for r := 0; r < len(s); r++ {",
+                    "        if idx, found := mp[s[r]]; found {",
+                    "            l = max(idx+1, l)",
+                    "        }",
+                    "        mp[s[r]] = r",
+                    "        if r - l + 1 > res {",
+                    "            res = r - l + 1",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the length of the string. Each character is visited at most once by the right pointer.",
+              "spaceComplexity": "O(m)",
+              "spaceDescription": "Space proportional to the number of unique characters m. In the worst case, m equals the size of the character set.",
+              "exampleWalkthrough": "For s='abcabcbb': r=0('a'): mp={'a':0}, l=0, res=1. r=1('b'): mp={'a':0,'b':1}, l=0, res=2. r=2('c'): res=3. r=3('a'): found at 0, l=max(1,0)=1, res=3. r=4('b'): found at 1, l=max(2,1)=2. Continue, return 3.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Sliding Window",
+              "type": "alternative",
+              "explanation": "Use a hash set to track characters in the current window. When we encounter a duplicate, shrink the window from the left by removing characters until the duplicate is removed. This maintains a valid window of unique characters.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s",
+                    "Create empty set charSet to track characters in current window",
+                    "Initialize variable l to zero for left pointer and variable res to zero for result",
+                    "Create empty line",
+                    "Loop through indices from zero to length of s",
+                    "Loop while character s at r exists in charSet",
+                    "Remove character s at l from charSet",
+                    "Increment l by one",
+                    "Add character s at r to charSet",
+                    "Check if r minus l plus one is greater than res",
+                    "If greater, set res to r minus l plus one",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def lengthOfLongestSubstring(s):",
+                    "    charSet = set()",
+                    "    l, res = 0, 0",
+                    "    ",
+                    "    for r in range(len(s)):",
+                    "        while s[r] in charSet:",
+                    "            charSet.remove(s[l])",
+                    "            l += 1",
+                    "        charSet.add(s[r])",
+                    "        if r - l + 1 > res:",
+                    "            res = r - l + 1",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s",
+                    "Create new Set object charSet to track characters in current window",
+                    "Initialize variable l to zero for left pointer and variable res to zero for result",
+                    "Create empty line",
+                    "Loop with r from zero while r less than length of s incrementing r",
+                    "Loop while charSet has character s at r using the has method",
+                    "Delete character s at l from charSet using delete method",
+                    "Increment l by one",
+                    "Close the while loop with closing brace",
+                    "Add character s at r to charSet using add method",
+                    "Check if r minus l plus one is greater than res",
+                    "If greater, set res to r minus l plus one",
+                    "Close the if statement with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return res",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function lengthOfLongestSubstring(s) {",
+                    "    const charSet = new Set();",
+                    "    let l = 0, res = 0;",
+                    "    ",
+                    "    for (let r = 0; r < s.length; r++) {",
+                    "        while (charSet.has(s[r])) {",
+                    "            charSet.delete(s[l]);",
+                    "            l++;",
+                    "        }",
+                    "        charSet.add(s[r]);",
+                    "        if (r - l + 1 > res) {",
+                    "            res = r - l + 1;",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s and returns integer",
+                    "Create map charSet with byte keys and boolean values using make",
+                    "Initialize variable l to zero for left pointer and variable res to zero for result",
+                    "Create empty line",
+                    "Loop with r from zero while r less than length of s incrementing r",
+                    "Loop while charSet at s at r is true",
+                    "Delete character s at l from charSet using delete function",
+                    "Increment l by one",
+                    "Close the inner for loop with closing brace",
+                    "Set charSet at s at r to true",
+                    "Check if r minus l plus one is greater than res",
+                    "If greater, set res to r minus l plus one",
+                    "Close the if block with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Return res",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func lengthOfLongestSubstring(s string) int {",
+                    "    charSet := make(map[byte]bool)",
+                    "    l, res := 0, 0",
+                    "",
+                    "    for r := 0; r < len(s); r++ {",
+                    "        for charSet[s[r]] {",
+                    "            delete(charSet, s[l])",
+                    "            l++",
+                    "        }",
+                    "        charSet[s[r]] = true",
+                    "        if r - l + 1 > res {",
+                    "            res = r - l + 1",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the length of the string. Each character is added and removed from the set at most once.",
+              "spaceComplexity": "O(m)",
+              "spaceDescription": "Space proportional to the number of unique characters m in the current window.",
+              "exampleWalkthrough": "For s='abcabcbb': r=0('a'): charSet={'a'}, res=1. r=1('b'): charSet={'a','b'}, res=2. r=2('c'): res=3. r=3('a'): duplicate! Remove 'a' at l=0, l=1. Add 'a', res=3. Continue shrinking and expanding window.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Brute Force",
+              "type": "alternative",
+              "explanation": "For each starting position, try to build the longest substring without duplicates. Use a hash set to track seen characters and break when we find a duplicate. Check all possible substrings with O(n*m) time complexity.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s",
+                    "Initialize variable res to zero for result",
+                    "Create empty line",
+                    "Loop through indices from zero to length of s",
+                    "Create empty set charSet for current substring",
+                    "Loop through indices from i to length of s",
+                    "Check if character s at j exists in charSet",
+                    "If exists, break from inner loop",
+                    "Add character s at j to charSet",
+                    "Check if length of charSet is greater than res",
+                    "If greater, set res to length of charSet",
+                    "Return res"
+                  ],
+                  "codeLines": [
+                    "def lengthOfLongestSubstring(s):",
+                    "    res = 0",
+                    "    ",
+                    "    for i in range(len(s)):",
+                    "        charSet = set()",
+                    "        for j in range(i, len(s)):",
+                    "            if s[j] in charSet:",
+                    "                break",
+                    "            charSet.add(s[j])",
+                    "        if len(charSet) > res:",
+                    "            res = len(charSet)",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s",
+                    "Initialize variable res to zero for result",
+                    "Create empty line",
+                    "Loop with i from zero while i less than length of s incrementing i",
+                    "Create new Set object charSet for current substring",
+                    "Loop with j from i while j less than length of s incrementing j",
+                    "Check if charSet has character s at j using the has method",
+                    "If exists, break from inner loop",
+                    "Close the if statement with closing brace",
+                    "Add character s at j to charSet using add method",
+                    "Close the inner for loop with closing brace",
+                    "Check if size of charSet is greater than res",
+                    "If greater, set res to size of charSet",
+                    "Close the if statement with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Return res",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function lengthOfLongestSubstring(s) {",
+                    "    let res = 0;",
+                    "    ",
+                    "    for (let i = 0; i < s.length; i++) {",
+                    "        const charSet = new Set();",
+                    "        for (let j = i; j < s.length; j++) {",
+                    "            if (charSet.has(s[j])) {",
+                    "                break;",
+                    "            }",
+                    "            charSet.add(s[j]);",
+                    "        }",
+                    "        if (charSet.size > res) {",
+                    "            res = charSet.size;",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function lengthOfLongestSubstring that accepts string s and returns integer",
+                    "Initialize variable res to zero for result",
+                    "Create empty line",
+                    "Loop with i from zero while i less than length of s incrementing i",
+                    "Create map charSet with byte keys and boolean values using make",
+                    "Loop with j from i while j less than length of s incrementing j",
+                    "Check if charSet at s at j is true",
+                    "If true, break from inner loop",
+                    "Close the if block with closing brace",
+                    "Set charSet at s at j to true",
+                    "Close the inner for loop with closing brace",
+                    "Check if length of charSet is greater than res",
+                    "If greater, set res to length of charSet",
+                    "Close the if block with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Return res",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func lengthOfLongestSubstring(s string) int {",
+                    "    res := 0",
+                    "",
+                    "    for i := 0; i < len(s); i++ {",
+                    "        charSet := make(map[byte]bool)",
+                    "        for j := i; j < len(s); j++ {",
+                    "            if charSet[s[j]] {",
+                    "                break",
+                    "            }",
+                    "            charSet[s[j]] = true",
+                    "        }",
+                    "        if len(charSet) > res {",
+                    "            res = len(charSet)",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n * m)",
+              "timeDescription": "Time complexity is O(n*m) where n is the length of the string and m is the number of unique characters. For each starting position, we may scan multiple characters.",
+              "spaceComplexity": "O(m)",
+              "spaceDescription": "Space for the hash set storing unique characters in the current substring, where m is the number of unique characters.",
+              "exampleWalkthrough": "For s='abcabcbb': i=0: build 'abc' (len=3), stop at duplicate 'a'. i=1: build 'bca' (len=3), stop at duplicate 'b'. i=2: build 'cab' (len=3). Continue for all positions. Return 3.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "strings",
+            "hash-table",
+            "sliding-window",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
