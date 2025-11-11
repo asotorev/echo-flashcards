@@ -1,0 +1,249 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #20 - Valid Parentheses",
+      "description": "Determine if a string of brackets is valid with proper opening and closing pairs",
+      "cards": [
+        {
+          "id": "leetcode_20_valid_parentheses",
+          "question": "Valid Parentheses: Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: 1) Open brackets must be closed by the same type of brackets. 2) Open brackets must be closed in the correct order. 3) Every close bracket has a corresponding open bracket of the same type.",
+          "solutions": [
+            {
+              "name": "Stack",
+              "type": "optimal",
+              "explanation": "Use a stack to track opening brackets. When we encounter a closing bracket, check if it matches the most recent opening bracket on the stack. Push opening brackets onto the stack and pop when we find matching closing brackets. The string is valid if the stack is empty at the end.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isValid that accepts string s",
+                    "Initialize stack to empty list",
+                    "Create dictionary closeToOpen mapping closing brackets to their corresponding opening brackets",
+                    "Create empty line",
+                    "Loop through each character c in s",
+                    "Check if c exists in closeToOpen",
+                    "Check if stack is not empty and last element of stack equals closeToOpen at c",
+                    "If matched, remove last element from stack",
+                    "Otherwise no match",
+                    "Return False",
+                    "Otherwise c is opening bracket",
+                    "Append c to stack",
+                    "Create empty line",
+                    "Return whether stack is empty"
+                  ],
+                  "codeLines": [
+                    "def isValid(s):",
+                    "    stack = []",
+                    "    closeToOpen = {')': '(', ']': '[', '}': '{'}",
+                    "    ",
+                    "    for c in s:",
+                    "        if c in closeToOpen:",
+                    "            if stack and stack[-1] == closeToOpen[c]:",
+                    "                stack.pop()",
+                    "            else:",
+                    "                return False",
+                    "        else:",
+                    "            stack.append(c)",
+                    "    ",
+                    "    return not stack"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isValid that accepts string s",
+                    "Initialize constant stack to empty array",
+                    "Create object closeToOpen mapping closing brackets to their corresponding opening brackets",
+                    "Create empty line",
+                    "Loop through each character c in s",
+                    "Check if c exists in closeToOpen",
+                    "Check if length of stack is greater than zero and last element of stack equals closeToOpen at c",
+                    "If matched, remove last element from stack using pop",
+                    "Close the if statement with closing brace",
+                    "Otherwise no match",
+                    "Return false",
+                    "Close the else block with closing brace",
+                    "Close the if block with closing brace",
+                    "Otherwise c is opening bracket",
+                    "Append c to stack using push",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Return whether length of stack equals zero",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isValid(s) {",
+                    "    const stack = [];",
+                    "    const closeToOpen = {')': '(', ']': '[', '}': '{'};",
+                    "    ",
+                    "    for (const c of s) {",
+                    "        if (c in closeToOpen) {",
+                    "            if (stack.length > 0 && stack[stack.length - 1] === closeToOpen[c]) {",
+                    "                stack.pop();",
+                    "            } else {",
+                    "                return false;",
+                    "            }",
+                    "        } else {",
+                    "            stack.push(c);",
+                    "        }",
+                    "    }",
+                    "    ",
+                    "    return stack.length === 0;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isValid that accepts string s and returns bool",
+                    "Initialize stack as empty rune slice",
+                    "Create map closeToOpen with rune keys and rune values containing closing to opening bracket mappings",
+                    "Create empty line",
+                    "Loop through s using range to get each character c ignoring the index",
+                    "Check if c exists in closeToOpen by retrieving value open and existence flag exists",
+                    "Check if length of stack is not zero",
+                    "Get last element of stack and store in top",
+                    "Slice stack to remove last element and store back in stack",
+                    "Check if top does not equal open",
+                    "If not matched, return false",
+                    "Close the if block with closing brace",
+                    "Close the if block with closing brace",
+                    "Otherwise stack is empty",
+                    "Return false",
+                    "Close the else block with closing brace",
+                    "Close the if block with closing brace",
+                    "Otherwise c is opening bracket",
+                    "Append c to stack and store back in stack",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Return whether length of stack equals zero",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isValid(s string) bool {",
+                    "    stack := []rune{}",
+                    "    closeToOpen := map[rune]rune{')': '(', ']': '[', '}': '{'}",
+                    "",
+                    "    for _, c := range s {",
+                    "        if open, exists := closeToOpen[c]; exists {",
+                    "            if len(stack) != 0 {",
+                    "                top := stack[len(stack)-1]",
+                    "                stack = stack[:len(stack)-1]",
+                    "                if top != open {",
+                    "                    return false",
+                    "                }",
+                    "            } else {",
+                    "                return false",
+                    "            }",
+                    "        } else {",
+                    "            stack = append(stack, c)",
+                    "        }",
+                    "    }",
+                    "",
+                    "    return len(stack) == 0",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the length of the string. We traverse the string once, with each push and pop operation taking O(1) time.",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for the stack. In the worst case (all opening brackets), the stack contains all n characters.",
+              "exampleWalkthrough": "For s='()[]{}': Process '(', push to stack. Process ')', matches '(', pop. Process '[', push. Process ']', matches '[', pop. Process '{', push. Process '}', matches '{', pop. Stack empty, return true.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Brute Force",
+              "type": "alternative",
+              "explanation": "Repeatedly search for and remove matching pairs of brackets ('()', '[]', '{}') from the string until no more pairs can be found. If the string becomes empty, it was valid. Simple but inefficient with O(n²) time complexity due to repeated string operations.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function isValid that accepts string s",
+                    "Loop while s contains open-close pair of parentheses or s contains open-close pair of curly braces or s contains open-close pair of square brackets",
+                    "Replace all occurrences of open-close parentheses with empty string in s and store back in s",
+                    "Replace all occurrences of open-close curly braces with empty string in s and store back in s",
+                    "Replace all occurrences of open-close square brackets with empty string in s and store back in s",
+                    "Return whether s equals empty string"
+                  ],
+                  "codeLines": [
+                    "def isValid(s):",
+                    "    while '()' in s or '{}' in s or '[]' in s:",
+                    "        s = s.replace('()', '')",
+                    "        s = s.replace('{}', '')",
+                    "        s = s.replace('[]', '')",
+                    "    return s == ''"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function isValid that accepts string s",
+                    "Loop while s includes open-close pair of parentheses or s includes open-close pair of curly braces or s includes open-close pair of square brackets",
+                    "Replace all occurrences of open-close parentheses with empty string in s using replaceAll and store back in s",
+                    "Replace all occurrences of open-close curly braces with empty string in s using replaceAll and store back in s",
+                    "Replace all occurrences of open-close square brackets with empty string in s using replaceAll and store back in s",
+                    "Close the while loop with closing brace",
+                    "Return whether s equals empty string",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function isValid(s) {",
+                    "    while (s.includes('()') || s.includes('{}') || s.includes('[]')) {",
+                    "        s = s.replaceAll('()', '');",
+                    "        s = s.replaceAll('{}', '');",
+                    "        s = s.replaceAll('[]', '');",
+                    "    }",
+                    "    return s === '';",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function isValid that accepts string s and returns bool",
+                    "Loop while s contains open-close pair of parentheses or s contains open-close pair of curly braces or s contains open-close pair of square brackets using strings Contains",
+                    "Replace all occurrences of open-close parentheses with empty string in s using strings ReplaceAll and store back in s",
+                    "Replace all occurrences of open-close curly braces with empty string in s using strings ReplaceAll and store back in s",
+                    "Replace all occurrences of open-close square brackets with empty string in s using strings ReplaceAll and store back in s",
+                    "Close the for loop with closing brace",
+                    "Return whether s equals empty string",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func isValid(s string) bool {",
+                    "    for strings.Contains(s, \"()\") || strings.Contains(s, \"{}\") || strings.Contains(s, \"[]\") {",
+                    "        s = strings.ReplaceAll(s, \"()\", \"\")",
+                    "        s = strings.ReplaceAll(s, \"{}\", \"\")",
+                    "        s = strings.ReplaceAll(s, \"[]\", \"\")",
+                    "    }",
+                    "    return s == \"\"",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n²)",
+              "timeDescription": "Quadratic time where n is the length of the string. In the worst case, we make n/2 iterations, each scanning and replacing the entire string.",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for creating new strings during replacement operations.",
+              "exampleWalkthrough": "For s='()[]{}': First iteration: remove '()', '[]', '{}', s becomes ''. String is empty, return true. For s='([)]': Remove '()', get '[)'. No more pairs, s='[)', return false.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "strings",
+            "stack",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
