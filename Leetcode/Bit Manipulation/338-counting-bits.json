@@ -16,11 +16,11 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array dp of size n plus one initialized with zeros",
-                    "Loop through range from zero to n plus one",
-                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i",
-                    "Return dp"
+                    "Define function countBits that accepts integer n.",
+                    "Create array dp of size n plus one initialized with zeros.",
+                    "Loop through range from zero to n plus one.",
+                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i.",
+                    "Return dp."
                   ],
                   "codeLines": [
                     "def countBits(n):",
@@ -33,13 +33,13 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array dp of size n plus one filled with zeros",
-                    "Start for loop with i from zero while i less than or equal to n incrementing i",
-                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i",
-                    "Close the for loop with closing brace",
-                    "Return dp",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n.",
+                    "Create array dp of size n plus one filled with zeros.",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i.",
+                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i.",
+                    "Close the for loop with closing brace.",
+                    "Return dp.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function countBits(n) {",
@@ -54,13 +54,13 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n and returns slice of integers",
-                    "Create slice dp of size n plus one initialized with zeros using make",
-                    "Start for loop with i from zero while i less than or equal to n incrementing i",
-                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i",
-                    "Close the for loop with closing brace",
-                    "Return dp",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n and returns slice of integers.",
+                    "Create slice dp of size n plus one initialized with zeros using make.",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i.",
+                    "Right shift i by one to get i divided by two, use as index in dp to get its bit count, AND i with one to get last bit, add them together, and store in dp at index i.",
+                    "Close the for loop with closing brace.",
+                    "Return dp.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func countBits(n int) []int {",
@@ -88,14 +88,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array dp of size n plus one initialized with zeros",
-                    "Initialize offset to one",
-                    "Loop through range from one to n plus one",
-                    "Check if offset times two equals i",
-                    "If true, update offset to i as we reached next power of two",
-                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i",
-                    "Return dp"
+                    "Define function countBits that accepts integer n.",
+                    "Create array dp of size n plus one initialized with zeros.",
+                    "Initialize offset to one.",
+                    "Loop through range from one to n plus one.",
+                    "Check if offset times two equals i.",
+                    "If true, update offset to i as we reached next power of two.",
+                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i.",
+                    "Return dp."
                   ],
                   "codeLines": [
                     "def countBits(n):",
@@ -111,17 +111,17 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array dp of size n plus one filled with zeros",
-                    "Initialize offset to one",
-                    "Start for loop with i from one while i less than or equal to n incrementing i",
-                    "Check if offset times two equals i",
-                    "If true, update offset to i as we reached next power of two",
-                    "Close the if statement with closing brace",
-                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i",
-                    "Close the for loop with closing brace",
-                    "Return dp",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n.",
+                    "Create array dp of size n plus one filled with zeros.",
+                    "Initialize offset to one.",
+                    "Start for loop with i from one while i less than or equal to n incrementing i.",
+                    "Check if offset times two equals i.",
+                    "If true, update offset to i as we reached next power of two.",
+                    "Close the if statement with closing brace.",
+                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i.",
+                    "Close the for loop with closing brace.",
+                    "Return dp.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function countBits(n) {",
@@ -140,17 +140,17 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n and returns slice of integers",
-                    "Create slice dp of size n plus one initialized with zeros using make",
-                    "Initialize offset to one",
-                    "Start for loop with i from one while i less than or equal to n incrementing i",
-                    "Check if offset times two equals i",
-                    "If true, update offset to i as we reached next power of two",
-                    "Close the if block with closing brace",
-                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i",
-                    "Close the for loop with closing brace",
-                    "Return dp",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n and returns slice of integers.",
+                    "Create slice dp of size n plus one initialized with zeros using make.",
+                    "Initialize offset to one.",
+                    "Start for loop with i from one while i less than or equal to n incrementing i.",
+                    "Check if offset times two equals i.",
+                    "If true, update offset to i as we reached next power of two.",
+                    "Close the if block with closing brace.",
+                    "Subtract offset from i, use as index in dp to get its bit count, add one, and store in dp at index i.",
+                    "Close the for loop with closing brace.",
+                    "Return dp.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func countBits(n int) []int {",
@@ -182,14 +182,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array res of size n plus one initialized with zeros",
-                    "Loop through range from one to n plus one",
-                    "Assign value i to variable num",
-                    "Loop while num is not equal to zero",
-                    "Increment res at index i by one",
-                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit",
-                    "Return res"
+                    "Define function countBits that accepts integer n.",
+                    "Create array res of size n plus one initialized with zeros.",
+                    "Loop through range from one to n plus one.",
+                    "Assign value i to variable num.",
+                    "Loop while num is not equal to zero.",
+                    "Increment res at index i by one.",
+                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def countBits(n):",
@@ -205,17 +205,17 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array res of size n plus one filled with zeros",
-                    "Start for loop with i from one while i less than or equal to n incrementing i",
-                    "Assign value i to variable num",
-                    "Loop while num is not equal to zero",
-                    "Increment res at index i by one",
-                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit",
-                    "Close the while loop with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n.",
+                    "Create array res of size n plus one filled with zeros.",
+                    "Start for loop with i from one while i less than or equal to n incrementing i.",
+                    "Assign value i to variable num.",
+                    "Loop while num is not equal to zero.",
+                    "Increment res at index i by one.",
+                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit.",
+                    "Close the while loop with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function countBits(n) {",
@@ -234,17 +234,17 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n and returns slice of integers",
-                    "Create slice res of size n plus one initialized with zeros using make",
-                    "Start for loop with i from one while i less than or equal to n incrementing i",
-                    "Assign value i to variable num",
-                    "Loop while num is not equal to zero",
-                    "Increment res at index i by one",
-                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit",
-                    "Close the for loop with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n and returns slice of integers.",
+                    "Create slice res of size n plus one initialized with zeros using make.",
+                    "Start for loop with i from one while i less than or equal to n incrementing i.",
+                    "Assign value i to variable num.",
+                    "Loop while num is not equal to zero.",
+                    "Increment res at index i by one.",
+                    "Subtract one from num, AND with num, and assign result back to num to remove rightmost one bit.",
+                    "Close the for loop with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func countBits(n int) []int {",
@@ -276,15 +276,15 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create empty array res",
-                    "Loop through each num in range from zero to n plus one",
-                    "Initialize one to zero to count set bits",
-                    "Loop through range from zero to thirty-two for each bit position",
-                    "Left shift one by i bits, AND with num, check if result is non-zero",
-                    "If non-zero, increment one by one",
-                    "Append one to res array",
-                    "Return res"
+                    "Define function countBits that accepts integer n.",
+                    "Create empty array res.",
+                    "Loop through each num in range from zero to n plus one.",
+                    "Initialize one to zero to count set bits.",
+                    "Loop through range from zero to thirty-two for each bit position.",
+                    "Left shift one by i bits, AND with num, check if result is non-zero.",
+                    "If non-zero, increment one by one.",
+                    "Append one to res array.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def countBits(n):",
@@ -301,19 +301,19 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create empty array res",
-                    "Start for loop with num from zero while num less than or equal to n incrementing num",
-                    "Initialize one to zero to count set bits",
-                    "Start inner for loop with i from zero while i less than thirty-two incrementing i",
-                    "Left shift one by i bits, AND with num, check if result is non-zero",
-                    "If non-zero, increment one by one",
-                    "Close the if statement with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Push one to res array",
-                    "Close the outer for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n.",
+                    "Create empty array res.",
+                    "Start for loop with num from zero while num less than or equal to n incrementing num.",
+                    "Initialize one to zero to count set bits.",
+                    "Start inner for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Left shift one by i bits, AND with num, check if result is non-zero.",
+                    "If non-zero, increment one by one.",
+                    "Close the if statement with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Push one to res array.",
+                    "Close the outer for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function countBits(n) {",
@@ -334,19 +334,19 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n and returns slice of integers",
-                    "Create empty slice res",
-                    "Start for loop with num from zero while num less than or equal to n incrementing num",
-                    "Initialize one to zero to count set bits",
-                    "Start inner for loop with i from zero while i less than thirty-two incrementing i",
-                    "Left shift one by i bits, AND with num, check if result is not equal to zero",
-                    "If not zero, increment one by one",
-                    "Close the if block with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Append one to res slice",
-                    "Close the outer for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n and returns slice of integers.",
+                    "Create empty slice res.",
+                    "Start for loop with num from zero while num less than or equal to n incrementing num.",
+                    "Initialize one to zero to count set bits.",
+                    "Start inner for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Left shift one by i bits, AND with num, check if result is not equal to zero.",
+                    "If not zero, increment one by one.",
+                    "Close the if block with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Append one to res slice.",
+                    "Close the outer for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func countBits(n int) []int {",
@@ -380,8 +380,8 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create list comprehension that iterates i from zero to n plus one, converts i to binary string using bin, counts occurrences of character one, and return the list"
+                    "Define function countBits that accepts integer n.",
+                    "Create list comprehension that iterates i from zero to n plus one, converts i to binary string using bin, counts occurrences of character one, and return the list."
                   ],
                   "codeLines": [
                     "def countBits(n):",
@@ -391,9 +391,9 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n",
-                    "Create array from zero to n using Array from with length n plus one and mapping function with parameters underscore and i, convert i to binary string using toString with base two, match all occurrences of character one using regex, get length of matches or zero if no matches, and return the array",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n.",
+                    "Create array from zero to n using Array from with length n plus one and mapping function with parameters underscore and i, convert i to binary string using toString with base two, match all occurrences of character one using regex, get length of matches or zero if no matches, and return the array.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function countBits(n) {",
@@ -404,13 +404,13 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function countBits that accepts integer n and returns slice of integers",
-                    "Create slice res of size n plus one initialized with zeros using make",
-                    "Start for loop with i from zero while i less than or equal to n incrementing i",
-                    "Convert i to unsigned integer, pass to bits OnesCount function from math slash bits package, and store result in res at index i",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function countBits that accepts integer n and returns slice of integers.",
+                    "Create slice res of size n plus one initialized with zeros using make.",
+                    "Start for loop with i from zero while i less than or equal to n incrementing i.",
+                    "Convert i to unsigned integer, pass to bits OnesCount function from math slash bits package, and store result in res at index i.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func countBits(n int) []int {",

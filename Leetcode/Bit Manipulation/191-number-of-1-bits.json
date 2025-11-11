@@ -16,12 +16,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Loop while n is non-zero",
-                    "Subtract one from n, AND with n, and assign result back to n to remove rightmost one bit",
-                    "Increment res by one",
-                    "Return res"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Loop while n is non-zero.",
+                    "Subtract one from n, AND with n, and assign result back to n to remove rightmost one bit.",
+                    "Increment res by one.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def hammingWeight(n):",
@@ -35,14 +35,14 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Loop while n is non-zero",
-                    "Subtract one from n, AND with n, and assign result back to n to remove rightmost one bit",
-                    "Increment res by one",
-                    "Close the while loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Loop while n is non-zero.",
+                    "Subtract one from n, AND with n, and assign result back to n to remove rightmost one bit.",
+                    "Increment res by one.",
+                    "Close the while loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hammingWeight(n) {",
@@ -58,14 +58,14 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n and returns int",
-                    "Initialize variable res to zero",
-                    "Loop while n is greater than zero",
-                    "Subtract one from n, AND with n, and assign result back to n to remove rightmost one bit",
-                    "Increment res by one",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n and returns int.",
+                    "Initialize variable res to zero.",
+                    "Loop while n is greater than zero.",
+                    "Subtract one from n, AND with n, and assign result back to n to remove rightmost one bit.",
+                    "Increment res by one.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hammingWeight(n int) int {",
@@ -94,12 +94,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Loop while n is non-zero",
-                    "AND n with one to get least significant bit, check if it equals one, add one to res if true otherwise add zero",
-                    "Right shift n by one bit and assign back to n",
-                    "Return res"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Loop while n is non-zero.",
+                    "AND n with one to get least significant bit, check if it equals one, add one to res if true otherwise add zero.",
+                    "Right shift n by one bit and assign back to n.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def hammingWeight(n):",
@@ -113,14 +113,14 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Loop while n is non-zero",
-                    "AND n with one to get least significant bit, use ternary to add one to res if bit is one otherwise add zero",
-                    "Right shift n by one bit using unsigned right shift and assign back to n",
-                    "Close the while loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Loop while n is non-zero.",
+                    "AND n with one to get least significant bit, use ternary to add one to res if bit is one otherwise add zero.",
+                    "Right shift n by one bit using unsigned right shift and assign back to n.",
+                    "Close the while loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hammingWeight(n) {",
@@ -136,16 +136,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n and returns int",
-                    "Initialize variable res to zero",
-                    "Loop while n is greater than zero",
-                    "Check if AND of n with one equals one",
-                    "If true, increment res by one",
-                    "Close the if block with closing brace",
-                    "Right shift n by one bit and assign back to n",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n and returns int.",
+                    "Initialize variable res to zero.",
+                    "Loop while n is greater than zero.",
+                    "Check if AND of n with one equals one.",
+                    "If true, increment res by one.",
+                    "Close the if block with closing brace.",
+                    "Right shift n by one bit and assign back to n.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hammingWeight(n int) int {",
@@ -176,12 +176,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Loop through range from zero to thirty-two",
-                    "Left shift one by i bits, AND with n, check if result is non-zero",
-                    "If non-zero, increment res by one",
-                    "Return res"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Loop through range from zero to thirty-two.",
+                    "Left shift one by i bits, AND with n, check if result is non-zero.",
+                    "If non-zero, increment res by one.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def hammingWeight(n):",
@@ -195,15 +195,15 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Initialize variable res to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Left shift one by i bits, AND with n, check if result is non-zero",
-                    "If non-zero, increment res by one",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Initialize variable res to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Left shift one by i bits, AND with n, check if result is non-zero.",
+                    "If non-zero, increment res by one.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hammingWeight(n) {",
@@ -220,15 +220,15 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n and returns int",
-                    "Initialize variable res to zero",
-                    "Start for loop with i from zero while i less than thirty-two incrementing i",
-                    "Left shift one by i bits, AND with n, check if result is not equal to zero",
-                    "If not zero, increment res by one",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n and returns int.",
+                    "Initialize variable res to zero.",
+                    "Start for loop with i from zero while i less than thirty-two incrementing i.",
+                    "Left shift one by i bits, AND with n, check if result is not equal to zero.",
+                    "If not zero, increment res by one.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hammingWeight(n int) int {",
@@ -258,8 +258,8 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Convert n to binary string using bin, count occurrences of character one, and return the count"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Convert n to binary string using bin, count occurrences of character one, and return the count."
                   ],
                   "codeLines": [
                     "def hammingWeight(n):",
@@ -269,9 +269,9 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n",
-                    "Convert n to binary string using toString with base two, match all occurrences of character one using regex, get length of matches or zero if no matches, and return the result",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n.",
+                    "Convert n to binary string using toString with base two, match all occurrences of character one using regex, get length of matches or zero if no matches, and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hammingWeight(n) {",
@@ -282,9 +282,9 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hammingWeight that accepts integer n and returns int",
-                    "Convert n to unsigned integer, pass to bits OnesCount function from math slash bits package, and return the result",
-                    "Close function with closing brace"
+                    "Define function hammingWeight that accepts integer n and returns int.",
+                    "Convert n to unsigned integer, pass to bits OnesCount function from math slash bits package, and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hammingWeight(n int) int {",

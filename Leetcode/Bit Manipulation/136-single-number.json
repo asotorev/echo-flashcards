@@ -16,11 +16,11 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Initialize variable res to zero",
-                    "Loop through each number in nums",
-                    "XOR num with res and assign result back to res",
-                    "Return res"
+                    "Define function singleNumber that accepts array nums.",
+                    "Initialize variable res to zero.",
+                    "Loop through each number in nums.",
+                    "XOR num with res and assign result back to res.",
+                    "Return res."
                   ],
                   "codeLines": [
                     "def singleNumber(nums):",
@@ -33,13 +33,13 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Initialize variable res to zero",
-                    "Start for loop iterating through each num in nums",
-                    "XOR num with res and assign result back to res",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts array nums.",
+                    "Initialize variable res to zero.",
+                    "Start for loop iterating through each num in nums.",
+                    "XOR num with res and assign result back to res.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function singleNumber(nums) {",
@@ -54,13 +54,13 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function singleNumber that accepts slice of integers nums and returns int",
-                    "Initialize variable res to zero",
-                    "Loop through nums using range to get each num, ignoring index",
-                    "XOR num with res and assign result back to res",
-                    "Close the for loop with closing brace",
-                    "Return res",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts slice of integers nums and returns int.",
+                    "Initialize variable res to zero.",
+                    "Loop through nums using range to get each num, ignoring index.",
+                    "XOR num with res and assign result back to res.",
+                    "Close the for loop with closing brace.",
+                    "Return res.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func singleNumber(nums []int) int {",
@@ -88,13 +88,13 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Create empty set called seen",
-                    "Loop through each number in nums",
-                    "Check if num exists in seen set",
-                    "If num exists in seen, remove num from seen",
-                    "If num does not exist, add num to seen",
-                    "Convert seen set to list, get element at index zero, and return it"
+                    "Define function singleNumber that accepts array nums.",
+                    "Create empty set called seen.",
+                    "Loop through each number in nums.",
+                    "Check if num exists in seen set.",
+                    "If num exists in seen, remove num from seen.",
+                    "If num does not exist, add num to seen.",
+                    "Convert seen set to list, get element at index zero, and return it."
                   ],
                   "codeLines": [
                     "def singleNumber(nums):",
@@ -110,17 +110,17 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Create new Set object called seen",
-                    "Start for loop iterating through each num in nums",
-                    "Check if seen has num using has method",
-                    "If num exists, delete num from seen using delete method",
-                    "Close the if statement with closing brace",
-                    "If num does not exist, add num to seen using add method",
-                    "Close the else statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "Convert seen to array using Array from, get element at index zero, and return it",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts array nums.",
+                    "Create new Set object called seen.",
+                    "Start for loop iterating through each num in nums.",
+                    "Check if seen has num using has method.",
+                    "If num exists, delete num from seen using delete method.",
+                    "Close the if statement with closing brace.",
+                    "If num does not exist, add num to seen using add method.",
+                    "Close the else statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Convert seen to array using Array from, get element at index zero, and return it.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function singleNumber(nums) {",
@@ -139,20 +139,20 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function singleNumber that accepts slice of integers nums and returns int",
-                    "Create map seen with integer keys and boolean values using make",
-                    "Loop through nums using range to get each num, ignoring index",
-                    "Check if seen at num is true",
-                    "If true, delete num from seen map",
-                    "Close the if block with closing brace",
-                    "If false, set seen at num to true",
-                    "Close the else block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Loop through seen map using range to get each num key",
-                    "Return num as it is the only remaining element",
-                    "Close the for loop with closing brace",
-                    "Return zero as fallback",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts slice of integers nums and returns int.",
+                    "Create map seen with integer keys and boolean values using make.",
+                    "Loop through nums using range to get each num, ignoring index.",
+                    "Check if seen at num is true.",
+                    "If true, delete num from seen map.",
+                    "Close the if block with closing brace.",
+                    "If false, set seen at num to true.",
+                    "Close the else block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Loop through seen map using range to get each num key.",
+                    "Return num as it is the only remaining element.",
+                    "Close the for loop with closing brace.",
+                    "Return zero as fallback.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func singleNumber(nums []int) int {",
@@ -187,14 +187,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Sort array nums in place",
-                    "Initialize variable i to zero",
-                    "Loop while i is less than length of nums minus one",
-                    "Check if element at i equals element at i plus one",
-                    "If equal, increment i by two to skip the pair",
-                    "If not equal, return element at index i as it is the single number",
-                    "After loop, return element at index i"
+                    "Define function singleNumber that accepts array nums.",
+                    "Sort array nums in place.",
+                    "Initialize variable i to zero.",
+                    "Loop while i is less than length of nums minus one.",
+                    "Check if element at i equals element at i plus one.",
+                    "If equal, increment i by two to skip the pair.",
+                    "If not equal, return element at index i as it is the single number.",
+                    "After loop, return element at index i."
                   ],
                   "codeLines": [
                     "def singleNumber(nums):",
@@ -211,18 +211,18 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Sort array nums in place using sort with comparison function that takes a and b and returns a minus b",
-                    "Initialize variable i to zero",
-                    "Loop while i is less than length of nums minus one",
-                    "Check if element at i equals element at i plus one",
-                    "If equal, increment i by two to skip the pair",
-                    "Close the if statement with closing brace",
-                    "If not equal, return element at index i as it is the single number",
-                    "Close the else statement with closing brace",
-                    "Close the while loop with closing brace",
-                    "After loop, return element at index i",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts array nums.",
+                    "Sort array nums in place using sort with comparison function that takes a and b and returns a minus b.",
+                    "Initialize variable i to zero.",
+                    "Loop while i is less than length of nums minus one.",
+                    "Check if element at i equals element at i plus one.",
+                    "If equal, increment i by two to skip the pair.",
+                    "Close the if statement with closing brace.",
+                    "If not equal, return element at index i as it is the single number.",
+                    "Close the else statement with closing brace.",
+                    "Close the while loop with closing brace.",
+                    "After loop, return element at index i.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function singleNumber(nums) {",
@@ -242,18 +242,18 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function singleNumber that accepts slice of integers nums and returns int",
-                    "Sort array nums in place using sort Ints",
-                    "Initialize variable i to zero",
-                    "Loop while i is less than length of nums minus one",
-                    "Check if element at i equals element at i plus one",
-                    "If equal, increment i by two to skip the pair",
-                    "Close the if block with closing brace",
-                    "If not equal, return element at index i as it is the single number",
-                    "Close the else block with closing brace",
-                    "Close the for loop with closing brace",
-                    "After loop, return element at index i",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts slice of integers nums and returns int.",
+                    "Sort array nums in place using sort Ints.",
+                    "Initialize variable i to zero.",
+                    "Loop while i is less than length of nums minus one.",
+                    "Check if element at i equals element at i plus one.",
+                    "If equal, increment i by two to skip the pair.",
+                    "Close the if block with closing brace.",
+                    "If not equal, return element at index i as it is the single number.",
+                    "Close the else block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "After loop, return element at index i.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func singleNumber(nums []int) int {",
@@ -286,15 +286,15 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Loop through array indices from zero to length of nums",
-                    "Initialize flag to True to track if current number is unique",
-                    "Loop through array indices from zero to length of nums for comparison",
-                    "Check if index i is not equal to j and element at i equals element at j",
-                    "If duplicate found, set flag to False",
-                    "Exit the inner loop with break",
-                    "Check if flag is still True meaning no duplicate was found",
-                    "If flag is True, return element at index i"
+                    "Define function singleNumber that accepts array nums.",
+                    "Loop through array indices from zero to length of nums.",
+                    "Initialize flag to True to track if current number is unique.",
+                    "Loop through array indices from zero to length of nums for comparison.",
+                    "Check if index i is not equal to j and element at i equals element at j.",
+                    "If duplicate found, set flag to False.",
+                    "Exit the inner loop with break.",
+                    "Check if flag is still True meaning no duplicate was found.",
+                    "If flag is True, return element at index i."
                   ],
                   "codeLines": [
                     "def singleNumber(nums):",
@@ -311,20 +311,20 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function singleNumber that accepts array nums",
-                    "Start outer loop with i from zero while i less than length of nums incrementing i",
-                    "Initialize flag to true to track if current number is unique",
-                    "Start inner loop with j from zero while j less than length of nums incrementing j",
-                    "Check if index i is not equal to j and element at i equals element at j",
-                    "If duplicate found, set flag to false",
-                    "Exit the inner loop with break",
-                    "Close the if statement with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Check if flag is still true meaning no duplicate was found",
-                    "If flag is true, return element at index i",
-                    "Close the if statement with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts array nums.",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i.",
+                    "Initialize flag to true to track if current number is unique.",
+                    "Start inner loop with j from zero while j less than length of nums incrementing j.",
+                    "Check if index i is not equal to j and element at i equals element at j.",
+                    "If duplicate found, set flag to false.",
+                    "Exit the inner loop with break.",
+                    "Close the if statement with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Check if flag is still true meaning no duplicate was found.",
+                    "If flag is true, return element at index i.",
+                    "Close the if statement with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function singleNumber(nums) {",
@@ -346,21 +346,21 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function singleNumber that accepts slice of integers nums and returns int",
-                    "Start outer loop with i from zero while i less than length of nums incrementing i",
-                    "Initialize flag to true to track if current number is unique",
-                    "Start inner loop with j from zero while j less than length of nums incrementing j",
-                    "Check if index i is not equal to j and element at i equals element at j",
-                    "If duplicate found, set flag to false",
-                    "Exit the inner loop with break",
-                    "Close the if block with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Check if flag is still true meaning no duplicate was found",
-                    "If flag is true, return element at index i",
-                    "Close the if block with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "Return zero as fallback",
-                    "Close function with closing brace"
+                    "Define function singleNumber that accepts slice of integers nums and returns int.",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i.",
+                    "Initialize flag to true to track if current number is unique.",
+                    "Start inner loop with j from zero while j less than length of nums incrementing j.",
+                    "Check if index i is not equal to j and element at i equals element at j.",
+                    "If duplicate found, set flag to false.",
+                    "Exit the inner loop with break.",
+                    "Close the if block with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Check if flag is still true meaning no duplicate was found.",
+                    "If flag is true, return element at index i.",
+                    "Close the if block with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "Return zero as fallback.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func singleNumber(nums []int) int {",

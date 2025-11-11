@@ -16,15 +16,15 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hasCycle that accepts head",
-                    "Set slow to head",
-                    "Set fast to head",
-                    "Loop while fast exists and fast next exists",
-                    "Set slow to slow next",
-                    "Set fast to fast next next",
-                    "Check if slow equals fast",
-                    "Return True",
-                    "Return False"
+                    "Define function hasCycle that accepts head.",
+                    "Set slow to head.",
+                    "Set fast to head.",
+                    "Loop while fast exists and fast next exists.",
+                    "Set slow to slow next.",
+                    "Set fast to fast next next.",
+                    "Check if slow equals fast.",
+                    "Return True.",
+                    "Return False."
                   ],
                   "codeLines": [
                     "def hasCycle(head):",
@@ -41,18 +41,18 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hasCycle that accepts head",
-                    "Initialize variable slow to head",
-                    "Initialize variable fast to head",
-                    "Loop while fast exists and fast next exists",
-                    "Set slow to slow next",
-                    "Set fast to fast next next",
-                    "Check if slow equals fast",
-                    "Return true",
-                    "Close the if block with closing brace",
-                    "Close the while loop with closing brace",
-                    "Return false",
-                    "Close the function with closing brace"
+                    "Define function hasCycle that accepts head.",
+                    "Initialize variable slow to head.",
+                    "Initialize variable fast to head.",
+                    "Loop while fast exists and fast next exists.",
+                    "Set slow to slow next.",
+                    "Set fast to fast next next.",
+                    "Check if slow equals fast.",
+                    "Return true.",
+                    "Close the if block with closing brace.",
+                    "Close the while loop with closing brace.",
+                    "Return false.",
+                    "Close the function with closing brace."
                   ],
                   "codeLines": [
                     "function hasCycle(head) {",
@@ -72,18 +72,18 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hasCycle that accepts pointer to ListNode head and returns bool",
-                    "Set slow to head",
-                    "Set fast to head",
-                    "Loop while fast is not nil and fast Next is not nil",
-                    "Set slow to slow Next",
-                    "Set fast to fast Next Next",
-                    "Check if slow equals fast",
-                    "Return true",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "Return false",
-                    "Close the function with closing brace"
+                    "Define function hasCycle that accepts pointer to ListNode head and returns bool.",
+                    "Set slow to head.",
+                    "Set fast to head.",
+                    "Loop while fast is not nil and fast Next is not nil.",
+                    "Set slow to slow Next.",
+                    "Set fast to fast Next Next.",
+                    "Check if slow equals fast.",
+                    "Return true.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "Return false.",
+                    "Close the function with closing brace."
                   ],
                   "codeLines": [
                     "func hasCycle(head *ListNode) bool {",
@@ -116,15 +116,15 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hasCycle that accepts head",
-                    "Initialize seen as empty set",
-                    "Set cur to head",
-                    "Loop while cur exists",
-                    "Check if cur is in seen",
-                    "Return True",
-                    "Add cur to seen",
-                    "Set cur to cur next",
-                    "Return False"
+                    "Define function hasCycle that accepts head.",
+                    "Initialize seen as empty set.",
+                    "Set cur to head.",
+                    "Loop while cur exists.",
+                    "Check if cur is in seen.",
+                    "Return True.",
+                    "Add cur to seen.",
+                    "Set cur to cur next.",
+                    "Return False."
                   ],
                   "codeLines": [
                     "def hasCycle(head):",
@@ -141,18 +141,18 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hasCycle that accepts head",
-                    "Initialize constant seen as new Set",
-                    "Initialize variable cur to head",
-                    "Loop while cur exists",
-                    "Check if seen has cur",
-                    "Return true",
-                    "Close the if block with closing brace",
-                    "Add cur to seen",
-                    "Set cur to cur next",
-                    "Close the while loop with closing brace",
-                    "Return false",
-                    "Close the function with closing brace"
+                    "Define function hasCycle that accepts head.",
+                    "Initialize constant seen as new Set.",
+                    "Initialize variable cur to head.",
+                    "Loop while cur exists.",
+                    "Check if seen has cur.",
+                    "Return true.",
+                    "Close the if block with closing brace.",
+                    "Add cur to seen.",
+                    "Set cur to cur next.",
+                    "Close the while loop with closing brace.",
+                    "Return false.",
+                    "Close the function with closing brace."
                   ],
                   "codeLines": [
                     "function hasCycle(head) {",
@@ -172,18 +172,18 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hasCycle that accepts pointer to ListNode head and returns bool",
-                    "Create map with pointer to ListNode keys and bool values using make and store in seen",
-                    "Set cur to head",
-                    "Loop while cur is not nil",
-                    "Check if seen at cur is true",
-                    "Return true",
-                    "Close the if block with closing brace",
-                    "Set seen at cur to true",
-                    "Set cur to cur Next",
-                    "Close the for loop with closing brace",
-                    "Return false",
-                    "Close the function with closing brace"
+                    "Define function hasCycle that accepts pointer to ListNode head and returns bool.",
+                    "Create map with pointer to ListNode keys and bool values using make and store in seen.",
+                    "Set cur to head.",
+                    "Loop while cur is not nil.",
+                    "Check if seen at cur is true.",
+                    "Return true.",
+                    "Close the if block with closing brace.",
+                    "Set seen at cur to true.",
+                    "Set cur to cur Next.",
+                    "Close the for loop with closing brace.",
+                    "Return false.",
+                    "Close the function with closing brace."
                   ],
                   "codeLines": [
                     "func hasCycle(head *ListNode) bool {",

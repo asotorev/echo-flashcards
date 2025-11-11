@@ -16,17 +16,17 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return False immediately",
-                    "Create array count of 26 zeros for each lowercase letter",
-                    "Loop through indices from zero to length of s",
-                    "Get character s at index i, calculate its alphabetical position by subtracting ordinal of a, use that as index in count array, and increment by one",
-                    "Get character t at index i, calculate its alphabetical position by subtracting ordinal of a, use that as index in count array, and decrement by one",
-                    "Loop through each value in the count array",
-                    "Check if current value is not equal to zero",
-                    "If not zero, return False as frequencies do not match",
-                    "After all checks, return True"
+                    "Define function isAnagram that accepts two strings s and t.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return False immediately.",
+                    "Create array count of 26 zeros for each lowercase letter.",
+                    "Loop through indices from zero to length of s.",
+                    "Get character s at index i, calculate its alphabetical position by subtracting ordinal of a, use that as index in count array, and increment by one.",
+                    "Get character t at index i, calculate its alphabetical position by subtracting ordinal of a, use that as index in count array, and decrement by one.",
+                    "Loop through each value in the count array.",
+                    "Check if current value is not equal to zero.",
+                    "If not zero, return False as frequencies do not match.",
+                    "After all checks, return True."
                   ],
                   "codeLines": [
                     "def isAnagram(s, t):",
@@ -45,22 +45,22 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return false immediately",
-                    "Close the if statement with closing brace",
-                    "Create constant count as new array of 26 elements filled with zero",
-                    "Start for loop with i from zero while i less than length of s incrementing i",
-                    "Get character code of s at index i, subtract character code of a to get alphabetical position, use that as index in count array, and increment by one",
-                    "Get character code of t at index i, subtract character code of a to get alphabetical position, use that as index in count array, and decrement by one",
-                    "Close the for loop with closing brace",
-                    "Start for loop iterating through each value of count array",
-                    "Check if current value is not equal to zero",
-                    "If not zero, return false as frequencies do not match",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "After all checks, return true",
-                    "Close function with closing brace"
+                    "Define function isAnagram that accepts two strings s and t.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return false immediately.",
+                    "Close the if statement with closing brace.",
+                    "Create constant count as new array of 26 elements filled with zero.",
+                    "Start for loop with i from zero while i less than length of s incrementing i.",
+                    "Get character code of s at index i, subtract character code of a to get alphabetical position, use that as index in count array, and increment by one.",
+                    "Get character code of t at index i, subtract character code of a to get alphabetical position, use that as index in count array, and decrement by one.",
+                    "Close the for loop with closing brace.",
+                    "Start for loop iterating through each value of count array.",
+                    "Check if current value is not equal to zero.",
+                    "If not zero, return false as frequencies do not match.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "After all checks, return true.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function isAnagram(s, t) {",
@@ -84,22 +84,22 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t and returns bool",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return false immediately",
-                    "Close the if block with closing brace",
-                    "Declare count as array of 26 integers initialized to zero",
-                    "Start for loop with i from zero while i less than length of s incrementing i",
-                    "Get character s at index i, subtract byte value of a to get alphabetical position, use that as index in count array, and increment by one",
-                    "Get character t at index i, subtract byte value of a to get alphabetical position, use that as index in count array, and decrement by one",
-                    "Close the for loop with closing brace",
-                    "Start for loop iterating through each value in count array using range",
-                    "Check if current value is not equal to zero",
-                    "If not zero, return false as frequencies do not match",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "After all checks, return true",
-                    "Close function with closing brace"
+                    "Define function isAnagram that accepts two strings s and t and returns bool.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return false immediately.",
+                    "Close the if block with closing brace.",
+                    "Declare count as array of 26 integers initialized to zero.",
+                    "Start for loop with i from zero while i less than length of s incrementing i.",
+                    "Get character s at index i, subtract byte value of a to get alphabetical position, use that as index in count array, and increment by one.",
+                    "Get character t at index i, subtract byte value of a to get alphabetical position, use that as index in count array, and decrement by one.",
+                    "Close the for loop with closing brace.",
+                    "Start for loop iterating through each value in count array using range.",
+                    "Check if current value is not equal to zero.",
+                    "If not zero, return false as frequencies do not match.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "After all checks, return true.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func isAnagram(s string, t string) bool {",
@@ -136,14 +136,14 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return False immediately",
-                    "Create two empty dictionaries countS and countT",
-                    "Loop through indices from zero to length of s",
-                    "Get character s at index i, retrieve its current count from countS defaulting to zero, add one to it, and store the result back in countS at that character",
-                    "Get character t at index i, retrieve its current count from countT defaulting to zero, add one to it, and store the result back in countT at that character",
-                    "Return whether countS equals countT"
+                    "Define function isAnagram that accepts two strings s and t.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return False immediately.",
+                    "Create two empty dictionaries countS and countT.",
+                    "Loop through indices from zero to length of s.",
+                    "Get character s at index i, retrieve its current count from countS defaulting to zero, add one to it, and store the result back in countS at that character.",
+                    "Get character t at index i, retrieve its current count from countT defaulting to zero, add one to it, and store the result back in countT at that character.",
+                    "Return whether countS equals countT."
                   ],
                   "codeLines": [
                     "def isAnagram(s, t):",
@@ -159,17 +159,17 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return false immediately",
-                    "Close the if statement with closing brace",
-                    "Create two empty objects countS and countT",
-                    "Start for loop with i from zero while i less than length of s incrementing i",
-                    "Get character s at index i, retrieve its current count from countS defaulting to zero, add one to it, and store the result back in countS at that character",
-                    "Get character t at index i, retrieve its current count from countT defaulting to zero, add one to it, and store the result back in countT at that character",
-                    "Close the for loop with closing brace",
-                    "Return whether JSON stringified countS equals JSON stringified countT",
-                    "Close function with closing brace"
+                    "Define function isAnagram that accepts two strings s and t.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return false immediately.",
+                    "Close the if statement with closing brace.",
+                    "Create two empty objects countS and countT.",
+                    "Start for loop with i from zero while i less than length of s incrementing i.",
+                    "Get character s at index i, retrieve its current count from countS defaulting to zero, add one to it, and store the result back in countS at that character.",
+                    "Get character t at index i, retrieve its current count from countT defaulting to zero, add one to it, and store the result back in countT at that character.",
+                    "Close the for loop with closing brace.",
+                    "Return whether JSON stringified countS equals JSON stringified countT.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function isAnagram(s, t) {",
@@ -188,25 +188,25 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t and returns bool",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return false immediately",
-                    "Close the if block with closing brace",
-                    "Declare countS and countT as maps with rune keys and int values using make",
-                    "Start for loop with i from zero while i less than length of s incrementing i",
-                    "Get character s at index i, convert to rune, use as key in countS map, and increment by one",
-                    "Get character t at index i, convert to rune, use as key in countT map, and increment by one",
-                    "Close the for loop with closing brace",
-                    "Check if length of countS does not equal length of countT",
-                    "If lengths differ, return false",
-                    "Close the if block with closing brace",
-                    "Start for loop iterating through each char and count in countS using range",
-                    "Check if countT at char does not equal count",
-                    "If not equal, return false",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "After all checks, return true",
-                    "Close function with closing brace"
+                    "Define function isAnagram that accepts two strings s and t and returns bool.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return false immediately.",
+                    "Close the if block with closing brace.",
+                    "Declare countS and countT as maps with rune keys and int values using make.",
+                    "Start for loop with i from zero while i less than length of s incrementing i.",
+                    "Get character s at index i, convert to rune, use as key in countS map, and increment by one.",
+                    "Get character t at index i, convert to rune, use as key in countT map, and increment by one.",
+                    "Close the for loop with closing brace.",
+                    "Check if length of countS does not equal length of countT.",
+                    "If lengths differ, return false.",
+                    "Close the if block with closing brace.",
+                    "Start for loop iterating through each char and count in countS using range.",
+                    "Check if countT at char does not equal count.",
+                    "If not equal, return false.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "After all checks, return true.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func isAnagram(s string, t string) bool {",
@@ -246,10 +246,10 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return False immediately",
-                    "Sort string s into alphabetical order, sort string t into alphabetical order, compare if they are equal, and return the result"
+                    "Define function isAnagram that accepts two strings s and t.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return False immediately.",
+                    "Sort string s into alphabetical order, sort string t into alphabetical order, compare if they are equal, and return the result."
                   ],
                   "codeLines": [
                     "def isAnagram(s, t):",
@@ -261,12 +261,12 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return false immediately",
-                    "Close the if statement with closing brace",
-                    "Split string s into array of characters, sort the array alphabetically, join back into string, do the same for string t, compare if equal, and return the result",
-                    "Close function with closing brace"
+                    "Define function isAnagram that accepts two strings s and t.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return false immediately.",
+                    "Close the if statement with closing brace.",
+                    "Split string s into array of characters, sort the array alphabetically, join back into string, do the same for string t, compare if equal, and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function isAnagram(s, t) {",
@@ -280,16 +280,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function isAnagram that accepts two strings s and t and returns bool",
-                    "Check if length of s does not equal length of t",
-                    "If lengths differ, return false immediately",
-                    "Close the if block with closing brace",
-                    "Convert string s to slice of runes and assign to sRunes",
-                    "Convert string t to slice of runes and assign to tRunes",
-                    "Sort sRunes using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if sRunes at i is less than sRunes at j",
-                    "Sort tRunes using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if tRunes at i is less than tRunes at j",
-                    "Convert sRunes back to string, convert tRunes back to string, compare if they are equal, and return the result",
-                    "Close function with closing brace"
+                    "Define function isAnagram that accepts two strings s and t and returns bool.",
+                    "Check if length of s does not equal length of t.",
+                    "If lengths differ, return false immediately.",
+                    "Close the if block with closing brace.",
+                    "Convert string s to slice of runes and assign to sRunes.",
+                    "Convert string t to slice of runes and assign to tRunes.",
+                    "Sort sRunes using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if sRunes at i is less than sRunes at j.",
+                    "Sort tRunes using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if tRunes at i is less than tRunes at j.",
+                    "Convert sRunes back to string, convert tRunes back to string, compare if they are equal, and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func isAnagram(s string, t string) bool {",

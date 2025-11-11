@@ -16,13 +16,13 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Create empty set called seen to track numbers we have encountered",
-                    "Loop through each number in nums",
-                    "Check if current number exists in seen set",
-                    "If number exists in seen, return True as we found a duplicate",
-                    "Add current number to seen set",
-                    "After checking all numbers, return False as no duplicates were found"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Create empty set called seen to track numbers we have encountered.",
+                    "Loop through each number in nums.",
+                    "Check if current number exists in seen set.",
+                    "If number exists in seen, return True as we found a duplicate.",
+                    "Add current number to seen set.",
+                    "After checking all numbers, return False as no duplicates were found."
                   ],
                   "codeLines": [
                     "def hasDuplicate(nums):",
@@ -37,16 +37,16 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Create new Set object called seen to track numbers we have encountered",
-                    "Start for loop iterating through each number in nums",
-                    "Check if seen set has current number using the has method",
-                    "If number exists in seen, return true as we found a duplicate",
-                    "Close the if statement with closing brace",
-                    "Add current number to seen set using the add method",
-                    "Close the for loop with closing brace",
-                    "After checking all numbers, return false as no duplicates were found",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Create new Set object called seen to track numbers we have encountered.",
+                    "Start for loop iterating through each number in nums.",
+                    "Check if seen set has current number using the has method.",
+                    "If number exists in seen, return true as we found a duplicate.",
+                    "Close the if statement with closing brace.",
+                    "Add current number to seen set using the add method.",
+                    "Close the for loop with closing brace.",
+                    "After checking all numbers, return false as no duplicates were found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hasDuplicate(nums) {",
@@ -64,16 +64,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts slice of integers nums and returns bool",
-                    "Create map seen with integer keys and boolean values using make",
-                    "Loop through nums using range to get each value num ignoring the index",
-                    "Check if seen map at key num is true",
-                    "If true, return true as we found a duplicate",
-                    "Close the if block with closing brace",
-                    "Set seen map at key num to true to mark this number as encountered",
-                    "Close the for loop with closing brace",
-                    "After checking all numbers, return false as no duplicates were found",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts slice of integers nums and returns bool.",
+                    "Create map seen with integer keys and boolean values using make.",
+                    "Loop through nums using range to get each value num ignoring the index.",
+                    "Check if seen map at key num is true.",
+                    "If true, return true as we found a duplicate.",
+                    "Close the if block with closing brace.",
+                    "Set seen map at key num to true to mark this number as encountered.",
+                    "Close the for loop with closing brace.",
+                    "After checking all numbers, return false as no duplicates were found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hasDuplicate(nums []int) bool {",
@@ -104,11 +104,11 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Create empty set called seen",
-                    "Loop through each number in nums",
-                    "Add current number to seen set",
-                    "Get length of seen set, get length of nums array, compare if seen length is less than nums length, and return the result"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Create empty set called seen.",
+                    "Loop through each number in nums.",
+                    "Add current number to seen set.",
+                    "Get length of seen set, get length of nums array, compare if seen length is less than nums length, and return the result."
                   ],
                   "codeLines": [
                     "def hasDuplicate(nums):",
@@ -121,13 +121,13 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Create new Set object called seen",
-                    "Start for loop iterating through each number in nums",
-                    "Add current number to seen set using the add method",
-                    "Close the for loop with closing brace",
-                    "Get size property of seen set, get length property of nums array, compare if size is less than length, and return the result",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Create new Set object called seen.",
+                    "Start for loop iterating through each number in nums.",
+                    "Add current number to seen set using the add method.",
+                    "Close the for loop with closing brace.",
+                    "Get size property of seen set, get length property of nums array, compare if size is less than length, and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hasDuplicate(nums) {",
@@ -142,13 +142,13 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts slice of integers nums and returns bool",
-                    "Create map seen with integer keys and empty struct values using make",
-                    "Loop through nums using range to get each value num ignoring the index",
-                    "Set seen map at key num to empty struct to mark this number as encountered",
-                    "Close the for loop with closing brace",
-                    "Get length of seen map, get length of nums slice, compare if map length is less than slice length, and return the result",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts slice of integers nums and returns bool.",
+                    "Create map seen with integer keys and empty struct values using make.",
+                    "Loop through nums using range to get each value num ignoring the index.",
+                    "Set seen map at key num to empty struct to mark this number as encountered.",
+                    "Close the for loop with closing brace.",
+                    "Get length of seen map, get length of nums slice, compare if map length is less than slice length, and return the result.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hasDuplicate(nums []int) bool {",
@@ -176,12 +176,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Sort the nums array in place in ascending order",
-                    "Loop through indices from one to length of nums",
-                    "Get element nums at index i, get element nums at index i minus one, compare if they are equal",
-                    "If elements are equal, return True as we found adjacent duplicates",
-                    "After checking all adjacent pairs, return False as no duplicates were found"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Sort the nums array in place in ascending order.",
+                    "Loop through indices from one to length of nums.",
+                    "Get element nums at index i, get element nums at index i minus one, compare if they are equal.",
+                    "If elements are equal, return True as we found adjacent duplicates.",
+                    "After checking all adjacent pairs, return False as no duplicates were found."
                   ],
                   "codeLines": [
                     "def hasDuplicate(nums):",
@@ -195,15 +195,15 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Sort nums array in place using sort method with comparison function that takes a and b and returns a minus b for ascending order",
-                    "Start for loop with i from one while i less than length of nums incrementing i",
-                    "Get element nums at index i, get element nums at index i minus one, compare if they are equal",
-                    "If elements are equal, return true as we found adjacent duplicates",
-                    "Close the if statement with closing brace",
-                    "Close the for loop with closing brace",
-                    "After checking all adjacent pairs, return false as no duplicates were found",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Sort nums array in place using sort method with comparison function that takes a and b and returns a minus b for ascending order.",
+                    "Start for loop with i from one while i less than length of nums incrementing i.",
+                    "Get element nums at index i, get element nums at index i minus one, compare if they are equal.",
+                    "If elements are equal, return true as we found adjacent duplicates.",
+                    "Close the if statement with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "After checking all adjacent pairs, return false as no duplicates were found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hasDuplicate(nums) {",
@@ -220,15 +220,15 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts slice of integers nums and returns bool",
-                    "Sort nums slice in place in ascending order using sort Ints function",
-                    "Start for loop with i from one while i less than length of nums incrementing i",
-                    "Get element nums at index i, get element nums at index i minus one, compare if they are equal",
-                    "If elements are equal, return true as we found adjacent duplicates",
-                    "Close the if block with closing brace",
-                    "Close the for loop with closing brace",
-                    "After checking all adjacent pairs, return false as no duplicates were found",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts slice of integers nums and returns bool.",
+                    "Sort nums slice in place in ascending order using sort Ints function.",
+                    "Start for loop with i from one while i less than length of nums incrementing i.",
+                    "Get element nums at index i, get element nums at index i minus one, compare if they are equal.",
+                    "If elements are equal, return true as we found adjacent duplicates.",
+                    "Close the if block with closing brace.",
+                    "Close the for loop with closing brace.",
+                    "After checking all adjacent pairs, return false as no duplicates were found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hasDuplicate(nums []int) bool {",
@@ -258,12 +258,12 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Start outer loop iterating through indices from zero to length of nums",
-                    "Start inner loop iterating from i plus one to length of nums",
-                    "Get element nums at i, get element nums at j, compare if they are equal",
-                    "If elements are equal, return True as we found a duplicate",
-                    "After checking all pairs, return False as no duplicates were found"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Start outer loop iterating through indices from zero to length of nums.",
+                    "Start inner loop iterating from i plus one to length of nums.",
+                    "Get element nums at i, get element nums at j, compare if they are equal.",
+                    "If elements are equal, return True as we found a duplicate.",
+                    "After checking all pairs, return False as no duplicates were found."
                   ],
                   "codeLines": [
                     "def hasDuplicate(nums):",
@@ -277,16 +277,16 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts array nums",
-                    "Start outer loop with i from zero while i less than length of nums incrementing i",
-                    "Start inner loop with j from i plus one while j less than length of nums incrementing j",
-                    "Get element nums at i, get element nums at j, compare if they are equal",
-                    "If elements are equal, return true as we found a duplicate",
-                    "Close the if statement with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "After checking all pairs, return false as no duplicates were found",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts array nums.",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i.",
+                    "Start inner loop with j from i plus one while j less than length of nums incrementing j.",
+                    "Get element nums at i, get element nums at j, compare if they are equal.",
+                    "If elements are equal, return true as we found a duplicate.",
+                    "Close the if statement with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "After checking all pairs, return false as no duplicates were found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function hasDuplicate(nums) {",
@@ -304,16 +304,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function hasDuplicate that accepts slice of integers nums and returns bool",
-                    "Start outer loop with i from zero while i less than length of nums incrementing i",
-                    "Start inner loop with j from i plus one while j less than length of nums incrementing j",
-                    "Get element nums at i, get element nums at j, compare if they are equal",
-                    "If elements are equal, return true as we found a duplicate",
-                    "Close the if block with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "After checking all pairs, return false as no duplicates were found",
-                    "Close function with closing brace"
+                    "Define function hasDuplicate that accepts slice of integers nums and returns bool.",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i.",
+                    "Start inner loop with j from i plus one while j less than length of nums incrementing j.",
+                    "Get element nums at i, get element nums at j, compare if they are equal.",
+                    "If elements are equal, return true as we found a duplicate.",
+                    "Close the if block with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "After checking all pairs, return false as no duplicates were found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func hasDuplicate(nums []int) bool {",

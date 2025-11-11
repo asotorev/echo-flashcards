@@ -16,11 +16,11 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function twoSum that accepts array nums and integer target",
-                    "Start outer loop iterating through indices from zero to length of nums",
-                    "Start inner loop iterating from i plus one to length of nums",
-                    "Get element nums at i, get element nums at j, add them together, check if sum equals target",
-                    "If sum equals target, return list containing indices i and j"
+                    "Define function twoSum that accepts array nums and integer target.",
+                    "Start outer loop iterating through indices from zero to length of nums.",
+                    "Start inner loop iterating from i plus one to length of nums.",
+                    "Get element nums at i, get element nums at j, add them together, check if sum equals target.",
+                    "If sum equals target, return list containing indices i and j."
                   ],
                   "codeLines": [
                     "def twoSum(nums, target):",
@@ -33,15 +33,15 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function twoSum that accepts array nums and integer target",
-                    "Start outer loop with i from zero while i less than length of nums incrementing i",
-                    "Start inner loop with j from i plus one while j less than length of nums incrementing j",
-                    "Get element nums at i, get element nums at j, add them together, check if sum equals target",
-                    "If sum equals target, return array containing indices i and j",
-                    "Close the if statement with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "Close function with closing brace"
+                    "Define function twoSum that accepts array nums and integer target.",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i.",
+                    "Start inner loop with j from i plus one while j less than length of nums incrementing j.",
+                    "Get element nums at i, get element nums at j, add them together, check if sum equals target.",
+                    "If sum equals target, return array containing indices i and j.",
+                    "Close the if statement with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function twoSum(nums, target) {",
@@ -58,16 +58,16 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function twoSum that accepts slice of integers nums and integer target and returns slice of integers",
-                    "Start outer loop with i from zero while i less than length of nums incrementing i",
-                    "Start inner loop with j from i plus one while j less than length of nums incrementing j",
-                    "Get element nums at i, get element nums at j, add them together, check if sum equals target",
-                    "If sum equals target, return new integer slice containing indices i and j",
-                    "Close the if block with closing brace",
-                    "Close the inner for loop with closing brace",
-                    "Close the outer for loop with closing brace",
-                    "Return nil if no solution found",
-                    "Close function with closing brace"
+                    "Define function twoSum that accepts slice of integers nums and integer target and returns slice of integers.",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i.",
+                    "Start inner loop with j from i plus one while j less than length of nums incrementing j.",
+                    "Get element nums at i, get element nums at j, add them together, check if sum equals target.",
+                    "If sum equals target, return new integer slice containing indices i and j.",
+                    "Close the if block with closing brace.",
+                    "Close the inner for loop with closing brace.",
+                    "Close the outer for loop with closing brace.",
+                    "Return nil if no solution found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func twoSum(nums []int, target int) []int {",
@@ -98,13 +98,13 @@
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function twoSum that accepts array nums and integer target",
-                    "Create empty dictionary prevMap to store numbers as keys and indices as values",
-                    "Loop through nums using enumerate to get both index i and value num",
-                    "Get current number num, subtract from target, and store result as diff",
-                    "Check if diff exists as key in prevMap dictionary",
-                    "If diff exists, get index of diff from prevMap, create list with that index and current index i, and return the list",
-                    "If diff does not exist, store current number num as key with index i as value in prevMap"
+                    "Define function twoSum that accepts array nums and integer target.",
+                    "Create empty dictionary prevMap to store numbers as keys and indices as values.",
+                    "Loop through nums using enumerate to get both index i and value num.",
+                    "Get current number num, subtract from target, and store result as diff.",
+                    "Check if diff exists as key in prevMap dictionary.",
+                    "If diff exists, get index of diff from prevMap, create list with that index and current index i, and return the list.",
+                    "If diff does not exist, store current number num as key with index i as value in prevMap."
                   ],
                   "codeLines": [
                     "def twoSum(nums, target):",
@@ -119,17 +119,17 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function twoSum that accepts array nums and integer target",
-                    "Create new Map object prevMap to store numbers as keys and indices as values",
-                    "Start for loop with i from zero while i less than length of nums incrementing i",
-                    "Get element nums at index i and store in constant num",
-                    "Get num, subtract from target, and store result in constant diff",
-                    "Check if prevMap has diff as a key using the has method",
-                    "If diff exists, get stored index of diff from prevMap using get method, create array with that index and current index i, and return the array",
-                    "Close the if statement with closing brace",
-                    "Store current number num as key with index i as value in prevMap using set method",
-                    "Close the for loop with closing brace",
-                    "Close function with closing brace"
+                    "Define function twoSum that accepts array nums and integer target.",
+                    "Create new Map object prevMap to store numbers as keys and indices as values.",
+                    "Start for loop with i from zero while i less than length of nums incrementing i.",
+                    "Get element nums at index i and store in constant num.",
+                    "Get num, subtract from target, and store result in constant diff.",
+                    "Check if prevMap has diff as a key using the has method.",
+                    "If diff exists, get stored index of diff from prevMap using get method, create array with that index and current index i, and return the array.",
+                    "Close the if statement with closing brace.",
+                    "Store current number num as key with index i as value in prevMap using set method.",
+                    "Close the for loop with closing brace.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "function twoSum(nums, target) {",
@@ -148,17 +148,17 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function twoSum that accepts slice of integers nums and integer target and returns slice of integers",
-                    "Create map prevMap with integer keys and integer values using make",
-                    "Loop through nums using range to get both index i and value num",
-                    "Get current number num, subtract from target, and store result as diff",
-                    "Check if diff exists as key in prevMap, assign the stored index to idx and existence boolean to ok",
-                    "If ok is true meaning diff was found, create new integer slice containing idx and i, and return it",
-                    "Close the if block with closing brace",
-                    "Store current number num as key with index i as value in prevMap",
-                    "Close the for loop with closing brace",
-                    "Return nil if no solution found",
-                    "Close function with closing brace"
+                    "Define function twoSum that accepts slice of integers nums and integer target and returns slice of integers.",
+                    "Create map prevMap with integer keys and integer values using make.",
+                    "Loop through nums using range to get both index i and value num.",
+                    "Get current number num, subtract from target, and store result as diff.",
+                    "Check if diff exists as key in prevMap, assign the stored index to idx and existence boolean to ok.",
+                    "If ok is true meaning diff was found, create new integer slice containing idx and i, and return it.",
+                    "Close the if block with closing brace.",
+                    "Store current number num as key with index i as value in prevMap.",
+                    "Close the for loop with closing brace.",
+                    "Return nil if no solution found.",
+                    "Close function with closing brace."
                   ],
                   "codeLines": [
                     "func twoSum(nums []int, target int) []int {",
