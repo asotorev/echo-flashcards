@@ -1,0 +1,199 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #1 - Two Sum",
+      "description": "Given an array of integers and a target value, find the indices of two numbers that add up to the target",
+      "cards": [
+        {
+          "id": "leetcode_001_two_sum",
+          "question": "Two Sum Problem: Given an array of integers and a target value, how do you find the indices of two numbers that add up to the target?",
+          "solutions": [
+            {
+              "name": "Brute Force",
+              "type": "naive",
+              "explanation": "Check every possible pair of numbers to see if they sum to the target using nested loops.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function twoSum that accepts array nums and integer target",
+                    "Start outer loop iterating through indices from zero to length of nums",
+                    "Start inner loop iterating from i plus one to length of nums",
+                    "Get element nums at i, get element nums at j, add them together, check if sum equals target",
+                    "If sum equals target, return list containing indices i and j"
+                  ],
+                  "codeLines": [
+                    "def twoSum(nums, target):",
+                    "    for i in range(len(nums)):",
+                    "        for j in range(i + 1, len(nums)):",
+                    "            if nums[i] + nums[j] == target:",
+                    "                return [i, j]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function twoSum that accepts array nums and integer target",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i",
+                    "Start inner loop with j from i plus one while j less than length of nums incrementing j",
+                    "Get element nums at i, get element nums at j, add them together, check if sum equals target",
+                    "If sum equals target, return array containing indices i and j",
+                    "Close the if statement with closing brace",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function twoSum(nums, target) {",
+                    "    for (let i = 0; i < nums.length; i++) {",
+                    "        for (let j = i + 1; j < nums.length; j++) {",
+                    "            if (nums[i] + nums[j] === target) {",
+                    "                return [i, j];",
+                    "            }",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function twoSum that accepts slice of integers nums and integer target and returns slice of integers",
+                    "Start outer loop with i from zero while i less than length of nums incrementing i",
+                    "Start inner loop with j from i plus one while j less than length of nums incrementing j",
+                    "Get element nums at i, get element nums at j, add them together, check if sum equals target",
+                    "If sum equals target, return new integer slice containing indices i and j",
+                    "Close the if block with closing brace",
+                    "Close the inner for loop with closing brace",
+                    "Close the outer for loop with closing brace",
+                    "Return nil if no solution found",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func twoSum(nums []int, target int) []int {",
+                    "    for i := 0; i < len(nums); i++ {",
+                    "        for j := i + 1; j < len(nums); j++ {",
+                    "            if nums[i] + nums[j] == target {",
+                    "                return []int{i, j}",
+                    "            }",
+                    "        }",
+                    "    }",
+                    "    return nil",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^2)",
+              "timeDescription": "Quadratic time, because we check every possible pair of elements using nested loops",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space, because we only use a fixed amount of extra variables",
+              "exampleWalkthrough": "Given array [2, 7, 11, 15] with target 9: Compare (2,7): 2+7=9, return [0,1]",
+              "displayOrder": 2
+            },
+            {
+              "name": "Hash Map",
+              "type": "optimal",
+              "explanation": "Use a hash map to store previously seen numbers and their indices, allowing single-pass lookup. For each number, check if its complement exists in the map.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function twoSum that accepts array nums and integer target",
+                    "Create empty dictionary prevMap to store numbers as keys and indices as values",
+                    "Loop through nums using enumerate to get both index i and value num",
+                    "Get current number num, subtract from target, and store result as diff",
+                    "Check if diff exists as key in prevMap dictionary",
+                    "If diff exists, get index of diff from prevMap, create list with that index and current index i, and return the list",
+                    "If diff does not exist, store current number num as key with index i as value in prevMap"
+                  ],
+                  "codeLines": [
+                    "def twoSum(nums, target):",
+                    "    prevMap = {}",
+                    "    for i, num in enumerate(nums):",
+                    "        diff = target - num",
+                    "        if diff in prevMap:",
+                    "            return [prevMap[diff], i]",
+                    "        prevMap[num] = i"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function twoSum that accepts array nums and integer target",
+                    "Create new Map object prevMap to store numbers as keys and indices as values",
+                    "Start for loop with i from zero while i less than length of nums incrementing i",
+                    "Get element nums at index i and store in constant num",
+                    "Get num, subtract from target, and store result in constant diff",
+                    "Check if prevMap has diff as a key using the has method",
+                    "If diff exists, get stored index of diff from prevMap using get method, create array with that index and current index i, and return the array",
+                    "Close the if statement with closing brace",
+                    "Store current number num as key with index i as value in prevMap using set method",
+                    "Close the for loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function twoSum(nums, target) {",
+                    "    const prevMap = new Map();",
+                    "    for (let i = 0; i < nums.length; i++) {",
+                    "        const num = nums[i];",
+                    "        const diff = target - num;",
+                    "        if (prevMap.has(diff)) {",
+                    "            return [prevMap.get(diff), i];",
+                    "        }",
+                    "        prevMap.set(num, i);",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function twoSum that accepts slice of integers nums and integer target and returns slice of integers",
+                    "Create map prevMap with integer keys and integer values using make",
+                    "Loop through nums using range to get both index i and value num",
+                    "Get current number num, subtract from target, and store result as diff",
+                    "Check if diff exists as key in prevMap, assign the stored index to idx and existence boolean to ok",
+                    "If ok is true meaning diff was found, create new integer slice containing idx and i, and return it",
+                    "Close the if block with closing brace",
+                    "Store current number num as key with index i as value in prevMap",
+                    "Close the for loop with closing brace",
+                    "Return nil if no solution found",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func twoSum(nums []int, target int) []int {",
+                    "    prevMap := make(map[int]int)",
+                    "    for i, num := range nums {",
+                    "        diff := target - num",
+                    "        if idx, ok := prevMap[diff]; ok {",
+                    "            return []int{idx, i}",
+                    "        }",
+                    "        prevMap[num] = i",
+                    "    }",
+                    "    return nil",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time because we traverse the array only once with constant time hash map lookups",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space because we may store up to n elements in the hash map in the worst case",
+              "exampleWalkthrough": "Given array [2, 7, 11, 15] with target 9: At index 0, num=2, diff=7, not in map, store 2→0. At index 1, num=7, diff=2, found in map at index 0, return [0, 1]",
+              "displayOrder": 1
+            }
+          ],
+          "tags": [
+            "arrays",
+            "hash-map",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
