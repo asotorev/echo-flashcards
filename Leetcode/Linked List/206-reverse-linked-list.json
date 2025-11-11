@@ -1,0 +1,243 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #206 - Reverse Linked List",
+      "description": "Reverse a singly linked list",
+      "cards": [
+        {
+          "id": "leetcode_206_reverse_linked_list",
+          "question": "Reverse Linked List: Given the head of a singly linked list, reverse the list, and return the reversed list.",
+          "solutions": [
+            {
+              "name": "Iteration",
+              "type": "optimal",
+              "explanation": "Use three pointers to iteratively reverse the linked list. Maintain prev (initially null), curr (starts at head), and temp (for storing next node). In each iteration, save the next node, reverse the current node's pointer to point to prev, then advance prev and curr. This reverses the list in-place with constant space.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function reverseList that accepts head",
+                    "Initialize prev to None",
+                    "Set curr to head",
+                    "Create empty line",
+                    "Loop while curr exists",
+                    "Get curr next and store in temp",
+                    "Set curr next to prev",
+                    "Set prev to curr",
+                    "Set curr to temp",
+                    "Create empty line",
+                    "Return prev"
+                  ],
+                  "codeLines": [
+                    "def reverseList(head):",
+                    "    prev = None",
+                    "    curr = head",
+                    "    ",
+                    "    while curr:",
+                    "        temp = curr.next",
+                    "        curr.next = prev",
+                    "        prev = curr",
+                    "        curr = temp",
+                    "    ",
+                    "    return prev"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function reverseList that accepts head",
+                    "Initialize variable prev to null",
+                    "Initialize variable curr to head",
+                    "Create empty line",
+                    "Loop while curr exists",
+                    "Get curr next and store in constant temp",
+                    "Set curr next to prev",
+                    "Set prev to curr",
+                    "Set curr to temp",
+                    "Close the while loop with closing brace",
+                    "Create empty line",
+                    "Return prev",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function reverseList(head) {",
+                    "    let prev = null;",
+                    "    let curr = head;",
+                    "    ",
+                    "    while (curr) {",
+                    "        const temp = curr.next;",
+                    "        curr.next = prev;",
+                    "        prev = curr;",
+                    "        curr = temp;",
+                    "    }",
+                    "    ",
+                    "    return prev;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function reverseList that accepts pointer to ListNode head and returns pointer to ListNode",
+                    "Declare variable prev as pointer to ListNode initialized to nil",
+                    "Set curr to head",
+                    "Create empty line",
+                    "Loop while curr is not nil",
+                    "Get curr Next and store in temp",
+                    "Set curr Next to prev",
+                    "Set prev to curr",
+                    "Set curr to temp",
+                    "Close the for loop with closing brace",
+                    "Return prev",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func reverseList(head *ListNode) *ListNode {",
+                    "    var prev *ListNode",
+                    "    curr := head",
+                    "    ",
+                    "    for curr != nil {",
+                    "        temp := curr.Next",
+                    "        curr.Next = prev",
+                    "        prev = curr",
+                    "        curr = temp",
+                    "    }",
+                    "    return prev",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of nodes. We visit each node exactly once.",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space. Only uses three pointers regardless of list size.",
+              "exampleWalkthrough": "For list 1->2->3->4->5: Start with prev=null, curr=1. Iteration 1: save temp=2, reverse 1->null, advance prev=1, curr=2. Iteration 2: save temp=3, reverse 2->1, advance prev=2, curr=3. Continue until curr=null. Final result: 5->4->3->2->1->null.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Recursion",
+              "type": "alternative",
+              "explanation": "Recursively reverse the list by processing from the end backwards. Base case: if head is null, return null. Recursive case: reverse the rest of the list first, then fix the pointers by making the next node point back to current, and setting current's next to null. The new head is returned from the deepest recursion level.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function reverseList that accepts head",
+                    "Check if head is falsy",
+                    "Return None",
+                    "Create empty line",
+                    "Set newHead to head",
+                    "Check if head next exists",
+                    "Recursively call reverseList with head next and store in newHead",
+                    "Set head next next to head",
+                    "Set head next to None",
+                    "Create empty line",
+                    "Return newHead"
+                  ],
+                  "codeLines": [
+                    "def reverseList(head):",
+                    "    if not head:",
+                    "        return None",
+                    "    ",
+                    "    newHead = head",
+                    "    if head.next:",
+                    "        newHead = reverseList(head.next)",
+                    "        head.next.next = head",
+                    "    head.next = None",
+                    "    ",
+                    "    return newHead"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function reverseList that accepts head",
+                    "Check if head is falsy",
+                    "Return null",
+                    "Close the if block with closing brace",
+                    "Create empty line",
+                    "Initialize variable newHead to head",
+                    "Check if head next exists",
+                    "Recursively call reverseList with head next and store in newHead",
+                    "Set head next next to head",
+                    "Close the if block with closing brace",
+                    "Set head next to null",
+                    "Create empty line",
+                    "Return newHead",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function reverseList(head) {",
+                    "    if (!head) {",
+                    "        return null;",
+                    "    }",
+                    "    ",
+                    "    let newHead = head;",
+                    "    if (head.next) {",
+                    "        newHead = reverseList(head.next);",
+                    "        head.next.next = head;",
+                    "    }",
+                    "    head.next = null;",
+                    "    ",
+                    "    return newHead;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function reverseList that accepts pointer to ListNode head and returns pointer to ListNode",
+                    "Check if head equals nil",
+                    "Return nil",
+                    "Close the if block with closing brace",
+                    "Create empty line",
+                    "Set newHead to head",
+                    "Check if head Next is not nil",
+                    "Recursively call reverseList with head Next and store in newHead",
+                    "Set head Next Next to head",
+                    "Close the if block with closing brace",
+                    "Set head Next to nil",
+                    "Create empty line",
+                    "Return newHead",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func reverseList(head *ListNode) *ListNode {",
+                    "    if head == nil {",
+                    "        return nil",
+                    "    }",
+                    "    ",
+                    "    newHead := head",
+                    "    if head.Next != nil {",
+                    "        newHead = reverseList(head.Next)",
+                    "        head.Next.Next = head",
+                    "    }",
+                    "    head.Next = nil",
+                    "    ",
+                    "    return newHead",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of nodes. Each node is processed once during the recursive calls.",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for the recursion call stack. The maximum depth equals the number of nodes in the list.",
+              "exampleWalkthrough": "For list 1->2->3->4->5: Call reverseList(1). Since 1.next exists, call reverseList(2). Continue recursing until reverseList(5). At 5, next is null, so newHead=5 and set 5.next=null. Return to reverseList(4): newHead=5, set 5.next=4, set 4.next=null. Return to reverseList(3): newHead=5, set 4.next=3, set 3.next=null. Continue unwinding. Final result: 5->4->3->2->1.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "linked-list",
+            "recursion",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

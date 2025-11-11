@@ -1,0 +1,226 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #141 - Linked List Cycle",
+      "description": "Detect if a linked list has a cycle",
+      "cards": [
+        {
+          "id": "leetcode_141_linked_list_cycle",
+          "question": "Linked List Cycle: Given head, the head of a linked list, determine if the linked list has a cycle in it. There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Return true if there is a cycle in the linked list. Otherwise, return false.",
+          "solutions": [
+            {
+              "name": "Fast and Slow Pointers",
+              "type": "optimal",
+              "explanation": "Use Floyd's Cycle Detection algorithm with two pointers moving at different speeds. The slow pointer moves one step at a time, while the fast pointer moves two steps. If there's a cycle, the fast pointer will eventually catch up to the slow pointer inside the cycle. If there's no cycle, the fast pointer will reach the end. This is optimal with constant space.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function hasCycle that accepts head",
+                    "Set slow to head",
+                    "Set fast to head",
+                    "Loop while fast exists and fast next exists",
+                    "Set slow to slow next",
+                    "Set fast to fast next next",
+                    "Check if slow equals fast",
+                    "Return True",
+                    "Return False"
+                  ],
+                  "codeLines": [
+                    "def hasCycle(head):",
+                    "    slow = head",
+                    "    fast = head",
+                    "    while fast and fast.next:",
+                    "        slow = slow.next",
+                    "        fast = fast.next.next",
+                    "        if slow == fast:",
+                    "            return True",
+                    "    return False"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function hasCycle that accepts head",
+                    "Initialize variable slow to head",
+                    "Initialize variable fast to head",
+                    "Loop while fast exists and fast next exists",
+                    "Set slow to slow next",
+                    "Set fast to fast next next",
+                    "Check if slow equals fast",
+                    "Return true",
+                    "Close the if block with closing brace",
+                    "Close the while loop with closing brace",
+                    "Return false",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function hasCycle(head) {",
+                    "    let slow = head;",
+                    "    let fast = head;",
+                    "    while (fast && fast.next) {",
+                    "        slow = slow.next;",
+                    "        fast = fast.next.next;",
+                    "        if (slow === fast) {",
+                    "            return true;",
+                    "        }",
+                    "    }",
+                    "    return false;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function hasCycle that accepts pointer to ListNode head and returns bool",
+                    "Set slow to head",
+                    "Set fast to head",
+                    "Loop while fast is not nil and fast Next is not nil",
+                    "Set slow to slow Next",
+                    "Set fast to fast Next Next",
+                    "Check if slow equals fast",
+                    "Return true",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return false",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func hasCycle(head *ListNode) bool {",
+                    "    slow := head",
+                    "    fast := head",
+                    "    for fast != nil && fast.Next != nil {",
+                    "        slow = slow.Next",
+                    "        fast = fast.Next.Next",
+                    "        if slow == fast {",
+                    "            return true",
+                    "        }",
+                    "    }",
+                    "    return false",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of nodes. In the worst case without a cycle, the fast pointer traverses the list once. With a cycle, the pointers meet after at most 2n steps.",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space. Only uses two pointers regardless of list size.",
+              "exampleWalkthrough": "For list 3->2->0->-4 with cycle back to node 2: Start with slow=3, fast=3. Iteration 1: slow=2, fast=0. Iteration 2: slow=0, fast=2. Iteration 3: slow=-4, fast=-4. Pointers meet, return true. For list without cycle 1->2, fast reaches end without meeting slow, return false.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Hash Set",
+              "type": "alternative",
+              "explanation": "Traverse the list while maintaining a hash set of visited nodes. For each node, check if it's already in the set. If yes, we've encountered a cycle. If no, add it to the set and continue. If we reach the end (null), there's no cycle. Simple but uses extra space to store node references.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function hasCycle that accepts head",
+                    "Initialize seen as empty set",
+                    "Set cur to head",
+                    "Loop while cur exists",
+                    "Check if cur is in seen",
+                    "Return True",
+                    "Add cur to seen",
+                    "Set cur to cur next",
+                    "Return False"
+                  ],
+                  "codeLines": [
+                    "def hasCycle(head):",
+                    "    seen = set()",
+                    "    cur = head",
+                    "    while cur:",
+                    "        if cur in seen:",
+                    "            return True",
+                    "        seen.add(cur)",
+                    "        cur = cur.next",
+                    "    return False"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function hasCycle that accepts head",
+                    "Initialize constant seen as new Set",
+                    "Initialize variable cur to head",
+                    "Loop while cur exists",
+                    "Check if seen has cur",
+                    "Return true",
+                    "Close the if block with closing brace",
+                    "Add cur to seen",
+                    "Set cur to cur next",
+                    "Close the while loop with closing brace",
+                    "Return false",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function hasCycle(head) {",
+                    "    const seen = new Set();",
+                    "    let cur = head;",
+                    "    while (cur) {",
+                    "        if (seen.has(cur)) {",
+                    "            return true;",
+                    "        }",
+                    "        seen.add(cur);",
+                    "        cur = cur.next;",
+                    "    }",
+                    "    return false;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function hasCycle that accepts pointer to ListNode head and returns bool",
+                    "Create map with pointer to ListNode keys and bool values using make and store in seen",
+                    "Set cur to head",
+                    "Loop while cur is not nil",
+                    "Check if seen at cur is true",
+                    "Return true",
+                    "Close the if block with closing brace",
+                    "Set seen at cur to true",
+                    "Set cur to cur Next",
+                    "Close the for loop with closing brace",
+                    "Return false",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func hasCycle(head *ListNode) bool {",
+                    "    seen := make(map[*ListNode]bool)",
+                    "    cur := head",
+                    "    for cur != nil {",
+                    "        if seen[cur] {",
+                    "            return true",
+                    "        }",
+                    "        seen[cur] = true",
+                    "        cur = cur.Next",
+                    "    }",
+                    "    return false",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time where n is the number of nodes. We visit each node at most once before either finding a cycle or reaching the end.",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for the hash set. In the worst case without a cycle, we store all n nodes.",
+              "exampleWalkthrough": "For list 3->2->0->-4 with cycle back to node 2: Start with empty set, cur=3. Visit 3, add to set. Visit 2, add to set. Visit 0, add to set. Visit -4, add to set. Visit 2 again, found in set, return true. For list without cycle, traverse all nodes adding to set, reach null, return false.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "linked-list",
+            "two-pointers",
+            "hash-table",
+            "leetcode-easy"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
