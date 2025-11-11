@@ -1,0 +1,253 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #235 - Lowest Common Ancestor of a Binary Search Tree",
+      "description": "Find the lowest common ancestor of two nodes in a binary search tree",
+      "cards": [
+        {
+          "id": "leetcode_235_lowest_common_ancestor_of_a_binary_search_tree",
+          "question": "Lowest Common Ancestor of a Binary Search Tree: Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST. According to the definition of LCA: The lowest common ancestor is defined between two nodes p and q as the lowest node in the tree that has both p and q as descendants (where we allow a node to be a descendant of itself).",
+          "solutions": [
+            {
+              "name": "Recursion",
+              "type": "optimal",
+              "explanation": "Leverage BST property where left subtree values are less than root and right subtree values are greater. If both p and q values are less than current node, LCA must be in left subtree. If both greater, LCA in right subtree. Otherwise, current node is the split point and thus the LCA. Recursive solution with O(h) time and space.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function lowestCommonAncestor that accepts root, p, and q as TreeNode and returns TreeNode",
+                    "Check if root does not exist or p does not exist or q does not exist using not operator",
+                    "If any is None, return None as no valid LCA",
+                    "Check if max of p dot val and q dot val is less than root dot val",
+                    "If both values less than root, recursively call lowestCommonAncestor with root dot left, p, and q and return result",
+                    "Check elif min of p dot val and q dot val is greater than root dot val",
+                    "If both values greater than root, recursively call lowestCommonAncestor with root dot right, p, and q and return result",
+                    "If neither condition true, root is split point so return root as LCA"
+                  ],
+                  "codeLines": [
+                    "def lowestCommonAncestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:",
+                    "    if not root or not p or not q:",
+                    "        return None",
+                    "    if (max(p.val, q.val) < root.val):",
+                    "        return lowestCommonAncestor(root.left, p, q)",
+                    "    elif (min(p.val, q.val) > root.val):",
+                    "        return lowestCommonAncestor(root.right, p, q)",
+                    "    else:",
+                    "        return root"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function lowestCommonAncestor that accepts root, p, and q as parameters with opening brace",
+                    "Check if root does not exist or p does not exist or q does not exist using negation operator with opening brace",
+                    "If any is null, return null as no valid LCA",
+                    "Close the if block with closing brace",
+                    "Check if Math dot max of p dot val and q dot val is less than root dot val with opening brace",
+                    "If both values less than root, recursively call lowestCommonAncestor with root dot left, p, and q and return result",
+                    "Close the if block with closing brace and add else if Math dot min of p dot val and q dot val is greater than root dot val with opening brace",
+                    "If both values greater than root, recursively call lowestCommonAncestor with root dot right, p, and q and return result",
+                    "Close the else if block with closing brace and add else with opening brace",
+                    "If neither condition true, return root as split point LCA",
+                    "Close the else block with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function lowestCommonAncestor(root, p, q) {",
+                    "    if (!root || !p || !q) {",
+                    "        return null;",
+                    "    }",
+                    "    if (Math.max(p.val, q.val) < root.val) {",
+                    "        return lowestCommonAncestor(root.left, p, q);",
+                    "    } else if (Math.min(p.val, q.val) > root.val) {",
+                    "        return lowestCommonAncestor(root.right, p, q);",
+                    "    } else {",
+                    "        return root;",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function lowestCommonAncestor that accepts root, p, and q as pointers to TreeNode and returns pointer to TreeNode with opening brace",
+                    "Check if root equals nil or p equals nil or q equals nil with opening brace",
+                    "If any is nil, return nil as no valid LCA",
+                    "Close the if block with closing brace",
+                    "Calculate maxVal as max of p dot Val and q dot Val using conditional",
+                    "Declare maxVal as int",
+                    "Check if p dot Val is greater than q dot Val with opening brace",
+                    "If p greater, set maxVal to p dot Val",
+                    "Close the if block with closing brace and add else with opening brace",
+                    "If q greater or equal, set maxVal to q dot Val",
+                    "Close the else block with closing brace",
+                    "Calculate minVal as min of p dot Val and q dot Val using conditional",
+                    "Declare minVal as int",
+                    "Check if p dot Val is less than q dot Val with opening brace",
+                    "If p less, set minVal to p dot Val",
+                    "Close the if block with closing brace and add else with opening brace",
+                    "If q less or equal, set minVal to q dot Val",
+                    "Close the else block with closing brace",
+                    "Check if maxVal is less than root dot Val with opening brace",
+                    "If both values less than root, recursively call lowestCommonAncestor with root dot Left, p, and q and return result",
+                    "Close the if block with closing brace and add else if minVal is greater than root dot Val with opening brace",
+                    "If both values greater than root, recursively call lowestCommonAncestor with root dot Right, p, and q and return result",
+                    "Close the else if block with closing brace and add else with opening brace",
+                    "If neither condition true, return root as split point LCA",
+                    "Close the else block with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {",
+                    "    if root == nil || p == nil || q == nil {",
+                    "        return nil",
+                    "    }",
+                    "    maxVal := 0",
+                    "    if p.Val > q.Val {",
+                    "        maxVal = p.Val",
+                    "    } else {",
+                    "        maxVal = q.Val",
+                    "    }",
+                    "    minVal := 0",
+                    "    if p.Val < q.Val {",
+                    "        minVal = p.Val",
+                    "    } else {",
+                    "        minVal = q.Val",
+                    "    }",
+                    "    if maxVal < root.Val {",
+                    "        return lowestCommonAncestor(root.Left, p, q)",
+                    "    } else if minVal > root.Val {",
+                    "        return lowestCommonAncestor(root.Right, p, q)",
+                    "    } else {",
+                    "        return root",
+                    "    }",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(h)",
+              "timeDescription": "Time proportional to tree height h, O(log n) for balanced BST, O(n) worst case for skewed tree",
+              "spaceComplexity": "O(h)",
+              "spaceDescription": "Recursion stack space proportional to tree height h",
+              "exampleWalkthrough": "Given BST [6,2,8,0,4,7,9] with p=2, q=8: Start at 6. min(2,8)=2 < 6 and max(2,8)=8 > 6, so 6 is between p and q values. Return 6 as LCA since it's the split point.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Iteration",
+              "type": "optimal",
+              "explanation": "Iterative approach using BST property without recursion. Start at root and traverse down. If both p and q values are greater than current, go right. If both less, go left. Otherwise, current node is the split point and thus the LCA. Optimal O(h) time with O(1) space, no recursion overhead.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function lowestCommonAncestor that accepts root, p, and q as TreeNode and returns TreeNode",
+                    "Initialize cur to root as current node pointer",
+                    "Start while loop that continues while cur exists",
+                    "Check if p dot val is greater than cur dot val and q dot val is greater than cur dot val",
+                    "If both greater, move cur to cur dot right",
+                    "Check elif p dot val is less than cur dot val and q dot val is less than cur dot val",
+                    "If both less, move cur to cur dot left",
+                    "If neither condition true, return cur as LCA split point"
+                  ],
+                  "codeLines": [
+                    "def lowestCommonAncestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:",
+                    "    cur = root",
+                    "    while cur:",
+                    "        if p.val > cur.val and q.val > cur.val:",
+                    "            cur = cur.right",
+                    "        elif p.val < cur.val and q.val < cur.val:",
+                    "            cur = cur.left",
+                    "        else:",
+                    "            return cur"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function lowestCommonAncestor that accepts root, p, and q as parameters with opening brace",
+                    "Initialize cur to root as current node pointer",
+                    "Start while loop that continues while cur exists with opening brace",
+                    "Check if p dot val is greater than cur dot val and q dot val is greater than cur dot val with opening brace",
+                    "If both greater, move cur to cur dot right",
+                    "Close the if block with closing brace and add else if p dot val is less than cur dot val and q dot val is less than cur dot val with opening brace",
+                    "If both less, move cur to cur dot left",
+                    "Close the else if block with closing brace and add else with opening brace",
+                    "If neither condition true, return cur as LCA split point",
+                    "Close the else block with closing brace",
+                    "Close the while loop with closing brace",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function lowestCommonAncestor(root, p, q) {",
+                    "    let cur = root;",
+                    "    while (cur) {",
+                    "        if (p.val > cur.val && q.val > cur.val) {",
+                    "            cur = cur.right;",
+                    "        } else if (p.val < cur.val && q.val < cur.val) {",
+                    "            cur = cur.left;",
+                    "        } else {",
+                    "            return cur;",
+                    "        }",
+                    "    }",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function lowestCommonAncestor that accepts root, p, and q as pointers to TreeNode and returns pointer to TreeNode with opening brace",
+                    "Initialize cur to root as current node pointer",
+                    "Start for loop that continues while cur is not nil with opening brace",
+                    "Check if p dot Val is greater than cur dot Val and q dot Val is greater than cur dot Val with opening brace",
+                    "If both greater, move cur to cur dot Right",
+                    "Close the if block with closing brace and add else if p dot Val is less than cur dot Val and q dot Val is less than cur dot Val with opening brace",
+                    "If both less, move cur to cur dot Left",
+                    "Close the else if block with closing brace and add else with opening brace",
+                    "If neither condition true, return cur as LCA split point",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Return nil if loop exits without finding LCA",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {",
+                    "    cur := root",
+                    "    for cur != nil {",
+                    "        if p.Val > cur.Val && q.Val > cur.Val {",
+                    "            cur = cur.Right",
+                    "        } else if p.Val < cur.Val && q.Val < cur.Val {",
+                    "            cur = cur.Left",
+                    "        } else {",
+                    "            return cur",
+                    "        }",
+                    "    }",
+                    "    return nil",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(h)",
+              "timeDescription": "Time proportional to tree height h, O(log n) for balanced BST, O(n) worst case for skewed tree",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant extra space using only pointer variable, no recursion stack",
+              "exampleWalkthrough": "Given BST [6,2,8,0,4,7,9] with p=2, q=4: Start cur=6. Both 2<6 and 4<6, move left to cur=2. Now 2=2 and 4>2, not both less or both greater. Return 2 as LCA.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "binary-search-tree",
+            "tree",
+            "depth-first-search",
+            "recursion",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
