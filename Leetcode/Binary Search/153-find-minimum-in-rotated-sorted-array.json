@@ -1,0 +1,352 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #153 - Find Minimum in Rotated Sorted Array",
+      "description": "Find the minimum element in a rotated sorted array",
+      "cards": [
+        {
+          "id": "leetcode_153_find_minimum_in_rotated_sorted_array",
+          "question": "Find Minimum in Rotated Sorted Array: Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2] if it was rotated 4 times, or [0,1,2,4,5,6,7] if it was rotated 7 times. Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]]. Given the sorted rotated array nums of unique elements, return the minimum element of this array. You must write an algorithm that runs in O(log n) time.",
+          "solutions": [
+            {
+              "name": "Binary Search (Lower Bound)",
+              "type": "optimal",
+              "explanation": "Use binary search to find the rotation pivot where the minimum element is located. Compare middle element with right boundary to determine which half contains the minimum. Most elegant solution with clean logic.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function findMin that accepts array nums",
+                    "Initialize l to zero and r to length of nums minus one",
+                    "Start while loop that continues while l is less than r",
+                    "Calculate midpoint m by adding l to the result of r minus l divided by two using integer division",
+                    "Check if element at index m is less than element at index r",
+                    "If less, minimum is in left half including m, so set r to m",
+                    "Otherwise minimum is in right half",
+                    "Set l to m plus one",
+                    "After loop ends, return element at index l as the minimum"
+                  ],
+                  "codeLines": [
+                    "def findMin(nums):",
+                    "    l, r = 0, len(nums) - 1",
+                    "    while l < r:",
+                    "        m = l + (r - l) // 2",
+                    "        if nums[m] < nums[r]:",
+                    "            r = m",
+                    "        else:",
+                    "            l = m + 1",
+                    "    return nums[l]"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function findMin that accepts array nums",
+                    "Declare l initialized to zero and r initialized to length of nums minus one",
+                    "Start while loop that continues while l is less than r",
+                    "Declare constant m by adding l to floor of r minus l divided by two",
+                    "Check if element at index m is less than element at index r",
+                    "If less, minimum is in left half including m, so set r to m",
+                    "Close the if block with closing brace",
+                    "Otherwise minimum is in right half",
+                    "Set l to m plus one",
+                    "Close the else block with closing brace",
+                    "Close the while loop with closing brace",
+                    "After loop ends, return element at index l as the minimum",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function findMin(nums) {",
+                    "    let l = 0, r = nums.length - 1;",
+                    "    while (l < r) {",
+                    "        const m = l + Math.floor((r - l) / 2);",
+                    "        if (nums[m] < nums[r]) {",
+                    "            r = m;",
+                    "        } else {",
+                    "            l = m + 1;",
+                    "        }",
+                    "    }",
+                    "    return nums[l];",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function findMin that accepts slice of integers nums and returns int",
+                    "Initialize l to zero and r to length of nums minus one",
+                    "Start for loop that continues while l is less than r",
+                    "Calculate midpoint m by adding l to the result of r minus l divided by two using integer division",
+                    "Check if element at index m is less than element at index r",
+                    "If less, minimum is in left half including m, so set r to m",
+                    "Close the if block with closing brace",
+                    "Otherwise minimum is in right half",
+                    "Set l to m plus one",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After loop ends, return element at index l as the minimum",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func findMin(nums []int) int {",
+                    "    l, r := 0, len(nums)-1",
+                    "    for l < r {",
+                    "        m := l + (r-l)/2",
+                    "        if nums[m] < nums[r] {",
+                    "            r = m",
+                    "        } else {",
+                    "            l = m + 1",
+                    "        }",
+                    "    }",
+                    "    return nums[l]",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(log n)",
+              "timeDescription": "Logarithmic time as search space is halved in each iteration",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only pointers for binary search",
+              "exampleWalkthrough": "Given nums=[3,4,5,1,2]: l=0, r=4. First: m=2, nums[2]=5 > nums[4]=2, l=3. Second: m=3, nums[3]=1 < nums[4]=2, r=3. Loop ends with l=r=3, return nums[3]=1.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Binary Search",
+              "type": "optimal",
+              "explanation": "Binary search that tracks the current minimum while navigating the rotated array. Check if current portion is sorted, if so take minimum and break early. Otherwise update pointers based on which half is sorted.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function findMin that accepts array nums",
+                    "Initialize res to first element of nums",
+                    "Initialize l to zero and r to length of nums minus one",
+                    "Start while loop that continues while l is less than or equal to r",
+                    "Check if element at index l is less than element at index r",
+                    "If less, current portion is sorted, update res to minimum of res and element at l, then break",
+                    "Calculate midpoint m by adding l to the result of r minus l divided by two using integer division",
+                    "Update res to minimum of res and element at m",
+                    "Check if element at index m is greater than or equal to element at index l",
+                    "If true, left half is sorted, so minimum is in right half, set l to m plus one",
+                    "Otherwise right half is sorted, so minimum is in left half",
+                    "Set r to m minus one",
+                    "After loop ends, return res as the minimum"
+                  ],
+                  "codeLines": [
+                    "def findMin(nums):",
+                    "    res = nums[0]",
+                    "    l, r = 0, len(nums) - 1",
+                    "    while l <= r:",
+                    "        if nums[l] < nums[r]:",
+                    "            res = min(res, nums[l])",
+                    "            break",
+                    "        m = l + (r - l) // 2",
+                    "        res = min(res, nums[m])",
+                    "        if nums[m] >= nums[l]:",
+                    "            l = m + 1",
+                    "        else:",
+                    "            r = m - 1",
+                    "    return res"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function findMin that accepts array nums",
+                    "Declare res initialized to first element of nums",
+                    "Declare l initialized to zero and r initialized to length of nums minus one",
+                    "Start while loop that continues while l is less than or equal to r",
+                    "Check if element at index l is less than element at index r",
+                    "If less, current portion is sorted, update res to minimum of res and element at l using Math min, then break",
+                    "Close the if block with closing brace",
+                    "Declare constant m by adding l to floor of r minus l divided by two",
+                    "Update res to minimum of res and element at m using Math min",
+                    "Check if element at index m is greater than or equal to element at index l",
+                    "If true, left half is sorted, so minimum is in right half, set l to m plus one",
+                    "Close the if block with closing brace",
+                    "Otherwise right half is sorted, so minimum is in left half",
+                    "Set r to m minus one",
+                    "Close the else block with closing brace",
+                    "Close the while loop with closing brace",
+                    "After loop ends, return res as the minimum",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function findMin(nums) {",
+                    "    let res = nums[0];",
+                    "    let l = 0, r = nums.length - 1;",
+                    "    while (l <= r) {",
+                    "        if (nums[l] < nums[r]) {",
+                    "            res = Math.min(res, nums[l]);",
+                    "            break;",
+                    "        }",
+                    "        const m = l + Math.floor((r - l) / 2);",
+                    "        res = Math.min(res, nums[m]);",
+                    "        if (nums[m] >= nums[l]) {",
+                    "            l = m + 1;",
+                    "        } else {",
+                    "            r = m - 1;",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function findMin that accepts slice of integers nums and returns int",
+                    "Initialize res to first element of nums",
+                    "Initialize l to zero and r to length of nums minus one",
+                    "Start for loop that continues while l is less than or equal to r",
+                    "Check if element at index l is less than element at index r",
+                    "If less, current portion is sorted",
+                    "Check if element at l is less than res",
+                    "If less, update res to element at l",
+                    "Close the inner if block with closing brace",
+                    "Break out of loop",
+                    "Close the if block with closing brace",
+                    "Calculate midpoint m by adding l to the result of r minus l divided by two using integer division",
+                    "Check if element at m is less than res",
+                    "If less, update res to element at m",
+                    "Close the if block with closing brace",
+                    "Check if element at index m is greater than or equal to element at index l",
+                    "If true, left half is sorted, so minimum is in right half, set l to m plus one",
+                    "Close the if block with closing brace",
+                    "Otherwise right half is sorted, so minimum is in left half",
+                    "Set r to m minus one",
+                    "Close the else block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After loop ends, return res as the minimum",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func findMin(nums []int) int {",
+                    "    res := nums[0]",
+                    "    l, r := 0, len(nums)-1",
+                    "    for l <= r {",
+                    "        if nums[l] < nums[r] {",
+                    "            if nums[l] < res {",
+                    "                res = nums[l]",
+                    "            }",
+                    "            break",
+                    "        }",
+                    "        m := l + (r-l)/2",
+                    "        if nums[m] < res {",
+                    "            res = nums[m]",
+                    "        }",
+                    "        if nums[m] >= nums[l] {",
+                    "            l = m + 1",
+                    "        } else {",
+                    "            r = m - 1",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(log n)",
+              "timeDescription": "Logarithmic time as search space is halved in each iteration with early termination",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only pointers and result variable",
+              "exampleWalkthrough": "Given nums=[3,4,5,1,2]: res=3, l=0, r=4. First: nums[0]=3 > nums[4]=2, not sorted. m=2, nums[2]=5, res stays 3. nums[2]=5 >= nums[0]=3, l=3. Second: nums[3]=1 < nums[4]=2, sorted portion found. res=min(3,1)=1, break. Return 1.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Brute Force",
+              "type": "alternative",
+              "explanation": "Linear scan through entire array to find minimum value. Simple approach but doesn't utilize the sorted rotated property of the array. Not optimal but straightforward.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function findMin that accepts array nums",
+                    "Initialize minVal to first element of nums",
+                    "Start for loop iterating through each num in nums",
+                    "Check if num is less than minVal",
+                    "If less, update minVal to num",
+                    "After loop ends, return minVal as the minimum"
+                  ],
+                  "codeLines": [
+                    "def findMin(nums):",
+                    "    minVal = nums[0]",
+                    "    for num in nums:",
+                    "        if num < minVal:",
+                    "            minVal = num",
+                    "    return minVal"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function findMin that accepts array nums",
+                    "Declare minVal initialized to first element of nums",
+                    "Start for loop iterating through each num in nums",
+                    "Check if num is less than minVal",
+                    "If less, update minVal to num",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After loop ends, return minVal as the minimum",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function findMin(nums) {",
+                    "    let minVal = nums[0];",
+                    "    for (const num of nums) {",
+                    "        if (num < minVal) {",
+                    "            minVal = num;",
+                    "        }",
+                    "    }",
+                    "    return minVal;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function findMin that accepts slice of integers nums and returns int",
+                    "Initialize minVal to first element of nums",
+                    "Start for loop iterating through each num in nums using range with blank identifier for index",
+                    "Check if num is less than minVal",
+                    "If less, update minVal to num",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "After loop ends, return minVal as the minimum",
+                    "Close function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func findMin(nums []int) int {",
+                    "    minVal := nums[0]",
+                    "    for _, num := range nums {",
+                    "        if num < minVal {",
+                    "            minVal = num",
+                    "        }",
+                    "    }",
+                    "    return minVal",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n)",
+              "timeDescription": "Linear time as must check every element in worst case",
+              "spaceComplexity": "O(1)",
+              "spaceDescription": "Constant space using only one variable to track minimum",
+              "exampleWalkthrough": "Given nums=[3,4,5,1,2]: minVal starts at 3. Check 3 >= 3, check 4 >= 3, check 5 >= 3, check 1 < 3 so minVal=1, check 2 >= 1. Return 1.",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "binary-search",
+            "array",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
