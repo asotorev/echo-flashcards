@@ -1,0 +1,297 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #853 - Car Fleet",
+      "description": "Determine the number of car fleets that will arrive at the destination",
+      "cards": [
+        {
+          "id": "leetcode_853_car_fleet",
+          "question": "Car Fleet: There are n cars at given miles away from the starting mile 0, traveling to reach the mile target. You are given two integer arrays position and speed, both of length n, where position[i] is the starting mile of the i-th car and speed[i] is the speed of the i-th car in miles per hour. A car cannot pass another car, but it can catch up and then travel next to it at the speed of the slower car. A car fleet is a car or cars driving next to each other. The speed of the car fleet is the minimum speed of any car in the fleet. If a car catches up to a car fleet at the destination, it will still be considered as part of the car fleet. Return the number of car fleets that will arrive at the destination.",
+          "solutions": [
+            {
+              "name": "Stack",
+              "type": "optimal",
+              "explanation": "Sort cars by position in descending order (closest to target first). Calculate the time each car takes to reach the target. Use a stack to track fleet leaders. If a car behind takes longer or equal time to reach the target compared to the car ahead, it cannot catch up and forms a new fleet. Otherwise, it catches up and merges with the fleet ahead (pop from stack). The stack size gives the number of fleets.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function carFleet that accepts target position and speed",
+                    "Create list of tuples pairing position with speed using zip and list comprehension",
+                    "Sort pair in reverse order by position",
+                    "Create empty line",
+                    "Initialize stack as empty list",
+                    "Loop through each position speed pair destructured from pair",
+                    "Calculate target minus p divided by s and store in time",
+                    "Append time to stack",
+                    "Check if stack length is at least two and last element of stack is less than or equal to second to last element of stack",
+                    "Pop last element from stack",
+                    "Create empty line",
+                    "Return length of stack"
+                  ],
+                  "codeLines": [
+                    "def carFleet(target, position, speed):",
+                    "    pair = [(p, s) for p, s in zip(position, speed)]",
+                    "    pair.sort(reverse=True)",
+                    "    ",
+                    "    stack = []",
+                    "    for p, s in pair:",
+                    "        time = (target - p) / s",
+                    "        stack.append(time)",
+                    "        if len(stack) >= 2 and stack[-1] <= stack[-2]:",
+                    "            stack.pop()",
+                    "    ",
+                    "    return len(stack)"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function carFleet that accepts target position and speed",
+                    "Create array pair by mapping position to array of position and corresponding speed",
+                    "Sort pair in descending order by position using comparison function",
+                    "Create empty line",
+                    "Initialize constant stack as empty array",
+                    "Loop through each position speed pair destructured from pair",
+                    "Calculate target minus p divided by s and store in constant time",
+                    "Push time to stack",
+                    "Check if stack length is at least two and last element of stack is less than or equal to second to last element of stack",
+                    "Pop last element from stack",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Return stack length",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function carFleet(target, position, speed) {",
+                    "    const pair = position.map((p, i) => [p, speed[i]]);",
+                    "    pair.sort((a, b) => b[0] - a[0]);",
+                    "    ",
+                    "    const stack = [];",
+                    "    for (const [p, s] of pair) {",
+                    "        const time = (target - p) / s;",
+                    "        stack.push(time);",
+                    "        if (stack.length >= 2 && stack[stack.length - 1] <= stack[stack.length - 2]) {",
+                    "            stack.pop();",
+                    "        }",
+                    "    }",
+                    "    ",
+                    "    return stack.length;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function carFleet that accepts int target int slice position int slice speed and returns int",
+                    "Get length of position and store in n",
+                    "Create 2D int array pair with n elements using make",
+                    "Loop from zero to n",
+                    "Set element at index i of pair to array containing position at i and speed at i",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Sort pair slice using sort Slice with comparison function that compares first element in descending order",
+                    "Return whether first element of pair at i is greater than first element of pair at j",
+                    "Close the function and sort Slice with closing brace",
+                    "Create empty line",
+                    "Initialize stack as empty float64 slice",
+                    "Loop through pair using range to get each p ignoring index",
+                    "Calculate target minus first element of p divided by second element of p as float64 and store in time",
+                    "Append time to stack and store back in stack",
+                    "Check if stack length is at least two and last element of stack is less than or equal to second to last element of stack",
+                    "Slice stack to remove last element and store back in stack",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Return length of stack",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func carFleet(target int, position []int, speed []int) int {",
+                    "    n := len(position)",
+                    "    pair := make([][2]int, n)",
+                    "    for i := 0; i < n; i++ {",
+                    "        pair[i] = [2]int{position[i], speed[i]}",
+                    "    }",
+                    "    ",
+                    "    sort.Slice(pair, func(i, j int) bool {",
+                    "        return pair[i][0] > pair[j][0]",
+                    "    })",
+                    "    ",
+                    "    stack := []float64{}",
+                    "    for _, p := range pair {",
+                    "        time := float64(target - p[0]) / float64(p[1])",
+                    "        stack = append(stack, time)",
+                    "        if len(stack) >= 2 && stack[len(stack)-1] <= stack[len(stack)-2] {",
+                    "            stack = stack[:len(stack)-1]",
+                    "        }",
+                    "    }",
+                    "    ",
+                    "    return len(stack)",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "Time is dominated by sorting the cars by position. The subsequent stack operations are O(n) since each car is pushed and potentially popped once.",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for storing the position-speed pairs and the stack. In the worst case, all cars form separate fleets.",
+              "exampleWalkthrough": "For target=12, position=[10,8,0,5,3], speed=[2,4,1,1,3]: Sort by position descending: [(10,2),(8,4),(5,1),(3,3),(0,1)]. Times: [1.0, 1.0, 7.0, 3.0, 12.0]. Process: push 1.0. Push 1.0, but 1.0<=1.0 so pop (same fleet). Push 7.0 (new fleet). Push 3.0, but 3.0<=7.0 so pop (catches up). Push 12.0 (new fleet). Stack=[1.0,7.0,12.0], return 3 fleets.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Iteration",
+              "type": "alternative",
+              "explanation": "Similar to the stack approach, sort cars by position in descending order and calculate arrival times. Instead of using a stack, track the previous fleet leader's time. Start with 1 fleet (the first car). For each subsequent car, if its arrival time is greater than the previous fleet leader's time, it cannot catch up and forms a new fleet. This approach avoids the stack data structure by directly counting fleets.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define function carFleet that accepts target position and speed",
+                    "Create list of tuples pairing position with speed using zip and list comprehension",
+                    "Sort pair in reverse order by position",
+                    "Create empty line",
+                    "Initialize fleets to one",
+                    "Calculate target minus first position divided by first speed and store in prev time",
+                    "Loop from one to length of pair",
+                    "Calculate target minus position at i divided by speed at i and store in curr time",
+                    "Check if curr time is greater than prev time",
+                    "Increment fleets by one",
+                    "Set prev time to curr time",
+                    "Create empty line",
+                    "Return fleets"
+                  ],
+                  "codeLines": [
+                    "def carFleet(target, position, speed):",
+                    "    pair = [(p, s) for p, s in zip(position, speed)]",
+                    "    pair.sort(reverse=True)",
+                    "    ",
+                    "    fleets = 1",
+                    "    prev_time = (target - pair[0][0]) / pair[0][1]",
+                    "    for i in range(1, len(pair)):",
+                    "        curr_time = (target - pair[i][0]) / pair[i][1]",
+                    "        if curr_time > prev_time:",
+                    "            fleets += 1",
+                    "            prev_time = curr_time",
+                    "    ",
+                    "    return fleets"
+                  ]
+                },
+                {
+                  "language": "javascript",
+                  "semanticLines": [
+                    "Define function carFleet that accepts target position and speed",
+                    "Create array pair by mapping position to array of position and corresponding speed",
+                    "Sort pair in descending order by position using comparison function",
+                    "Create empty line",
+                    "Initialize variable fleets to one",
+                    "Calculate target minus first position divided by first speed and store in variable prevTime",
+                    "Loop from one to pair length",
+                    "Calculate target minus position at i divided by speed at i and store in constant currTime",
+                    "Check if currTime is greater than prevTime",
+                    "Increment fleets by one",
+                    "Set prevTime to currTime",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Return fleets",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "function carFleet(target, position, speed) {",
+                    "    const pair = position.map((p, i) => [p, speed[i]]);",
+                    "    pair.sort((a, b) => b[0] - a[0]);",
+                    "    ",
+                    "    let fleets = 1;",
+                    "    let prevTime = (target - pair[0][0]) / pair[0][1];",
+                    "    for (let i = 1; i < pair.length; i++) {",
+                    "        const currTime = (target - pair[i][0]) / pair[i][1];",
+                    "        if (currTime > prevTime) {",
+                    "            fleets++;",
+                    "            prevTime = currTime;",
+                    "        }",
+                    "    }",
+                    "    ",
+                    "    return fleets;",
+                    "}"
+                  ]
+                },
+                {
+                  "language": "go",
+                  "semanticLines": [
+                    "Define function carFleet that accepts int target int slice position int slice speed and returns int",
+                    "Get length of position and store in n",
+                    "Create 2D int array pair with n elements using make",
+                    "Loop from zero to n",
+                    "Set element at index i of pair to array containing position at i and speed at i",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Sort pair slice using sort Slice with comparison function that compares first element in descending order",
+                    "Return whether first element of pair at i is greater than first element of pair at j",
+                    "Close the function and sort Slice with closing brace",
+                    "Create empty line",
+                    "Initialize fleets to one",
+                    "Calculate target minus first position divided by first speed as float64 and store in prevTime",
+                    "Loop from one to n",
+                    "Calculate target minus position at i divided by speed at i as float64 and store in currTime",
+                    "Check if currTime is greater than prevTime",
+                    "Increment fleets by one",
+                    "Set prevTime to currTime",
+                    "Close the if block with closing brace",
+                    "Close the for loop with closing brace",
+                    "Create empty line",
+                    "Return fleets",
+                    "Close the function with closing brace"
+                  ],
+                  "codeLines": [
+                    "func carFleet(target int, position []int, speed []int) int {",
+                    "    n := len(position)",
+                    "    pair := make([][2]int, n)",
+                    "    for i := 0; i < n; i++ {",
+                    "        pair[i] = [2]int{position[i], speed[i]}",
+                    "    }",
+                    "    ",
+                    "    sort.Slice(pair, func(i, j int) bool {",
+                    "        return pair[i][0] > pair[j][0]",
+                    "    })",
+                    "    ",
+                    "    fleets := 1",
+                    "    prevTime := float64(target - pair[0][0]) / float64(pair[0][1])",
+                    "    for i := 1; i < n; i++ {",
+                    "        currTime := float64(target - pair[i][0]) / float64(pair[i][1])",
+                    "        if currTime > prevTime {",
+                    "            fleets++",
+                    "            prevTime = currTime",
+                    "        }",
+                    "    }",
+                    "    ",
+                    "    return fleets",
+                    "}"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n log n)",
+              "timeDescription": "Time is dominated by sorting the cars by position. The subsequent iteration through the sorted pairs is O(n).",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Linear space for storing the position-speed pairs. No additional stack is needed, only a few variables for tracking.",
+              "exampleWalkthrough": "For target=12, position=[10,8,0,5,3], speed=[2,4,1,1,3]: Sort by position descending: [(10,2),(8,4),(5,1),(3,3),(0,1)]. Start with fleets=1, prevTime=1.0. At i=1: currTime=1.0, not greater than 1.0, same fleet. At i=2: currTime=7.0>1.0, increment fleets=2, prevTime=7.0. At i=3: currTime=3.0, not greater than 7.0, same fleet. At i=4: currTime=12.0>7.0, increment fleets=3, prevTime=12.0. Return 3.",
+              "displayOrder": 2
+            }
+          ],
+          "tags": [
+            "array",
+            "stack",
+            "sorting",
+            "monotonic-stack",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
