@@ -1,0 +1,787 @@
+{
+  "problemId": "139",
+  "title": "Word Break",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "String Segmentation",
+  "similar_questions": ["140. Word Break II", "472. Concatenated Words"],
+  "real_life_domains": ["Natural Language Processing", "Text Processing", "Autocomplete", "Spell Checking"],
+  "scenarios": [
+    {
+      "scenario": "Text segmentation in languages without spaces",
+      "description": "Breaking compound words or continuous text (like in Chinese or Japanese) into meaningful dictionary words for translation or processing."
+    },
+    {
+      "scenario": "URL parsing and domain validation",
+      "description": "Determining if a domain name or URL can be decomposed into valid registered subdomains or recognized patterns."
+    },
+    {
+      "scenario": "Code identifier parsing",
+      "description": "Validating if a variable name or identifier can be broken down into meaningful dictionary words, useful for code analysis and naming convention checks."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Use recursive backtracking to try matching each word in the dictionary at the current position. If a word matches, recursively check if the remaining substring can be segmented. Return true if we reach the end of the string.",
+      "explanation": "The recursive solution explores all possible ways to segment the string. Starting from index i, we try each word in wordDict. If a word matches the substring starting at i, we recursively check if the rest of the string (starting from i + len(word)) can be segmented. The base case is when i equals the length of s, meaning we've successfully segmented the entire string. If any recursive path returns true, we've found a valid segmentation. This approach systematically tries all possibilities but may recompute the same subproblems multiple times.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n\n        def dfs(i):\n            if i == len(s):\n                return True\n\n            for w in wordDict:\n                if ((i + len(w)) <= len(s) and\n                     s[i : i + len(w)] == w\n                ):\n                    if dfs(i + len(w)):\n                        return True\n            return False\n\n        return dfs(0)",
+          "semantic_descriptions": [
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Return true for valid segmentation.",
+            "Return false if no word leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var wordBreak = function(s, wordDict) {\n    function dfs(i) {\n        if (i === s.length) {\n            return true;\n        }\n\n        for (let w of wordDict) {\n            if ((i + w.length) <= s.length &&\n                 s.substring(i, i + w.length) === w\n            ) {\n                if (dfs(i + w.length)) {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n\n    return dfs(0);\n};",
+          "semantic_descriptions": [
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Return true for valid segmentation.",
+            "Return false if no word leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func wordBreak(s string, wordDict []string) bool {\n    var dfs func(i int) bool\n    dfs = func(i int) bool {\n        if i == len(s) {\n            return true\n        }\n\n        for _, w := range wordDict {\n            if (i + len(w)) <= len(s) &&\n               s[i:i + len(w)] == w {\n                if dfs(i + len(w)) {\n                    return true\n                }\n            }\n        }\n        return false\n    }\n\n    return dfs(0)\n}",
+          "semantic_descriptions": [
+            "Declare recursive function taking index parameter.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Return true for valid segmentation.",
+            "Return false if no word leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        }
+      ],
+      "time_complexity": "O(t*m^n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "In the worst case, we explore all possible segmentations. At each position, we try all m words, and the maximum recursion depth is n (when using single-character words). The substring comparison takes O(t) time where t is the max word length. This creates an m-ary tree of depth n, resulting in exponential time complexity.",
+        "space": "The recursion stack can go as deep as n levels (the length of the string) in the worst case, requiring O(n) space."
+      },
+      "why_it_works": "This solution works by exploring all possible ways to segment the string using words from the dictionary. At each position i, we try to match every word from the dictionary. If a word matches (checked by substring comparison), we recursively verify if the remaining portion of the string can be segmented. The base case ensures that we've consumed the entire string, meaning all parts matched dictionary words. If any path through the recursion tree reaches the base case, we've found a valid segmentation. The correctness relies on exhaustive search - we try all possibilities until we find one that works or exhaust all options.",
+      "constraints_examples": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "output": "true",
+          "explanation": "String can be segmented as 'leet' + 'code'."
+        },
+        {
+          "input": "s = \"applepenapple\", wordDict = [\"apple\",\"pen\"]",
+          "output": "true",
+          "explanation": "String can be segmented as 'apple' + 'pen' + 'apple'."
+        },
+        {
+          "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+          "output": "false",
+          "explanation": "No valid segmentation exists."
+        }
+      ],
+      "common_mistakes": [
+        "Not checking if i + len(w) exceeds the string length before substring comparison, causing index errors.",
+        "Using s[i:i+len(w)] == w without bounds checking, which can create incorrect substrings.",
+        "Forgetting the base case i == len(s), leading to infinite recursion or incorrect results.",
+        "Returning true immediately when finding a matching word without checking if the rest can be segmented."
+      ],
+      "pro_tips": [
+        "The substring comparison s[i:i+len(w)] == w is O(t) where t is the word length, contributing to overall time complexity.",
+        "This recursive solution has overlapping subproblems - the same index i is visited multiple times through different paths, making it a candidate for memoization.",
+        "The condition (i + len(w)) <= len(s) prevents array out of bounds errors.",
+        "Understanding this brute force approach is essential before optimizing with DP."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "steps": [
+            "dfs(0): Try 'leet', matches s[0:4], recurse with dfs(4).",
+            "  dfs(4): Try 'leet', s[4:8] = 'code' != 'leet'.",
+            "  dfs(4): Try 'code', matches s[4:8], recurse with dfs(8).",
+            "    dfs(8): i == len(s), return True.",
+            "  dfs(4): Returns True.",
+            "dfs(0): Returns True.",
+            "Return True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Recursion (Hash Set)",
+      "approach": "Convert wordDict to a hash set for O(1) lookup. Instead of iterating through dictionary words, iterate through all possible ending positions and check if the substring is in the set. This allows more flexible exploration of segmentation points.",
+      "explanation": "This optimization converts the word dictionary to a hash set for constant-time lookup. Instead of trying each word and checking if it matches, we iterate through all possible ending positions j from the current position i. For each position, we extract the substring s[i:j+1] and check if it exists in the word set. If it does, we recursively check if the rest of the string can be segmented. This approach is more flexible than the first solution as it doesn't require iterating through the potentially large wordDict for each position. However, without memoization, it still suffers from exponential time complexity due to overlapping subproblems.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        wordSet = set(wordDict)\n\n        def dfs(i):\n            if i == len(s):\n                return True\n\n            for j in range(i, len(s)):\n                if s[i : j + 1] in wordSet:\n                    if dfs(j + 1):\n                        return True\n            return False\n\n        return dfs(0)",
+          "semantic_descriptions": [
+            "Convert word list to set for fast lookup.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through each possible ending position from current.",
+            "If substring from current to ending is in word set.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Return true for valid segmentation.",
+            "Return false if no substring leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var wordBreak = function(s, wordDict) {\n    const wordSet = new Set(wordDict);\n\n    function dfs(i) {\n        if (i === s.length) {\n            return true;\n        }\n\n        for (let j = i; j < s.length; j++) {\n            if (wordSet.has(s.substring(i, j + 1))) {\n                if (dfs(j + 1)) {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n\n    return dfs(0);\n};",
+          "semantic_descriptions": [
+            "Convert word list to set for fast lookup.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through each possible ending position from current.",
+            "If substring from current to ending is in word set.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Return true for valid segmentation.",
+            "Return false if no substring leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func wordBreak(s string, wordDict []string) bool {\n    wordSet := make(map[string]bool)\n    for _, w := range wordDict {\n        wordSet[w] = true\n    }\n\n    var dfs func(i int) bool\n    dfs = func(i int) bool {\n        if i == len(s) {\n            return true\n        }\n\n        for j := i; j < len(s); j++ {\n            if wordSet[s[i:j+1]] {\n                if dfs(j + 1) {\n                    return true\n                }\n            }\n        }\n        return false\n    }\n\n    return dfs(0)\n}",
+          "semantic_descriptions": [
+            "Initialize map for word set.",
+            "Add each word to set.",
+            "Declare recursive function taking index parameter.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through each possible ending position from current.",
+            "If substring from current to ending is in word set.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Return true for valid segmentation.",
+            "Return false if no substring leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        }
+      ],
+      "time_complexity": "O((n*2^n)+m)",
+      "space_complexity": "O(n+(m*t))",
+      "complexity_explanation": {
+        "time": "Creating the word set takes O(m) time where m is the number of words. The recursion explores all possible segmentation points. For each starting position i, we try all ending positions j, creating O(n) substrings. In the worst case, we explore all 2^n possible segmentations (binary choice at each position). Substring creation and lookup contribute O(n) per path, resulting in O(n*2^n) for recursion.",
+        "space": "The word set stores m words with average length t, requiring O(m*t) space. The recursion stack depth is O(n). Substring creation also uses O(n) space temporarily. Total space is O(n+(m*t))."
+      },
+      "why_it_works": "This solution works by systematically trying all possible split points in the string. At each position i, we consider all substrings starting at i and check if they exist in the dictionary (using O(1) hash set lookup). If a substring is valid, we recursively verify that the remaining portion can be segmented. The hash set optimization makes the word lookup faster than iterating through wordDict. The base case ensures we've consumed the entire string. While this approach is more elegant than iterating through the word list, it still explores all possible segmentations without caching results, leading to repeated computation of the same subproblems.",
+      "constraints_examples": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "output": "true",
+          "explanation": "At i=0, try substrings until 'leet' found in set, then recurse from i=4 and find 'code'."
+        },
+        {
+          "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+          "output": "false",
+          "explanation": "No combination of dictionary words can segment the entire string."
+        }
+      ],
+      "common_mistakes": [
+        "Creating the substring s[i:j+1] inside the loop for every j without limiting the range, leading to many unnecessary substring operations.",
+        "Not converting wordDict to a set first, making each lookup O(m) instead of O(1).",
+        "Confusing the loop variable j as an index vs. j+1 in the substring slice.",
+        "Forgetting that Python slicing s[i:j+1] creates a new string object, which has memory overhead."
+      ],
+      "pro_tips": [
+        "Using a hash set for word lookup reduces the lookup time from O(m) to O(1), though the overall time complexity is still exponential without memoization.",
+        "This approach is more flexible than iterating through words because it can potentially use early termination based on substring length.",
+        "The inner loop creates O(n^2) substrings in total across all recursive calls, contributing to time complexity.",
+        "This solution sets up well for optimization - adding memoization transforms it into an efficient DP solution."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"applepenapple\", wordDict = [\"apple\",\"pen\"]",
+          "steps": [
+            "wordSet = {'apple', 'pen'}.",
+            "dfs(0): Try j=0 to 12.",
+            "  j=0 to 4: s[0:5]='apple' in set, dfs(5).",
+            "    dfs(5): Try j=5 to 12.",
+            "      j=5 to 7: s[5:8]='pen' in set, dfs(8).",
+            "        dfs(8): Try j=8 to 12.",
+            "          j=8 to 12: s[8:13]='apple' in set, dfs(13).",
+            "            dfs(13): i == len(s), return True.",
+            "Return True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Add memoization to the recursive solution to avoid recomputing the same subproblems. Store whether each index can lead to a valid segmentation in a memo dictionary. This transforms the exponential solution into polynomial time.",
+      "explanation": "This solution optimizes the first recursive approach by adding memoization. We use a dictionary memo where memo[i] stores whether the substring starting at index i can be segmented into dictionary words. Before computing dfs(i), we check if we've already solved it by looking in memo. If found, we return the cached result immediately. Otherwise, we compute it using the same logic as the recursive solution: try each word from wordDict, and if it matches at position i, recursively check the rest. We store the result in memo before returning. The base case memo[len(s)] = True is initialized upfront. This eliminates redundant computations by ensuring each index is solved exactly once.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        memo = {len(s) : True}\n        def dfs(i):\n            if i in memo:\n                return memo[i]\n\n            for w in wordDict:\n                if ((i + len(w)) <= len(s) and\n                     s[i : i + len(w)] == w\n                ):\n                    if dfs(i + len(w)):\n                        memo[i] = True\n                        return True\n            memo[i] = False\n            return False\n\n        return dfs(0)",
+          "semantic_descriptions": [
+            "Initialize cache with base case for end of string.",
+            "If current index already computed.",
+            "Return cached result.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Store true in cache for this index.",
+            "Return true for valid segmentation.",
+            "Store false in cache for this index.",
+            "Return false if no word leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var wordBreak = function(s, wordDict) {\n    const memo = new Map();\n    memo.set(s.length, true);\n\n    function dfs(i) {\n        if (memo.has(i)) {\n            return memo.get(i);\n        }\n\n        for (let w of wordDict) {\n            if ((i + w.length) <= s.length &&\n                 s.substring(i, i + w.length) === w\n            ) {\n                if (dfs(i + w.length)) {\n                    memo.set(i, true);\n                    return true;\n                }\n            }\n        }\n        memo.set(i, false);\n        return false;\n    }\n\n    return dfs(0);\n};",
+          "semantic_descriptions": [
+            "Initialize cache map.",
+            "Set base case for end of string to true.",
+            "If current index already computed.",
+            "Return cached result.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Store true in cache for this index.",
+            "Return true for valid segmentation.",
+            "Store false in cache for this index.",
+            "Return false if no word leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func wordBreak(s string, wordDict []string) bool {\n    memo := make(map[int]bool)\n    memo[len(s)] = true\n\n    var dfs func(i int) bool\n    dfs = func(i int) bool {\n        if val, exists := memo[i]; exists {\n            return val\n        }\n\n        for _, w := range wordDict {\n            if (i + len(w)) <= len(s) &&\n               s[i:i + len(w)] == w {\n                if dfs(i + len(w)) {\n                    memo[i] = true\n                    return true\n                }\n            }\n        }\n        memo[i] = false\n        return false\n    }\n\n    return dfs(0)\n}",
+          "semantic_descriptions": [
+            "Initialize cache map.",
+            "Set base case for end of string to true.",
+            "Declare recursive function taking index parameter.",
+            "If current index already computed.",
+            "Return cached result.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Store true in cache for this index.",
+            "Return true for valid segmentation.",
+            "Store false in cache for this index.",
+            "Return false if no word leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*m*t)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "Each unique index from 0 to n is computed exactly once due to memoization. For each index, we try all m words from the dictionary. For each word, we do a substring comparison which takes O(t) time where t is the word length. Therefore, total time is O(n*m*t).",
+        "space": "The memo dictionary stores boolean results for at most n indices, requiring O(n) space. The recursion stack can also be O(n) deep in the worst case. Total space is O(n)."
+      },
+      "why_it_works": "Memoization eliminates the exponential time complexity by caching results for each index. The key observation is that whether we can segment the string starting from index i depends only on i, not on how we reached i. This means we have overlapping subproblems - the same index i might be reached through different segmentation paths. By storing the result for each index the first time we compute it, all subsequent calls with the same index can retrieve the cached value in O(1) time. This transforms the problem from exploring all 2^n possible segmentations to solving n independent subproblems, each of which tries m words. The correctness is preserved from the recursive solution while achieving polynomial time complexity.",
+      "constraints_examples": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "output": "true",
+          "explanation": "memo builds: memo[8]=True, memo[4]=True, memo[0]=True. Return True."
+        },
+        {
+          "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+          "output": "false",
+          "explanation": "memo fills various indices with False, eventually memo[0]=False. Return False."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to initialize memo[len(s)] = True, which is the crucial base case.",
+        "Not storing the result in memo before returning, which defeats the purpose of memoization.",
+        "Storing only successful results (True) but not failures (False), leading to recomputation of failed paths.",
+        "Checking memo after trying all words instead of before, missing the optimization."
+      ],
+      "pro_tips": [
+        "Top-down DP with memoization is often easier to implement than bottom-up because it follows the natural recursive structure.",
+        "Initializing memo with the base case {len(s): True} simplifies the recursive function.",
+        "This pattern of adding memoization to recursion is widely applicable - identify overlapping subproblems first.",
+        "In interviews, starting with recursion and then adding memoization shows clear problem-solving progression."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "steps": [
+            "Initialize memo = {8: True}.",
+            "dfs(0): Not in memo. Try 'leet', matches s[0:4], dfs(4).",
+            "  dfs(4): Not in memo. Try 'code', matches s[4:8], dfs(8).",
+            "    dfs(8): In memo, return True.",
+            "  dfs(4): Returns True, memo[4] = True.",
+            "dfs(0): Returns True, memo[0] = True.",
+            "Return True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Hash Set)",
+      "approach": "Combine hash set optimization with memoization. Convert wordDict to a set and find the maximum word length. Use memoization while iterating through possible ending positions, but limit the search to the maximum word length to avoid unnecessary checks.",
+      "explanation": "This solution combines the best of both worlds: hash set for O(1) word lookup and memoization for avoiding repeated computation, plus an optimization to limit the search range. We first convert wordDict to a set and compute the maximum word length t. For each index i, instead of checking all positions from i to len(s), we only check up to min(len(s), i+t), since no word can be longer than t. We use memoization to cache whether each index can lead to valid segmentation. This reduces unnecessary substring operations and lookups for very long strings. The combination of these optimizations makes this one of the most efficient solutions.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        wordSet = set(wordDict)\n        t = 0\n        for w in wordDict:\n            t = max(t, len(w))\n\n        memo = {}\n        def dfs(i):\n            if i in memo:\n                return memo[i]\n            if i == len(s):\n                return True\n            for j in range(i, min(len(s), i + t)):\n                if s[i : j + 1] in wordSet:\n                    if dfs(j + 1):\n                        memo[i] = True\n                        return True\n            memo[i] = False\n            return False\n\n        return dfs(0)",
+          "semantic_descriptions": [
+            "Convert word list to set for fast lookup.",
+            "Initialize maximum word length to zero.",
+            "Loop through each word to find maximum length.",
+            "Update maximum length.",
+            "Initialize memoization cache as empty dictionary.",
+            "If current index already computed.",
+            "Return cached result.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through positions up to max word length from current.",
+            "If substring from current to ending is in word set.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Store true in cache for this index.",
+            "Return true for valid segmentation.",
+            "Store false in cache for this index.",
+            "Return false if no substring leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var wordBreak = function(s, wordDict) {\n    const wordSet = new Set(wordDict);\n    let t = 0;\n    for (let w of wordDict) {\n        t = Math.max(t, w.length);\n    }\n\n    const memo = new Map();\n    function dfs(i) {\n        if (memo.has(i)) {\n            return memo.get(i);\n        }\n        if (i === s.length) {\n            return true;\n        }\n        for (let j = i; j < Math.min(s.length, i + t); j++) {\n            if (wordSet.has(s.substring(i, j + 1))) {\n                if (dfs(j + 1)) {\n                    memo.set(i, true);\n                    return true;\n                }\n            }\n        }\n        memo.set(i, false);\n        return false;\n    }\n\n    return dfs(0);\n};",
+          "semantic_descriptions": [
+            "Convert word list to set for fast lookup.",
+            "Initialize maximum word length to zero.",
+            "Loop through each word to find maximum length.",
+            "Update maximum length.",
+            "Initialize memoization cache as map.",
+            "If current index already computed.",
+            "Return cached result.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Loop through positions up to max word length from current.",
+            "If substring from current to ending is in word set.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Store true in cache for this index.",
+            "Return true for valid segmentation.",
+            "Store false in cache for this index.",
+            "Return false if no substring leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func wordBreak(s string, wordDict []string) bool {\n    wordSet := make(map[string]bool)\n    t := 0\n    for _, w := range wordDict {\n        wordSet[w] = true\n        if len(w) > t {\n            t = len(w)\n        }\n    }\n\n    memo := make(map[int]bool)\n    var dfs func(i int) bool\n    dfs = func(i int) bool {\n        if val, exists := memo[i]; exists {\n            return val\n        }\n        if i == len(s) {\n            return true\n        }\n        maxJ := len(s)\n        if i + t < maxJ {\n            maxJ = i + t\n        }\n        for j := i; j < maxJ; j++ {\n            if wordSet[s[i:j+1]] {\n                if dfs(j + 1) {\n                    memo[i] = true\n                    return true\n                }\n            }\n        }\n        memo[i] = false\n        return false\n    }\n\n    return dfs(0)\n}",
+          "semantic_descriptions": [
+            "Initialize word set map.",
+            "Initialize maximum word length to zero.",
+            "Loop through each word.",
+            "Add word to set.",
+            "If word length exceeds current maximum.",
+            "Update maximum length.",
+            "Initialize memoization cache map.",
+            "Declare recursive function taking index parameter.",
+            "If current index already computed.",
+            "Return cached result.",
+            "If current index equals string length.",
+            "Return true for successful segmentation.",
+            "Set maximum ending position to string length.",
+            "If current plus max word length is less than string length.",
+            "Limit maximum ending position to current plus max word length.",
+            "Loop through positions up to maximum.",
+            "If substring from current to ending is in word set.",
+            "Recursively check if rest of string can be segmented.",
+            "If recursive call succeeds.",
+            "Store true in cache for this index.",
+            "Return true for valid segmentation.",
+            "Store false in cache for this index.",
+            "Return false if no substring leads to valid segmentation.",
+            "Start recursion from index zero."
+          ]
+        }
+      ],
+      "time_complexity": "O((t^2*n)+m)",
+      "space_complexity": "O(n+(m*t))",
+      "complexity_explanation": {
+        "time": "Computing the word set and max length takes O(m) time. For each of n indices, we try at most t different ending positions (limited by max word length). For each substring, we create it in O(t) time and look it up in O(1) time. Total time is O(n*t*t) = O(t^2*n) for the DP, plus O(m) for preprocessing.",
+        "space": "The word set stores m words with average length t, requiring O(m*t) space. The memo stores results for at most n indices, requiring O(n) space. The recursion stack is O(n) deep. Substring creation uses O(t) temporary space. Total space is O(n+(m*t))."
+      },
+      "why_it_works": "This solution optimizes both the word lookup and the search range. Using a hash set makes word lookup O(1) instead of O(m). Limiting the search to the maximum word length avoids creating and checking substrings that are too long to match any dictionary word. Memoization ensures each index is computed once. The combination of these optimizations significantly reduces the practical runtime. The correctness is preserved: we still check all valid segmentation possibilities (substrings up to max word length), but skip impossible ones (substrings longer than any word). This makes the solution efficient even for long strings with short dictionary words.",
+      "constraints_examples": [
+        {
+          "input": "s = \"aaaaaaa\", wordDict = [\"aa\",\"aaa\"]",
+          "output": "true",
+          "explanation": "t=3 limits search range. Can segment as 'aa'+'aa'+'aaa' or 'aaa'+'aa'+'aa' or other combinations."
+        },
+        {
+          "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+          "output": "false",
+          "explanation": "t=4 limits unnecessary long substring checks, but still can't find valid segmentation."
+        }
+      ],
+      "common_mistakes": [
+        "Computing max word length inside the recursive function instead of preprocessing it once.",
+        "Using range(i, min(len(s), i+t)) which checks positions up to i+t-1, when we want i+t (need to check substrings of length t).",
+        "Forgetting that the base case i == len(s) must be checked after memo lookup to avoid missing the cache.",
+        "Not understanding that the optimization only helps when t << n (max word length much smaller than string length)."
+      ],
+      "pro_tips": [
+        "The max word length optimization is most effective when the dictionary contains short words and the string is long.",
+        "This solution demonstrates how multiple optimizations can be combined: hash set (O(1) lookup), memoization (avoid recomputation), and pruning (limit search space).",
+        "The loop range min(len(s), i+t) ensures we don't go beyond the string length even if i+t exceeds it.",
+        "This is one of the most practical solutions for real-world applications where dictionaries often have bounded word lengths."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "steps": [
+            "wordSet = {'leet', 'code'}, t = 4.",
+            "dfs(0): Check j=0 to min(8,4)=4.",
+            "  j=0 to 3: s[0:4]='leet' in set, dfs(4).",
+            "    dfs(4): Check j=4 to min(8,8)=8.",
+            "      j=4 to 7: s[4:8]='code' in set, dfs(8).",
+            "        dfs(8): i == 8, return True.",
+            "      memo[4] = True, return True.",
+            "  memo[0] = True, return True.",
+            "Return True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build the solution iteratively from the end of the string to the beginning. Use a boolean array dp where dp[i] represents whether the substring starting at index i can be segmented. For each position, try all dictionary words and update dp[i] based on whether the word matches and dp[i+len(word)] is true.",
+      "explanation": "The bottom-up approach eliminates recursion by building the solution iteratively. We create a boolean array dp of size n+1, where dp[i] indicates whether the substring s[i:] can be segmented into dictionary words. We initialize dp[n] = True (empty string is valid). Then we iterate backward from n-1 to 0. For each position i, we try every word in the dictionary. If a word matches at position i and dp[i+len(word)] is True (meaning the rest can be segmented), we set dp[i] = True and break (no need to try more words). This iterative approach computes the same values as top-down DP but in reverse order without recursion. The answer is dp[0].",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        dp = [False] * (len(s) + 1)\n        dp[len(s)] = True\n\n        for i in range(len(s) - 1, -1, -1):\n            for w in wordDict:\n                if (i + len(w)) <= len(s) and s[i : i + len(w)] == w:\n                    dp[i] = dp[i + len(w)]\n                if dp[i]:\n                    break\n\n        return dp[0]",
+          "semantic_descriptions": [
+            "Initialize array with false for all positions.",
+            "Set base case for end of string to true.",
+            "Loop backward from last character to first.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Set current position based on position after word.",
+            "If current position is now true.",
+            "Break early as we found valid segmentation.",
+            "Return whether start of string can be segmented."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var wordBreak = function(s, wordDict) {\n    const dp = new Array(s.length + 1).fill(false);\n    dp[s.length] = true;\n\n    for (let i = s.length - 1; i >= 0; i--) {\n        for (let w of wordDict) {\n            if ((i + w.length) <= s.length && \n                s.substring(i, i + w.length) === w) {\n                dp[i] = dp[i + w.length];\n            }\n            if (dp[i]) {\n                break;\n            }\n        }\n    }\n\n    return dp[0];\n};",
+          "semantic_descriptions": [
+            "Initialize array with false for all positions.",
+            "Set base case for end of string to true.",
+            "Loop backward from last character to first.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Set current position based on position after word.",
+            "If current position is now true.",
+            "Break early as we found valid segmentation.",
+            "Return whether start of string can be segmented."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func wordBreak(s string, wordDict []string) bool {\n    dp := make([]bool, len(s) + 1)\n    dp[len(s)] = true\n\n    for i := len(s) - 1; i >= 0; i-- {\n        for _, w := range wordDict {\n            if (i + len(w)) <= len(s) && s[i:i + len(w)] == w {\n                dp[i] = dp[i + len(w)]\n            }\n            if dp[i] {\n                break\n            }\n        }\n    }\n\n    return dp[0]\n}",
+          "semantic_descriptions": [
+            "Initialize array with false for all positions.",
+            "Set base case for end of string to true.",
+            "Loop backward from last character to first.",
+            "Loop through each word in dictionary.",
+            "If word fits within remaining string and matches substring.",
+            "Set current position based on position after word.",
+            "If current position is now true.",
+            "Break early as we found valid segmentation.",
+            "Return whether start of string can be segmented."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*m*t)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We iterate through n positions backward. For each position, we try all m words from the dictionary. For each word, we do a substring comparison which takes O(t) time where t is the word length. The early break optimization helps in practice but doesn't change worst-case complexity. Total time is O(n*m*t).",
+        "space": "We use a dp array of size n+1, requiring O(n) space. No recursion stack is needed, making this more space-efficient in practice than top-down DP."
+      },
+      "why_it_works": "Bottom-up DP works by building solutions to larger problems from solutions to smaller problems. The recurrence relation is: dp[i] = True if there exists a word w such that s[i:i+len(w)] == w and dp[i+len(w)] == True. By iterating backward from n-1 to 0, we ensure that when we compute dp[i], all values dp[i+1], dp[i+2], ..., dp[n] have already been computed. The base case dp[n] = True represents that an empty substring can always be segmented (vacuously true). This approach avoids recursion entirely, making it more efficient in practice due to eliminating function call overhead. The early break when dp[i] becomes True is an optimization that skips checking remaining words once we've found one valid segmentation.",
+      "constraints_examples": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "output": "true",
+          "explanation": "Build dp backward: dp[8]=T, dp[4]=T (from 'code'), dp[0]=T (from 'leet'). Return True."
+        },
+        {
+          "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+          "output": "false",
+          "explanation": "No position can set dp[i]=True leading back to dp[0]=False."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating forward instead of backward, which causes you to access dp[i+len(w)] before it's computed.",
+        "Forgetting to initialize dp[len(s)] = True before the loop.",
+        "Using dp[i] = True instead of dp[i] = dp[i+len(w)], which ignores whether the rest can be segmented.",
+        "Not breaking early when dp[i] becomes True, leading to unnecessary word checks.",
+        "Off-by-one errors in array indexing or loop bounds."
+      ],
+      "pro_tips": [
+        "Bottom-up DP is generally more efficient than top-down in practice because it avoids recursion overhead.",
+        "The early break optimization significantly improves performance when multiple words match at a position.",
+        "The iteration order (backward) is critical - we must compute smaller subproblems (larger indices) before larger subproblems (smaller indices).",
+        "This solution is optimal in both time and space complexity and is often preferred in interviews for its clarity."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "steps": [
+            "Initialize dp = [F,F,F,F,F,F,F,F,T] (index 0 to 8).",
+            "i=7: Try 'leet' (too long), try 'code' (too long). dp[7]=F.",
+            "i=6: Try 'leet' (too long), try 'code' (too long). dp[6]=F.",
+            "i=5: Try 'leet' (too long), try 'code' (too long). dp[5]=F.",
+            "i=4: Try 'leet' (too long), try 'code' matches s[4:8], dp[4]=dp[8]=T. Break.",
+            "i=3: Try 'leet' (too long), try 'code' (too long). dp[3]=F.",
+            "i=2: Try 'leet' (too long), try 'code' (too long). dp[2]=F.",
+            "i=1: Try 'leet' (too long), try 'code' (too long). dp[1]=F.",
+            "i=0: Try 'leet' matches s[0:4], dp[0]=dp[4]=T. Break.",
+            "Return dp[0] = True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Dynamic Programming (Trie)",
+      "approach": "Use a Trie data structure to store the dictionary words for efficient prefix matching. Build a DP array bottom-up, but instead of checking each word individually or using hash set lookups, use the Trie to check if substrings are valid words. This optimizes the word lookup especially when there are many words with common prefixes.",
+      "explanation": "This advanced solution uses a Trie (prefix tree) for efficient word lookup. We first build a Trie containing all dictionary words. Each node in the Trie has children (character mappings) and a boolean flag indicating if it's the end of a word. We then use bottom-up DP similar to solution 5, but instead of iterating through all words, we iterate through possible ending positions (limited by max word length) and use the Trie's search method to check if s[i:j+1] is a valid word. The Trie allows us to quickly check word membership with early termination if a prefix doesn't exist. This is particularly efficient when the dictionary has many words with common prefixes.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_word = False\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_word = True\n\n    def search(self, s, i, j):\n        node = self.root\n        for idx in range(i, j + 1):\n            if s[idx] not in node.children:\n                return False\n            node = node.children[s[idx]]\n        return node.is_word\n\nclass Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        trie = Trie()\n        for word in wordDict:\n            trie.insert(word)\n\n        dp = [False] * (len(s) + 1)\n        dp[len(s)] = True\n\n        t = 0\n        for w in wordDict:\n            t = max(t, len(w))\n\n        for i in range(len(s), -1, -1):\n            for j in range(i, min(len(s), i + t)):\n                if trie.search(s, i, j):\n                    dp[i] = dp[j + 1]\n                    if dp[i]:\n                        break\n\n        return dp[0]",
+          "semantic_descriptions": [
+            "Initialize children as empty dictionary.",
+            "Set word end flag to false.",
+            "Initialize root node.",
+            "Start at root node.",
+            "Loop through each character in word.",
+            "If character not in children.",
+            "Create new node for character.",
+            "Move to child node.",
+            "Mark final node as word end.",
+            "Start at root node.",
+            "Loop through substring indices.",
+            "If character not in children.",
+            "Return false for invalid word.",
+            "Move to child node.",
+            "Return whether final node marks word end.",
+            "Create new trie.",
+            "Insert each word into trie.",
+            "Initialize array with false for all positions.",
+            "Set base case for end of string to true.",
+            "Initialize maximum word length to zero.",
+            "Find maximum word length in dictionary.",
+            "Loop from end to start including end position.",
+            "Loop through positions up to max word length from current.",
+            "If substring is valid word in trie.",
+            "Set current position based on position after word.",
+            "If current position is now true.",
+            "Break early as we found valid segmentation.",
+            "Return whether start of string can be segmented."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "class TrieNode {\n    constructor() {\n        this.children = {};\n        this.is_word = false;\n    }\n}\n\nclass Trie {\n    constructor() {\n        this.root = new TrieNode();\n    }\n\n    insert(word) {\n        let node = this.root;\n        for (let char of word) {\n            if (!(char in node.children)) {\n                node.children[char] = new TrieNode();\n            }\n            node = node.children[char];\n        }\n        node.is_word = true;\n    }\n\n    search(s, i, j) {\n        let node = this.root;\n        for (let idx = i; idx <= j; idx++) {\n            if (!(s[idx] in node.children)) {\n                return false;\n            }\n            node = node.children[s[idx]];\n        }\n        return node.is_word;\n    }\n}\n\nvar wordBreak = function(s, wordDict) {\n    const trie = new Trie();\n    for (let word of wordDict) {\n        trie.insert(word);\n    }\n\n    const dp = new Array(s.length + 1).fill(false);\n    dp[s.length] = true;\n\n    let t = 0;\n    for (let w of wordDict) {\n        t = Math.max(t, w.length);\n    }\n\n    for (let i = s.length; i >= 0; i--) {\n        for (let j = i; j < Math.min(s.length, i + t); j++) {\n            if (trie.search(s, i, j)) {\n                dp[i] = dp[j + 1];\n                if (dp[i]) {\n                    break;\n                }\n            }\n        }\n    }\n\n    return dp[0];\n};",
+          "semantic_descriptions": [
+            "Initialize children as empty object.",
+            "Set word end flag to false.",
+            "Initialize root node.",
+            "Start at root node.",
+            "Loop through each character in word.",
+            "If character not in children.",
+            "Create new node for character.",
+            "Move to child node.",
+            "Mark final node as word end.",
+            "Start at root node.",
+            "Loop through substring indices.",
+            "If character not in children.",
+            "Return false for invalid word.",
+            "Move to child node.",
+            "Return whether final node marks word end.",
+            "Create new trie.",
+            "Insert each word into trie.",
+            "Initialize array with false for all positions.",
+            "Set base case for end of string to true.",
+            "Initialize maximum word length to zero.",
+            "Find maximum word length in dictionary.",
+            "Loop from end to start including end position.",
+            "Loop through positions up to max word length from current.",
+            "If substring is valid word in trie.",
+            "Set current position based on position after word.",
+            "If current position is now true.",
+            "Break early as we found valid segmentation.",
+            "Return whether start of string can be segmented."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "type TrieNode struct {\n    children map[rune]*TrieNode\n    isWord   bool\n}\n\ntype Trie struct {\n    root *TrieNode\n}\n\nfunc NewTrie() *Trie {\n    return &Trie{root: &TrieNode{children: make(map[rune]*TrieNode)}}\n}\n\nfunc (t *Trie) Insert(word string) {\n    node := t.root\n    for _, char := range word {\n        if _, exists := node.children[char]; !exists {\n            node.children[char] = &TrieNode{children: make(map[rune]*TrieNode)}\n        }\n        node = node.children[char]\n    }\n    node.isWord = true\n}\n\nfunc (t *Trie) Search(s string, i, j int) bool {\n    node := t.root\n    for idx := i; idx <= j; idx++ {\n        char := rune(s[idx])\n        if _, exists := node.children[char]; !exists {\n            return false\n        }\n        node = node.children[char]\n    }\n    return node.isWord\n}\n\nfunc wordBreak(s string, wordDict []string) bool {\n    trie := NewTrie()\n    for _, word := range wordDict {\n        trie.Insert(word)\n    }\n\n    dp := make([]bool, len(s) + 1)\n    dp[len(s)] = true\n\n    t := 0\n    for _, w := range wordDict {\n        if len(w) > t {\n            t = len(w)\n        }\n    }\n\n    for i := len(s); i >= 0; i-- {\n        maxJ := len(s)\n        if i + t < maxJ {\n            maxJ = i + t\n        }\n        for j := i; j < maxJ; j++ {\n            if trie.Search(s, i, j) {\n                dp[i] = dp[j + 1]\n                if dp[i] {\n                    break\n                }\n            }\n        }\n    }\n\n    return dp[0]\n}",
+          "semantic_descriptions": [
+            "Return new trie with initialized root.",
+            "Start at root node.",
+            "Loop through each character in word.",
+            "If character not in children.",
+            "Create new node for character.",
+            "Move to child node.",
+            "Mark final node as word end.",
+            "Start at root node.",
+            "Loop through substring indices.",
+            "Convert character to rune.",
+            "If character not in children.",
+            "Return false for invalid word.",
+            "Move to child node.",
+            "Return whether final node marks word end.",
+            "Create new trie.",
+            "Insert each word into trie.",
+            "Initialize array with false for all positions.",
+            "Set base case for end of string to true.",
+            "Initialize maximum word length to zero.",
+            "Find maximum word length in dictionary.",
+            "Set maximum ending position to string length.",
+            "If current plus max word length is less.",
+            "Limit maximum ending position.",
+            "Loop through positions up to maximum.",
+            "If substring is valid word in trie.",
+            "Set current position based on position after word.",
+            "If current position is now true.",
+            "Break early as we found valid segmentation.",
+            "Return whether start of string can be segmented."
+          ]
+        }
+      ],
+      "time_complexity": "O((n*t^2)+m)",
+      "space_complexity": "O(n+(m*t))",
+      "complexity_explanation": {
+        "time": "Building the Trie takes O(m*t) time where m is the number of words and t is average word length. Finding max word length takes O(m). For the DP, we iterate through n positions, and for each position, we check at most t ending positions. Each Trie search takes O(t) time to traverse the Trie. Total time is O(m*t) for Trie construction + O(n*t*t) for DP = O((n*t^2)+m).",
+        "space": "The Trie stores m words with average length t, requiring O(m*t) space in the worst case (no shared prefixes). The dp array requires O(n) space. Total space is O(n+(m*t))."
+      },
+      "why_it_works": "The Trie provides efficient word lookup with early termination for invalid prefixes. When searching for s[i:j+1] in the Trie, if we encounter a character that doesn't exist in the current node's children, we can immediately return false without checking the rest. This is more efficient than substring comparison when there are many words with common prefixes. The DP logic is the same as solution 5, but we use Trie.search instead of iterating through all words or using hash set lookup. The Trie's structure naturally encodes prefix relationships, making it ideal for string matching problems. The max word length optimization limits the search range, preventing unnecessary long substring checks.",
+      "constraints_examples": [
+        {
+          "input": "s = \"catsanddog\", wordDict = [\"cat\",\"cats\",\"and\",\"sand\",\"dog\"]",
+          "output": "true",
+          "explanation": "Trie efficiently handles 'cat' and 'cats' with shared prefix. Segments as 'cats'+'and'+'dog'."
+        },
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "output": "true",
+          "explanation": "Trie.search efficiently verifies 'leet' and 'code'. Segments as 'leet'+'code'."
+        }
+      ],
+      "common_mistakes": [
+        "Not initializing TrieNode.children as an empty dictionary/map in the constructor.",
+        "Forgetting to set is_word = True at the end of insert, making all words unfindable.",
+        "Off-by-one errors in Trie search range (should be idx <= j, not idx < j).",
+        "Not handling the loop range correctly in the DP iteration (should include i = len(s)).",
+        "Assuming Trie search is always faster - for small dictionaries, hash set can be more efficient."
+      ],
+      "pro_tips": [
+        "Tries are most beneficial when the dictionary has many words with common prefixes, as they share storage.",
+        "The Trie search method could be optimized to return early if we've already determined dp[i] = True.",
+        "This solution demonstrates an advanced data structure application, showing depth of algorithmic knowledge.",
+        "In practice, hash set solutions (solution 4) are often simpler and sufficient unless the dictionary is very large with many shared prefixes.",
+        "The Trie can be extended to solve Word Break II (finding all segmentations) more efficiently."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+          "steps": [
+            "Build Trie: root -> l -> e -> e -> t (is_word=True), root -> c -> o -> d -> e (is_word=True).",
+            "t = 4, dp = [F,F,F,F,F,F,F,F,T].",
+            "i=8: No iterations (min(8,12)=8).",
+            "i=7,6,5: Trie.search finds no valid words.",
+            "i=4: j=4 to 7, Trie.search(s,4,7) for 'code' -> True, dp[4]=dp[8]=T, break.",
+            "i=3,2,1: Trie.search finds no valid words.",
+            "i=0: j=0 to 3, Trie.search(s,0,3) for 'leet' -> True, dp[0]=dp[4]=T, break.",
+            "Return dp[0] = True."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution to return all possible segmentations, not just whether it's possible?",
+      "hint": "This is Word Break II (problem 140). Use backtracking with memoization to store all valid segmentations for each index."
+    },
+    {
+      "question": "What if words in the dictionary could only be used once?",
+      "hint": "Modify the DP to track which words have been used, requiring a different state representation (possibly exponential state space)."
+    },
+    {
+      "question": "How would you handle a very large dictionary efficiently?",
+      "hint": "Use a Trie for space-efficient storage with shared prefixes, and consider preprocessing to remove words that don't appear as substrings in s."
+    }
+  ],
+  "related_topics": ["Dynamic Programming", "String", "Trie", "Memoization", "Hash Table"],
+  "hints": [
+    "Think about whether you can segment the string starting from position i - this depends on whether there's a word starting at i and whether the rest can be segmented.",
+    "The base case is when you reach the end of the string - this represents successful segmentation.",
+    "Memoization is crucial - the same index i may be reached through different segmentation paths.",
+    "Consider optimizations like using a hash set for O(1) word lookup and limiting the search to maximum word length."
+  ],
+  "notes": "This is a classic DP problem demonstrating string segmentation. The key insight is that segmentability at position i depends on finding a word starting at i and the segmentability of the remaining string. Multiple optimization techniques can be applied: hash set for fast lookup, max word length pruning, early break, and Trie for prefix-based matching. Solutions 3, 4, and 5 are most practical, with solution 4 offering the best balance of efficiency and simplicity. The Trie solution is more advanced and beneficial for large dictionaries with shared prefixes.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
