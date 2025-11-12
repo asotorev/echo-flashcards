@@ -1,0 +1,544 @@
+{
+  "problemId": "152",
+  "title": "Maximum Product Subarray",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "Kadane's Algorithm Variant",
+  "similar_questions": ["53. Maximum Subarray", "628. Maximum Product of Three Numbers", "713. Subarray Product Less Than K"],
+  "real_life_domains": ["Stock Trading", "Performance Metrics", "Financial Analysis", "Data Analytics"],
+  "scenarios": [
+    {
+      "scenario": "Stock price ratio analysis",
+      "description": "Finding periods where the cumulative product of daily price change ratios yields maximum growth, helping identify the best investment windows."
+    },
+    {
+      "scenario": "Performance multiplier optimization",
+      "description": "Identifying consecutive periods where performance multipliers (which can be positive or negative) combine to give maximum overall performance improvement."
+    },
+    {
+      "scenario": "Compounding interest calculations",
+      "description": "Finding the optimal time window for investments with variable interest rates that compound, where rates can be positive or negative."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Brute Force",
+      "approach": "Check all possible subarrays by trying every starting position and extending to every ending position. Calculate the product for each subarray and track the maximum product found.",
+      "explanation": "The brute force solution systematically examines every possible contiguous subarray in the input array. For each starting index i, we initialize the current product with nums[i] and update the result. Then we extend the subarray by iterating through each ending index j from i+1 to the end, multiplying the current product by nums[j] at each step. We continuously update the maximum result with the current product. This ensures we check every possible subarray exactly once. While inefficient, this approach guarantees finding the maximum product by exhaustive search.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        res = nums[0]\n\n        for i in range(len(nums)):\n            cur = nums[i]\n            res = max(res, cur)\n            for j in range(i + 1, len(nums)):\n                cur *= nums[j]\n                res = max(res, cur)\n\n        return res",
+          "semantic_descriptions": [
+            "Initialize result to first element.",
+            "Loop through each possible starting index.",
+            "Set current product to element at start index.",
+            "Update result with current single element.",
+            "Loop through each possible ending index after start.",
+            "Multiply current product by next element.",
+            "Update result with current product.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var maxProduct = function(nums) {\n    let res = nums[0];\n\n    for (let i = 0; i < nums.length; i++) {\n        let cur = nums[i];\n        res = Math.max(res, cur);\n        for (let j = i + 1; j < nums.length; j++) {\n            cur *= nums[j];\n            res = Math.max(res, cur);\n        }\n    }\n\n    return res;\n};",
+          "semantic_descriptions": [
+            "Initialize result to first element.",
+            "Loop through each possible starting index.",
+            "Set current product to element at start index.",
+            "Update result with current single element.",
+            "Loop through each possible ending index after start.",
+            "Multiply current product by next element.",
+            "Update result with current product.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func maxProduct(nums []int) int {\n    res := nums[0]\n\n    for i := 0; i < len(nums); i++ {\n        cur := nums[i]\n        res = max(res, cur)\n        for j := i + 1; j < len(nums); j++ {\n            cur *= nums[j]\n            res = max(res, cur)\n        }\n    }\n\n    return res\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Initialize result to first element.",
+            "Loop through each possible starting index.",
+            "Set current product to element at start index.",
+            "Update result with current single element.",
+            "Loop through each possible ending index after start.",
+            "Multiply current product by next element.",
+            "Update result with current product.",
+            "Return maximum product found."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "We have two nested loops: the outer loop runs n times, and for each iteration i, the inner loop runs (n - i - 1) times. This gives us approximately n * n/2 iterations, which is O(n^2).",
+        "space": "We only use a constant amount of extra space for variables (res, i, j, cur), regardless of input size."
+      },
+      "why_it_works": "This solution works by exhaustive enumeration of all possible contiguous subarrays. Since we're looking for the maximum product among all subarrays, checking every possible subarray guarantees we'll find it. The key insight is that we can compute the product of a subarray incrementally: if we know the product of nums[i:j], we can compute the product of nums[i:j+1] by multiplying by nums[j]. This incremental calculation within the inner loop makes the brute force approach feasible, though still inefficient. We update the result whenever we find a larger product, ensuring the final result is the global maximum.",
+      "constraints_examples": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "output": "6",
+          "explanation": "Subarray [2,3] has product 6, which is the maximum."
+        },
+        {
+          "input": "nums = [-2,0,-1]",
+          "output": "0",
+          "explanation": "The result cannot be 2 because [-2,-1] is not contiguous. Maximum is 0."
+        },
+        {
+          "input": "nums = [-2]",
+          "output": "-2",
+          "explanation": "Single element array, return that element."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to consider single-element subarrays (not updating res with cur at start of outer loop).",
+        "Not initializing res with nums[0], leading to incorrect results for all-negative arrays.",
+        "Trying to optimize by skipping certain subarrays, which can miss the maximum.",
+        "Integer overflow issues in languages with fixed-size integers when products become very large."
+      ],
+      "pro_tips": [
+        "This brute force approach serves as a baseline to understand the problem before optimizing.",
+        "The incremental product calculation (cur *= nums[j]) is more efficient than recalculating the product from scratch for each subarray.",
+        "Even though this is O(n^2), it's straightforward to implement and verify correctness.",
+        "This approach doesn't require understanding the special properties of products (negative numbers, zeros), making it conceptually simple."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "steps": [
+            "Initialize res = 2.",
+            "i = 0: cur = 2, res = max(2, 2) = 2.",
+            "  j = 1: cur = 2*3 = 6, res = max(2, 6) = 6.",
+            "  j = 2: cur = 6*(-2) = -12, res = max(6, -12) = 6.",
+            "  j = 3: cur = -12*4 = -48, res = max(6, -48) = 6.",
+            "i = 1: cur = 3, res = max(6, 3) = 6.",
+            "  j = 2: cur = 3*(-2) = -6, res = max(6, -6) = 6.",
+            "  j = 3: cur = -6*4 = -24, res = max(6, -24) = 6.",
+            "i = 2: cur = -2, res = max(6, -2) = 6.",
+            "  j = 3: cur = -2*4 = -8, res = max(6, -8) = 6.",
+            "i = 3: cur = 4, res = max(6, 4) = 6.",
+            "Return 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Sliding Window",
+      "approach": "Split the array by zeros (since any subarray containing 0 will have product 0), then for each non-zero segment, use a sliding window to maintain an even number of negative numbers. Handle negative numbers by calculating how many negatives to keep and adjusting the window accordingly.",
+      "explanation": "This solution recognizes that zeros divide the array into independent segments, and any subarray crossing a zero will have product 0. First, we split the array into segments separated by zeros, also tracking the maximum as we go (in case 0 is the answer). For each non-zero segment, we count the total number of negative numbers. If there's an even count, we can multiply all elements. If odd, we need to exclude one negative to make the count even. We use a sliding window that expands by including elements and contracts when we have too many negatives. We track the product of the current window and update the result. This approach cleverly handles the sign-flipping nature of negative numbers.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        A = []\n        cur = []\n        res = float('-inf')\n\n        for num in nums:\n            res = max(res, num)\n            if num == 0:\n                if cur:\n                    A.append(cur)\n                cur = []\n            else:\n                cur.append(num)\n\n        if cur:\n            A.append(cur)\n\n        for sub in A:\n            negs = sum(1 for i in sub if i < 0)\n            prod = 1\n            need = negs if negs % 2 == 0 else negs - 1\n            negs = 0\n            j = 0\n\n            for i in range(len(sub)):\n                prod *= sub[i]\n                if sub[i] < 0:\n                    negs += 1\n                    while negs > need:\n                        prod //= sub[j]\n                        if sub[j] < 0:\n                            negs -= 1\n                        j += 1\n                if j <= i:\n                    res = max(res, prod)\n\n        return res",
+          "semantic_descriptions": [
+            "Initialize list to hold non-zero segments.",
+            "Initialize current segment as empty list.",
+            "Initialize result to negative infinity.",
+            "Loop through each number in array.",
+            "Update result with current number.",
+            "If current number is zero.",
+            "If current segment is not empty.",
+            "Add current segment to segments list.",
+            "Reset current segment to empty.",
+            "Otherwise add number to current segment.",
+            "If current segment is not empty after loop.",
+            "Add final segment to segments list.",
+            "Loop through each non-zero segment.",
+            "Count total negative numbers in segment.",
+            "Initialize product to one.",
+            "Calculate how many negatives to include for even count.",
+            "Reset negative counter to zero.",
+            "Initialize left pointer to zero.",
+            "Loop through segment with right pointer.",
+            "Multiply product by current element.",
+            "If current element is negative.",
+            "Increment negative counter.",
+            "While we have too many negatives.",
+            "Divide product by left element.",
+            "If left element is negative.",
+            "Decrement negative counter.",
+            "Move left pointer right.",
+            "If window is valid.",
+            "Update result with current product.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var maxProduct = function(nums) {\n    const A = [];\n    let cur = [];\n    let res = -Infinity;\n\n    for (let num of nums) {\n        res = Math.max(res, num);\n        if (num === 0) {\n            if (cur.length > 0) {\n                A.push(cur);\n            }\n            cur = [];\n        } else {\n            cur.push(num);\n        }\n    }\n\n    if (cur.length > 0) {\n        A.push(cur);\n    }\n\n    for (let sub of A) {\n        let negs = sub.filter(x => x < 0).length;\n        let prod = 1;\n        let need = negs % 2 === 0 ? negs : negs - 1;\n        negs = 0;\n        let j = 0;\n\n        for (let i = 0; i < sub.length; i++) {\n            prod *= sub[i];\n            if (sub[i] < 0) {\n                negs++;\n                while (negs > need) {\n                    prod = Math.floor(prod / sub[j]);\n                    if (sub[j] < 0) {\n                        negs--;\n                    }\n                    j++;\n                }\n            }\n            if (j <= i) {\n                res = Math.max(res, prod);\n            }\n        }\n    }\n\n    return res;\n};",
+          "semantic_descriptions": [
+            "Initialize list to hold non-zero segments.",
+            "Initialize current segment as empty list.",
+            "Initialize result to negative infinity.",
+            "Loop through each number in array.",
+            "Update result with current number.",
+            "If current number is zero.",
+            "If current segment is not empty.",
+            "Add current segment to segments list.",
+            "Reset current segment to empty.",
+            "Otherwise add number to current segment.",
+            "If current segment is not empty after loop.",
+            "Add final segment to segments list.",
+            "Loop through each non-zero segment.",
+            "Count total negative numbers in segment.",
+            "Initialize product to one.",
+            "Calculate how many negatives to include for even count.",
+            "Reset negative counter to zero.",
+            "Initialize left pointer to zero.",
+            "Loop through segment with right pointer.",
+            "Multiply product by current element.",
+            "If current element is negative.",
+            "Increment negative counter.",
+            "While we have too many negatives.",
+            "Divide product by left element.",
+            "If left element is negative.",
+            "Decrement negative counter.",
+            "Move left pointer right.",
+            "If window is valid.",
+            "Update result with current product.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func maxProduct(nums []int) int {\n    A := [][]int{}\n    cur := []int{}\n    res := -1 << 31\n\n    for _, num := range nums {\n        if num > res {\n            res = num\n        }\n        if num == 0 {\n            if len(cur) > 0 {\n                A = append(A, cur)\n            }\n            cur = []int{}\n        } else {\n            cur = append(cur, num)\n        }\n    }\n\n    if len(cur) > 0 {\n        A = append(A, cur)\n    }\n\n    for _, sub := range A {\n        negs := 0\n        for _, val := range sub {\n            if val < 0 {\n                negs++\n            }\n        }\n        prod := 1\n        need := negs\n        if negs % 2 != 0 {\n            need = negs - 1\n        }\n        negs = 0\n        j := 0\n\n        for i := 0; i < len(sub); i++ {\n            prod *= sub[i]\n            if sub[i] < 0 {\n                negs++\n                for negs > need {\n                    prod /= sub[j]\n                    if sub[j] < 0 {\n                        negs--\n                    }\n                    j++\n                }\n            }\n            if j <= i {\n                if prod > res {\n                    res = prod\n                }\n            }\n        }\n    }\n\n    return res\n}",
+          "semantic_descriptions": [
+            "Initialize list to hold non-zero segments.",
+            "Initialize current segment as empty slice.",
+            "Initialize result to minimum integer.",
+            "Loop through each number in array.",
+            "If current number greater than result.",
+            "Update result with current number.",
+            "If current number is zero.",
+            "If current segment is not empty.",
+            "Add current segment to segments list.",
+            "Reset current segment to empty.",
+            "Otherwise add number to current segment.",
+            "If current segment is not empty after loop.",
+            "Add final segment to segments list.",
+            "Loop through each non-zero segment.",
+            "Initialize negative counter to zero.",
+            "Count total negative numbers in segment.",
+            "Initialize product to one.",
+            "Set needed negatives to total count.",
+            "If negative count is odd.",
+            "Set needed to one less for even count.",
+            "Reset negative counter to zero.",
+            "Initialize left pointer to zero.",
+            "Loop through segment with right pointer.",
+            "Multiply product by current element.",
+            "If current element is negative.",
+            "Increment negative counter.",
+            "While we have too many negatives.",
+            "Divide product by left element.",
+            "If left element is negative.",
+            "Decrement negative counter.",
+            "Move left pointer right.",
+            "If window is valid.",
+            "If current product greater than result.",
+            "Update result with current product.",
+            "Return maximum product found."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We iterate through the array once to split by zeros, then iterate through each segment once. Each element is processed a constant number of times (once for expansion, at most once for contraction), giving us O(n) total time.",
+        "space": "We store all non-zero elements in the segments list A, which in the worst case (no zeros) requires O(n) space."
+      },
+      "why_it_works": "This solution leverages two key insights: zeros divide the problem into independent subproblems, and the sign of a product is determined by the parity of negative numbers. By splitting on zeros, we avoid subarrays with product 0 (except when 0 itself is the maximum). For each segment, we want to include an even number of negatives to get a positive product. If we have an odd number of negatives, we exclude exactly one by shrinking the window from the left. The sliding window maintains the invariant that we have at most the target number of negatives, and we update the result for each valid window configuration. This approach efficiently finds the maximum product without checking all subarrays.",
+      "constraints_examples": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "output": "6",
+          "explanation": "Segment [2,3,-2,4] has 1 negative, so we need 0 negatives. Window shrinks to exclude -2, giving [2,3] with product 6."
+        },
+        {
+          "input": "nums = [-2,0,-1]",
+          "output": "0",
+          "explanation": "Split by zero: segments [-2] and [-1]. Both have odd negatives (1), need 0, so products are empty. Result is 0."
+        }
+      ],
+      "common_mistakes": [
+        "Not tracking individual numbers in res, missing cases where a single element is the maximum.",
+        "Forgetting to handle the case where the final segment doesn't end with a zero.",
+        "Integer division issues when dividing prod by sub[j] - need to ensure proper division.",
+        "Not resetting negs counter correctly when processing each segment.",
+        "Off-by-one errors in the sliding window logic."
+      ],
+      "pro_tips": [
+        "This approach demonstrates how problem constraints (zeros split the array) can simplify the solution.",
+        "The sliding window technique adapts to maintain an invariant (even number of negatives).",
+        "While this solution is O(n) time, it's more complex than Kadane's algorithm variant, making it less preferred in practice.",
+        "Understanding this solution helps with recognizing when sliding window patterns apply to product problems."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [2,-3,-4]",
+          "steps": [
+            "Split by zeros: segments = [[2,-3,-4]].",
+            "Process [2,-3,-4]: negs = 2 (even), need = 2.",
+            "i = 0: prod = 2, sub[0] >= 0, negs = 0, res = max(-inf, 2) = 2.",
+            "i = 1: prod = 2*(-3) = -6, sub[1] < 0, negs = 1, negs <= need, res = max(2, -6) = 2.",
+            "i = 2: prod = -6*(-4) = 24, sub[2] < 0, negs = 2, negs <= need, res = max(2, 24) = 24.",
+            "Return 24."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Kadane's Algorithm",
+      "approach": "Adapt Kadane's algorithm for maximum subarray by tracking both the current minimum and maximum products. At each position, update both values considering that multiplying by a negative number swaps min and max. The maximum product so far is updated at each step.",
+      "explanation": "This solution extends Kadane's algorithm to handle products. The key insight is that a negative number can flip a minimum product into a maximum product and vice versa. We maintain curMin and curMax representing the minimum and maximum products ending at the current position. For each number, we compute three candidates: the number itself (starting a new subarray), the number times curMax, and the number times curMin. The new curMax is the maximum of these three, and the new curMin is the minimum. We update the global result with curMax at each step. This approach elegantly handles negatives, zeros, and all edge cases in a single pass.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        res = nums[0]\n        curMin, curMax = 1, 1\n\n        for num in nums:\n            tmp = curMax * num\n            curMax = max(num * curMax, num * curMin, num)\n            curMin = min(tmp, num * curMin, num)\n            res = max(res, curMax)\n        return res",
+          "semantic_descriptions": [
+            "Initialize result to first element.",
+            "Initialize current minimum and maximum to one.",
+            "Loop through each number in array.",
+            "Store old maximum times current number in temporary.",
+            "Update current maximum to max of three candidates.",
+            "Update current minimum to min of old max times num, min times num, or num alone.",
+            "Update result with current maximum.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var maxProduct = function(nums) {\n    let res = nums[0];\n    let curMin = 1, curMax = 1;\n\n    for (let num of nums) {\n        const tmp = curMax * num;\n        curMax = Math.max(num * curMax, num * curMin, num);\n        curMin = Math.min(tmp, num * curMin, num);\n        res = Math.max(res, curMax);\n    }\n    return res;\n};",
+          "semantic_descriptions": [
+            "Initialize result to first element.",
+            "Initialize current minimum and maximum to one.",
+            "Loop through each number in array.",
+            "Store old maximum times current number in constant.",
+            "Update current maximum to max of three candidates.",
+            "Update current minimum to min of old max times num, min times num, or num alone.",
+            "Update result with current maximum.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func maxProduct(nums []int) int {\n    res := nums[0]\n    curMin, curMax := 1, 1\n\n    for _, num := range nums {\n        tmp := curMax * num\n        curMax = max(max(num * curMax, num * curMin), num)\n        curMin = min(min(tmp, num * curMin), num)\n        res = max(res, curMax)\n    }\n    return res\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}\n\nfunc min(a, b int) int {\n    if a < b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Initialize result to first element.",
+            "Initialize current minimum and maximum to one.",
+            "Loop through each number in array.",
+            "Store old maximum times current number in temporary.",
+            "Update current maximum to max of three candidates.",
+            "Update current minimum to min of old max times num, min times num, or num alone.",
+            "Update result with current maximum.",
+            "Return maximum product found."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "We iterate through the array exactly once, performing constant time operations (multiplication, min, max) at each step, giving us O(n) time.",
+        "space": "We only use a constant amount of extra space for variables (res, curMin, curMax, tmp, num), regardless of input size."
+      },
+      "why_it_works": "This algorithm works by maintaining the maximum and minimum products ending at each position. The critical insight is that multiplying by a negative number swaps the roles of maximum and minimum. When we encounter a negative number, what was previously the minimum (most negative) product becomes the maximum (most positive) after multiplication, and vice versa. By considering three cases for each position - starting fresh with just the current number, extending the previous maximum, or extending the previous minimum - we ensure we capture the optimal choice. The temporary variable is needed because curMax is updated before curMin, and curMin needs the old curMax value. This approach naturally handles zeros (which reset the products to just the current number) and all edge cases.",
+      "constraints_examples": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "output": "6",
+          "explanation": "Track curMax through iterations: 2, 6, -12→-2 (reset), -8. Maximum is 6."
+        },
+        {
+          "input": "nums = [-2,0,-1]",
+          "output": "0",
+          "explanation": "curMax: -2, 0 (reset), -1→0 (from 0*-1 or just 0). Maximum is 0."
+        },
+        {
+          "input": "nums = [-2,3,-4]",
+          "output": "24",
+          "explanation": "curMax: -2, 3, 24 (from -2*3*-4). Maximum is 24."
+        }
+      ],
+      "common_mistakes": [
+        "Updating curMax and curMin without storing the old curMax value first, causing incorrect curMin calculation.",
+        "Only tracking curMax without curMin, missing cases where negatives flip the optimal choice.",
+        "Not including 'num' alone as a candidate, which is needed when starting a new subarray.",
+        "Initializing curMin and curMax to 0 instead of 1, which breaks the multiplication logic.",
+        "Initializing res to 0 instead of nums[0], causing issues with all-negative arrays."
+      ],
+      "pro_tips": [
+        "The temporary variable is crucial - it preserves the old curMax value before it's updated, which is needed for curMin calculation.",
+        "This is a modification of Kadane's algorithm adapted for products instead of sums.",
+        "The 'num' candidate in max/min represents starting a fresh subarray from the current position.",
+        "This solution is optimal in both time and space complexity and is the preferred approach for interviews.",
+        "Understanding why we need both curMin and curMax is key to grasping this solution."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "steps": [
+            "Initialize res = 2, curMin = 1, curMax = 1.",
+            "num = 2: tmp = 1*2 = 2, curMax = max(2, 2, 2) = 2, curMin = min(2, 2, 2) = 2, res = max(2, 2) = 2.",
+            "num = 3: tmp = 2*3 = 6, curMax = max(6, 6, 3) = 6, curMin = min(6, 6, 3) = 3, res = max(2, 6) = 6.",
+            "num = -2: tmp = 6*(-2) = -12, curMax = max(-12, -6, -2) = -2, curMin = min(-12, -6, -2) = -12, res = max(6, -2) = 6.",
+            "num = 4: tmp = -2*4 = -8, curMax = max(-8, -48, 4) = 4, curMin = min(-8, -48, 4) = -48, res = max(6, 4) = 6.",
+            "Return 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Prefix & Suffix",
+      "approach": "Compute products from left-to-right (prefix) and right-to-left (suffix) simultaneously. When encountering zero, reset the product to 1 (using 'or 1' trick). Track the maximum of both prefix and suffix products at each position. The maximum product subarray will be captured by either prefix or suffix.",
+      "explanation": "This clever solution observes that the maximum product subarray will be captured by either a prefix product (left-to-right) or a suffix product (right-to-left). The reason is that if there's an even number of negatives, multiplying all elements gives the maximum. If there's an odd number, we need to exclude either the leftmost or rightmost negative, which is captured by one of the two scans. When we encounter a zero, we reset the product to 1 (the expression 'prefix or 1' returns 1 when prefix is 0). By computing both directions simultaneously and taking the maximum at each step, we ensure we find the optimal subarray in a single pass.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        n, res = len(nums), nums[0]\n        prefix = suffix = 0\n\n        for i in range(n):\n            prefix = nums[i] * (prefix or 1)\n            suffix = nums[n - 1 - i] * (suffix or 1)\n            res = max(res, max(prefix, suffix))\n        return res",
+          "semantic_descriptions": [
+            "Store array length and initialize result to first element.",
+            "Initialize prefix and suffix products to zero.",
+            "Loop through each index in array.",
+            "Multiply prefix by current element, using one if prefix is zero.",
+            "Multiply suffix by element from end, using one if suffix is zero.",
+            "Update result with maximum of current result, prefix, and suffix.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var maxProduct = function(nums) {\n    const n = nums.length;\n    let res = nums[0];\n    let prefix = 0, suffix = 0;\n\n    for (let i = 0; i < n; i++) {\n        prefix = nums[i] * (prefix || 1);\n        suffix = nums[n - 1 - i] * (suffix || 1);\n        res = Math.max(res, Math.max(prefix, suffix));\n    }\n    return res;\n};",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize result to first element.",
+            "Initialize prefix and suffix products to zero.",
+            "Loop through each index in array.",
+            "Multiply prefix by current element, using one if prefix is zero.",
+            "Multiply suffix by element from end, using one if suffix is zero.",
+            "Update result with maximum of current result, prefix, and suffix.",
+            "Return maximum product found."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func maxProduct(nums []int) int {\n    n := len(nums)\n    res := nums[0]\n    prefix, suffix := 0, 0\n\n    for i := 0; i < n; i++ {\n        if prefix == 0 {\n            prefix = 1\n        }\n        if suffix == 0 {\n            suffix = 1\n        }\n        prefix *= nums[i]\n        suffix *= nums[n - 1 - i]\n        res = max(res, max(prefix, suffix))\n    }\n    return res\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize result to first element.",
+            "Initialize prefix and suffix products to zero.",
+            "Loop through each index in array.",
+            "If prefix is zero.",
+            "Reset prefix to one.",
+            "If suffix is zero.",
+            "Reset suffix to one.",
+            "Multiply prefix by current element.",
+            "Multiply suffix by element from end.",
+            "Update result with maximum of current result, prefix, and suffix.",
+            "Return maximum product found."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "We iterate through the array exactly once, performing constant time operations (multiplication, max) at each step, giving us O(n) time.",
+        "space": "We only use a constant amount of extra space for variables (n, res, prefix, suffix, i), regardless of input size."
+      },
+      "why_it_works": "This solution works because the maximum product subarray must be captured by either the prefix product up to some index or the suffix product from some index to the end. If the array has an even number of negatives, multiplying all elements gives the maximum, which both prefix and suffix will capture. If there's an odd number of negatives, we need to exclude either the leftmost or rightmost negative number to maximize the product - the prefix scan excludes the rightmost negative (stops before it or resets after), while the suffix scan excludes the leftmost negative. The 'or 1' trick elegantly handles zeros by resetting the product, effectively starting a new subarray. By tracking both directions simultaneously and taking the maximum, we guarantee finding the optimal solution.",
+      "constraints_examples": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "output": "6",
+          "explanation": "Prefix: 2, 6, -12, -48. Suffix: 4, -8, -24, -48. Max at i=1: prefix=6."
+        },
+        {
+          "input": "nums = [-2,0,-1]",
+          "output": "0",
+          "explanation": "Prefix: -2, 0, 0 (reset to 1, then -1). Suffix: -1, 0, 0. Max is 0."
+        },
+        {
+          "input": "nums = [-2,3,-4]",
+          "output": "24",
+          "explanation": "Prefix: -2, -6, 24. Suffix: -4, -12, 24. Both capture 24."
+        }
+      ],
+      "common_mistakes": [
+        "Not understanding the 'or 1' trick - it returns 1 when the value is 0 (falsy), resetting the product.",
+        "Forgetting to update res with both prefix and suffix at each step, potentially missing the maximum.",
+        "Initializing prefix and suffix to 1 instead of 0, which breaks the reset logic.",
+        "Not computing suffix correctly by using n - 1 - i to traverse from right to left.",
+        "Thinking this only works for specific cases - it's actually a complete and elegant solution."
+      ],
+      "pro_tips": [
+        "The expression 'prefix or 1' is a Pythonic way to reset to 1 when prefix becomes 0. In other languages, use 'prefix || 1' or an if statement.",
+        "This solution is optimal in both time and space and is one of the most elegant approaches.",
+        "Understanding why both directions are needed requires thinking about how negatives affect the product.",
+        "This approach can be explained as: the answer is either all elements, or all except a prefix, or all except a suffix.",
+        "In interviews, this solution demonstrates deep problem understanding and elegant implementation."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [2,3,-2,4]",
+          "steps": [
+            "Initialize n = 4, res = 2, prefix = 0, suffix = 0.",
+            "i = 0: prefix = 2*(0 or 1) = 2*1 = 2, suffix = 4*(0 or 1) = 4, res = max(2, max(2, 4)) = 4.",
+            "i = 1: prefix = 3*2 = 6, suffix = -2*4 = -8, res = max(4, max(6, -8)) = 6.",
+            "i = 2: prefix = -2*6 = -12, suffix = 3*(-8) = -24, res = max(6, max(-12, -24)) = 6.",
+            "i = 3: prefix = 4*(-12) = -48, suffix = 2*(-24) = -48, res = max(6, max(-48, -48)) = 6.",
+            "Return 6."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution to return the actual subarray with maximum product, not just the product value?",
+      "hint": "Track the start and end indices when updating the maximum result. For Kadane's variant, track where curMax resets to just num."
+    },
+    {
+      "question": "What if negative numbers were more costly than positive (weighted differently)?",
+      "hint": "Modify the DP approach to include weights in the product calculation, adjusting the curMin and curMax updates."
+    },
+    {
+      "question": "How would you find the k subarrays with maximum products?",
+      "hint": "Use a priority queue (max heap) to track the top k products as you enumerate subarrays, or modify the DP to track multiple candidates."
+    }
+  ],
+  "related_topics": ["Array", "Dynamic Programming", "Kadane's Algorithm", "Sliding Window"],
+  "hints": [
+    "Negative numbers can flip minimum products into maximum products and vice versa.",
+    "Zeros effectively split the array into independent subproblems.",
+    "Think about what happens with an even vs odd number of negative numbers.",
+    "The maximum product subarray can be found by scanning both left-to-right and right-to-left."
+  ],
+  "notes": "This problem is a variant of the classic maximum subarray problem (Kadane's algorithm) adapted for products instead of sums. The key difference is handling negative numbers, which flip the optimization direction. The Kadane's variant (solution 3) and Prefix/Suffix approach (solution 4) are both optimal and preferred. Understanding why we need to track both minimum and maximum (or scan both directions) is crucial for mastering this problem.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
