@@ -1,0 +1,457 @@
+{
+  "id": "323",
+  "title": "Number of Connected Components in an Undirected Graph",
+  "category": "Graphs",
+  "difficulty": "Medium",
+  "ultimateGuide": "https://neetcode.io/problems/count-connected-components",
+  "problemStatement": "You are given an integer n representing the number of nodes in an undirected graph. The nodes are labeled from 0 to n - 1.\n\nYou are also given a 2D integer array edges, where edges[i] = [a, b] indicates that there is an undirected edge between nodes a and b.\n\nReturn the number of connected components in the graph.",
+  "examples": [
+    {
+      "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+      "output": "2",
+      "explanation": "There are two connected components: {0,1,2} and {3,4}."
+    },
+    {
+      "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+      "output": "1",
+      "explanation": "All nodes are connected in a single component: {0,1,2,3,4}."
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 2000",
+    "0 <= edges.length <= 5000",
+    "edges[i].length == 2",
+    "0 <= edges[i][0], edges[i][1] < n",
+    "edges[i][0] != edges[i][1]",
+    "No duplicate edges"
+  ],
+  "solutions": [
+    {
+      "name": "Depth First Search",
+      "description": "Build an adjacency list representation of the undirected graph and use depth-first search to explore each connected component. Track visited nodes to avoid revisiting. Start a new DFS from each unvisited node, incrementing the component count each time.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        adj = [[] for _ in range(n)]\n        visit = [False] * n\n        for u, v in edges:\n            adj[u].append(v)\n            adj[v].append(u)\n\n        def dfs(node):\n            for nei in adj[node]:\n                if not visit[nei]:\n                    visit[nei] = True\n                    dfs(nei)\n\n        res = 0\n        for node in range(n):\n            if not visit[node]:\n                visit[node] = True\n                dfs(node)\n                res += 1\n        return res",
+        "semanticLines": [
+          "Create a list of empty lists for adjacency list representation from zero to n minus one.",
+          "Create a list of False values with length n to track visited nodes.",
+          "For each u and v pair in the edges list.",
+          "Add v to the adjacency list of u.",
+          "Add u to the adjacency list of v for undirected graph.",
+          "Define a depth-first search function that takes a node as parameter.",
+          "For each neighbor in the adjacency list of current node.",
+          "If the neighbor has not been visited.",
+          "Mark the neighbor as visited.",
+          "Recursively call depth-first search on the neighbor.",
+          "Initialize result counter to zero.",
+          "For each node number from zero to n minus one.",
+          "If the node has not been visited.",
+          "Mark the current node as visited.",
+          "Call depth-first search on the current node.",
+          "Increment the result counter by one.",
+          "Return the result counter as the number of connected components."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    countComponents(n, edges) {\n        const adj = Array.from({ length: n }, () => []);\n        const visit = new Array(n).fill(false);\n        for (const [u, v] of edges) {\n            adj[u].push(v);\n            adj[v].push(u);\n        }\n\n        const dfs = (node) => {\n            for (const nei of adj[node]) {\n                if (!visit[nei]) {\n                    visit[nei] = true;\n                    dfs(nei);\n                }\n            }\n        };\n\n        let res = 0;\n        for (let node = 0; node < n; node++) {\n            if (!visit[node]) {\n                visit[node] = true;\n                dfs(node);\n                res++;\n            }\n        }\n        return res;\n    }\n}",
+        "semanticLines": [
+          "Create an array of empty arrays for adjacency list representation with length n.",
+          "Create a new array of length n filled with false to track visited nodes.",
+          "For each u and v pair in the edges array.",
+          "Add v to the adjacency array of u.",
+          "Add u to the adjacency array of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Define a depth-first search arrow function that takes a node as parameter.",
+          "For each neighbor in the adjacency array of current node.",
+          "If the neighbor has not been visited.",
+          "Mark the neighbor as visited.",
+          "Recursively call depth-first search on the neighbor.",
+          "Close the visited check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the depth-first search function definition.",
+          "Initialize result counter to zero.",
+          "For each node number from zero to n minus one.",
+          "If the node has not been visited.",
+          "Mark the current node as visited.",
+          "Call depth-first search on the current node.",
+          "Increment the result counter by one.",
+          "Close the unvisited check condition.",
+          "Close the loop that processes all nodes.",
+          "Return the result counter as the number of connected components.",
+          "Close the countComponents method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func countComponents(n int, edges [][]int) int {\n    adj := make([][]int, n)\n    visit := make([]bool, n)\n    for i := range adj {\n        adj[i] = []int{}\n    }\n    for _, edge := range edges {\n        u, v := edge[0], edge[1]\n        adj[u] = append(adj[u], v)\n        adj[v] = append(adj[v], u)\n    }\n\n    var dfs func(int)\n    dfs = func(node int) {\n        for _, nei := range adj[node] {\n            if !visit[nei] {\n                visit[nei] = true\n                dfs(nei)\n            }\n        }\n    }\n\n    res := 0\n    for node := 0; node < n; node++ {\n        if !visit[node] {\n            visit[node] = true\n            dfs(node)\n            res++\n        }\n    }\n    return res\n}",
+        "semanticLines": [
+          "Create a slice of integer slices for adjacency list representation with length n.",
+          "Create a boolean slice of length n to track visited nodes.",
+          "For each index in the adjacency slice.",
+          "Initialize an empty integer slice for this node's adjacency list.",
+          "Close the loop that initializes adjacency slices.",
+          "For each edge in the edges slice.",
+          "Extract u and v from the edge.",
+          "Append v to the adjacency slice of u.",
+          "Append u to the adjacency slice of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Declare a depth-first search function variable that takes an integer.",
+          "Define the depth-first search function that takes a node as parameter.",
+          "For each neighbor in the adjacency slice of current node.",
+          "If the neighbor has not been visited.",
+          "Mark the neighbor as visited.",
+          "Recursively call depth-first search on the neighbor.",
+          "Close the visited check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the depth-first search function definition.",
+          "Initialize result counter to zero.",
+          "For each node number from zero to n minus one.",
+          "If the node has not been visited.",
+          "Mark the current node as visited.",
+          "Call depth-first search on the current node.",
+          "Increment the result counter by one.",
+          "Close the unvisited check condition.",
+          "Close the loop that processes all nodes.",
+          "Return the result counter as the number of connected components.",
+          "Close the countComponents function."
+        ]
+      },
+      "detailedExplanation": "This solution uses depth-first search to explore each connected component in the undirected graph. We build an adjacency list where each node stores its neighbors (adding edges in both directions for undirected graph). We maintain a visited array to track which nodes have been explored. The key insight is that each time we start a DFS from an unvisited node, we discover a new connected component. The DFS explores all reachable nodes from the starting point, marking them as visited. After the DFS completes, all nodes in that component are marked, so we won't start another DFS from any of them. We iterate through all nodes, and for each unvisited node, we increment our component counter and run DFS to mark its entire component. The final count represents the total number of connected components.",
+      "commonMistakes": [
+        "Forgetting to add edges in both directions for undirected graph (missing neighbors)",
+        "Marking nodes as visited after DFS instead of before/during (causing duplicate counting)",
+        "Not checking if node is visited before starting DFS (double counting components)",
+        "Incrementing counter inside DFS instead of outside (incorrect count)",
+        "Using visited set instead of array (works but less efficient for dense node numbering)"
+      ],
+      "whyItWorks": "DFS naturally explores all nodes reachable from a starting point, which exactly corresponds to a connected component. By tracking visited nodes, we ensure each node is counted exactly once. Starting DFS only from unvisited nodes guarantees we discover each component exactly once. The algorithm systematically partitions all nodes into their respective components through exhaustive exploration.",
+      "keyInsights": [
+        "Each DFS call explores exactly one connected component completely",
+        "Visited tracking prevents double-counting nodes in the same component",
+        "Starting from unvisited nodes ensures all components are discovered",
+        "Undirected edges require bidirectional adjacency list entries",
+        "Component count equals the number of DFS initiations needed"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0,2], 2:[1], 3:[4], 4:[3]}. Initialize visit=[F,F,F,F,F], res=0. Check node 0: not visited, mark visited [T,F,F,F,F], DFS(0) visits 1 and 2, visit=[T,T,T,F,F], res=1. Check node 1: already visited, skip. Check node 2: already visited, skip. Check node 3: not visited, mark visited [T,T,T,T,F], DFS(3) visits 4, visit=[T,T,T,T,T], res=2. Check node 4: already visited, skip. Return res=2."
+        },
+        "example2": {
+          "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0,2], 2:[1,3], 3:[2,4], 4:[3]}. Initialize visit=[F,F,F,F,F], res=0. Check node 0: not visited, mark visited [T,F,F,F,F], DFS(0) explores 0→1→2→3→4, visit=[T,T,T,T,T], res=1. Check nodes 1-4: all visited, skip. Return res=1."
+        }
+      }
+    },
+    {
+      "name": "Breadth First Search",
+      "description": "Build an adjacency list representation of the undirected graph and use breadth-first search to explore each connected component level by level. Track visited nodes to avoid revisiting. Start a new BFS from each unvisited node, incrementing the component count each time.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        adj = [[] for _ in range(n)]\n        visit = [False] * n\n        for u, v in edges:\n            adj[u].append(v)\n            adj[v].append(u)\n\n        def bfs(node):\n            q = deque([node])\n            visit[node] = True\n            while q:\n                cur = q.popleft()\n                for nei in adj[cur]:\n                    if not visit[nei]:\n                        visit[nei] = True\n                        q.append(nei)\n\n        res = 0\n        for node in range(n):\n            if not visit[node]:\n                bfs(node)\n                res += 1\n        return res",
+        "semanticLines": [
+          "Create a list of empty lists for adjacency list representation from zero to n minus one.",
+          "Create a list of False values with length n to track visited nodes.",
+          "For each u and v pair in the edges list.",
+          "Add v to the adjacency list of u.",
+          "Add u to the adjacency list of v for undirected graph.",
+          "Define a breadth-first search function that takes a node as parameter.",
+          "Create a deque with the starting node.",
+          "Mark the starting node as visited.",
+          "While the queue is not empty.",
+          "Remove and get the leftmost node from the deque.",
+          "For each neighbor in the adjacency list of current node.",
+          "If the neighbor has not been visited.",
+          "Mark the neighbor as visited.",
+          "Append the neighbor to the deque.",
+          "Initialize result counter to zero.",
+          "For each node number from zero to n minus one.",
+          "If the node has not been visited.",
+          "Call breadth-first search on the current node.",
+          "Increment the result counter by one.",
+          "Return the result counter as the number of connected components."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    countComponents(n, edges) {\n        const adj = Array.from({ length: n }, () => []);\n        const visit = new Array(n).fill(false);\n        for (const [u, v] of edges) {\n            adj[u].push(v);\n            adj[v].push(u);\n        }\n\n        const bfs = (node) => {\n            const q = [node];\n            visit[node] = true;\n            while (q.length > 0) {\n                const cur = q.shift();\n                for (const nei of adj[cur]) {\n                    if (!visit[nei]) {\n                        visit[nei] = true;\n                        q.push(nei);\n                    }\n                }\n            }\n        };\n\n        let res = 0;\n        for (let node = 0; node < n; node++) {\n            if (!visit[node]) {\n                bfs(node);\n                res++;\n            }\n        }\n        return res;\n    }\n}",
+        "semanticLines": [
+          "Create an array of empty arrays for adjacency list representation with length n.",
+          "Create a new array of length n filled with false to track visited nodes.",
+          "For each u and v pair in the edges array.",
+          "Add v to the adjacency array of u.",
+          "Add u to the adjacency array of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Define a breadth-first search arrow function that takes a node as parameter.",
+          "Create an array with the starting node.",
+          "Mark the starting node as visited.",
+          "While the queue has elements.",
+          "Remove and get the first node from the array.",
+          "For each neighbor in the adjacency array of current node.",
+          "If the neighbor has not been visited.",
+          "Mark the neighbor as visited.",
+          "Append the neighbor to the queue.",
+          "Close the visited check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the while loop that processes the queue.",
+          "Close the breadth-first search function definition.",
+          "Initialize result counter to zero.",
+          "For each node number from zero to n minus one.",
+          "If the node has not been visited.",
+          "Call breadth-first search on the current node.",
+          "Increment the result counter by one.",
+          "Close the unvisited check condition.",
+          "Close the loop that processes all nodes.",
+          "Return the result counter as the number of connected components.",
+          "Close the countComponents method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func countComponents(n int, edges [][]int) int {\n    adj := make([][]int, n)\n    visit := make([]bool, n)\n    for i := range adj {\n        adj[i] = []int{}\n    }\n    for _, edge := range edges {\n        u, v := edge[0], edge[1]\n        adj[u] = append(adj[u], v)\n        adj[v] = append(adj[v], u)\n    }\n\n    bfs := func(node int) {\n        q := []int{node}\n        visit[node] = true\n        for len(q) > 0 {\n            cur := q[0]\n            q = q[1:]\n            for _, nei := range adj[cur] {\n                if !visit[nei] {\n                    visit[nei] = true\n                    q = append(q, nei)\n                }\n            }\n        }\n    }\n\n    res := 0\n    for node := 0; node < n; node++ {\n        if !visit[node] {\n            bfs(node)\n            res++\n        }\n    }\n    return res\n}",
+        "semanticLines": [
+          "Create a slice of integer slices for adjacency list representation with length n.",
+          "Create a boolean slice of length n to track visited nodes.",
+          "For each index in the adjacency slice.",
+          "Initialize an empty integer slice for this node's adjacency list.",
+          "Close the loop that initializes adjacency slices.",
+          "For each edge in the edges slice.",
+          "Extract u and v from the edge.",
+          "Append v to the adjacency slice of u.",
+          "Append u to the adjacency slice of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Define a breadth-first search function that takes a node as parameter.",
+          "Create an integer slice with the starting node.",
+          "Mark the starting node as visited.",
+          "While the queue has elements.",
+          "Get the first node from the queue.",
+          "Remove the first element from the queue.",
+          "For each neighbor in the adjacency slice of current node.",
+          "If the neighbor has not been visited.",
+          "Mark the neighbor as visited.",
+          "Append the neighbor to the queue.",
+          "Close the visited check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the while loop that processes the queue.",
+          "Close the breadth-first search function definition.",
+          "Initialize result counter to zero.",
+          "For each node number from zero to n minus one.",
+          "If the node has not been visited.",
+          "Call breadth-first search on the current node.",
+          "Increment the result counter by one.",
+          "Close the unvisited check condition.",
+          "Close the loop that processes all nodes.",
+          "Return the result counter as the number of connected components.",
+          "Close the countComponents function."
+        ]
+      },
+      "detailedExplanation": "This BFS solution counts connected components by exploring the graph level by level. We build an adjacency list for the undirected graph and maintain a visited array. The core BFS function takes a starting node, adds it to a queue, and marks it visited. We then process nodes from the queue: for each node, we examine all its neighbors, marking unvisited ones as visited and adding them to the queue. This continues until the queue is empty, at which point we've discovered all nodes in that component. In the main logic, we iterate through all nodes, and whenever we find an unvisited node, we know we've discovered a new component. We run BFS from that node to mark its entire component, then increment our counter. The key difference from DFS is the exploration strategy: BFS explores neighbors level by level using a queue, while DFS explores as deep as possible using recursion/stack.",
+      "commonMistakes": [
+        "Marking nodes as visited when dequeuing instead of when enqueuing (causes duplicate queue entries)",
+        "Forgetting to mark the starting node as visited before beginning BFS (causes immediate re-enqueue)",
+        "Not building bidirectional edges for undirected graph (incomplete connectivity)",
+        "Incrementing counter inside BFS instead of after BFS completes (incorrect count)",
+        "Using JavaScript shift() in tight loop without considering O(n) cost per operation"
+      ],
+      "whyItWorks": "BFS systematically explores all nodes reachable from a starting point by visiting neighbors level by level. This naturally discovers exactly one connected component per invocation. The visited array prevents double-counting: once a node is marked visited, it won't trigger another BFS. By iterating through all nodes and starting BFS only from unvisited nodes, we ensure every component is discovered exactly once. The queue ensures we process nodes in breadth-first order, though the order doesn't affect correctness for component counting.",
+      "keyInsights": [
+        "BFS explores one complete connected component per invocation",
+        "Marking nodes visited when enqueuing prevents duplicate queue entries",
+        "Queue enables level-by-level exploration pattern",
+        "Component count equals number of BFS initiations from unvisited nodes",
+        "BFS and DFS produce same result for component counting, differ only in exploration order"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0,2], 2:[1], 3:[4], 4:[3]}. Initialize visit=[F,F,F,F,F], res=0. Check node 0: not visited, BFS(0) with queue [0], mark 0 visited [T,F,F,F,F]. Process 0: add neighbor 1, queue [1], visit=[T,T,F,F,F]. Process 1: neighbors 0 (visited), 2 (add), queue [2], visit=[T,T,T,F,F]. Process 2: neighbor 1 (visited), queue empty. Increment res=1. Check nodes 1-2: visited, skip. Check node 3: not visited, BFS(3) with queue [3], mark 3 visited [T,T,T,T,F]. Process 3: add neighbor 4, queue [4], visit=[T,T,T,T,T]. Process 4: neighbor 3 (visited), queue empty. Increment res=2. Check node 4: visited, skip. Return res=2."
+        },
+        "example2": {
+          "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0,2], 2:[1,3], 3:[2,4], 4:[3]}. Initialize visit=[F,F,F,F,F], res=0. Check node 0: not visited, BFS(0). Queue progression: [0]→[1]→[2]→[3]→[4]→empty. After BFS, visit=[T,T,T,T,T], res=1. Check nodes 1-4: all visited, skip. Return res=1."
+        }
+      }
+    },
+    {
+      "name": "Disjoint Set Union (Rank | Size)",
+      "description": "Use Disjoint Set Union (Union-Find) with path compression and union by rank to efficiently count connected components. Start with n components (each node is its own set). For each edge, attempt to union the two endpoints. Each successful union merges two components, reducing the count by one. The final count is the number of components.",
+      "timeComplexity": "O(V + (E * α(V)))",
+      "spaceComplexity": "O(V)",
+      "python": {
+        "code": "class DSU:\n    def __init__(self, n):\n        self.parent = list(range(n))\n        self.rank = [1] * n\n\n    def find(self, node):\n        cur = node\n        while cur != self.parent[cur]:\n            self.parent[cur] = self.parent[self.parent[cur]]\n            cur = self.parent[cur]\n        return cur\n\n    def union(self, u, v):\n        pu = self.find(u)\n        pv = self.find(v)\n        if pu == pv:\n            return False\n        if self.rank[pv] > self.rank[pu]:\n            pu, pv = pv, pu\n        self.parent[pv] = pu\n        self.rank[pu] += self.rank[pv]\n        return True\n\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        dsu = DSU(n)\n        res = n\n        for u, v in edges:\n            if dsu.union(u, v):\n                res -= 1\n        return res",
+        "semanticLines": [
+          "Define a Disjoint Set Union class constructor that takes n as parameter.",
+          "Create a parent list where each node from zero to n minus one is its own parent.",
+          "Create a rank list where each set has initial rank one.",
+          "Define a find method that takes a node as parameter.",
+          "Set current pointer to the node.",
+          "While current is not its own parent.",
+          "Set parent of current to grandparent for path compression.",
+          "Move current pointer to its parent.",
+          "Return the root parent of the node.",
+          "Define a union method that takes two nodes u and v as parameters.",
+          "Find the parent of u.",
+          "Find the parent of v.",
+          "If both parents are the same.",
+          "Return False because the nodes are already in the same set.",
+          "If the rank of pv's set is greater than the rank of pu's set.",
+          "Swap pu and pv to always attach smaller rank set to larger rank set.",
+          "Set the parent of pv to pu to complete the union.",
+          "Add the rank of pv's set to pu's rank.",
+          "Return True to indicate successful union.",
+          "Initialize result counter to n for initial number of components.",
+          "For each u and v pair in the edges list.",
+          "If the union of u and v returns True.",
+          "Decrement the result counter by one.",
+          "Return the result counter as the number of connected components."
+        ]
+      },
+      "javascript": {
+        "code": "class DSU {\n    constructor(n) {\n        this.parent = Array.from({ length: n }, (_, i) => i);\n        this.rank = new Array(n).fill(1);\n    }\n\n    find(node) {\n        let cur = node;\n        while (cur !== this.parent[cur]) {\n            this.parent[cur] = this.parent[this.parent[cur]];\n            cur = this.parent[cur];\n        }\n        return cur;\n    }\n\n    union(u, v) {\n        let pu = this.find(u);\n        let pv = this.find(v);\n        if (pu === pv) {\n            return false;\n        }\n        if (this.rank[pv] > this.rank[pu]) {\n            [pu, pv] = [pv, pu];\n        }\n        this.parent[pv] = pu;\n        this.rank[pu] += this.rank[pv];\n        return true;\n    }\n}\n\nclass Solution {\n    countComponents(n, edges) {\n        const dsu = new DSU(n);\n        let res = n;\n        for (const [u, v] of edges) {\n            if (dsu.union(u, v)) {\n                res--;\n            }\n        }\n        return res;\n    }\n}",
+        "semanticLines": [
+          "Define a Disjoint Set Union class constructor that takes n as parameter.",
+          "Create a parent array where each node from zero to n minus one is its own parent.",
+          "Create a rank array where each set has initial rank one.",
+          "Close the DSU constructor.",
+          "Define a find method that takes a node as parameter.",
+          "Set current pointer to the node.",
+          "While current is not its own parent.",
+          "Set parent of current to grandparent for path compression.",
+          "Move current pointer to its parent.",
+          "Close the while loop for path compression.",
+          "Return the root parent of the node.",
+          "Close the find method.",
+          "Define a union method that takes two nodes u and v as parameters.",
+          "Find the parent of u.",
+          "Find the parent of v.",
+          "If both parents are the same.",
+          "Return false because the nodes are already in the same set.",
+          "Close the same parent check condition.",
+          "If the rank of pv's set is greater than the rank of pu's set.",
+          "Swap pu and pv to always attach smaller rank set to larger rank set.",
+          "Close the rank comparison condition.",
+          "Set the parent of pv to pu to complete the union.",
+          "Add the rank of pv's set to pu's rank.",
+          "Return true to indicate successful union.",
+          "Close the union method.",
+          "Close the DSU class definition.",
+          "Define the countComponents method that takes n and edges as parameters.",
+          "Create a new DSU instance with n nodes.",
+          "Initialize result counter to n for initial number of components.",
+          "For each u and v pair in the edges array.",
+          "If the union of u and v returns true.",
+          "Decrement the result counter by one.",
+          "Close the successful union condition.",
+          "Close the loop that processes edges.",
+          "Return the result counter as the number of connected components.",
+          "Close the countComponents method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "type DSU struct {\n    parent []int\n    rank   []int\n}\n\nfunc NewDSU(n int) *DSU {\n    parent := make([]int, n)\n    for i := range parent {\n        parent[i] = i\n    }\n    return &DSU{\n        parent: parent,\n        rank:   make([]int, n),\n    }\n}\n\nfunc (d *DSU) find(node int) int {\n    cur := node\n    for cur != d.parent[cur] {\n        d.parent[cur] = d.parent[d.parent[cur]]\n        cur = d.parent[cur]\n    }\n    return cur\n}\n\nfunc (d *DSU) union(u, v int) bool {\n    pu := d.find(u)\n    pv := d.find(v)\n    if pu == pv {\n        return false\n    }\n    if d.rank[pv] > d.rank[pu] {\n        pu, pv = pv, pu\n    }\n    d.parent[pv] = pu\n    d.rank[pu] += d.rank[pv]\n    return true\n}\n\nfunc countComponents(n int, edges [][]int) int {\n    dsu := NewDSU(n)\n    res := n\n    for _, edge := range edges {\n        u, v := edge[0], edge[1]\n        if dsu.union(u, v) {\n            res--\n        }\n    }\n    return res\n}",
+        "semanticLines": [
+          "Define a DSU struct with parent integer slice and rank integer slice fields.",
+          "Close the DSU struct definition.",
+          "Define a NewDSU constructor function that takes n as parameter and returns a pointer to DSU.",
+          "Create a parent integer slice of length n.",
+          "For each index in the parent slice.",
+          "Set each node to be its own parent.",
+          "Close the loop that initializes parent slice.",
+          "Return a pointer to a new DSU with initialized parent slice and rank slice.",
+          "Close the NewDSU constructor.",
+          "Define a find method on DSU pointer that takes a node and returns an integer.",
+          "Set current pointer to the node.",
+          "While current is not its own parent.",
+          "Set parent of current to grandparent for path compression.",
+          "Move current pointer to its parent.",
+          "Close the while loop for path compression.",
+          "Return the root parent of the node.",
+          "Close the find method.",
+          "Define a union method on DSU pointer that takes two integers u and v and returns a boolean.",
+          "Find the parent of u.",
+          "Find the parent of v.",
+          "If both parents are the same.",
+          "Return false because the nodes are already in the same set.",
+          "Close the same parent check condition.",
+          "If the rank of pv's set is greater than the rank of pu's set.",
+          "Swap pu and pv to always attach smaller rank set to larger rank set.",
+          "Close the rank comparison condition.",
+          "Set the parent of pv to pu to complete the union.",
+          "Add the rank of pv's set to pu's rank.",
+          "Return true to indicate successful union.",
+          "Close the union method.",
+          "Define the countComponents function that takes n and edges as parameters and returns an integer.",
+          "Create a new DSU instance with n nodes.",
+          "Initialize result counter to n for initial number of components.",
+          "For each edge in the edges slice.",
+          "Extract u and v from the edge.",
+          "If the union of u and v returns true.",
+          "Decrement the result counter by one.",
+          "Close the successful union condition.",
+          "Close the loop that processes edges.",
+          "Return the result counter as the number of connected components.",
+          "Close the countComponents function."
+        ]
+      },
+      "detailedExplanation": "The Union-Find approach provides an elegant solution by modeling the component-merging process. We start with n disjoint sets (each node is its own component). The DSU data structure efficiently tracks which nodes belong to the same set. The find operation (with path compression) locates the representative (root) of a node's set in near-constant amortized time. The union operation attempts to merge two sets: if the nodes already share the same root, they're in the same component and we return false; otherwise, we merge the sets by making one root point to the other (using union by rank to keep trees balanced). Each successful union reduces the component count by exactly one. After processing all edges, the remaining count is our answer. Path compression flattens trees during find by making nodes point directly to their root. Union by rank attaches the smaller tree to the larger one, maintaining balance. These optimizations ensure near-constant amortized time per operation.",
+      "commonMistakes": [
+        "Not implementing path compression in find (resulting in O(n) worst case)",
+        "Not implementing union by rank (resulting in unbalanced trees)",
+        "Forgetting to decrement count only on successful unions (incorrect count)",
+        "Using rank comparison incorrectly (should attach smaller rank to larger rank)",
+        "Starting with component count of 0 instead of n (wrong initial state)",
+        "Incrementing instead of decrementing on successful union (inverted logic)"
+      ],
+      "whyItWorks": "Union-Find models the incremental building of components. Initially, n isolated nodes means n components. Each edge either connects two separate components (reducing count by 1) or connects nodes within the same component (no change). The find operation with path compression efficiently determines component membership. Union by rank ensures trees stay balanced, preventing degeneration to linked lists. The approach is particularly elegant because it directly models the mathematical relationship: components = n - successful_unions. The optimizations ensure α(n) amortized time per operation, where α is the inverse Ackermann function (effectively constant for practical inputs).",
+      "keyInsights": [
+        "Component count starts at n and decreases by 1 for each successful union",
+        "Failed union indicates nodes already in same component (no count change)",
+        "Path compression makes future find operations faster by flattening trees",
+        "Union by rank prevents worst-case O(n) tree depth by balancing merges",
+        "This approach is more space-efficient than DFS/BFS (no adjacency list needed in Solution)",
+        "Natural fit for problems requiring incremental connectivity updates"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+          "explanation": "Initialize DSU: parent=[0,1,2,3,4], rank=[1,1,1,1,1], res=5. Process edge [0,1]: find(0)=0, find(1)=1, different sets, union succeeds. parent=[0,0,2,3,4], rank=[2,1,2,3,4], res=4. Process edge [1,2]: find(1)=0 (path compression), find(2)=2, union succeeds. parent=[0,0,0,3,4], rank=[3,1,1,3,4], res=3. Process edge [3,4]: find(3)=3, find(4)=4, union succeeds. parent=[0,0,0,3,3], rank=[3,1,1,2,1], res=2. Return res=2."
+        },
+        "example2": {
+          "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+          "explanation": "Initialize DSU: parent=[0,1,2,3,4], rank=[1,1,1,1,1], res=5. Process edge [0,1]: union succeeds, res=4. Process edge [1,2]: union succeeds, res=3. Process edge [2,3]: union succeeds, res=2. Process edge [3,4]: union succeeds, res=1. After all edges, all nodes have same root, forming one component. Return res=1."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "Think about what defines a connected component - all nodes reachable from each other.",
+    "How can you systematically explore all nodes in a component? DFS or BFS both work.",
+    "Track which nodes you've already visited to avoid counting the same component twice.",
+    "For Union-Find, consider that each edge potentially merges two components into one.",
+    "The number of DFS/BFS initiations equals the number of components."
+  ],
+  "followUpQuestions": [
+    "How would you modify the solution to return the actual components (list of node sets)?",
+    "What if edges are added dynamically? How would you maintain the component count efficiently?",
+    "Can you solve this with only O(1) extra space (modifying the input is allowed)?",
+    "How would you find the largest connected component?",
+    "What if you need to support edge deletions as well as additions?"
+  ],
+  "relatedProblems": [
+    "200. Number of Islands",
+    "261. Graph Valid Tree",
+    "547. Number of Provinces",
+    "684. Redundant Connection",
+    "1319. Number of Operations to Make Network Connected"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
