@@ -1,0 +1,457 @@
+{
+  "id": "210",
+  "title": "Course Schedule II",
+  "category": "Graphs",
+  "difficulty": "Medium",
+  "ultimateGuide": "https://neetcode.io/problems/course-schedule-ii",
+  "problemStatement": "You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b before course a.\n\nReturn a valid ordering of courses you can take to finish all courses. If there are multiple valid orderings, return any of them. If it's impossible to finish all courses, return an empty array.",
+  "examples": [
+    {
+      "input": "numCourses = 3, prerequisites = [[1,0]]",
+      "output": "[0,1,2]",
+      "explanation": "There are a total of 3 courses. To take course 1 you must take course 0 first. One valid order is [0,1,2]."
+    },
+    {
+      "input": "numCourses = 3, prerequisites = [[0,1],[1,2],[2,0]]",
+      "output": "[]",
+      "explanation": "It's impossible to finish all courses due to a cycle in the prerequisites."
+    }
+  ],
+  "constraints": [
+    "1 <= numCourses <= 2000",
+    "0 <= prerequisites.length <= numCourses * (numCourses - 1)",
+    "All prerequisite pairs are unique"
+  ],
+  "solutions": [
+    {
+      "name": "Cycle Detection (DFS)",
+      "description": "Use depth-first search with two sets to detect cycles and build a valid course order. The cycle set tracks courses in the current path, while the visit set tracks completed courses. Append courses to output after processing their prerequisites to ensure dependencies are satisfied first.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:\n        prereq = {c: [] for c in range(numCourses)}\n        for crs, pre in prerequisites:\n            prereq[crs].append(pre)\n\n        output = []\n        visit, cycle = set(), set()\n\n        def dfs(crs):\n            if crs in cycle:\n                return False\n            if crs in visit:\n                return True\n\n            cycle.add(crs)\n            for pre in prereq[crs]:\n                if dfs(pre) == False:\n                    return False\n            cycle.remove(crs)\n            visit.add(crs)\n            output.append(crs)\n            return True\n\n        for c in range(numCourses):\n            if dfs(c) == False:\n                return []\n        return output",
+        "semanticLines": [
+          "Create a dictionary to store prerequisites for each course from zero to numCourses minus one.",
+          "For each course and prerequisite pair in the prerequisites list.",
+          "Add the prerequisite to the list of prerequisites for that course.",
+          "Create an empty list to store the final course order.",
+          "Create two empty sets, one for visited courses and one for courses in current cycle path.",
+          "Define a depth-first search function that takes a course as parameter.",
+          "If the course is already in the cycle set.",
+          "Return False to indicate a cycle was detected.",
+          "If the course is already in the visited set.",
+          "Return True since this course was already processed successfully.",
+          "Add the current course to the cycle set to track current path.",
+          "For each prerequisite of the current course.",
+          "If the recursive call on the prerequisite returns False.",
+          "Return False to propagate the cycle detection.",
+          "Remove the current course from the cycle set after processing its prerequisites.",
+          "Add the current course to the visited set to mark it as completed.",
+          "Append the current course to the output list.",
+          "Return True to indicate successful processing of this course.",
+          "For each course number from zero to numCourses minus one.",
+          "If the depth-first search on this course returns False.",
+          "Return an empty list since a cycle was detected.",
+          "Return the output list containing the valid course order."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    findOrder(numCourses, prerequisites) {\n        const prereq = {};\n        for (let c = 0; c < numCourses; c++) {\n            prereq[c] = [];\n        }\n        for (const [crs, pre] of prerequisites) {\n            prereq[crs].push(pre);\n        }\n\n        const output = [];\n        const visit = new Set();\n        const cycle = new Set();\n\n        const dfs = (crs) => {\n            if (cycle.has(crs)) {\n                return false;\n            }\n            if (visit.has(crs)) {\n                return true;\n            }\n\n            cycle.add(crs);\n            for (const pre of prereq[crs]) {\n                if (dfs(pre) === false) {\n                    return false;\n                }\n            }\n            cycle.delete(crs);\n            visit.add(crs);\n            output.push(crs);\n            return true;\n        };\n\n        for (let c = 0; c < numCourses; c++) {\n            if (dfs(c) === false) {\n                return [];\n            }\n        }\n        return output;\n    }\n}",
+        "semanticLines": [
+          "Create an empty object to store prerequisites for each course.",
+          "For each course number from zero to numCourses minus one.",
+          "Initialize an empty array for this course's prerequisites.",
+          "Close the loop that initializes the prerequisite arrays.",
+          "For each course and prerequisite pair in the prerequisites array.",
+          "Add the prerequisite to the array of prerequisites for that course.",
+          "Close the loop that populates the prerequisite arrays.",
+          "Create an empty array to store the final course order.",
+          "Create a new Set to track visited courses.",
+          "Create a new Set to track courses in current cycle path.",
+          "Define a depth-first search arrow function that takes a course as parameter.",
+          "If the course is already in the cycle set.",
+          "Return false to indicate a cycle was detected.",
+          "Close the cycle detection condition.",
+          "If the course is already in the visited set.",
+          "Return true since this course was already processed successfully.",
+          "Close the visited check condition.",
+          "Add the current course to the cycle set to track current path.",
+          "For each prerequisite of the current course.",
+          "If the recursive call on the prerequisite returns false.",
+          "Return false to propagate the cycle detection.",
+          "Close the cycle propagation condition.",
+          "Close the loop that processes prerequisites.",
+          "Remove the current course from the cycle set after processing its prerequisites.",
+          "Add the current course to the visited set to mark it as completed.",
+          "Append the current course to the output array.",
+          "Return true to indicate successful processing of this course.",
+          "Close the depth-first search function definition.",
+          "For each course number from zero to numCourses minus one.",
+          "If the depth-first search on this course returns false.",
+          "Return an empty array since a cycle was detected.",
+          "Close the cycle detection condition.",
+          "Close the loop that processes all courses.",
+          "Return the output array containing the valid course order.",
+          "Close the findOrder method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func findOrder(numCourses int, prerequisites [][]int) []int {\n    prereq := make(map[int][]int)\n    for c := 0; c < numCourses; c++ {\n        prereq[c] = []int{}\n    }\n    for _, pair := range prerequisites {\n        crs, pre := pair[0], pair[1]\n        prereq[crs] = append(prereq[crs], pre)\n    }\n\n    output := []int{}\n    visit := make(map[int]bool)\n    cycle := make(map[int]bool)\n\n    var dfs func(int) bool\n    dfs = func(crs int) bool {\n        if cycle[crs] {\n            return false\n        }\n        if visit[crs] {\n            return true\n        }\n\n        cycle[crs] = true\n        for _, pre := range prereq[crs] {\n            if !dfs(pre) {\n                return false\n            }\n        }\n        delete(cycle, crs)\n        visit[crs] = true\n        output = append(output, crs)\n        return true\n    }\n\n    for c := 0; c < numCourses; c++ {\n        if !dfs(c) {\n            return []int{}\n        }\n    }\n    return output\n}",
+        "semanticLines": [
+          "Create a map to store prerequisites for each course.",
+          "For each course number from zero to numCourses minus one.",
+          "Initialize an empty integer slice for this course's prerequisites.",
+          "Close the loop that initializes the prerequisite slices.",
+          "For each prerequisite pair in the prerequisites slice.",
+          "Extract the course and prerequisite from the pair.",
+          "Append the prerequisite to the slice of prerequisites for that course.",
+          "Close the loop that populates the prerequisite slices.",
+          "Create an empty integer slice to store the final course order.",
+          "Create a map to track visited courses.",
+          "Create a map to track courses in current cycle path.",
+          "Declare a depth-first search function variable that takes an integer and returns a boolean.",
+          "Define the depth-first search function that takes a course as parameter.",
+          "If the course is already in the cycle map.",
+          "Return false to indicate a cycle was detected.",
+          "Close the cycle detection condition.",
+          "If the course is already in the visited map.",
+          "Return true since this course was already processed successfully.",
+          "Close the visited check condition.",
+          "Set the current course to true in the cycle map to track current path.",
+          "For each prerequisite of the current course.",
+          "If the recursive call on the prerequisite returns false.",
+          "Return false to propagate the cycle detection.",
+          "Close the cycle propagation condition.",
+          "Close the loop that processes prerequisites.",
+          "Remove the current course from the cycle map after processing its prerequisites.",
+          "Set the current course to true in the visited map to mark it as completed.",
+          "Append the current course to the output slice.",
+          "Return true to indicate successful processing of this course.",
+          "Close the depth-first search function definition.",
+          "For each course number from zero to numCourses minus one.",
+          "If the depth-first search on this course returns false.",
+          "Return an empty integer slice since a cycle was detected.",
+          "Close the cycle detection condition.",
+          "Close the loop that processes all courses.",
+          "Return the output slice containing the valid course order.",
+          "Close the findOrder function."
+        ]
+      },
+      "detailedExplanation": "This solution uses depth-first search with cycle detection to build a valid course ordering. The key insight is that we need to detect cycles (which make it impossible to complete all courses) while also building the ordering by visiting prerequisites before dependent courses. We maintain two sets: 'cycle' tracks courses in the current DFS path (allowing us to detect back edges), and 'visit' tracks courses that have been completely processed. For each course, we first check if it's in the cycle set (indicating a cycle), then if it's already visited (already processed successfully). Otherwise, we add it to the cycle set, recursively process all its prerequisites, remove it from the cycle set, add it to the visit set, and append it to the output. The course is added to output after its prerequisites are processed, ensuring the correct order. If any DFS call returns False, we return an empty array indicating impossibility.",
+      "commonMistakes": [
+        "Forgetting to remove courses from the cycle set after processing (causing false cycle detection)",
+        "Adding courses to output before processing prerequisites (incorrect ordering)",
+        "Using only one set instead of separate cycle and visit sets (incorrect cycle detection)",
+        "Not checking both cycle and visit sets at the start of DFS (inefficient or incorrect)",
+        "Forgetting to return empty array when a cycle is detected"
+      ],
+      "whyItWorks": "The algorithm correctly handles the topological ordering problem with cycle detection. By using the cycle set to track the current DFS path, we can detect back edges which indicate cycles. The visit set prevents redundant work by remembering courses we've already processed. Adding courses to the output after processing their prerequisites ensures the ordering satisfies all dependencies. If a cycle exists, the cycle set will contain a course we're trying to visit again in the same path, allowing us to detect impossibility early.",
+      "keyInsights": [
+        "Two sets serve different purposes: cycle for current path, visit for completed courses",
+        "Adding courses to output after processing prerequisites ensures correct ordering",
+        "Cycle detection via checking if a course is in the current path",
+        "DFS naturally handles transitive dependencies through recursion",
+        "Returning False propagates cycle detection up the call stack"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
+          "explanation": "Build adjacency list: {0:[], 1:[0], 2:[0], 3:[1,2]}. Start DFS from course 0: no prerequisites, add to output [0]. DFS from course 1: visit 0 (already in output), add 1 to output [0,1]. DFS from course 2: visit 0 (already processed), add 2 to output [0,1,2]. DFS from course 3: visit 1 and 2 (both processed), add 3 to output [0,1,2,3]. Return [0,1,2,3] as valid ordering."
+        },
+        "example2": {
+          "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0]}. Start DFS from course 0: add to cycle set, visit prerequisite 1. From 1: add to cycle set, visit prerequisite 0. Course 0 is already in cycle set, indicating a cycle. Return False, propagate up to return []. This correctly identifies the circular dependency."
+        }
+      }
+    },
+    {
+      "name": "Topological Sort (Kahn's Algorithm)",
+      "description": "Use breadth-first search with indegree tracking to build a valid course order. Calculate indegree for each course (number of prerequisites), start with courses having zero indegree, and process courses level by level, decrementing indegrees of dependent courses. The output is reversed since we build from prerequisites to dependents.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:\n        indegree = [0] * numCourses\n        adj = [[] for i in range(numCourses)]\n        for src, dst in prerequisites:\n            indegree[dst] += 1\n            adj[src].append(dst)\n\n        q = deque()\n        for n in range(numCourses):\n            if indegree[n] == 0:\n                q.append(n)\n\n        finish, output = 0, []\n        while q:\n            node = q.popleft()\n            output.append(node)\n            finish += 1\n            for nei in adj[node]:\n                indegree[nei] -= 1\n                if indegree[nei] == 0:\n                    q.append(nei)\n\n        if finish != numCourses:\n            return []\n        return output[::-1]",
+        "semanticLines": [
+          "Create a list of zeros with length numCourses to track indegree for each course.",
+          "Create a list of empty lists for adjacency list representation from zero to numCourses minus one.",
+          "For each source and destination pair in the prerequisites list.",
+          "Increment the indegree of the destination course by one.",
+          "Add the destination course to the adjacency list of the source course.",
+          "Create an empty deque to store courses ready to be processed.",
+          "For each course number from zero to numCourses minus one.",
+          "If the indegree of this course is zero.",
+          "Add this course to the deque since it has no prerequisites.",
+          "Initialize finish counter to zero and output list to empty list.",
+          "While the deque is not empty.",
+          "Remove and get the leftmost course from the deque.",
+          "Append this course to the output list.",
+          "Increment the finish counter by one.",
+          "For each neighbor course in the adjacency list of current course.",
+          "Decrement the indegree of the neighbor by one.",
+          "If the indegree of the neighbor becomes zero.",
+          "Add the neighbor to the deque since all its prerequisites are satisfied.",
+          "If the finish counter does not equal numCourses.",
+          "Return an empty list since not all courses could be completed.",
+          "Return the output list reversed to get the correct course order."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    findOrder(numCourses, prerequisites) {\n        const indegree = new Array(numCourses).fill(0);\n        const adj = Array.from({ length: numCourses }, () => []);\n        for (const [src, dst] of prerequisites) {\n            indegree[dst]++;\n            adj[src].push(dst);\n        }\n\n        const q = [];\n        for (let n = 0; n < numCourses; n++) {\n            if (indegree[n] === 0) {\n                q.push(n);\n            }\n        }\n\n        let finish = 0;\n        const output = [];\n        while (q.length > 0) {\n            const node = q.shift();\n            output.push(node);\n            finish++;\n            for (const nei of adj[node]) {\n                indegree[nei]--;\n                if (indegree[nei] === 0) {\n                    q.push(nei);\n                }\n            }\n        }\n\n        if (finish !== numCourses) {\n            return [];\n        }\n        return output.reverse();\n    }\n}",
+        "semanticLines": [
+          "Create a new array of length numCourses filled with zeros to track indegree for each course.",
+          "Create an array of empty arrays for adjacency list representation with length numCourses.",
+          "For each source and destination pair in the prerequisites array.",
+          "Increment the indegree of the destination course by one.",
+          "Add the destination course to the adjacency array of the source course.",
+          "Close the loop that populates indegree and adjacency list.",
+          "Create an empty array to store courses ready to be processed.",
+          "For each course number from zero to numCourses minus one.",
+          "If the indegree of this course is zero.",
+          "Add this course to the array since it has no prerequisites.",
+          "Close the indegree zero check condition.",
+          "Close the loop that initializes the queue.",
+          "Initialize finish counter to zero.",
+          "Create an empty array to store the output.",
+          "While the queue has elements.",
+          "Remove and get the first course from the queue.",
+          "Append this course to the output array.",
+          "Increment the finish counter by one.",
+          "For each neighbor course in the adjacency array of current course.",
+          "Decrement the indegree of the neighbor by one.",
+          "If the indegree of the neighbor becomes zero.",
+          "Add the neighbor to the queue since all its prerequisites are satisfied.",
+          "Close the indegree zero check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the while loop that processes the queue.",
+          "If the finish counter does not equal numCourses.",
+          "Return an empty array since not all courses could be completed.",
+          "Close the finish check condition.",
+          "Return the output array reversed to get the correct course order.",
+          "Close the findOrder method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func findOrder(numCourses int, prerequisites [][]int) []int {\n    indegree := make([]int, numCourses)\n    adj := make([][]int, numCourses)\n    for i := range adj {\n        adj[i] = []int{}\n    }\n    for _, pair := range prerequisites {\n        src, dst := pair[0], pair[1]\n        indegree[dst]++\n        adj[src] = append(adj[src], dst)\n    }\n\n    q := []int{}\n    for n := 0; n < numCourses; n++ {\n        if indegree[n] == 0 {\n            q = append(q, n)\n        }\n    }\n\n    finish := 0\n    output := []int{}\n    for len(q) > 0 {\n        node := q[0]\n        q = q[1:]\n        output = append(output, node)\n        finish++\n        for _, nei := range adj[node] {\n            indegree[nei]--\n            if indegree[nei] == 0 {\n                q = append(q, nei)\n            }\n        }\n    }\n\n    if finish != numCourses {\n        return []int{}\n    }\n    for i, j := 0, len(output)-1; i < j; i, j = i+1, j-1 {\n        output[i], output[j] = output[j], output[i]\n    }\n    return output\n}",
+        "semanticLines": [
+          "Create an integer slice of length numCourses to track indegree for each course.",
+          "Create a slice of integer slices for adjacency list representation with length numCourses.",
+          "For each index in the adjacency slice.",
+          "Initialize an empty integer slice for this course's adjacency list.",
+          "Close the loop that initializes adjacency slices.",
+          "For each prerequisite pair in the prerequisites slice.",
+          "Extract the source and destination from the pair.",
+          "Increment the indegree of the destination course by one.",
+          "Append the destination course to the adjacency slice of the source course.",
+          "Close the loop that populates indegree and adjacency list.",
+          "Create an empty integer slice to store courses ready to be processed.",
+          "For each course number from zero to numCourses minus one.",
+          "If the indegree of this course is zero.",
+          "Append this course to the slice since it has no prerequisites.",
+          "Close the indegree zero check condition.",
+          "Close the loop that initializes the queue.",
+          "Initialize finish counter to zero.",
+          "Create an empty integer slice to store the output.",
+          "While the queue has elements.",
+          "Get the first course from the queue.",
+          "Remove the first element from the queue.",
+          "Append this course to the output slice.",
+          "Increment the finish counter by one.",
+          "For each neighbor course in the adjacency slice of current course.",
+          "Decrement the indegree of the neighbor by one.",
+          "If the indegree of the neighbor becomes zero.",
+          "Append the neighbor to the queue since all its prerequisites are satisfied.",
+          "Close the indegree zero check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the while loop that processes the queue.",
+          "If the finish counter does not equal numCourses.",
+          "Return an empty integer slice since not all courses could be completed.",
+          "Close the finish check condition.",
+          "For two pointers from start and end of output, moving toward center.",
+          "Swap elements at the two pointer positions to reverse the slice.",
+          "Close the loop that reverses the output.",
+          "Return the reversed output slice containing the correct course order.",
+          "Close the findOrder function."
+        ]
+      },
+      "detailedExplanation": "Kahn's Algorithm is a classic BFS-based topological sorting algorithm. The key idea is to use indegree (number of incoming edges) to identify which courses can be taken next. We start by building an adjacency list where each course points to courses that depend on it, and count the indegree for each course. Courses with indegree 0 have no prerequisites and can be taken immediately, so we add them to a queue. We then process courses from the queue: add them to output, increment a counter, and for each dependent course, decrement its indegree. When a course's indegree becomes 0, all its prerequisites have been satisfied, so we add it to the queue. If we process all courses (finish == numCourses), a valid ordering exists. We reverse the output because we build the order from prerequisites to dependents, but need to return it from dependents to prerequisites.",
+      "commonMistakes": [
+        "Building adjacency list in wrong direction (prerequisite -> course instead of course -> dependent)",
+        "Forgetting to reverse the output at the end (returning wrong order)",
+        "Not checking if finish equals numCourses (missing cycle detection)",
+        "Using wrong indegree direction (counting outgoing instead of incoming edges)",
+        "Forgetting to decrement indegree when processing neighbors"
+      ],
+      "whyItWorks": "Kahn's Algorithm works because it processes courses in a valid topological order by ensuring all prerequisites are completed before a course is processed. The indegree counter tracks how many prerequisites remain for each course. Starting with courses that have no prerequisites (indegree 0) and gradually freeing up dependent courses by decrementing their indegrees ensures we build a valid ordering. If a cycle exists, some courses will never reach indegree 0, so finish will be less than numCourses, allowing us to detect impossibility.",
+      "keyInsights": [
+        "Indegree represents the number of unmet prerequisites for a course",
+        "Courses with indegree 0 can be taken immediately",
+        "Processing a course 'frees up' its dependents by decrementing their indegrees",
+        "BFS naturally processes courses level by level in topological order",
+        "The finish counter detects cycles by checking if all courses were processed",
+        "Output must be reversed because we build from prerequisites to dependents"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
+          "explanation": "Build adjacency list: {0:[1,2], 1:[3], 2:[3], 3:[]}. Calculate indegree: [0,1,1,2]. Queue starts with [0] (indegree 0). Process 0: add to output [0], decrement indegrees of 1 and 2 to [0,0,0,2]. Queue becomes [1,2]. Process 1: add to output [0,1], decrement indegree of 3 to [0,0,0,1]. Queue becomes [2]. Process 2: add to output [0,1,2], decrement indegree of 3 to [0,0,0,0]. Queue becomes [3]. Process 3: add to output [0,1,2,3]. Finish=4, reverse output to [3,2,1,0]."
+        },
+        "example2": {
+          "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0]}. Calculate indegree: [1,1]. Queue starts empty since no course has indegree 0. While loop doesn't execute. Finish=0, which doesn't equal numCourses=2, so return []. This correctly detects the cycle."
+        }
+      }
+    },
+    {
+      "name": "Topological Sort (DFS)",
+      "description": "Use depth-first search with indegree tracking to build a valid course order. Instead of maintaining a queue, use recursive DFS to process courses when their indegree becomes zero. The algorithm directly decrements indegrees during traversal and processes courses immediately when all prerequisites are satisfied.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:\n        adj = [[] for i in range(numCourses)]\n        indegree = [0] * numCourses\n        for nxt, pre in prerequisites:\n            indegree[nxt] += 1\n            adj[pre].append(nxt)\n\n        output = []\n\n        def dfs(node):\n            output.append(node)\n            indegree[node] -= 1\n            for nei in adj[node]:\n                indegree[nei] -= 1\n                if indegree[nei] == 0:\n                    dfs(nei)\n\n        for i in range(numCourses):\n            if indegree[i] == 0:\n                dfs(i)\n\n        return output if len(output) == numCourses else []",
+        "semanticLines": [
+          "Create a list of empty lists for adjacency list representation from zero to numCourses minus one.",
+          "Create a list of zeros with length numCourses to track indegree for each course.",
+          "For each next course and prerequisite pair in the prerequisites list.",
+          "Increment the indegree of the next course by one.",
+          "Add the next course to the adjacency list of the prerequisite course.",
+          "Create an empty list to store the final course order.",
+          "Define a depth-first search function that takes a node as parameter.",
+          "Append the current node to the output list.",
+          "Decrement the indegree of the current node by one.",
+          "For each neighbor course in the adjacency list of current node.",
+          "Decrement the indegree of the neighbor by one.",
+          "If the indegree of the neighbor becomes zero.",
+          "Recursively call depth-first search on the neighbor.",
+          "For each course number from zero to numCourses minus one.",
+          "If the indegree of this course is zero.",
+          "Call depth-first search on this course to start processing.",
+          "Return the output list if its length equals numCourses, otherwise return empty list."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    findOrder(numCourses, prerequisites) {\n        const adj = Array.from({ length: numCourses }, () => []);\n        const indegree = new Array(numCourses).fill(0);\n        for (const [nxt, pre] of prerequisites) {\n            indegree[nxt]++;\n            adj[pre].push(nxt);\n        }\n\n        const output = [];\n\n        const dfs = (node) => {\n            output.push(node);\n            indegree[node]--;\n            for (const nei of adj[node]) {\n                indegree[nei]--;\n                if (indegree[nei] === 0) {\n                    dfs(nei);\n                }\n            }\n        };\n\n        for (let i = 0; i < numCourses; i++) {\n            if (indegree[i] === 0) {\n                dfs(i);\n            }\n        }\n\n        return output.length === numCourses ? output : [];\n    }\n}",
+        "semanticLines": [
+          "Create an array of empty arrays for adjacency list representation with length numCourses.",
+          "Create a new array of length numCourses filled with zeros to track indegree for each course.",
+          "For each next course and prerequisite pair in the prerequisites array.",
+          "Increment the indegree of the next course by one.",
+          "Add the next course to the adjacency array of the prerequisite course.",
+          "Close the loop that populates indegree and adjacency list.",
+          "Create an empty array to store the final course order.",
+          "Define a depth-first search arrow function that takes a node as parameter.",
+          "Append the current node to the output array.",
+          "Decrement the indegree of the current node by one.",
+          "For each neighbor course in the adjacency array of current node.",
+          "Decrement the indegree of the neighbor by one.",
+          "If the indegree of the neighbor becomes zero.",
+          "Recursively call depth-first search on the neighbor.",
+          "Close the indegree zero check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the depth-first search function definition.",
+          "For each course number from zero to numCourses minus one.",
+          "If the indegree of this course is zero.",
+          "Call depth-first search on this course to start processing.",
+          "Close the indegree zero check condition.",
+          "Close the loop that starts DFS on zero-indegree courses.",
+          "Return the output array if its length equals numCourses, otherwise return empty array.",
+          "Close the findOrder method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func findOrder(numCourses int, prerequisites [][]int) []int {\n    adj := make([][]int, numCourses)\n    indegree := make([]int, numCourses)\n    for i := range adj {\n        adj[i] = []int{}\n    }\n    for _, pair := range prerequisites {\n        nxt, pre := pair[0], pair[1]\n        indegree[nxt]++\n        adj[pre] = append(adj[pre], nxt)\n    }\n\n    output := []int{}\n\n    var dfs func(int)\n    dfs = func(node int) {\n        output = append(output, node)\n        indegree[node]--\n        for _, nei := range adj[node] {\n            indegree[nei]--\n            if indegree[nei] == 0 {\n                dfs(nei)\n            }\n        }\n    }\n\n    for i := 0; i < numCourses; i++ {\n        if indegree[i] == 0 {\n            dfs(i)\n        }\n    }\n\n    if len(output) == numCourses {\n        return output\n    }\n    return []int{}\n}",
+        "semanticLines": [
+          "Create a slice of integer slices for adjacency list representation with length numCourses.",
+          "Create an integer slice of length numCourses to track indegree for each course.",
+          "For each index in the adjacency slice.",
+          "Initialize an empty integer slice for this course's adjacency list.",
+          "Close the loop that initializes adjacency slices.",
+          "For each prerequisite pair in the prerequisites slice.",
+          "Extract the next course and prerequisite from the pair.",
+          "Increment the indegree of the next course by one.",
+          "Append the next course to the adjacency slice of the prerequisite course.",
+          "Close the loop that populates indegree and adjacency list.",
+          "Create an empty integer slice to store the final course order.",
+          "Declare a depth-first search function variable that takes an integer.",
+          "Define the depth-first search function that takes a node as parameter.",
+          "Append the current node to the output slice.",
+          "Decrement the indegree of the current node by one.",
+          "For each neighbor course in the adjacency slice of current node.",
+          "Decrement the indegree of the neighbor by one.",
+          "If the indegree of the neighbor becomes zero.",
+          "Recursively call depth-first search on the neighbor.",
+          "Close the indegree zero check condition.",
+          "Close the loop that processes neighbors.",
+          "Close the depth-first search function definition.",
+          "For each course number from zero to numCourses minus one.",
+          "If the indegree of this course is zero.",
+          "Call depth-first search on this course to start processing.",
+          "Close the indegree zero check condition.",
+          "Close the loop that starts DFS on zero-indegree courses.",
+          "If the length of output equals numCourses.",
+          "Return the output slice containing the valid course order.",
+          "Close the length check condition.",
+          "Return an empty integer slice since not all courses could be completed.",
+          "Close the findOrder function."
+        ]
+      },
+      "detailedExplanation": "This DFS-based topological sort variant combines indegree tracking with recursive DFS processing. Unlike the cycle detection approach, this doesn't explicitly check for cycles but detects them implicitly by counting processed courses. The algorithm builds an adjacency list where each prerequisite points to courses that depend on it, and tracks indegree for each course. We start DFS from every course with indegree 0 (no prerequisites). During DFS, we immediately add the current course to output, then decrement indegrees of all dependent courses. When a dependent course's indegree reaches 0, we recursively process it, creating a chain of immediately-processed courses. This approach is elegant because it combines the benefits of DFS (implicit recursion stack) with the benefits of indegree tracking (knowing when courses are ready). The final check compares output length to numCourses to detect if all courses were processed (no cycles).",
+      "commonMistakes": [
+        "Not decrementing indegree of current node (though not strictly necessary for correctness)",
+        "Building adjacency list in wrong direction (next course -> prerequisite instead of prerequisite -> next)",
+        "Forgetting to check output length against numCourses (missing cycle detection)",
+        "Starting DFS from all courses instead of only zero-indegree courses (incorrect ordering)",
+        "Processing neighbors before decrementing their indegrees (incorrect behavior)"
+      ],
+      "whyItWorks": "This algorithm works by leveraging DFS to naturally follow the prerequisite chains. Starting from courses with no prerequisites ensures we begin with valid starting points. As we process each course, we immediately handle its dependent courses if they're ready (indegree becomes 0). The recursive nature of DFS means we completely process entire prerequisite chains before backtracking, ensuring correct ordering. The indegree counter prevents processing courses until all their prerequisites are satisfied. If a cycle exists, some courses will never have their indegrees reach 0, so they won't be processed, and the output length check will detect this.",
+      "keyInsights": [
+        "Combines DFS recursion with indegree tracking for elegant solution",
+        "Starting from zero-indegree courses ensures valid topological ordering",
+        "Immediate recursive processing when indegree reaches 0 creates natural chains",
+        "No explicit cycle detection needed - output length check suffices",
+        "More space-efficient than BFS (no queue) but uses call stack",
+        "Processes courses in a valid topological order without need for reversal"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
+          "explanation": "Build adjacency list: {0:[1,2], 1:[3], 2:[3], 3:[]}. Calculate indegree: [0,1,1,2]. Start DFS from course 0 (indegree 0): add 0 to output [0], decrement indegrees of 1 and 2 to [0,0,0,2]. Course 1's indegree is now 0, so DFS(1): add 1 to output [0,1], decrement indegree of 3 to [0,0,0,1]. Course 2's indegree is now 0, so DFS(2): add 2 to output [0,1,2], decrement indegree of 3 to [0,0,0,0]. Course 3's indegree is now 0, so DFS(3): add 3 to output [0,1,2,3]. Output length equals 4, return [0,1,2,3]."
+        },
+        "example2": {
+          "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+          "explanation": "Build adjacency list: {0:[1], 1:[0]}. Calculate indegree: [1,1]. No course has indegree 0, so DFS never starts. Output remains empty []. Output length 0 doesn't equal numCourses 2, return []. This correctly detects the cycle."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "This is a topological sorting problem. Think about how to order tasks with dependencies.",
+    "Consider using DFS with cycle detection or BFS with indegree tracking.",
+    "For Kahn's Algorithm, start with courses that have no prerequisites (indegree 0).",
+    "How can you detect if it's impossible to complete all courses? Check if all courses are processed.",
+    "Remember to reverse the output if you're building from prerequisites to dependents."
+  ],
+  "followUpQuestions": [
+    "What if you need to return all possible valid orderings?",
+    "How would you handle weighted prerequisites (some are harder than others)?",
+    "Can you optimize for space if you're allowed to modify the input?",
+    "How would you handle the case where you need to minimize the number of semesters?"
+  ],
+  "relatedProblems": [
+    "207. Course Schedule",
+    "269. Alien Dictionary",
+    "310. Minimum Height Trees",
+    "444. Sequence Reconstruction",
+    "1136. Parallel Courses"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
