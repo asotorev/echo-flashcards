@@ -1,0 +1,472 @@
+{
+  "id": "261",
+  "title": "Graph Valid Tree",
+  "category": "Graphs",
+  "difficulty": "Medium",
+  "ultimateGuide": "https://neetcode.io/problems/valid-tree",
+  "problemStatement": "Given n nodes labeled from 0 to n - 1 and a list of undirected edges, determine if these edges form a valid tree.\n\nA valid tree must satisfy two conditions:\n1. It must be fully connected (all nodes are reachable from any node)\n2. It must have no cycles",
+  "examples": [
+    {
+      "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+      "output": "true",
+      "explanation": "The graph forms a valid tree with 5 nodes and 4 edges, all nodes are connected, and there are no cycles."
+    },
+    {
+      "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+      "output": "false",
+      "explanation": "The graph contains a cycle: 1 -> 2 -> 3 -> 1, so it's not a valid tree."
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 2000",
+    "0 <= edges.length <= 5000",
+    "edges[i].length == 2",
+    "0 <= edges[i][0], edges[i][1] < n",
+    "edges[i][0] != edges[i][1]",
+    "No duplicate edges"
+  ],
+  "solutions": [
+    {
+      "name": "Cycle Detection (DFS)",
+      "description": "Use depth-first search with parent tracking to detect cycles in an undirected graph. A valid tree must have exactly n-1 edges, be fully connected, and contain no cycles. Track the parent of each node during DFS to distinguish between back edges (cycles) and parent edges (valid tree edges).",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        if len(edges) > (n - 1):\n            return False\n\n        adj = [[] for _ in range(n)]\n        for u, v in edges:\n            adj[u].append(v)\n            adj[v].append(u)\n\n        visit = set()\n        def dfs(node, par):\n            if node in visit:\n                return False\n\n            visit.add(node)\n            for nei in adj[node]:\n                if nei == par:\n                    continue\n                if not dfs(nei, node):\n                    return False\n            return True\n\n        return dfs(0, -1) and len(visit) == n",
+        "semanticLines": [
+          "If the number of edges is greater than n minus one.",
+          "Return False because a tree must have exactly n minus one edges.",
+          "Create a list of empty lists for adjacency list representation from zero to n minus one.",
+          "For each u and v pair in the edges list.",
+          "Add v to the adjacency list of u.",
+          "Add u to the adjacency list of v for undirected graph.",
+          "Create an empty set to track visited nodes.",
+          "Define a depth-first search function that takes a node and its parent as parameters.",
+          "If the node is already in the visited set.",
+          "Return False because we found a cycle.",
+          "Add the current node to the visited set.",
+          "For each neighbor in the adjacency list of current node.",
+          "If the neighbor is the parent of current node.",
+          "Continue to skip the parent edge.",
+          "If the recursive call on neighbor with current node as parent returns False.",
+          "Return False to propagate the cycle detection.",
+          "Return True to indicate no cycle found from this node.",
+          "Return True if DFS from node zero with parent negative one succeeds and all nodes were visited."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    validTree(n, edges) {\n        if (edges.length > n - 1) {\n            return false;\n        }\n\n        const adj = Array.from({ length: n }, () => []);\n        for (const [u, v] of edges) {\n            adj[u].push(v);\n            adj[v].push(u);\n        }\n\n        const visit = new Set();\n        const dfs = (node, par) => {\n            if (visit.has(node)) {\n                return false;\n            }\n\n            visit.add(node);\n            for (const nei of adj[node]) {\n                if (nei === par) {\n                    continue;\n                }\n                if (!dfs(nei, node)) {\n                    return false;\n                }\n            }\n            return true;\n        };\n\n        return dfs(0, -1) && visit.size === n;\n    }\n}",
+        "semanticLines": [
+          "If the number of edges is greater than n minus one.",
+          "Return false because a tree must have exactly n minus one edges.",
+          "Close the edge count check condition.",
+          "Create an array of empty arrays for adjacency list representation with length n.",
+          "For each u and v pair in the edges array.",
+          "Add v to the adjacency array of u.",
+          "Add u to the adjacency array of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Create a new Set to track visited nodes.",
+          "Define a depth-first search arrow function that takes a node and its parent as parameters.",
+          "If the node is already in the visited set.",
+          "Return false because we found a cycle.",
+          "Close the cycle detection condition.",
+          "Add the current node to the visited set.",
+          "For each neighbor in the adjacency array of current node.",
+          "If the neighbor is the parent of current node.",
+          "Continue to skip the parent edge.",
+          "Close the parent check condition.",
+          "If the recursive call on neighbor with current node as parent returns false.",
+          "Return false to propagate the cycle detection.",
+          "Close the cycle propagation condition.",
+          "Close the loop that processes neighbors.",
+          "Return true to indicate no cycle found from this node.",
+          "Close the depth-first search function definition.",
+          "Return true if DFS from node zero with parent negative one succeeds and all nodes were visited.",
+          "Close the validTree method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func validTree(n int, edges [][]int) bool {\n    if len(edges) > n-1 {\n        return false\n    }\n\n    adj := make([][]int, n)\n    for i := range adj {\n        adj[i] = []int{}\n    }\n    for _, edge := range edges {\n        u, v := edge[0], edge[1]\n        adj[u] = append(adj[u], v)\n        adj[v] = append(adj[v], u)\n    }\n\n    visit := make(map[int]bool)\n    var dfs func(int, int) bool\n    dfs = func(node, par int) bool {\n        if visit[node] {\n            return false\n        }\n\n        visit[node] = true\n        for _, nei := range adj[node] {\n            if nei == par {\n                continue\n            }\n            if !dfs(nei, node) {\n                return false\n            }\n        }\n        return true\n    }\n\n    return dfs(0, -1) && len(visit) == n\n}",
+        "semanticLines": [
+          "If the number of edges is greater than n minus one.",
+          "Return false because a tree must have exactly n minus one edges.",
+          "Close the edge count check condition.",
+          "Create a slice of integer slices for adjacency list representation with length n.",
+          "For each index in the adjacency slice.",
+          "Initialize an empty integer slice for this node's adjacency list.",
+          "Close the loop that initializes adjacency slices.",
+          "For each edge in the edges slice.",
+          "Extract u and v from the edge.",
+          "Append v to the adjacency slice of u.",
+          "Append u to the adjacency slice of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Create a map to track visited nodes.",
+          "Declare a depth-first search function variable that takes two integers and returns a boolean.",
+          "Define the depth-first search function that takes a node and its parent as parameters.",
+          "If the node is already in the visited map.",
+          "Return false because we found a cycle.",
+          "Close the cycle detection condition.",
+          "Set the current node to true in the visited map.",
+          "For each neighbor in the adjacency slice of current node.",
+          "If the neighbor is the parent of current node.",
+          "Continue to skip the parent edge.",
+          "Close the parent check condition.",
+          "If the recursive call on neighbor with current node as parent returns false.",
+          "Return false to propagate the cycle detection.",
+          "Close the cycle propagation condition.",
+          "Close the loop that processes neighbors.",
+          "Return true to indicate no cycle found from this node.",
+          "Close the depth-first search function definition.",
+          "Return true if DFS from node zero with parent negative one succeeds and all nodes were visited.",
+          "Close the validTree function."
+        ]
+      },
+      "detailedExplanation": "This solution uses DFS with parent tracking to validate if an undirected graph forms a valid tree. First, we perform a quick check: a tree with n nodes must have exactly n-1 edges (if more, there's definitely a cycle). We build an adjacency list for the undirected graph. Then we perform DFS starting from node 0 with parent -1 (indicating no parent). During DFS, if we encounter a node already in the visit set, we've found a cycle. To handle undirected graphs correctly, we skip edges going back to the parent node (otherwise we'd incorrectly detect a cycle). After DFS completes, we check if all n nodes were visited (ensuring connectivity). A valid tree must pass both tests: no cycles detected during DFS, and all nodes reachable from the starting node.",
+      "commonMistakes": [
+        "Forgetting to check if number of edges equals n-1 at the start (optimization and correctness)",
+        "Not skipping the parent node in undirected graph (falsely detecting cycles)",
+        "Only checking for cycles without verifying connectivity (missing disconnected components)",
+        "Using the wrong parent value in initial DFS call (should be -1 or any invalid node)",
+        "Building directed instead of undirected adjacency list (incorrect graph representation)"
+      ],
+      "whyItWorks": "The algorithm correctly identifies valid trees by checking the two fundamental properties: acyclicity and connectivity. The edge count check (n-1) is an optimization that leverages the tree property. The DFS with parent tracking correctly detects cycles in undirected graphs by distinguishing between back edges (cycles) and parent edges (valid tree structure). The final connectivity check ensures there are no disconnected components. Together, these checks fully validate the tree structure.",
+      "keyInsights": [
+        "A tree with n nodes must have exactly n-1 edges (necessary but not sufficient condition)",
+        "Parent tracking is essential for cycle detection in undirected graphs",
+        "Visiting all n nodes from any starting point proves connectivity",
+        "DFS naturally explores connected components, making connectivity check straightforward",
+        "Early termination when cycle detected improves efficiency"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+          "explanation": "Edge count: 4 == 5-1, check passes. Build adjacency list: {0:[1,2,3], 1:[0,4], 2:[0], 3:[0], 4:[1]}. Start DFS(0, -1): visit 0, explore neighbors. DFS(1, 0): visit 1, explore neighbor 0 (skip parent), explore 4. DFS(4, 1): visit 4, explore neighbor 1 (skip parent). Back to DFS(1), complete. DFS(2, 0): visit 2, explore neighbor 0 (skip parent). DFS(3, 0): visit 3, explore neighbor 0 (skip parent). All DFS calls return true, visited nodes: {0,1,2,3,4}. Size 5 == n, return true."
+        },
+        "example2": {
+          "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+          "explanation": "Edge count: 5 > 5-1, immediately return false. The early check detects that with 5 edges for 5 nodes, a cycle must exist (tree property violation)."
+        }
+      }
+    },
+    {
+      "name": "Breadth First Search",
+      "description": "Use breadth-first search with parent tracking to detect cycles in an undirected graph. Similar to the DFS approach but uses a queue to explore nodes level by level. Track both the current node and its parent in the queue to properly handle undirected edges.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "python": {
+        "code": "class Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        if len(edges) > n - 1:\n            return False\n\n        adj = [[] for _ in range(n)]\n        for u, v in edges:\n            adj[u].append(v)\n            adj[v].append(u)\n\n        visit = set()\n        q = deque([(0, -1)])  # (current node, parent node)\n        visit.add(0)\n\n        while q:\n            node, parent = q.popleft()\n            for nei in adj[node]:\n                if nei == parent:\n                    continue\n                if nei in visit:\n                    return False\n                visit.add(nei)\n                q.append((nei, node))\n\n        return len(visit) == n",
+        "semanticLines": [
+          "If the number of edges is greater than n minus one.",
+          "Return False because a tree must have exactly n minus one edges.",
+          "Create a list of empty lists for adjacency list representation from zero to n minus one.",
+          "For each u and v pair in the edges list.",
+          "Add v to the adjacency list of u.",
+          "Add u to the adjacency list of v for undirected graph.",
+          "Create an empty set to track visited nodes.",
+          "Create a deque with a tuple containing node zero and parent negative one.",
+          "Add node zero to the visited set.",
+          "While the queue is not empty.",
+          "Remove and get the leftmost node and parent pair from the deque.",
+          "For each neighbor in the adjacency list of current node.",
+          "If the neighbor is the parent of current node.",
+          "Continue to skip the parent edge.",
+          "If the neighbor is already in the visited set.",
+          "Return False because we found a cycle.",
+          "Add the neighbor to the visited set.",
+          "Append a tuple of neighbor and current node to the deque.",
+          "Return True if the number of visited nodes equals n."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    validTree(n, edges) {\n        if (edges.length > n - 1) {\n            return false;\n        }\n\n        const adj = Array.from({ length: n }, () => []);\n        for (const [u, v] of edges) {\n            adj[u].push(v);\n            adj[v].push(u);\n        }\n\n        const visit = new Set();\n        const q = [[0, -1]];  // [current node, parent node]\n        visit.add(0);\n\n        while (q.length > 0) {\n            const [node, parent] = q.shift();\n            for (const nei of adj[node]) {\n                if (nei === parent) {\n                    continue;\n                }\n                if (visit.has(nei)) {\n                    return false;\n                }\n                visit.add(nei);\n                q.push([nei, node]);\n            }\n        }\n\n        return visit.size === n;\n    }\n}",
+        "semanticLines": [
+          "If the number of edges is greater than n minus one.",
+          "Return false because a tree must have exactly n minus one edges.",
+          "Close the edge count check condition.",
+          "Create an array of empty arrays for adjacency list representation with length n.",
+          "For each u and v pair in the edges array.",
+          "Add v to the adjacency array of u.",
+          "Add u to the adjacency array of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Create a new Set to track visited nodes.",
+          "Create an array with a nested array containing node zero and parent negative one.",
+          "Add node zero to the visited set.",
+          "While the queue has elements.",
+          "Destructure and remove the first node and parent pair from the array.",
+          "For each neighbor in the adjacency array of current node.",
+          "If the neighbor is the parent of current node.",
+          "Continue to skip the parent edge.",
+          "Close the parent check condition.",
+          "If the neighbor is already in the visited set.",
+          "Return false because we found a cycle.",
+          "Close the cycle detection condition.",
+          "Add the neighbor to the visited set.",
+          "Append an array of neighbor and current node to the queue.",
+          "Close the loop that processes neighbors.",
+          "Close the while loop that processes the queue.",
+          "Return true if the number of visited nodes equals n.",
+          "Close the validTree method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func validTree(n int, edges [][]int) bool {\n    if len(edges) > n-1 {\n        return false\n    }\n\n    adj := make([][]int, n)\n    for i := range adj {\n        adj[i] = []int{}\n    }\n    for _, edge := range edges {\n        u, v := edge[0], edge[1]\n        adj[u] = append(adj[u], v)\n        adj[v] = append(adj[v], u)\n    }\n\n    visit := make(map[int]bool)\n    type Pair struct {\n        node, parent int\n    }\n    q := []Pair{{0, -1}}\n    visit[0] = true\n\n    for len(q) > 0 {\n        curr := q[0]\n        q = q[1:]\n        node, parent := curr.node, curr.parent\n        for _, nei := range adj[node] {\n            if nei == parent {\n                continue\n            }\n            if visit[nei] {\n                return false\n            }\n            visit[nei] = true\n            q = append(q, Pair{nei, node})\n        }\n    }\n\n    return len(visit) == n\n}",
+        "semanticLines": [
+          "If the number of edges is greater than n minus one.",
+          "Return false because a tree must have exactly n minus one edges.",
+          "Close the edge count check condition.",
+          "Create a slice of integer slices for adjacency list representation with length n.",
+          "For each index in the adjacency slice.",
+          "Initialize an empty integer slice for this node's adjacency list.",
+          "Close the loop that initializes adjacency slices.",
+          "For each edge in the edges slice.",
+          "Extract u and v from the edge.",
+          "Append v to the adjacency slice of u.",
+          "Append u to the adjacency slice of v for undirected graph.",
+          "Close the loop that builds the adjacency list.",
+          "Create a map to track visited nodes.",
+          "Define a Pair struct with node and parent integer fields.",
+          "Close the Pair struct definition.",
+          "Create a slice with a Pair containing node zero and parent negative one.",
+          "Set node zero to true in the visited map.",
+          "While the queue has elements.",
+          "Get the first Pair from the queue.",
+          "Remove the first element from the queue.",
+          "Extract node and parent from the current Pair.",
+          "For each neighbor in the adjacency slice of current node.",
+          "If the neighbor is the parent of current node.",
+          "Continue to skip the parent edge.",
+          "Close the parent check condition.",
+          "If the neighbor is already in the visited map.",
+          "Return false because we found a cycle.",
+          "Close the cycle detection condition.",
+          "Set the neighbor to true in the visited map.",
+          "Append a new Pair of neighbor and current node to the queue.",
+          "Close the loop that processes neighbors.",
+          "Close the while loop that processes the queue.",
+          "Return true if the number of visited nodes equals n.",
+          "Close the validTree function."
+        ]
+      },
+      "detailedExplanation": "This BFS solution validates tree structure using level-order traversal with parent tracking. Like the DFS approach, we first check if edges equal n-1 and build an undirected adjacency list. We initialize a queue with node 0 and its parent -1, immediately marking node 0 as visited. The key difference from DFS is we explore nodes level by level: process all neighbors of the current level before moving deeper. For each node, we iterate through its neighbors, skipping the parent edge. If we encounter an already-visited neighbor (that's not the parent), we've found a cycle and return false. Otherwise, we mark the neighbor as visited and add it with its parent (current node) to the queue. After BFS completes, we verify all n nodes were visited to ensure connectivity. This approach trades the implicit recursion stack of DFS for an explicit queue, but the cycle detection logic remains the same.",
+      "commonMistakes": [
+        "Forgetting to mark nodes as visited when adding to queue (causing duplicate processing)",
+        "Not storing parent information in the queue (incorrect cycle detection in undirected graphs)",
+        "Checking visited status after popping from queue instead of before adding (inefficiency and potential bugs)",
+        "Using shift() in JavaScript without considering O(n) time complexity per operation",
+        "Not checking final visited count against n (missing disconnected components)"
+      ],
+      "whyItWorks": "BFS explores the graph level by level, naturally detecting cycles and verifying connectivity. By tracking the parent of each node in the queue, we correctly handle undirected edges without falsely detecting cycles from parent-child relationships. The visited set prevents revisiting nodes and enables cycle detection: if we reach an already-visited node through a non-parent edge, we've found a cycle. The level-order traversal ensures we explore all reachable nodes, so the final count check confirms full connectivity. The early edge count check (n-1) leverages the mathematical property that trees must have exactly n-1 edges.",
+      "keyInsights": [
+        "BFS provides level-by-level exploration, useful for understanding tree structure",
+        "Parent tracking in queue enables correct cycle detection in undirected graphs",
+        "Marking nodes as visited when enqueuing prevents redundant processing",
+        "Queue-based approach is iterative, avoiding potential stack overflow from deep recursion",
+        "Both DFS and BFS approaches have same time/space complexity but different traversal orders"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+          "explanation": "Edge count: 4 == 5-1, check passes. Build adjacency list: {0:[1,2,3], 1:[0,4], 2:[0], 3:[0], 4:[1]}. Initialize queue with [(0,-1)], visit={0}. Process (0,-1): neighbors [1,2,3]. Add 1 (parent 0), 2 (parent 0), 3 (parent 0) to queue and visit={0,1,2,3}. Process (1,0): neighbor 0 (skip parent), neighbor 4. Add 4 (parent 1) to queue, visit={0,1,2,3,4}. Process (2,0): neighbor 0 (skip parent). Process (3,0): neighbor 0 (skip parent). Process (4,1): neighbor 1 (skip parent). Queue empty, visited size 5 == n, return true."
+        },
+        "example2": {
+          "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+          "explanation": "Edge count: 5 > 5-1, immediately return false. The early edge count check efficiently detects the tree property violation without needing to traverse the graph."
+        }
+      }
+    },
+    {
+      "name": "Disjoint Set Union",
+      "description": "Use Disjoint Set Union (Union-Find) data structure with path compression and union by size to detect cycles and count connected components. Each successful union operation merges two components. If a union fails (nodes already in same set), a cycle exists. A valid tree has exactly one connected component after processing all edges.",
+      "timeComplexity": "O(V + (E * α(V)))",
+      "spaceComplexity": "O(V)",
+      "python": {
+        "code": "class DSU:\n    def __init__(self, n):\n        self.comps = n\n        self.Parent = list(range(n + 1))\n        self.Size = [1] * (n + 1)\n\n    def find(self, node):\n        if self.Parent[node] != node:\n            self.Parent[node] = self.find(self.Parent[node])\n        return self.Parent[node]\n\n    def union(self, u, v):\n        pu = self.find(u)\n        pv = self.find(v)\n        if pu == pv:\n            return False\n\n        self.comps -= 1\n        if self.Size[pu] < self.Size[pv]:\n            pu, pv = pv, pu\n        self.Size[pu] += self.Size[pv]\n        self.Parent[pv] = pu\n        return True\n\n    def components(self):\n        return self.comps\n\nclass Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        if len(edges) > n - 1:\n            return False\n\n        dsu = DSU(n)\n        for u, v in edges:\n            if not dsu.union(u, v):\n                return False\n        return dsu.components() == 1",
+        "semanticLines": [
+          "Define a Disjoint Set Union class constructor that takes n as parameter.",
+          "Initialize the number of components to n.",
+          "Create a parent list where each node from zero to n is its own parent.",
+          "Create a size list where each set has initial size one.",
+          "Define a find method that takes a node as parameter.",
+          "If the parent of the node is not the node itself.",
+          "Set the parent of node to the result of find on its parent for path compression.",
+          "Return the parent of the node.",
+          "Define a union method that takes two nodes u and v as parameters.",
+          "Find the parent of u.",
+          "Find the parent of v.",
+          "If both parents are the same.",
+          "Return False because the nodes are already in the same set indicating a cycle.",
+          "Decrement the component count by one.",
+          "If the size of pu's set is less than the size of pv's set.",
+          "Swap pu and pv to always attach smaller set to larger set.",
+          "Add the size of pv's set to pu's set.",
+          "Set the parent of pv to pu to complete the union.",
+          "Return True to indicate successful union without cycle.",
+          "Define a components method that returns the number of components.",
+          "Return the component count.",
+          "If the number of edges is greater than n minus one.",
+          "Return False because a tree must have exactly n minus one edges.",
+          "Create a new DSU instance with n nodes.",
+          "For each u and v pair in the edges list.",
+          "If the union of u and v returns False.",
+          "Return False because a cycle was detected.",
+          "Return True if the number of components equals one."
+        ]
+      },
+      "javascript": {
+        "code": "class DSU {\n    constructor(n) {\n        this.comps = n;\n        this.Parent = Array.from({ length: n + 1 }, (_, i) => i);\n        this.Size = new Array(n + 1).fill(1);\n    }\n\n    find(node) {\n        if (this.Parent[node] !== node) {\n            this.Parent[node] = this.find(this.Parent[node]);\n        }\n        return this.Parent[node];\n    }\n\n    union(u, v) {\n        let pu = this.find(u);\n        let pv = this.find(v);\n        if (pu === pv) {\n            return false;\n        }\n\n        this.comps--;\n        if (this.Size[pu] < this.Size[pv]) {\n            [pu, pv] = [pv, pu];\n        }\n        this.Size[pu] += this.Size[pv];\n        this.Parent[pv] = pu;\n        return true;\n    }\n\n    components() {\n        return this.comps;\n    }\n}\n\nclass Solution {\n    validTree(n, edges) {\n        if (edges.length > n - 1) {\n            return false;\n        }\n\n        const dsu = new DSU(n);\n        for (const [u, v] of edges) {\n            if (!dsu.union(u, v)) {\n                return false;\n            }\n        }\n        return dsu.components() === 1;\n    }\n}",
+        "semanticLines": [
+          "Define a Disjoint Set Union class constructor that takes n as parameter.",
+          "Initialize the number of components to n.",
+          "Create a parent array where each node from zero to n is its own parent.",
+          "Create a size array where each set has initial size one.",
+          "Close the DSU constructor.",
+          "Define a find method that takes a node as parameter.",
+          "If the parent of the node is not the node itself.",
+          "Set the parent of node to the result of find on its parent for path compression.",
+          "Close the path compression condition.",
+          "Return the parent of the node.",
+          "Close the find method.",
+          "Define a union method that takes two nodes u and v as parameters.",
+          "Find the parent of u.",
+          "Find the parent of v.",
+          "If both parents are the same.",
+          "Return false because the nodes are already in the same set indicating a cycle.",
+          "Close the cycle detection condition.",
+          "Decrement the component count by one.",
+          "If the size of pu's set is less than the size of pv's set.",
+          "Swap pu and pv to always attach smaller set to larger set.",
+          "Close the swap condition.",
+          "Add the size of pv's set to pu's set.",
+          "Set the parent of pv to pu to complete the union.",
+          "Return true to indicate successful union without cycle.",
+          "Close the union method.",
+          "Define a components method that returns the number of components.",
+          "Return the component count.",
+          "Close the components method.",
+          "Close the DSU class definition.",
+          "Define the validTree method that takes n and edges as parameters.",
+          "If the number of edges is greater than n minus one.",
+          "Return false because a tree must have exactly n minus one edges.",
+          "Close the edge count check condition.",
+          "Create a new DSU instance with n nodes.",
+          "For each u and v pair in the edges array.",
+          "If the union of u and v returns false.",
+          "Return false because a cycle was detected.",
+          "Close the cycle detection condition.",
+          "Close the loop that processes edges.",
+          "Return true if the number of components equals one.",
+          "Close the validTree method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "type DSU struct {\n    comps  int\n    Parent []int\n    Size   []int\n}\n\nfunc NewDSU(n int) *DSU {\n    parent := make([]int, n+1)\n    for i := range parent {\n        parent[i] = i\n    }\n    return &DSU{\n        comps:  n,\n        Parent: parent,\n        Size:   make([]int, n+1),\n    }\n}\n\nfunc (d *DSU) find(node int) int {\n    if d.Parent[node] != node {\n        d.Parent[node] = d.find(d.Parent[node])\n    }\n    return d.Parent[node]\n}\n\nfunc (d *DSU) union(u, v int) bool {\n    pu := d.find(u)\n    pv := d.find(v)\n    if pu == pv {\n        return false\n    }\n\n    d.comps--\n    if d.Size[pu] < d.Size[pv] {\n        pu, pv = pv, pu\n    }\n    d.Size[pu] += d.Size[pv]\n    d.Parent[pv] = pu\n    return true\n}\n\nfunc (d *DSU) components() int {\n    return d.comps\n}\n\nfunc validTree(n int, edges [][]int) bool {\n    if len(edges) > n-1 {\n        return false\n    }\n\n    dsu := NewDSU(n)\n    for _, edge := range edges {\n        u, v := edge[0], edge[1]\n        if !dsu.union(u, v) {\n            return false\n        }\n    }\n    return dsu.components() == 1\n}",
+        "semanticLines": [
+          "Define a DSU struct with comps integer, Parent integer slice, and Size integer slice fields.",
+          "Close the DSU struct definition.",
+          "Define a NewDSU constructor function that takes n as parameter and returns a pointer to DSU.",
+          "Create a parent integer slice of length n plus one.",
+          "For each index in the parent slice.",
+          "Set each node to be its own parent.",
+          "Close the loop that initializes parent slice.",
+          "Return a pointer to a new DSU with n components, initialized parent slice, and size slice.",
+          "Close the NewDSU constructor.",
+          "Define a find method on DSU pointer that takes a node and returns an integer.",
+          "If the parent of the node is not the node itself.",
+          "Set the parent of node to the result of find on its parent for path compression.",
+          "Close the path compression condition.",
+          "Return the parent of the node.",
+          "Close the find method.",
+          "Define a union method on DSU pointer that takes two integers u and v and returns a boolean.",
+          "Find the parent of u.",
+          "Find the parent of v.",
+          "If both parents are the same.",
+          "Return false because the nodes are already in the same set indicating a cycle.",
+          "Close the cycle detection condition.",
+          "Decrement the component count by one.",
+          "If the size of pu's set is less than the size of pv's set.",
+          "Swap pu and pv to always attach smaller set to larger set.",
+          "Close the swap condition.",
+          "Add the size of pv's set to pu's set.",
+          "Set the parent of pv to pu to complete the union.",
+          "Return true to indicate successful union without cycle.",
+          "Close the union method.",
+          "Define a components method on DSU pointer that returns an integer.",
+          "Return the component count.",
+          "Close the components method.",
+          "Define the validTree function that takes n and edges as parameters and returns a boolean.",
+          "If the number of edges is greater than n minus one.",
+          "Return false because a tree must have exactly n minus one edges.",
+          "Close the edge count check condition.",
+          "Create a new DSU instance with n nodes.",
+          "For each edge in the edges slice.",
+          "Extract u and v from the edge.",
+          "If the union of u and v returns false.",
+          "Return false because a cycle was detected.",
+          "Close the cycle detection condition.",
+          "Close the loop that processes edges.",
+          "Return true if the number of components equals one.",
+          "Close the validTree function."
+        ]
+      },
+      "detailedExplanation": "The Union-Find (Disjoint Set Union) approach elegantly solves tree validation by tracking connected components and detecting cycles through set membership. We initialize n disjoint sets (each node is its own component). The DSU data structure supports two key operations: find (with path compression) returns the representative of a node's set in near-constant amortized time, and union (with union by size) merges two sets while maintaining balanced tree structure. For each edge, we attempt to union its endpoints. If they're already in the same set (same parent), we've found a cycle and return false. Each successful union decrements the component count. After processing all edges, we verify exactly one component remains (full connectivity). Path compression flattens trees during find operations, and union by size attaches smaller sets to larger ones, both optimizations ensuring near-constant amortized time per operation. This approach is particularly elegant because it naturally handles both cycle detection and connectivity verification through the same union operations.",
+      "commonMistakes": [
+        "Not implementing path compression in find (resulting in O(n) worst case per operation)",
+        "Not implementing union by size/rank (resulting in unbalanced trees and poor performance)",
+        "Forgetting to decrement component count during union (incorrect connectivity check)",
+        "Initializing DSU with n+1 size but only using n nodes (minor inefficiency)",
+        "Not checking edge count before processing (missing optimization opportunity)",
+        "Checking for zero components instead of one component (incorrect logic)"
+      ],
+      "whyItWorks": "Union-Find naturally models the tree formation process. Initially, each node is isolated (n components). Each edge should merge exactly two separate components, reducing the count by one. If an edge connects nodes already in the same component, it creates a cycle (invalid for trees). After processing n-1 edges successfully, we should have exactly 1 component. Path compression and union by size optimizations ensure near-constant amortized time per operation by keeping set trees shallow. The approach is efficient because it avoids explicit graph traversal, instead maintaining set membership information that directly answers the cycle and connectivity questions.",
+      "keyInsights": [
+        "Union-Find provides a different perspective: building the tree incrementally rather than traversing it",
+        "Path compression collapses chains to keep trees flat, enabling O(α(n)) amortized time",
+        "Union by size ensures balanced merging, preventing degenerate tree structures",
+        "Failed union operation directly indicates cycle without need for visited tracking",
+        "Component count naturally tracks connectivity without explicit traversal",
+        "Amortized analysis: α(n) is inverse Ackermann function, grows extremely slowly (< 5 for practical inputs)"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+          "explanation": "Edge count: 4 == 5-1, check passes. Initialize DSU: comps=5, Parent=[0,1,2,3,4], Size=[1,1,1,1,1]. Process edge [0,1]: find(0)=0, find(1)=1, different sets, union succeeds, comps=4, Parent=[0,0,2,3,4], Size=[2,1,2,3,4]. Process edge [0,2]: find(0)=0, find(2)=2, union succeeds, comps=3, Parent=[0,0,0,3,4], Size=[3,1,1,1,1]. Process edge [0,3]: find(0)=0, find(3)=3, union succeeds, comps=2, Parent=[0,0,0,0,4], Size=[4,1,1,1,1]. Process edge [1,4]: find(1)=0 (path compression), find(4)=4, union succeeds, comps=1, Parent=[0,0,0,0,0], Size=[5,1,1,1,1]. Final comps=1, return true."
+        },
+        "example2": {
+          "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+          "explanation": "Edge count: 5 > 5-1, immediately return false without processing edges. The early check efficiently detects the impossibility."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "A valid tree with n nodes must have exactly n-1 edges.",
+    "A tree is a connected graph with no cycles.",
+    "Think about how to detect cycles while ensuring all nodes are connected.",
+    "For DFS/BFS, remember to track parent nodes to handle undirected edges correctly.",
+    "Union-Find can detect cycles by checking if nodes are already in the same set."
+  ],
+  "followUpQuestions": [
+    "How would you modify the solution to count the number of connected components?",
+    "Can you solve this problem if the graph is directed instead of undirected?",
+    "What if you need to find the minimum number of edges to add to make it a valid tree?",
+    "How would you identify which specific edges form cycles if there are any?"
+  ],
+  "relatedProblems": [
+    "200. Number of Islands",
+    "323. Number of Connected Components in an Undirected Graph",
+    "547. Number of Provinces",
+    "684. Redundant Connection",
+    "685. Redundant Connection II"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
