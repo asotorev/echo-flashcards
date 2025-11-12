@@ -3,7 +3,6 @@
   "title": "Graph Valid Tree",
   "category": "Graphs",
   "difficulty": "Medium",
-  "ultimateGuide": "https://neetcode.io/problems/valid-tree",
   "problemStatement": "Given n nodes labeled from 0 to n - 1 and a list of undirected edges, determine if these edges form a valid tree.\n\nA valid tree must satisfy two conditions:\n1. It must be fully connected (all nodes are reachable from any node)\n2. It must have no cycles",
   "examples": [
     {

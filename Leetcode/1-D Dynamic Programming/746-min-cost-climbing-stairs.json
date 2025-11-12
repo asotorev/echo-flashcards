@@ -3,7 +3,6 @@
   "title": "Min Cost Climbing Stairs",
   "category": "1-D Dynamic Programming",
   "difficulty": "Easy",
-  "ultimateGuide": "https://neetcode.io/problems/min-cost-climbing-stairs",
   "problemStatement": "You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.\n\nYou can either start from the step with index 0, or the step with index 1.\n\nReturn the minimum cost to reach the top of the floor (one step past the last index).",
   "examples": [
     {

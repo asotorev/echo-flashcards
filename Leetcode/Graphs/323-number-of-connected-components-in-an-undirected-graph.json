@@ -3,7 +3,6 @@
   "title": "Number of Connected Components in an Undirected Graph",
   "category": "Graphs",
   "difficulty": "Medium",
-  "ultimateGuide": "https://neetcode.io/problems/count-connected-components",
   "problemStatement": "You are given an integer n representing the number of nodes in an undirected graph. The nodes are labeled from 0 to n - 1.\n\nYou are also given a 2D integer array edges, where edges[i] = [a, b] indicates that there is an undirected edge between nodes a and b.\n\nReturn the number of connected components in the graph.",
   "examples": [
     {

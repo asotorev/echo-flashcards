@@ -3,7 +3,6 @@
   "title": "Course Schedule II",
   "category": "Graphs",
   "difficulty": "Medium",
-  "ultimateGuide": "https://neetcode.io/problems/course-schedule-ii",
   "problemStatement": "You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b before course a.\n\nReturn a valid ordering of courses you can take to finish all courses. If there are multiple valid orderings, return any of them. If it's impossible to finish all courses, return an empty array.",
   "examples": [
     {
