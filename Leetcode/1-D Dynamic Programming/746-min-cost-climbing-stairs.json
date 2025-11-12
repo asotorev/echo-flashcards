@@ -1,0 +1,385 @@
+{
+  "id": "746",
+  "title": "Min Cost Climbing Stairs",
+  "category": "1-D Dynamic Programming",
+  "difficulty": "Easy",
+  "ultimateGuide": "https://neetcode.io/problems/min-cost-climbing-stairs",
+  "problemStatement": "You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.\n\nYou can either start from the step with index 0, or the step with index 1.\n\nReturn the minimum cost to reach the top of the floor (one step past the last index).",
+  "examples": [
+    {
+      "input": "cost = [10,15,20]",
+      "output": "15",
+      "explanation": "You will start at index 1.\n- Pay 15 and climb two steps to reach the top.\nThe total cost is 15."
+    },
+    {
+      "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+      "output": "6",
+      "explanation": "You will start at index 0.\n- Pay 1 and climb two steps to reach index 2.\n- Pay 1 and climb two steps to reach index 4.\n- Pay 1 and climb two steps to reach index 6.\n- Pay 1 and climb one step to reach index 7.\n- Pay 1 and climb two steps to reach index 9.\n- Pay 1 and climb one step to reach the top.\nThe total cost is 6."
+    }
+  ],
+  "constraints": [
+    "2 <= cost.length <= 1000",
+    "0 <= cost[i] <= 999"
+  ],
+  "solutions": [
+    {
+      "name": "Recursion",
+      "description": "Use pure recursion to explore all possible paths from each starting position. From each step i, compute the minimum cost to reach the top by trying both climbing 1 step and climbing 2 steps. The base case returns 0 when reaching or passing the top. This brute force approach has exponential time complexity due to overlapping subproblems.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n\n        def dfs(i):\n            if i >= len(cost):\n                return 0\n            return cost[i] + min(dfs(i + 1), dfs(i + 2))\n\n        return min(dfs(0), dfs(1))",
+        "semanticLines": [
+          "Define a depth-first search function that takes current step index i as parameter.",
+          "If current step i is greater than or equal to the length of cost array.",
+          "Return zero because we've reached the top with no additional cost.",
+          "Return the cost at index i plus the minimum of climbing one step and climbing two steps.",
+          "Return the minimum cost between starting from step zero and starting from step one."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    minCostClimbingStairs(cost) {\n\n        const dfs = (i) => {\n            if (i >= cost.length) {\n                return 0;\n            }\n            return cost[i] + Math.min(dfs(i + 1), dfs(i + 2));\n        };\n\n        return Math.min(dfs(0), dfs(1));\n    }\n}",
+        "semanticLines": [
+          "Define a depth-first search arrow function that takes current step index i as parameter.",
+          "If current step i is greater than or equal to the length of cost array.",
+          "Return zero because we've reached the top with no additional cost.",
+          "Close the base case condition.",
+          "Return the cost at index i plus the minimum of climbing one step and climbing two steps.",
+          "Close the depth-first search function definition.",
+          "Return the minimum cost between starting from step zero and starting from step one.",
+          "Close the minCostClimbingStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func minCostClimbingStairs(cost []int) int {\n\n    var dfs func(int) int\n    dfs = func(i int) int {\n        if i >= len(cost) {\n            return 0\n        }\n        one := dfs(i + 1)\n        two := dfs(i + 2)\n        if one < two {\n            return cost[i] + one\n        }\n        return cost[i] + two\n    }\n\n    start0 := dfs(0)\n    start1 := dfs(1)\n    if start0 < start1 {\n        return start0\n    }\n    return start1\n}",
+        "semanticLines": [
+          "Declare a depth-first search function variable that takes an integer and returns an integer.",
+          "Define the depth-first search function that takes current step index i as parameter.",
+          "If current step i is greater than or equal to the length of cost slice.",
+          "Return zero because we've reached the top with no additional cost.",
+          "Close the base case condition.",
+          "Calculate cost of climbing one step.",
+          "Calculate cost of climbing two steps.",
+          "If climbing one step is cheaper than climbing two steps.",
+          "Return the cost at index i plus the one-step cost.",
+          "Close the comparison condition.",
+          "Return the cost at index i plus the two-step cost.",
+          "Close the depth-first search function definition.",
+          "Calculate minimum cost starting from step zero.",
+          "Calculate minimum cost starting from step one.",
+          "If starting from zero is cheaper.",
+          "Return the cost starting from zero.",
+          "Close the comparison condition.",
+          "Return the cost starting from one.",
+          "Close the minCostClimbingStairs function."
+        ]
+      },
+      "detailedExplanation": "This recursive solution directly models the problem by exploring all possible paths. From any step i, we can reach the top by taking 1 step (to i+1) or 2 steps (to i+2). We pay cost[i] to leave step i and recursively compute the minimum cost for the remaining journey. The base case returns 0 when we reach or pass the top (i >= len(cost)), as no more cost is needed. Since we can start from either step 0 or step 1, we compute both and return the minimum. The recursive tree has exponential size because the same subproblems are recomputed many times. For example, computing minCost(5) might involve computing minCost(4) multiple times through different paths. This demonstrates the problem structure but is impractical for arrays larger than ~30 elements.",
+      "commonMistakes": [
+        "Adding cost when i >= len(cost) (should return 0, not add cost)",
+        "Not considering both starting positions (must try both 0 and 1)",
+        "Returning cost[i] instead of cost[i] + min(...) (missing recursive exploration)",
+        "Confusing the goal (reaching beyond last step, not reaching last step)",
+        "Off-by-one errors in base case (should be i >= len(cost), not i > len(cost))"
+      ],
+      "whyItWorks": "The recursion correctly explores all valid paths by considering both move options at each step. The base case correctly identifies when we've reached the goal (past the last step) with no additional cost. Summing cost[i] with the minimum recursive result correctly accumulates the total path cost. Trying both starting positions ensures we find the globally optimal solution. However, the overlapping subproblems lead to exponential recomputation, making this approach inefficient.",
+      "keyInsights": [
+        "Problem has optimal substructure: optimal solution uses optimal solutions to subproblems",
+        "From step i, minimum cost is cost[i] + min(cost to reach from i+1, cost to reach from i+2)",
+        "Can start from either step 0 or step 1, need to try both",
+        "Base case: reaching past the last step costs nothing additional",
+        "Exponential time due to overlapping subproblems being recomputed"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "cost = [10,15,20]",
+          "explanation": "Try starting from 0: dfs(0) = 10 + min(dfs(1), dfs(2)). dfs(1) = 15 + min(dfs(2), dfs(3)). dfs(2) = 20 + min(dfs(3), dfs(4)). dfs(3) = 0, dfs(4) = 0. So dfs(2) = 20 + 0 = 20. dfs(1) = 15 + min(20, 0) = 15 + 0 = 15. dfs(0) = 10 + min(15, 20) = 10 + 15 = 25. Try starting from 1: dfs(1) = 15 (already computed). Return min(25, 15) = 15."
+        },
+        "example2": {
+          "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+          "explanation": "Starting from 0: dfs(0) = 1 + min(dfs(1), dfs(2)). This branches into many recursive calls exploring all paths. Optimal path: 0→2→4→6→7→9→top with cost 1+1+1+1+1+1=6. Starting from 1: Optimal path uses index 1→3→5→7→9→top with higher cost. Return 6."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Top-Down)",
+      "description": "Optimize the recursive solution using memoization. Cache the result of each subproblem in a memo array to avoid recomputation. When we encounter a subproblem we've already solved, return the cached result immediately. This reduces time complexity from exponential to linear.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        memo = [-1] * len(cost)\n\n        def dfs(i):\n            if i >= len(cost):\n                return 0\n            if memo[i] != -1:\n                return memo[i]\n            memo[i] = cost[i] + min(dfs(i + 1), dfs(i + 2))\n            return memo[i]\n\n        return min(dfs(0), dfs(1))",
+        "semanticLines": [
+          "Create a memo list of negative one values with length equal to cost array length.",
+          "Define a depth-first search function that takes current step index i as parameter.",
+          "If current step i is greater than or equal to the length of cost array.",
+          "Return zero because we've reached the top with no additional cost.",
+          "If the memo at index i is not negative one.",
+          "Return the cached value at index i.",
+          "Compute and store the cost at index i plus minimum of climbing one step and climbing two steps in memo at index i.",
+          "Return the memoized value at index i.",
+          "Return the minimum cost between starting from step zero and starting from step one."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    minCostClimbingStairs(cost) {\n        const memo = new Array(cost.length).fill(-1);\n\n        const dfs = (i) => {\n            if (i >= cost.length) {\n                return 0;\n            }\n            if (memo[i] !== -1) {\n                return memo[i];\n            }\n            memo[i] = cost[i] + Math.min(dfs(i + 1), dfs(i + 2));\n            return memo[i];\n        };\n\n        return Math.min(dfs(0), dfs(1));\n    }\n}",
+        "semanticLines": [
+          "Create a memo array of negative one values with length equal to cost array length.",
+          "Define a depth-first search arrow function that takes current step index i as parameter.",
+          "If current step i is greater than or equal to the length of cost array.",
+          "Return zero because we've reached the top with no additional cost.",
+          "Close the base case condition.",
+          "If the memo at index i is not negative one.",
+          "Return the cached value at index i.",
+          "Close the cache hit condition.",
+          "Compute and store the cost at index i plus minimum of climbing one step and climbing two steps in memo at index i.",
+          "Return the memoized value at index i.",
+          "Close the depth-first search function definition.",
+          "Return the minimum cost between starting from step zero and starting from step one.",
+          "Close the minCostClimbingStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func minCostClimbingStairs(cost []int) int {\n    memo := make([]int, len(cost))\n    for i := range memo {\n        memo[i] = -1\n    }\n\n    var dfs func(int) int\n    dfs = func(i int) int {\n        if i >= len(cost) {\n            return 0\n        }\n        if memo[i] != -1 {\n            return memo[i]\n        }\n        one := dfs(i + 1)\n        two := dfs(i + 2)\n        if one < two {\n            memo[i] = cost[i] + one\n        } else {\n            memo[i] = cost[i] + two\n        }\n        return memo[i]\n    }\n\n    start0 := dfs(0)\n    start1 := dfs(1)\n    if start0 < start1 {\n        return start0\n    }\n    return start1\n}",
+        "semanticLines": [
+          "Create a memo integer slice with length equal to cost slice length.",
+          "For each index in the memo slice.",
+          "Initialize memo value to negative one.",
+          "Close the initialization loop.",
+          "Declare a depth-first search function variable that takes an integer and returns an integer.",
+          "Define the depth-first search function that takes current step index i as parameter.",
+          "If current step i is greater than or equal to the length of cost slice.",
+          "Return zero because we've reached the top with no additional cost.",
+          "Close the base case condition.",
+          "If the memo at index i is not negative one.",
+          "Return the cached value at index i.",
+          "Close the cache hit condition.",
+          "Calculate cost of climbing one step.",
+          "Calculate cost of climbing two steps.",
+          "If climbing one step is cheaper than climbing two steps.",
+          "Store the cost at index i plus the one-step cost in memo at index i.",
+          "Close the comparison condition.",
+          "Otherwise store the cost at index i plus the two-step cost in memo.",
+          "Close the else block.",
+          "Return the memoized value at index i.",
+          "Close the depth-first search function definition.",
+          "Calculate minimum cost starting from step zero.",
+          "Calculate minimum cost starting from step one.",
+          "If starting from zero is cheaper.",
+          "Return the cost starting from zero.",
+          "Close the comparison condition.",
+          "Return the cost starting from one.",
+          "Close the minCostClimbingStairs function."
+        ]
+      },
+      "detailedExplanation": "This memoized solution adds a memo array to cache previously computed results. Before making recursive calls, we check if the result for the current step is already cached. If so, we return it immediately without recomputing. Otherwise, we compute it recursively, store it in the memo array, and return it. This eliminates the redundant computation that made the pure recursive solution exponential. Each of the n steps is computed exactly once, giving us O(n) time complexity. The space complexity is O(n) for the memo array plus O(n) for the recursion stack depth. This top-down approach is intuitive because it follows the natural recursive structure of the problem while adding memoization for efficiency.",
+      "commonMistakes": [
+        "Using 0 as the memo sentinel value (conflicts with valid result of 0 cost)",
+        "Not initializing the memo array properly (undefined behavior)",
+        "Forgetting to store the result in memo before returning (no memoization benefit)",
+        "Memoizing at wrong indices or with wrong values (incorrect results)",
+        "Not checking memo before making recursive calls (defeating memoization purpose)",
+        "Memo array too small (should be len(cost), not len(cost)+1)"
+      ],
+      "whyItWorks": "Memoization transforms the exponential recursive tree into a linear computation. Each subproblem (minimum cost from step i to top) is solved exactly once - the first time it's encountered, we compute and cache it; subsequent encounters return the cached value immediately. Since there are n unique subproblems (one for each step), and each takes O(1) time to compute after its dependencies are cached, the total time is O(n). The memo array acts as a lookup table that short-circuits redundant recursive calls.",
+      "keyInsights": [
+        "Memoization eliminates overlapping subproblem recomputation",
+        "Memo array maps step indices to minimum cost to reach top from that step",
+        "Each subproblem solved exactly once, reducing exponential to linear time",
+        "Recursion depth is O(n) in worst case",
+        "Top-down approach: start with problem, break into subproblems as needed",
+        "Must try both starting positions (0 and 1) since they're not memoized paths"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "cost = [10,15,20]",
+          "explanation": "memo=[-1,-1,-1]. dfs(0): memo[0]==-1, compute. Call dfs(1): memo[1]==-1, compute. Call dfs(2): memo[2]==-1, compute. Call dfs(3): return 0. Call dfs(4): return 0. memo[2]=20+min(0,0)=20. Return 20. Back to dfs(1). Call dfs(3): return 0. memo[1]=15+min(20,0)=15. Return 15. Back to dfs(0). Call dfs(2): memo[2]==20 (hit!), return 20. memo[0]=10+min(15,20)=25. Return 25. Now dfs(1): memo[1]==15 (hit!), return 15. Return min(25,15)=15."
+        },
+        "example2": {
+          "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+          "explanation": "Build memo array through recursive calls. Each step computed once. Optimal path from 0: 0→2→4→6→7→9→top = 6. Optimal path from 1 is more expensive. Return 6."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Bottom-Up)",
+      "description": "Use iterative dynamic programming with tabulation. Build up the solution from base cases to the target. Create a DP array where dp[i] represents the minimum cost to reach step i. The goal is dp[n] (reaching beyond the last step). Use the recurrence relation to fill the array from left to right.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n        dp = [0] * (n + 1)\n\n        for i in range(2, n + 1):\n            dp[i] = min(dp[i - 1] + cost[i - 1],\n                        dp[i - 2] + cost[i - 2])\n\n        return dp[n]",
+        "semanticLines": [
+          "Get the length of the cost array.",
+          "Create a dp array of zeros with length n plus one.",
+          "For each position i from two to n inclusive.",
+          "Set dp at index i to the minimum of arriving from previous step or two steps back.",
+          "The cost is dp at i minus one plus cost at i minus one, or dp at i minus two plus cost at i minus two.",
+          "Return dp at index n as the minimum cost to reach the top."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    minCostClimbingStairs(cost) {\n        const n = cost.length;\n        const dp = new Array(n + 1).fill(0);\n\n        for (let i = 2; i <= n; i++) {\n            dp[i] = Math.min(dp[i - 1] + cost[i - 1],\n                             dp[i - 2] + cost[i - 2]);\n        }\n\n        return dp[n];\n    }\n}",
+        "semanticLines": [
+          "Get the length of the cost array.",
+          "Create a dp array of zeros with length n plus one.",
+          "For each position i from two to n inclusive.",
+          "Set dp at index i to the minimum of arriving from previous step or two steps back.",
+          "The cost is dp at i minus one plus cost at i minus one.",
+          "Or dp at i minus two plus cost at i minus two.",
+          "Close the loop.",
+          "Return dp at index n as the minimum cost to reach the top.",
+          "Close the minCostClimbingStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func minCostClimbingStairs(cost []int) int {\n    n := len(cost)\n    dp := make([]int, n+1)\n\n    for i := 2; i <= n; i++ {\n        one := dp[i-1] + cost[i-1]\n        two := dp[i-2] + cost[i-2]\n        if one < two {\n            dp[i] = one\n        } else {\n            dp[i] = two\n        }\n    }\n\n    return dp[n]\n}",
+        "semanticLines": [
+          "Get the length of the cost slice.",
+          "Create a dp integer slice of length n plus one initialized to zeros.",
+          "For each position i from two to n inclusive.",
+          "Calculate cost of arriving from previous step.",
+          "Calculate cost of arriving from two steps back.",
+          "If arriving from previous step is cheaper.",
+          "Set dp at index i to the one-step cost.",
+          "Close the comparison condition.",
+          "Otherwise set dp at index i to the two-step cost.",
+          "Close the else block.",
+          "Close the loop.",
+          "Return dp at index n as the minimum cost to reach the top.",
+          "Close the minCostClimbingStairs function."
+        ]
+      },
+      "detailedExplanation": "This bottom-up DP approach builds the solution iteratively from the base cases upward. We create a DP array of size n+1 where dp[i] represents the minimum cost to reach position i. Position n is the top (one past the last step). The base cases are dp[0] = 0 and dp[1] = 0 because we can start at either step 0 or step 1 for free. For each position i ≥ 2, we can reach it from position i-1 (by paying cost[i-1] and climbing 1 step) or from position i-2 (by paying cost[i-2] and climbing 2 steps). Therefore, dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2]). We fill the array left to right, and finally dp[n] contains the minimum cost to reach the top. This approach avoids recursion overhead and is straightforward to implement.",
+      "commonMistakes": [
+        "Creating dp array of size n instead of n+1 (missing the top position)",
+        "Starting loop at wrong index (should start at 2, not 0 or 1)",
+        "Incorrect recurrence: using cost[i] instead of cost[i-1] and cost[i-2]",
+        "Forgetting that cost[i] is paid when leaving step i, not arriving at it",
+        "Returning dp[n-1] instead of dp[n] (stopping at last step, not past it)",
+        "Not initializing dp[0] and dp[1] to 0 (though zeros already from initialization)"
+      ],
+      "whyItWorks": "The bottom-up approach works by recognizing that to reach position i, we must have come from either position i-1 or position i-2. The cost to reach i is the minimum of: (1) cost to reach i-1 plus the cost of stepping from i-1, or (2) cost to reach i-2 plus the cost of stepping from i-2. The recurrence correctly models the problem because we pay the cost when leaving a step, not when arriving. By computing in order from smallest to largest position, we ensure all dependencies (dp[i-1] and dp[i-2]) are available when computing dp[i]. The base cases dp[0]=0 and dp[1]=0 correctly reflect that we can start at either position for free.",
+      "keyInsights": [
+        "dp[i] represents minimum cost to reach position i (not step i)",
+        "Position n is the goal (one past the last step)",
+        "Base cases: dp[0]=0 and dp[1]=0 (can start at either step for free)",
+        "Recurrence: dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])",
+        "Bottom-up approach: build from base cases to target",
+        "No recursion overhead, just a simple loop"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "cost = [10,15,20]",
+          "explanation": "n=3, dp=[0,0,0,0]. i=2: dp[2]=min(dp[1]+cost[1], dp[0]+cost[0])=min(0+15, 0+10)=10. i=3: dp[3]=min(dp[2]+cost[2], dp[1]+cost[1])=min(10+20, 0+15)=15. Return dp[3]=15."
+        },
+        "example2": {
+          "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+          "explanation": "n=10, dp=[0,0,0,0,0,0,0,0,0,0,0]. Fill iteratively: dp[2]=min(0+100,0+1)=1. dp[3]=min(1+1,0+100)=2. dp[4]=min(2+1,1+1)=2. dp[5]=min(2+1,2+1)=3. dp[6]=min(3+100,2+1)=3. dp[7]=min(3+1,3+100)=4. dp[8]=min(4+1,3+1)=4. dp[9]=min(4+100,4+1)=5. dp[10]=min(5+1,4+100)=6. Return dp[10]=6."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Space Optimized)",
+      "description": "Optimize space by modifying the cost array in-place. Work backwards from the end, updating each step's cost to include the minimum cost to reach the top from that step. This eliminates the need for a separate DP array, achieving O(1) extra space.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "python": {
+        "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        for i in range(len(cost) - 3, -1, -1):\n            cost[i] += min(cost[i + 1], cost[i + 2])\n\n        return min(cost[0], cost[1])",
+        "semanticLines": [
+          "For each index i from len of cost minus three down to zero in reverse order.",
+          "Add to cost at index i the minimum of cost at index i plus one and cost at index i plus two.",
+          "Return the minimum of cost at index zero and cost at index one."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    minCostClimbingStairs(cost) {\n        for (let i = cost.length - 3; i >= 0; i--) {\n            cost[i] += Math.min(cost[i + 1], cost[i + 2]);\n        }\n\n        return Math.min(cost[0], cost[1]);\n    }\n}",
+        "semanticLines": [
+          "For each index i from cost length minus three down to zero in reverse order.",
+          "Add to cost at index i the minimum of cost at index i plus one and cost at index i plus two.",
+          "Close the loop.",
+          "Return the minimum of cost at index zero and cost at index one.",
+          "Close the minCostClimbingStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func minCostClimbingStairs(cost []int) int {\n    for i := len(cost) - 3; i >= 0; i-- {\n        one := cost[i+1]\n        two := cost[i+2]\n        if one < two {\n            cost[i] += one\n        } else {\n            cost[i] += two\n        }\n    }\n\n    if cost[0] < cost[1] {\n        return cost[0]\n    }\n    return cost[1]\n}",
+        "semanticLines": [
+          "For each index i from len of cost minus three down to zero in reverse order.",
+          "Get the cost at index i plus one.",
+          "Get the cost at index i plus two.",
+          "If the cost at i plus one is less than the cost at i plus two.",
+          "Add the one-step cost to cost at index i.",
+          "Close the comparison condition.",
+          "Otherwise add the two-step cost to cost at index i.",
+          "Close the else block.",
+          "Close the loop.",
+          "If cost at index zero is less than cost at index one.",
+          "Return cost at index zero.",
+          "Close the comparison condition.",
+          "Return cost at index one.",
+          "Close the minCostClimbingStairs function."
+        ]
+      },
+      "detailedExplanation": "This space-optimized solution modifies the input array in-place to achieve O(1) extra space. The key insight is that we can work backwards, transforming cost[i] from 'cost to step on i' into 'total minimum cost to reach the top starting from i'. We iterate from len(cost)-3 down to 0, updating each step: cost[i] += min(cost[i+1], cost[i+2]). The last two steps (len(cost)-1 and len(cost)-2) are already correct because from there, we can reach the top in one or two steps with just their own costs. After processing, cost[0] contains the minimum cost starting from step 0, and cost[1] contains the minimum cost starting from step 1. We return the minimum of these two. This approach is elegant and memory-efficient, though it modifies the input array.",
+      "commonMistakes": [
+        "Starting loop at wrong index (should be len(cost)-3, not len(cost)-1)",
+        "Looping in wrong direction (should go backwards, not forwards)",
+        "Forgetting to handle the last two steps (they stay unchanged)",
+        "Off-by-one errors in loop bounds",
+        "Modifying input without considering if that's acceptable in the context",
+        "Not understanding why we start at len(cost)-3 (last two are already correct)"
+      ],
+      "whyItWorks": "Working backwards allows us to build up the solution in-place. From any step i, the minimum cost to reach the top is cost[i] (cost to leave this step) plus the minimum cost to reach the top from either i+1 or i+2 (which we've already computed because we're going backwards). The last two steps don't need updating because from len(cost)-1 we can step directly off (cost already correct), and from len(cost)-2 we can step to len(cost)-1 or off (we'll add the minimum in one more iteration). By transforming the array in-place, we achieve the same result as the bottom-up DP but with O(1) extra space instead of O(n).",
+      "keyInsights": [
+        "Transform cost array in-place: cost[i] becomes total cost to reach top from i",
+        "Work backwards so dependencies (i+1, i+2) are ready when needed",
+        "Last two steps already represent correct costs (no update needed)",
+        "Space optimization: O(n) DP array reduced to O(1) extra space",
+        "Trade-off: modifies input array (may not be acceptable in some contexts)",
+        "Same time complexity as other DP solutions but better space efficiency"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "cost = [10,15,20]",
+          "explanation": "Initial: cost=[10,15,20]. Loop starts at i=0 (len(cost)-3=0). i=0: cost[0]+=min(cost[1],cost[2])=10+min(15,20)=10+15=25. Now cost=[25,15,20]. Return min(25,15)=15."
+        },
+        "example2": {
+          "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+          "explanation": "Initial: cost=[1,100,1,1,1,100,1,1,100,1]. Work backwards: i=7: cost[7]+=min(cost[8],cost[9])=1+min(100,1)=2. i=6: cost[6]+=min(cost[7],cost[8])=1+min(2,100)=3. i=5: cost[5]+=min(cost[6],cost[7])=100+min(3,2)=102. i=4: cost[4]+=min(cost[5],cost[6])=1+min(102,3)=4. i=3: cost[3]+=min(cost[4],cost[5])=1+min(4,102)=5. i=2: cost[2]+=min(cost[3],cost[4])=1+min(5,4)=5. i=1: cost[1]+=min(cost[2],cost[3])=100+min(5,5)=105. i=0: cost[0]+=min(cost[1],cost[2])=1+min(105,5)=6. Return min(6,105)=6."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "Think about what information you need to make a decision at each step.",
+    "The minimum cost to reach the top from step i depends on the costs from steps i+1 and i+2.",
+    "You can start from either step 0 or step 1 - make sure to consider both!",
+    "Can you work backwards from the goal to build up your solution?",
+    "Do you really need to store all intermediate results, or can you optimize space?"
+  ],
+  "followUpQuestions": [
+    "What if you could start from any step in the first half of the array?",
+    "How would you modify the solution to return the actual path taken, not just the cost?",
+    "What if some steps were blocked and couldn't be used?",
+    "Can you solve this if you can climb 1, 2, or 3 steps at a time?",
+    "How would you handle negative costs (rewards for stepping on certain steps)?"
+  ],
+  "relatedProblems": [
+    "70. Climbing Stairs",
+    "198. House Robber",
+    "64. Minimum Path Sum",
+    "120. Triangle",
+    "931. Minimum Falling Path Sum"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
