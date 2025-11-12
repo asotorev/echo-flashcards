@@ -1,0 +1,628 @@
+{
+  "decks": [
+    {
+      "deckName": "Greedy",
+      "cards": [
+        {
+          "problemNumber": 45,
+          "questionId": "45",
+          "title": "Jump Game II",
+          "difficulty": "Medium",
+          "tags": ["Array", "Dynamic Programming", "Greedy"],
+          "likes": 14567,
+          "dislikes": 523,
+          "problemStatement": "You are given a 0-indexed array of integers nums of length n. You are initially positioned at nums[0].\n\nEach element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at nums[i], you can jump to any nums[i + j] where:\n\n0 <= j <= nums[i] and\ni + j < n\n\nReturn the minimum number of jumps to reach nums[n - 1]. The test cases are generated such that you can reach nums[n - 1].",
+          "examples": [
+            {
+              "input": "nums = [2,3,1,1,4]",
+              "output": "2",
+              "explanation": "The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index."
+            },
+            {
+              "input": "nums = [2,3,0,1,4]",
+              "output": "2",
+              "explanation": "Jump 1 step from index 0 to 1, then 3 steps to the last index."
+            }
+          ],
+          "constraints": [
+            "1 <= nums.length <= 10^4",
+            "0 <= nums[i] <= 1000",
+            "It's guaranteed that you can reach nums[n - 1]"
+          ],
+          "solutions": [
+            {
+              "solutionId": "bfs-greedy",
+              "solutionName": "Breadth First Search (Greedy)",
+              "solutionDescription": "Use BFS/greedy approach treating the array as levels. For each level (jump), find the farthest reachable position from all indices in the current level. Move to the next level and increment jump count.",
+              "timeComplexity": "O(n)",
+              "timeComplexityExplanation": "We visit each index at most once while expanding the reachable range.",
+              "spaceComplexity": "O(1)",
+              "spaceComplexityExplanation": "We only use a few variables to track pointers and counts.",
+              "displayOrder": 1,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def jump(self, nums: List[int]) -> int:",
+                    "        res = 0",
+                    "        l = r = 0",
+                    "",
+                    "        while r < len(nums) - 1:",
+                    "            farthest = 0",
+                    "            for i in range(l, r + 1):",
+                    "                farthest = max(farthest, i + nums[i])",
+                    "            l = r + 1",
+                    "            r = farthest",
+                    "            res += 1",
+                    "        return res"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Initialize res to zero.",
+                    "Initialize l and r to zero.",
+                    "",
+                    "While r is less than length of nums minus one.",
+                    "Initialize farthest to zero.",
+                    "Loop from l to r plus one, assign to i.",
+                    "Get maximum of farthest and i plus nums at i, assign to farthest.",
+                    "Set l to r plus one.",
+                    "Set r to farthest.",
+                    "Increment res by one.",
+                    "Return res."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var jump = function(nums) {",
+                    "    let res = 0;",
+                    "    let l = 0, r = 0;",
+                    "",
+                    "    while (r < nums.length - 1) {",
+                    "        let farthest = 0;",
+                    "        for (let i = l; i <= r; i++) {",
+                    "            farthest = Math.max(farthest, i + nums[i]);",
+                    "        }",
+                    "        l = r + 1;",
+                    "        r = farthest;",
+                    "        res++;",
+                    "    }",
+                    "    return res;",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Initialize res to zero.",
+                    "Initialize l and r to zero.",
+                    "",
+                    "While r is less than length of nums minus one.",
+                    "Initialize farthest to zero.",
+                    "Loop from l to r plus one, assign to i.",
+                    "Get maximum of farthest and i plus nums at i, assign to farthest.",
+                    "",
+                    "Set l to r plus one.",
+                    "Set r to farthest.",
+                    "Increment res.",
+                    "",
+                    "Return res.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func jump(nums []int) int {",
+                    "    res := 0",
+                    "    l, r := 0, 0",
+                    "",
+                    "    for r < len(nums) - 1 {",
+                    "        farthest := 0",
+                    "        for i := l; i <= r; i++ {",
+                    "            farthest = max(farthest, i + nums[i])",
+                    "        }",
+                    "        l = r + 1",
+                    "        r = farthest",
+                    "        res++",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Initialize res to zero.",
+                    "Initialize l and r to zero.",
+                    "",
+                    "While r is less than length of nums minus one.",
+                    "Initialize farthest to zero.",
+                    "Loop from l to r plus one, assign to i.",
+                    "Get maximum of farthest and i plus nums at i, assign to farthest.",
+                    "",
+                    "Set l to r plus one.",
+                    "Set r to farthest.",
+                    "Increment res.",
+                    "",
+                    "Return res.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Initialize res=0, l=0, r=0",
+                  "Jump 1: Check indices 0-0, farthest=0+2=2, update l=1, r=2, res=1",
+                  "Jump 2: Check indices 1-2, farthest=max(1+3, 2+1)=4, update l=3, r=4, res=2",
+                  "r=4 >= len-1, exit loop",
+                  "Return res=2"
+                ]
+              }
+            },
+            {
+              "solutionId": "dp-bottom-up",
+              "solutionName": "Dynamic Programming (Bottom-Up)",
+              "solutionDescription": "Build a DP array where dp[i] represents the minimum jumps needed to reach the end from position i. Fill the array from right to left by checking all reachable positions.",
+              "timeComplexity": "O(n^2)",
+              "timeComplexityExplanation": "For each position, we may check up to n positions within its jump range.",
+              "spaceComplexity": "O(n)",
+              "spaceComplexityExplanation": "We use a DP array of size n to store minimum jump counts.",
+              "displayOrder": 2,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def jump(self, nums: List[int]) -> int:",
+                    "        n = len(nums)",
+                    "        dp = [1000000] * n",
+                    "        dp[-1] = 0",
+                    "",
+                    "        for i in range(n - 2, -1, -1):",
+                    "            end = min(n, i + nums[i] + 1)",
+                    "            for j in range(i + 1, end):",
+                    "                dp[i] = min(dp[i], 1 + dp[j])",
+                    "        return dp[0]"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Get length of nums, assign to n.",
+                    "Create array of 1000000 with n elements, assign to dp.",
+                    "Set last element of dp to zero.",
+                    "",
+                    "Loop from n minus two down to zero, assign to i.",
+                    "Get minimum of n and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "Get minimum of dp at i and one plus dp at j, assign to dp at i.",
+                    "Return dp at zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var jump = function(nums) {",
+                    "    const n = nums.length;",
+                    "    const dp = new Array(n).fill(1000000);",
+                    "    dp[n - 1] = 0;",
+                    "",
+                    "    for (let i = n - 2; i >= 0; i--) {",
+                    "        const end = Math.min(n, i + nums[i] + 1);",
+                    "        for (let j = i + 1; j < end; j++) {",
+                    "            dp[i] = Math.min(dp[i], 1 + dp[j]);",
+                    "        }",
+                    "    }",
+                    "    return dp[0];",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Get length of nums, assign to n.",
+                    "Create array of 1000000 with n elements, assign to dp.",
+                    "Set element at n minus one of dp to zero.",
+                    "",
+                    "Loop from n minus two down to zero, assign to i.",
+                    "Get minimum of n and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "Get minimum of dp at i and one plus dp at j, assign to dp at i.",
+                    "",
+                    "",
+                    "Return dp at zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func jump(nums []int) int {",
+                    "    n := len(nums)",
+                    "    dp := make([]int, n)",
+                    "    for i := range dp {",
+                    "        dp[i] = 1000000",
+                    "    }",
+                    "    dp[n - 1] = 0",
+                    "",
+                    "    for i := n - 2; i >= 0; i-- {",
+                    "        end := min(n, i + nums[i] + 1)",
+                    "        for j := i + 1; j < end; j++ {",
+                    "            dp[i] = min(dp[i], 1 + dp[j])",
+                    "        }",
+                    "    }",
+                    "    return dp[0]",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Get length of nums, assign to n.",
+                    "Create int slice with n elements, assign to dp.",
+                    "Loop through dp indices, assign to i.",
+                    "Set dp at i to 1000000.",
+                    "",
+                    "Set element at n minus one of dp to zero.",
+                    "",
+                    "Loop from n minus two down to zero, assign to i.",
+                    "Get minimum of n and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "Get minimum of dp at i and one plus dp at j, assign to dp at i.",
+                    "",
+                    "",
+                    "Return dp at zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Initialize dp = [1000000, 1000000, 1000000, 1000000, 0]",
+                  "At i=3: Check positions 4-4, dp[3]=min(inf, 1+0)=1",
+                  "At i=2: Check positions 3-3, dp[2]=min(inf, 1+1)=2",
+                  "At i=1: Check positions 2-4, dp[1]=min(inf, 1+2, 1+1, 1+0)=1",
+                  "At i=0: Check positions 1-2, dp[0]=min(inf, 1+1, 1+2)=2",
+                  "Return dp[0]=2"
+                ]
+              }
+            },
+            {
+              "solutionId": "dp-top-down",
+              "solutionName": "Dynamic Programming (Top-Down)",
+              "solutionDescription": "Use memoized recursion to compute the minimum number of jumps from each position. For each position, try all possible jumps and cache the minimum result.",
+              "timeComplexity": "O(n^2)",
+              "timeComplexityExplanation": "Each position is computed once, and from each position we may check up to n positions.",
+              "spaceComplexity": "O(n)",
+              "spaceComplexityExplanation": "We use a memoization dictionary and recursion stack of size n.",
+              "displayOrder": 3,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def jump(self, nums: List[int]) -> int:",
+                    "        memo = {}",
+                    "",
+                    "        def dfs(i):",
+                    "            if i in memo:",
+                    "                return memo[i]",
+                    "            if i == len(nums) - 1:",
+                    "                return 0",
+                    "            if nums[i] == 0:",
+                    "                return 1000000",
+                    "",
+                    "            res = 1000000",
+                    "            end = min(len(nums), i + nums[i] + 1)",
+                    "            for j in range(i + 1, end):",
+                    "                res = min(res, 1 + dfs(j))",
+                    "            memo[i] = res",
+                    "            return res",
+                    "",
+                    "        return dfs(0)"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Create empty dictionary, assign to memo.",
+                    "",
+                    "Define function dfs that accepts i.",
+                    "If i is in memo.",
+                    "Return memo at i.",
+                    "If i equals length of nums minus one.",
+                    "Return zero.",
+                    "If nums at i equals zero.",
+                    "Return 1000000.",
+                    "",
+                    "Initialize res to 1000000.",
+                    "Get minimum of length of nums and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "Get minimum of res and one plus dfs of j, assign to res.",
+                    "Set memo at i to res.",
+                    "Return res.",
+                    "",
+                    "Return dfs of zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var jump = function(nums) {",
+                    "    const memo = new Map();",
+                    "",
+                    "    const dfs = (i) => {",
+                    "        if (memo.has(i)) {",
+                    "            return memo.get(i);",
+                    "        }",
+                    "        if (i === nums.length - 1) {",
+                    "            return 0;",
+                    "        }",
+                    "        if (nums[i] === 0) {",
+                    "            return 1000000;",
+                    "        }",
+                    "",
+                    "        let res = 1000000;",
+                    "        const end = Math.min(nums.length, i + nums[i] + 1);",
+                    "        for (let j = i + 1; j < end; j++) {",
+                    "            res = Math.min(res, 1 + dfs(j));",
+                    "        }",
+                    "        memo.set(i, res);",
+                    "        return res;",
+                    "    };",
+                    "",
+                    "    return dfs(0);",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Create empty Map, assign to memo.",
+                    "",
+                    "Define function dfs that accepts i.",
+                    "If memo has i.",
+                    "Return memo get i.",
+                    "",
+                    "If i equals length of nums minus one.",
+                    "Return zero.",
+                    "",
+                    "If nums at i equals zero.",
+                    "Return 1000000.",
+                    "",
+                    "",
+                    "Initialize res to 1000000.",
+                    "Get minimum of length of nums and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "Get minimum of res and one plus dfs of j, assign to res.",
+                    "",
+                    "Set memo at i to res.",
+                    "Return res.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func jump(nums []int) int {",
+                    "    memo := make(map[int]int)",
+                    "",
+                    "    var dfs func(int) int",
+                    "    dfs = func(i int) int {",
+                    "        if val, ok := memo[i]; ok {",
+                    "            return val",
+                    "        }",
+                    "        if i == len(nums) - 1 {",
+                    "            return 0",
+                    "        }",
+                    "        if nums[i] == 0 {",
+                    "            return 1000000",
+                    "        }",
+                    "",
+                    "        res := 1000000",
+                    "        end := min(len(nums), i + nums[i] + 1)",
+                    "        for j := i + 1; j < end; j++ {",
+                    "            res = min(res, 1 + dfs(j))",
+                    "        }",
+                    "        memo[i] = res",
+                    "        return res",
+                    "    }",
+                    "",
+                    "    return dfs(0)",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Create empty map from int to int, assign to memo.",
+                    "",
+                    "Declare dfs as function variable.",
+                    "Define dfs as function that accepts i.",
+                    "If val and ok from memo at i.",
+                    "Return val.",
+                    "",
+                    "If i equals length of nums minus one.",
+                    "Return zero.",
+                    "",
+                    "If nums at i equals zero.",
+                    "Return 1000000.",
+                    "",
+                    "",
+                    "Initialize res to 1000000.",
+                    "Get minimum of length of nums and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "Get minimum of res and one plus dfs of j, assign to res.",
+                    "",
+                    "Set memo at i to res.",
+                    "Return res.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Call dfs(0): nums[0]=2, try positions 1-2",
+                  "Call dfs(1): nums[1]=3, try positions 2-4",
+                  "Call dfs(2): nums[2]=1, try position 3",
+                  "Call dfs(3): nums[3]=1, try position 4",
+                  "Call dfs(4): reached last index, return 0",
+                  "dfs(3) returns min(inf, 1+0)=1, memoize",
+                  "dfs(2) returns min(inf, 1+1)=2, memoize",
+                  "dfs(1) returns min(inf, 1+2, 1+1, 1+0)=1, memoize",
+                  "dfs(0) returns min(inf, 1+1, 1+2)=2"
+                ]
+              }
+            },
+            {
+              "solutionId": "recursion",
+              "solutionName": "Recursion",
+              "solutionDescription": "Use pure recursion to explore all possible jump sequences. From each position, try all valid jumps and recursively find the minimum number of jumps needed.",
+              "timeComplexity": "O(n!)",
+              "timeComplexityExplanation": "In the worst case, we explore all possible jump combinations without memoization, leading to factorial time complexity.",
+              "spaceComplexity": "O(n)",
+              "spaceComplexityExplanation": "The recursion stack can go as deep as n levels.",
+              "displayOrder": 4,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def jump(self, nums: List[int]) -> int:",
+                    "        def dfs(i):",
+                    "            if i == len(nums) - 1:",
+                    "                return 0",
+                    "            if nums[i] == 0:",
+                    "                return float('inf')",
+                    "",
+                    "            end = min(len(nums) - 1, i + nums[i])",
+                    "            res = float('inf')",
+                    "            for j in range(i + 1, end + 1):",
+                    "                res = min(res, 1 + dfs(j))",
+                    "            return res",
+                    "",
+                    "        return dfs(0)"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Define function dfs that accepts i.",
+                    "If i equals length of nums minus one.",
+                    "Return zero.",
+                    "If nums at i equals zero.",
+                    "Return infinity.",
+                    "",
+                    "Get minimum of length of nums minus one and i plus nums at i, assign to end.",
+                    "Initialize res to infinity.",
+                    "Loop from i plus one to end plus one, assign to j.",
+                    "Get minimum of res and one plus dfs of j, assign to res.",
+                    "Return res.",
+                    "",
+                    "Return dfs of zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var jump = function(nums) {",
+                    "    const dfs = (i) => {",
+                    "        if (i === nums.length - 1) {",
+                    "            return 0;",
+                    "        }",
+                    "        if (nums[i] === 0) {",
+                    "            return Infinity;",
+                    "        }",
+                    "",
+                    "        const end = Math.min(nums.length - 1, i + nums[i]);",
+                    "        let res = Infinity;",
+                    "        for (let j = i + 1; j <= end; j++) {",
+                    "            res = Math.min(res, 1 + dfs(j));",
+                    "        }",
+                    "        return res;",
+                    "    };",
+                    "",
+                    "    return dfs(0);",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Define function dfs that accepts i.",
+                    "If i equals length of nums minus one.",
+                    "Return zero.",
+                    "",
+                    "If nums at i equals zero.",
+                    "Return Infinity.",
+                    "",
+                    "",
+                    "Get minimum of length of nums minus one and i plus nums at i, assign to end.",
+                    "Initialize res to Infinity.",
+                    "Loop from i plus one to end plus one, assign to j.",
+                    "Get minimum of res and one plus dfs of j, assign to res.",
+                    "",
+                    "Return res.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func jump(nums []int) int {",
+                    "    var dfs func(int) int",
+                    "    dfs = func(i int) int {",
+                    "        if i == len(nums) - 1 {",
+                    "            return 0",
+                    "        }",
+                    "        if nums[i] == 0 {",
+                    "            return 1000000",
+                    "        }",
+                    "",
+                    "        end := min(len(nums) - 1, i + nums[i])",
+                    "        res := 1000000",
+                    "        for j := i + 1; j <= end; j++ {",
+                    "            res = min(res, 1 + dfs(j))",
+                    "        }",
+                    "        return res",
+                    "    }",
+                    "",
+                    "    return dfs(0)",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function jump that accepts nums.",
+                    "Declare dfs as function variable.",
+                    "Define dfs as function that accepts i.",
+                    "If i equals length of nums minus one.",
+                    "Return zero.",
+                    "",
+                    "If nums at i equals zero.",
+                    "Return 1000000.",
+                    "",
+                    "",
+                    "Get minimum of length of nums minus one and i plus nums at i, assign to end.",
+                    "Initialize res to 1000000.",
+                    "Loop from i plus one to end plus one, assign to j.",
+                    "Get minimum of res and one plus dfs of j, assign to res.",
+                    "",
+                    "Return res.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Call dfs(0): nums[0]=2, try positions 1-2",
+                  "Call dfs(1): nums[1]=3, try positions 2-4",
+                  "Recursively explore all paths from each position",
+                  "For each path reaching the end, track jump count",
+                  "Return minimum jump count found: 2",
+                  "Note: Without memoization, this explores many duplicate subproblems"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
