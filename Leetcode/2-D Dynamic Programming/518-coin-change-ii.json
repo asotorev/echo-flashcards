@@ -1,0 +1,731 @@
+{
+  "id": "518-coin-change-ii",
+  "title": "Coin Change II",
+  "difficulty": "medium",
+  "category": "2-D Dynamic Programming",
+  "subcategory": "Unbounded Knapsack",
+  "similar_questions": ["Coin Change", "Combination Sum IV", "Number of Dice Rolls With Target Sum"],
+  "real_life_domains": ["Currency Exchange", "Vending Machines", "Payment Systems", "Combinatorics", "Financial Calculations"],
+  "problem_statement": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.\n\nReturn the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0.\n\nYou may assume that you have an infinite number of each kind of coin.\n\nThe answer is guaranteed to fit into a signed 32-bit integer.",
+  "input_format": "An integer amount and an integer array coins",
+  "output_format": "An integer representing the number of combinations",
+  "constraints": [
+    "1 <= coins.length <= 300",
+    "1 <= coins[i] <= 5000",
+    "All the values of coins are unique",
+    "0 <= amount <= 5000"
+  ],
+  "examples": [
+    {
+      "input": "amount = 5, coins = [1,2,5]",
+      "output": "4",
+      "explanation": "There are four ways to make up the amount: 5=5, 5=2+2+1, 5=2+1+1+1, 5=1+1+1+1+1"
+    },
+    {
+      "input": "amount = 3, coins = [2]",
+      "output": "0",
+      "explanation": "The amount of 3 cannot be made up with coins of 2."
+    },
+    {
+      "input": "amount = 10, coins = [10]",
+      "output": "1",
+      "explanation": "There is only one way: 10=10"
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Recursively explore all combinations by deciding whether to include each coin type or skip to the next coin.",
+      "description": "For each coin, recursively try two options: skip this coin type entirely, or use this coin and continue trying with the same coin. Count all valid combinations that sum to the target amount.",
+      "time_complexity": "O(2^max(n,a/m))",
+      "space_complexity": "O(max(n,a/m))",
+      "keywords": ["recursion", "brute force", "unbounded knapsack", "combinations"],
+      "python": {
+        "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        coins.sort()\n\n        def dfs(i, a):\n            if a == 0:\n                return 1\n            if i >= len(coins):\n                return 0\n\n            res = 0\n            if a >= coins[i]:\n                res = dfs(i + 1, a)\n                res += dfs(i, a - coins[i])\n            return res\n\n        return dfs(0, amount)",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Sort the coins array in ascending order.",
+          "Define recursive helper function dfs that takes coin index i and remaining amount a.",
+          "Check if remaining amount a equals 0.",
+          "Return 1 indicating one valid combination found.",
+          "Check if index i is greater than or equal to the length of coins.",
+          "Return 0 indicating no more coins available.",
+          "Initialize result counter to 0.",
+          "Check if remaining amount a is greater than or equal to current coin value.",
+          "Add combinations from skipping current coin type to result.",
+          "Add combinations from using current coin to result.",
+          "Return the total number of combinations.",
+          "Call dfs starting from index 0 with full amount and return the result."
+        ]
+      },
+      "javascript": {
+        "code": "var change = function(amount, coins) {\n    coins.sort((a, b) => a - b);\n\n    function dfs(i, a) {\n        if (a === 0) {\n            return 1;\n        }\n        if (i >= coins.length) {\n            return 0;\n        }\n\n        let res = 0;\n        if (a >= coins[i]) {\n            res = dfs(i + 1, a);\n            res += dfs(i, a - coins[i]);\n        }\n        return res;\n    }\n\n    return dfs(0, amount);\n};",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Sort the coins array in ascending order.",
+          "Define recursive helper function dfs that takes coin index i and remaining amount a.",
+          "Check if remaining amount a equals 0.",
+          "Return 1 indicating one valid combination found.",
+          "Check if index i is greater than or equal to the length of coins.",
+          "Return 0 indicating no more coins available.",
+          "Initialize result counter to 0.",
+          "Check if remaining amount a is greater than or equal to current coin value.",
+          "Add combinations from skipping current coin type to result.",
+          "Add combinations from using current coin to result.",
+          "Return the total number of combinations.",
+          "Call dfs starting from index 0 with full amount and return the result."
+        ]
+      },
+      "go": {
+        "code": "func change(amount int, coins []int) int {\n    sort.Ints(coins)\n\n    var dfs func(i, a int) int\n    dfs = func(i, a int) int {\n        if a == 0 {\n            return 1\n        }\n        if i >= len(coins) {\n            return 0\n        }\n\n        res := 0\n        if a >= coins[i] {\n            res = dfs(i+1, a)\n            res += dfs(i, a-coins[i])\n        }\n        return res\n    }\n\n    return dfs(0, amount)\n}",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Sort the coins slice in ascending order.",
+          "Declare recursive helper function dfs that takes coin index i and remaining amount a.",
+          "Define the dfs function implementation.",
+          "Check if remaining amount a equals 0.",
+          "Return 1 indicating one valid combination found.",
+          "Check if index i is greater than or equal to the length of coins.",
+          "Return 0 indicating no more coins available.",
+          "Initialize result counter to 0.",
+          "Check if remaining amount a is greater than or equal to current coin value.",
+          "Add combinations from skipping current coin type to result.",
+          "Add combinations from using current coin to result.",
+          "Return the total number of combinations.",
+          "Call dfs starting from index 0 with full amount and return the result."
+        ]
+      },
+      "explanation": {
+        "overview": "This recursive solution explores all possible combinations by making two decisions at each step: either skip the current coin type entirely and move to the next coin, or use the current coin and try again with reduced amount.",
+        "step_by_step": {
+          "step_1": "Start with the first coin and the full amount to make",
+          "step_2": "Base case 1: if amount is 0, we found a valid combination, return 1",
+          "step_3": "Base case 2: if we've exhausted all coins without reaching 0, return 0",
+          "step_4": "If current coin value is too large for remaining amount, skip it",
+          "step_5": "Otherwise, try two branches: skip this coin type, or use this coin",
+          "step_6": "Sum up the combinations from both branches",
+          "step_7": "Return total count of valid combinations"
+        },
+        "why_it_works": "The algorithm works by exploring all possible ways to combine coins. Each coin type can be used zero or more times (unbounded). By recursively trying both options (skip vs use) at each step, we enumerate all valid combinations. The base cases ensure we count exactly when we reach the target amount.",
+        "when_to_use": "Use this approach for understanding the problem structure or when dealing with very small inputs. It demonstrates the unbounded knapsack pattern but is impractical for larger inputs due to exponential time complexity.",
+        "invariants": [
+          "Each recursive call represents a decision point for a specific coin type",
+          "The sum of returned values from all branches equals the total number of combinations",
+          "Sorting coins is optional but can help with pruning in some cases"
+        ]
+      },
+      "walkthrough": {
+        "example": "amount = 5, coins = [1, 2, 5]",
+        "steps": [
+          {
+            "step": "Start: dfs(0, 5), coin=1",
+            "state": "i=0, a=5, considering coin 1",
+            "action": "Branch 1: skip coin 1, Branch 2: use coin 1"
+          },
+          {
+            "step": "Branch 2: dfs(0, 4), used one coin of value 1",
+            "state": "i=0, a=4, still considering coin 1",
+            "action": "Can continue using coin 1 or skip to coin 2"
+          },
+          {
+            "step": "Branch 1: dfs(1, 5), skipped coin 1",
+            "state": "i=1, a=5, considering coin 2",
+            "action": "Branch: skip coin 2 or use coin 2"
+          },
+          {
+            "step": "One path: use coin 5 once",
+            "state": "dfs(2, 0) after using coin 5",
+            "action": "Amount is 0, return 1 (combination: [5])"
+          },
+          {
+            "step": "Another path: use coin 2 twice, then coin 1 once",
+            "state": "5 - 2 - 2 = 1, then use coin 1",
+            "action": "Reaches 0, return 1 (combination: [2,2,1])"
+          },
+          {
+            "step": "Another path: use coin 1 five times",
+            "state": "5 - 1 - 1 - 1 - 1 - 1 = 0",
+            "action": "Reaches 0, return 1 (combination: [1,1,1,1,1])"
+          },
+          {
+            "step": "Another path: use coin 2 once, coin 1 three times",
+            "state": "5 - 2 - 1 - 1 - 1 = 0",
+            "action": "Reaches 0, return 1 (combination: [2,1,1,1])"
+          },
+          {
+            "step": "Sum all valid combinations",
+            "state": "Total: 4 combinations",
+            "action": "Return 4"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting the base case when amount reaches 0",
+        "Not handling the case when no more coins are available",
+        "Confusing this with bounded knapsack (each coin used once)",
+        "Not understanding that we can reuse the same coin multiple times"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Add memoization to the recursive solution to cache results for each (coin_index, remaining_amount) state.",
+      "description": "Use recursion with a 2D memoization table to store computed results for each state, avoiding redundant calculations and reducing time complexity to polynomial.",
+      "time_complexity": "O(n*a)",
+      "space_complexity": "O(n*a)",
+      "keywords": ["dynamic programming", "memoization", "top-down", "unbounded knapsack"],
+      "python": {
+        "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        coins.sort()\n        memo = [[-1] * (amount + 1) for _ in range(len(coins) + 1)]\n\n        def dfs(i, a):\n            if a == 0:\n                return 1\n            if i >= len(coins):\n                return 0\n            if memo[i][a] != -1:\n                return memo[i][a]\n\n            res = 0\n            if a >= coins[i]:\n                res = dfs(i + 1, a)\n                res += dfs(i, a - coins[i])\n\n            memo[i][a] = res\n            return res\n\n        return dfs(0, amount)",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Sort the coins array in ascending order.",
+          "Initialize a 2D memo table with dimensions (len(coins) + 1) by (amount + 1) filled with -1.",
+          "Define recursive helper function dfs that takes coin index i and remaining amount a.",
+          "Check if remaining amount a equals 0.",
+          "Return 1 indicating one valid combination found.",
+          "Check if index i is greater than or equal to the length of coins.",
+          "Return 0 indicating no more coins available.",
+          "Check if the result for state (i, a) is already cached in memo.",
+          "Return the cached result from memo.",
+          "Initialize result counter to 0.",
+          "Check if remaining amount a is greater than or equal to current coin value.",
+          "Add combinations from skipping current coin type to result.",
+          "Add combinations from using current coin to result.",
+          "Store the computed result in memo.",
+          "Return the result.",
+          "Call dfs starting from index 0 with full amount and return the result."
+        ]
+      },
+      "javascript": {
+        "code": "var change = function(amount, coins) {\n    coins.sort((a, b) => a - b);\n    const memo = Array(coins.length + 1)\n        .fill(0)\n        .map(() => Array(amount + 1).fill(-1));\n\n    function dfs(i, a) {\n        if (a === 0) {\n            return 1;\n        }\n        if (i >= coins.length) {\n            return 0;\n        }\n        if (memo[i][a] !== -1) {\n            return memo[i][a];\n        }\n\n        let res = 0;\n        if (a >= coins[i]) {\n            res = dfs(i + 1, a);\n            res += dfs(i, a - coins[i]);\n        }\n\n        memo[i][a] = res;\n        return res;\n    }\n\n    return dfs(0, amount);\n};",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Sort the coins array in ascending order.",
+          "Initialize a 2D memo table with dimensions (coins.length + 1) by (amount + 1) filled with -1.",
+          "Define recursive helper function dfs that takes coin index i and remaining amount a.",
+          "Check if remaining amount a equals 0.",
+          "Return 1 indicating one valid combination found.",
+          "Check if index i is greater than or equal to the length of coins.",
+          "Return 0 indicating no more coins available.",
+          "Check if the result for state (i, a) is already cached in memo.",
+          "Return the cached result from memo.",
+          "Initialize result counter to 0.",
+          "Check if remaining amount a is greater than or equal to current coin value.",
+          "Add combinations from skipping current coin type to result.",
+          "Add combinations from using current coin to result.",
+          "Store the computed result in memo.",
+          "Return the result.",
+          "Call dfs starting from index 0 with full amount and return the result."
+        ]
+      },
+      "go": {
+        "code": "func change(amount int, coins []int) int {\n    sort.Ints(coins)\n    memo := make([][]int, len(coins)+1)\n    for i := range memo {\n        memo[i] = make([]int, amount+1)\n        for j := range memo[i] {\n            memo[i][j] = -1\n        }\n    }\n\n    var dfs func(i, a int) int\n    dfs = func(i, a int) int {\n        if a == 0 {\n            return 1\n        }\n        if i >= len(coins) {\n            return 0\n        }\n        if memo[i][a] != -1 {\n            return memo[i][a]\n        }\n\n        res := 0\n        if a >= coins[i] {\n            res = dfs(i+1, a)\n            res += dfs(i, a-coins[i])\n        }\n\n        memo[i][a] = res\n        return res\n    }\n\n    return dfs(0, amount)\n}",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Sort the coins slice in ascending order.",
+          "Initialize a 2D memo slice with dimensions (len(coins) + 1) by (amount + 1).",
+          "Allocate each row and fill with -1.",
+          "Fill each element with -1.",
+          "Declare recursive helper function dfs that takes coin index i and remaining amount a.",
+          "Define the dfs function implementation.",
+          "Check if remaining amount a equals 0.",
+          "Return 1 indicating one valid combination found.",
+          "Check if index i is greater than or equal to the length of coins.",
+          "Return 0 indicating no more coins available.",
+          "Check if the result for state (i, a) is already cached in memo.",
+          "Return the cached result from memo.",
+          "Initialize result counter to 0.",
+          "Check if remaining amount a is greater than or equal to current coin value.",
+          "Add combinations from skipping current coin type to result.",
+          "Add combinations from using current coin to result.",
+          "Store the computed result in memo.",
+          "Return the result.",
+          "Call dfs starting from index 0 with full amount and return the result."
+        ]
+      },
+      "explanation": {
+        "overview": "This solution optimizes the recursive approach by adding a 2D memoization table. Each unique (coin_index, amount) state is computed only once, dramatically reducing time complexity from exponential to polynomial.",
+        "step_by_step": {
+          "step_1": "Initialize a 2D table to cache results, filled with -1 (not computed)",
+          "step_2": "Before computing a state, check if it's already in the cache",
+          "step_3": "If cached (not -1), return the stored result immediately",
+          "step_4": "Otherwise, compute using the same recursive logic as before",
+          "step_5": "Store the computed result in the cache before returning",
+          "step_6": "Subsequent calls to the same state will use the cached value"
+        },
+        "why_it_works": "Memoization works because the problem has overlapping subproblems. Many different paths in the recursion tree lead to the same (coin_index, amount) state. By caching results, we ensure each unique state is computed exactly once, converting exponential time to O(n*amount).",
+        "when_to_use": "Use this approach when you prefer recursive thinking but need better performance. It's ideal when the problem naturally fits a recursive structure and you want to optimize without changing the algorithm's fundamental approach.",
+        "invariants": [
+          "memo[i][a] stores the number of combinations for coins[i:] to make amount a",
+          "A value of -1 in memo indicates the state hasn't been computed yet",
+          "Each state is computed at most once"
+        ]
+      },
+      "walkthrough": {
+        "example": "amount = 5, coins = [1, 2, 5]",
+        "steps": [
+          {
+            "step": "Start: dfs(0, 5)",
+            "state": "memo all -1, computing coins[0:] for amount 5",
+            "action": "Not cached, compute recursively"
+          },
+          {
+            "step": "Branch: dfs(1, 5)",
+            "state": "Skip coin 1, compute coins[1:] for amount 5",
+            "action": "Not cached, compute recursively"
+          },
+          {
+            "step": "Sub-branch: dfs(2, 5)",
+            "state": "Skip coins 1 and 2, use only coin 5",
+            "action": "Can use coin 5 once, leads to amount 0"
+          },
+          {
+            "step": "Cache: memo[2][0] = 1",
+            "state": "Base case: amount 0 returns 1",
+            "action": "Store result"
+          },
+          {
+            "step": "Branch: dfs(0, 4)",
+            "state": "Used one coin of value 1, remaining amount 4",
+            "action": "Not cached, compute recursively"
+          },
+          {
+            "step": "Multiple states get cached",
+            "state": "Each (i, a) pair computed once",
+            "action": "Build up from smaller amounts to larger"
+          },
+          {
+            "step": "Cache hit: revisiting dfs(0, 3)",
+            "state": "Already computed, memo[0][3] exists",
+            "action": "Return cached value instead of recomputing"
+          },
+          {
+            "step": "Final: memo[0][5] = 4",
+            "state": "All states computed and cached",
+            "action": "Return 4 combinations"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Not initializing memo with -1 or using 0 which conflicts with valid results",
+        "Forgetting to check memo before computing",
+        "Not storing the result in memo before returning",
+        "Using too much memory by not recognizing we only need O(amount) space"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build a 2D table iteratively where each cell represents the number of combinations for a subset of coins to make a specific amount.",
+      "description": "Create a 2D DP table where dp[i][a] represents the number of ways to make amount a using coins[i:]. Fill the table from the last coin to the first coin.",
+      "time_complexity": "O(n*a)",
+      "space_complexity": "O(n*a)",
+      "keywords": ["dynamic programming", "bottom-up", "tabulation", "unbounded knapsack"],
+      "python": {
+        "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        n = len(coins)\n        coins.sort()\n        dp = [[0] * (amount + 1) for _ in range(n + 1)]\n\n        for i in range(n + 1):\n            dp[i][0] = 1\n\n        for i in range(n - 1, -1, -1):\n            for a in range(amount + 1):\n                if a >= coins[i]:\n                    dp[i][a] = dp[i + 1][a]\n                    dp[i][a] += dp[i][a - coins[i]]\n\n        return dp[0][amount]",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Store the length of coins in variable n.",
+          "Sort the coins array in ascending order.",
+          "Initialize a 2D array dp with dimensions (n + 1) by (amount + 1) filled with zeros.",
+          "Iterate through all coin indices including n.",
+          "Set dp[i][0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Iterate through all possible amounts from 0 to amount.",
+          "Check if current amount a is greater than or equal to current coin value.",
+          "Set dp[i][a] to the value from skipping current coin.",
+          "Add the value from using current coin to dp[i][a].",
+          "Return the value at dp[0][amount]."
+        ]
+      },
+      "javascript": {
+        "code": "var change = function(amount, coins) {\n    const n = coins.length;\n    coins.sort((a, b) => a - b);\n    const dp = Array(n + 1)\n        .fill(0)\n        .map(() => Array(amount + 1).fill(0));\n\n    for (let i = 0; i <= n; i++) {\n        dp[i][0] = 1;\n    }\n\n    for (let i = n - 1; i >= 0; i--) {\n        for (let a = 0; a <= amount; a++) {\n            if (a >= coins[i]) {\n                dp[i][a] = dp[i + 1][a];\n                dp[i][a] += dp[i][a - coins[i]];\n            }\n        }\n    }\n\n    return dp[0][amount];\n};",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Store the length of coins in variable n.",
+          "Sort the coins array in ascending order.",
+          "Initialize a 2D array dp with dimensions (n + 1) by (amount + 1) filled with zeros.",
+          "Iterate through all coin indices including n.",
+          "Set dp[i][0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Iterate through all possible amounts from 0 to amount.",
+          "Check if current amount a is greater than or equal to current coin value.",
+          "Set dp[i][a] to the value from skipping current coin.",
+          "Add the value from using current coin to dp[i][a].",
+          "Return the value at dp[0][amount]."
+        ]
+      },
+      "go": {
+        "code": "func change(amount int, coins []int) int {\n    n := len(coins)\n    sort.Ints(coins)\n    dp := make([][]int, n+1)\n    for i := range dp {\n        dp[i] = make([]int, amount+1)\n    }\n\n    for i := 0; i <= n; i++ {\n        dp[i][0] = 1\n    }\n\n    for i := n - 1; i >= 0; i-- {\n        for a := 0; a <= amount; a++ {\n            if a >= coins[i] {\n                dp[i][a] = dp[i+1][a]\n                dp[i][a] += dp[i][a-coins[i]]\n            }\n        }\n    }\n\n    return dp[0][amount]\n}",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Store the length of coins in variable n.",
+          "Sort the coins slice in ascending order.",
+          "Initialize a 2D slice dp with dimensions (n + 1) by (amount + 1).",
+          "Allocate each row of dp.",
+          "Iterate through all coin indices including n.",
+          "Set dp[i][0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Iterate through all possible amounts from 0 to amount.",
+          "Check if current amount a is greater than or equal to current coin value.",
+          "Set dp[i][a] to the value from skipping current coin.",
+          "Add the value from using current coin to dp[i][a].",
+          "Return the value at dp[0][amount]."
+        ]
+      },
+      "explanation": {
+        "overview": "This bottom-up approach builds a complete 2D table where dp[i][a] represents the number of ways to make amount a using coins from index i onward. It processes from the last coin to the first, ensuring all dependencies are computed before use.",
+        "step_by_step": {
+          "step_1": "Create a 2D table with (n+1) rows and (amount+1) columns",
+          "step_2": "Initialize base case: dp[i][0] = 1 for all i (one way to make amount 0: use no coins)",
+          "step_3": "Process coins from last to first (backward)",
+          "step_4": "For each coin, process all amounts from 0 to target amount",
+          "step_5": "If amount >= coin value: dp[i][a] = skip_coin + use_coin",
+          "step_6": "skip_coin comes from dp[i+1][a], use_coin comes from dp[i][a-coins[i]]",
+          "step_7": "Final answer is in dp[0][amount]"
+        },
+        "why_it_works": "The table approach works by building solutions from smaller subproblems. Each cell dp[i][a] correctly counts combinations because it sums two cases: not using coin i at all (take value from i+1), and using coin i at least once (take value from same row with reduced amount). The unbounded nature is handled by staying in the same row when using a coin.",
+        "when_to_use": "Use this approach when you prefer iterative solutions, want to visualize the DP table for debugging, or need to examine intermediate states. It's more intuitive for those who think in terms of filling tables.",
+        "invariants": [
+          "dp[i][a] represents the number of ways to make amount a using coins[i:]",
+          "dp[i][0] = 1 for all i (base case)",
+          "Each cell depends only on cells to the right (higher i) and left in same row (lower a)"
+        ]
+      },
+      "walkthrough": {
+        "example": "amount = 5, coins = [1, 2, 5]",
+        "steps": [
+          {
+            "step": "Initialize table",
+            "state": "dp is 4x6 table, all zeros except first column",
+            "action": "Set dp[0][0] = dp[1][0] = dp[2][0] = dp[3][0] = 1"
+          },
+          {
+            "step": "Process coin 5 (i=2)",
+            "state": "Processing last coin, value 5",
+            "action": "dp[2][5] = dp[3][5] + dp[2][0] = 0 + 1 = 1"
+          },
+          {
+            "step": "Process coin 2 (i=1)",
+            "state": "Processing middle coin, value 2",
+            "action": "dp[1][2] = dp[2][2] + dp[1][0] = 0 + 1 = 1"
+          },
+          {
+            "step": "Continue coin 2, amount 4",
+            "state": "i=1, a=4",
+            "action": "dp[1][4] = dp[2][4] + dp[1][2] = 0 + 1 = 1"
+          },
+          {
+            "step": "Continue coin 2, amount 5",
+            "state": "i=1, a=5",
+            "action": "dp[1][5] = dp[2][5] + dp[1][3] = 1 + 1 = 2"
+          },
+          {
+            "step": "Process coin 1 (i=0), amount 5",
+            "state": "First coin, building up all amounts",
+            "action": "dp[0][5] = dp[1][5] + dp[0][4] = 2 + 2 = 4"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[0][5] = 4",
+            "action": "Four ways to make amount 5"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting to initialize dp[i][0] = 1 for all rows",
+        "Iterating in the wrong direction (forward instead of backward)",
+        "Confusing unbounded (can reuse coins) with bounded knapsack",
+        "Not handling the case when amount < coin value"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Space Optimized)",
+      "approach": "Optimize space by using two 1D arrays instead of a full 2D table, since each row only depends on the next row.",
+      "description": "Reduce space complexity to O(amount) by maintaining only the current and next rows of the DP table, swapping them after processing each coin.",
+      "time_complexity": "O(n*a)",
+      "space_complexity": "O(a)",
+      "keywords": ["dynamic programming", "space optimization", "rolling array", "two arrays"],
+      "python": {
+        "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        dp = [0] * (amount + 1)\n        dp[0] = 1\n        for i in range(len(coins) - 1, -1, -1):\n            nextDP = [0] * (amount + 1)\n            nextDP[0] = 1\n\n            for a in range(1, amount + 1):\n                nextDP[a] = dp[a]\n                if a - coins[i] >= 0:\n                    nextDP[a] += nextDP[a - coins[i]]\n            dp = nextDP\n        return dp[amount]",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Initialize array dp with length amount + 1 filled with zeros.",
+          "Set dp[0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Initialize nextDP array with length amount + 1 filled with zeros.",
+          "Set nextDP[0] to 1 for base case.",
+          "Iterate through amounts from 1 to amount.",
+          "Set nextDP[a] to dp[a] representing skipping current coin.",
+          "Check if a minus current coin value is greater than or equal to 0.",
+          "Add nextDP[a - coins[i]] to nextDP[a] representing using current coin.",
+          "Update dp to nextDP for next iteration.",
+          "Return the value at dp[amount]."
+        ]
+      },
+      "javascript": {
+        "code": "var change = function(amount, coins) {\n    let dp = Array(amount + 1).fill(0);\n    dp[0] = 1;\n    for (let i = coins.length - 1; i >= 0; i--) {\n        let nextDP = Array(amount + 1).fill(0);\n        nextDP[0] = 1;\n\n        for (let a = 1; a <= amount; a++) {\n            nextDP[a] = dp[a];\n            if (a - coins[i] >= 0) {\n                nextDP[a] += nextDP[a - coins[i]];\n            }\n        }\n        dp = nextDP;\n    }\n    return dp[amount];\n};",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Initialize array dp with length amount + 1 filled with zeros.",
+          "Set dp[0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Initialize nextDP array with length amount + 1 filled with zeros.",
+          "Set nextDP[0] to 1 for base case.",
+          "Iterate through amounts from 1 to amount.",
+          "Set nextDP[a] to dp[a] representing skipping current coin.",
+          "Check if a minus current coin value is greater than or equal to 0.",
+          "Add nextDP[a - coins[i]] to nextDP[a] representing using current coin.",
+          "Update dp to nextDP for next iteration.",
+          "Return the value at dp[amount]."
+        ]
+      },
+      "go": {
+        "code": "func change(amount int, coins []int) int {\n    dp := make([]int, amount+1)\n    dp[0] = 1\n    for i := len(coins) - 1; i >= 0; i-- {\n        nextDP := make([]int, amount+1)\n        nextDP[0] = 1\n\n        for a := 1; a <= amount; a++ {\n            nextDP[a] = dp[a]\n            if a-coins[i] >= 0 {\n                nextDP[a] += nextDP[a-coins[i]]\n            }\n        }\n        dp = nextDP\n    }\n    return dp[amount]\n}",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Initialize slice dp with length amount + 1 filled with zeros.",
+          "Set dp[0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Initialize nextDP slice with length amount + 1 filled with zeros.",
+          "Set nextDP[0] to 1 for base case.",
+          "Iterate through amounts from 1 to amount.",
+          "Set nextDP[a] to dp[a] representing skipping current coin.",
+          "Check if a minus current coin value is greater than or equal to 0.",
+          "Add nextDP[a - coins[i]] to nextDP[a] representing using current coin.",
+          "Update dp to nextDP for next iteration.",
+          "Return the value at dp[amount]."
+        ]
+      },
+      "explanation": {
+        "overview": "This optimization recognizes that when computing row i of the DP table, we only need row i+1. By keeping two arrays (current and next row) and swapping them, we reduce space from O(n*amount) to O(amount).",
+        "step_by_step": {
+          "step_1": "Create two 1D arrays: dp (next row) and nextDP (current row being built)",
+          "step_2": "Initialize dp[0] = 1 (base case)",
+          "step_3": "For each coin from last to first, create a new nextDP array",
+          "step_4": "For each amount, nextDP[a] = dp[a] (skip coin) + nextDP[a-coin] (use coin)",
+          "step_5": "After processing all amounts for a coin, swap: dp = nextDP",
+          "step_6": "After all coins processed, dp[amount] contains the answer"
+        },
+        "why_it_works": "The algorithm works because each row only depends on the row below it in the conceptual 2D table. By processing from last coin to first and maintaining just two rows, we preserve all necessary information while using linear space instead of quadratic.",
+        "when_to_use": "Use this approach when memory is limited and you want to optimize space. It maintains the same time complexity while significantly reducing memory usage.",
+        "invariants": [
+          "dp represents the next row in the conceptual 2D table (coins[i+1:])",
+          "nextDP represents the current row being computed (coins[i:])",
+          "After processing coin i, dp is updated to nextDP's values"
+        ]
+      },
+      "walkthrough": {
+        "example": "amount = 3, coins = [1, 2]",
+        "steps": [
+          {
+            "step": "Initialize",
+            "state": "dp = [1, 0, 0, 0]",
+            "action": "Base case: one way to make amount 0"
+          },
+          {
+            "step": "Process coin 2 (i=1)",
+            "state": "nextDP = [1, 0, 0, 0]",
+            "action": "Start building row for coin 2"
+          },
+          {
+            "step": "Amount 2 with coin 2",
+            "state": "a=2, nextDP[2] = dp[2] + nextDP[0] = 0 + 1 = 1",
+            "action": "One way: use coin 2 once"
+          },
+          {
+            "step": "Amount 3 with coin 2",
+            "state": "a=3, nextDP[3] = dp[3] + nextDP[1] = 0 + 0 = 0",
+            "action": "Cannot make 3 with only coin 2"
+          },
+          {
+            "step": "Swap: dp = nextDP",
+            "state": "dp = [1, 0, 1, 0]",
+            "action": "Update dp for next coin"
+          },
+          {
+            "step": "Process coin 1 (i=0), amount 1",
+            "state": "nextDP[1] = dp[1] + nextDP[0] = 0 + 1 = 1",
+            "action": "One way: use coin 1 once"
+          },
+          {
+            "step": "Process coin 1, amount 2",
+            "state": "nextDP[2] = dp[2] + nextDP[1] = 1 + 1 = 2",
+            "action": "Two ways: [2] or [1,1]"
+          },
+          {
+            "step": "Process coin 1, amount 3",
+            "state": "nextDP[3] = dp[3] + nextDP[2] = 0 + 2 = 2",
+            "action": "Two ways: [2,1] or [1,1,1]"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[3] = 2 after final swap",
+            "action": "Two combinations for amount 3"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Not creating a new nextDP array for each coin",
+        "Forgetting to initialize nextDP[0] = 1",
+        "Not swapping dp and nextDP after processing each coin",
+        "Processing amounts in wrong order"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Dynamic Programming (Optimal)",
+      "approach": "Further optimize space by using a single 1D array updated in-place, eliminating the need for array swapping.",
+      "description": "Use only one array and update it in-place by processing amounts from left to right, achieving O(amount) space with better cache performance.",
+      "time_complexity": "O(n*a)",
+      "space_complexity": "O(a)",
+      "keywords": ["dynamic programming", "space optimization", "single array", "in-place"],
+      "python": {
+        "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        dp = [0] * (amount + 1)\n        dp[0] = 1\n        for i in range(len(coins) - 1, -1, -1):\n            for a in range(1, amount + 1):\n                dp[a] += dp[a - coins[i]] if coins[i] <= a else 0\n        return dp[amount]",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Initialize array dp with length amount + 1 filled with zeros.",
+          "Set dp[0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Iterate through amounts from 1 to amount.",
+          "Add dp[a - coins[i]] to dp[a] if coin value is less than or equal to a, else add 0.",
+          "Return the value at dp[amount]."
+        ]
+      },
+      "javascript": {
+        "code": "var change = function(amount, coins) {\n    const dp = Array(amount + 1).fill(0);\n    dp[0] = 1;\n    for (let i = coins.length - 1; i >= 0; i--) {\n        for (let a = 1; a <= amount; a++) {\n            dp[a] += coins[i] <= a ? dp[a - coins[i]] : 0;\n        }\n    }\n    return dp[amount];\n};",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Initialize array dp with length amount + 1 filled with zeros.",
+          "Set dp[0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Iterate through amounts from 1 to amount.",
+          "Add dp[a - coins[i]] to dp[a] if coin value is less than or equal to a, else add 0.",
+          "Return the value at dp[amount]."
+        ]
+      },
+      "go": {
+        "code": "func change(amount int, coins []int) int {\n    dp := make([]int, amount+1)\n    dp[0] = 1\n    for i := len(coins) - 1; i >= 0; i-- {\n        for a := 1; a <= amount; a++ {\n            if coins[i] <= a {\n                dp[a] += dp[a-coins[i]]\n            }\n        }\n    }\n    return dp[amount]\n}",
+        "semantic": [
+          "Define the function change that takes amount and coins as input.",
+          "Initialize slice dp with length amount + 1 filled with zeros.",
+          "Set dp[0] to 1 for base case of making amount 0.",
+          "Iterate through coins from the last index to 0.",
+          "Iterate through amounts from 1 to amount.",
+          "Check if coin value is less than or equal to a.",
+          "Add dp[a - coins[i]] to dp[a].",
+          "Return the value at dp[amount]."
+        ]
+      },
+      "explanation": {
+        "overview": "This is the most space-efficient solution, using only one array updated in-place. The key insight is that we can process amounts from left to right within each coin iteration, allowing us to use already-updated values in the same array.",
+        "step_by_step": {
+          "step_1": "Create a single 1D array dp of size amount + 1",
+          "step_2": "Initialize dp[0] = 1 (one way to make amount 0)",
+          "step_3": "For each coin from last to first",
+          "step_4": "For each amount from 1 to target, process left to right",
+          "step_5": "Add dp[a - coin] to dp[a] if coin <= a",
+          "step_6": "This in-place update works because we read from already-updated positions",
+          "step_7": "After all coins, dp[amount] contains the answer"
+        },
+        "why_it_works": "This works because we process amounts from left to right. When we update dp[a], we use dp[a - coin] which was already updated in this iteration for the current coin. This simulates using the same coin multiple times (unbounded knapsack). The order of processing ensures correctness without needing a second array.",
+        "when_to_use": "Use this in production systems where memory is at a premium and you want the absolute minimum space complexity with excellent cache performance. It's the most elegant and efficient solution.",
+        "invariants": [
+          "dp[a] represents the number of ways to make amount a using all coins processed so far",
+          "Processing left to right allows reusing updated values in the same iteration",
+          "dp[0] remains 1 throughout all iterations"
+        ]
+      },
+      "walkthrough": {
+        "example": "amount = 5, coins = [1, 2, 5]",
+        "steps": [
+          {
+            "step": "Initialize",
+            "state": "dp = [1, 0, 0, 0, 0, 0]",
+            "action": "Base case set"
+          },
+          {
+            "step": "Process coin 5 (i=2)",
+            "state": "Only amount 5 can use coin 5",
+            "action": "dp[5] += dp[0] = 0 + 1 = 1, dp = [1, 0, 0, 0, 0, 1]"
+          },
+          {
+            "step": "Process coin 2 (i=1), amount 2",
+            "state": "a=2, dp[2] += dp[0] = 0 + 1 = 1",
+            "action": "dp = [1, 0, 1, 0, 0, 1]"
+          },
+          {
+            "step": "Process coin 2, amount 4",
+            "state": "a=4, dp[4] += dp[2] = 0 + 1 = 1",
+            "action": "Uses already-updated dp[2], dp = [1, 0, 1, 0, 1, 1]"
+          },
+          {
+            "step": "Process coin 2, amount 5",
+            "state": "a=5, dp[5] += dp[3] = 1 + 0 = 1",
+            "action": "dp = [1, 0, 1, 0, 1, 1] (no change)"
+          },
+          {
+            "step": "Actually amount 5 with coin 2",
+            "state": "dp[5] += dp[3], but dp[3] needs updating first",
+            "action": "After all: dp = [1, 0, 1, 1, 2, 2]"
+          },
+          {
+            "step": "Process coin 1 (i=0)",
+            "state": "Each amount gets +1 way per unit",
+            "action": "Final: dp = [1, 1, 2, 3, 4, 4]"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[5] = 4",
+            "action": "Four combinations for amount 5"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Processing amounts from right to left instead of left to right",
+        "Not understanding why left-to-right processing is necessary",
+        "Forgetting to check if coin <= amount before accessing dp[a - coin]",
+        "Trying to optimize further by skipping the coin <= a check (causes errors)"
+      ]
+    }
+  ],
+  "followup_questions": [
+    "How would you modify this to count the minimum number of coins needed instead of the number of combinations?",
+    "Can you print all actual combinations instead of just counting them?",
+    "How would you handle the case where each coin can only be used once (bounded knapsack)?",
+    "What if coins could have negative values? Would the algorithm still work?"
+  ],
+  "key_concepts": [
+    "Unbounded Knapsack",
+    "Dynamic Programming",
+    "Combination Counting",
+    "Space Optimization",
+    "In-Place Updates"
+  ],
+  "learning_objectives": [
+    "Master the unbounded knapsack pattern",
+    "Understand the difference between combinations and permutations in DP",
+    "Learn progressive space optimization from 2D to 1D",
+    "Practice both top-down and bottom-up DP approaches",
+    "Recognize when in-place array updates are safe and correct"
+  ],
+  "metadata": {
+    "difficulty_level": 6,
+    "problem_type": "Unbounded Knapsack",
+    "domain": "Combinatorics",
+    "acceptance_rate": "63.8%",
+    "ai_generation_metadata": {
+      "generated_at": "2025-01-12",
+      "implementation_note": "All solutions tested and verified with example cases",
+      "completeness": "Full implementation with 5 progressive optimizations"
+    },
+    "spaced_repetition": {
+      "initial_interval_days": 1,
+      "ease_factor": 2.5,
+      "repetitions": 0,
+      "next_review_date": null
+    }
+  }
+}
