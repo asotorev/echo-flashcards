@@ -1,0 +1,553 @@
+{
+  "id": "494-target-sum",
+  "title": "Target Sum",
+  "difficulty": "medium",
+  "category": "2-D Dynamic Programming",
+  "subcategory": "Backtracking with States",
+  "similar_questions": ["Expression Add Operators", "Partition Equal Subset Sum", "Combination Sum IV"],
+  "real_life_domains": ["Expression Evaluation", "Resource Allocation", "Game Score Calculation", "Budget Planning", "Mathematical Puzzles"],
+  "problem_statement": "You are given an integer array nums and an integer target.\n\nYou want to build an expression out of nums by adding one of the symbols '+' and '-' before each integer in nums and then concatenate all the integers.\n\nFor example, if nums = [2, 1], you can add a '+' before 2 and a '-' before 1 and concatenate them to build the expression \"+2-1\".\n\nReturn the number of different expressions that you can build, which evaluates to target.",
+  "input_format": "An integer array nums and an integer target",
+  "output_format": "An integer representing the number of different expressions",
+  "constraints": [
+    "1 <= nums.length <= 20",
+    "0 <= nums[i] <= 1000",
+    "0 <= sum(nums[i]) <= 1000",
+    "-1000 <= target <= 1000"
+  ],
+  "examples": [
+    {
+      "input": "nums = [1,1,1,1,1], target = 3",
+      "output": "5",
+      "explanation": "There are 5 ways to assign symbols to make the sum of nums be target 3.\n-1 + 1 + 1 + 1 + 1 = 3\n+1 - 1 + 1 + 1 + 1 = 3\n+1 + 1 - 1 + 1 + 1 = 3\n+1 + 1 + 1 - 1 + 1 = 3\n+1 + 1 + 1 + 1 - 1 = 3"
+    },
+    {
+      "input": "nums = [1], target = 1",
+      "output": "1",
+      "explanation": "There is only one way: +1 = 1"
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Recursively explore all possible assignments of + and - signs to each number, counting expressions that evaluate to target.",
+      "description": "Use backtracking to try both adding and subtracting each number, counting all paths that reach the target sum when all numbers are processed.",
+      "time_complexity": "O(2^n)",
+      "space_complexity": "O(n)",
+      "keywords": ["recursion", "backtracking", "brute force", "exponential"],
+      "python": {
+        "code": "class Solution:\n    def findTargetSumWays(self, nums: List[int], target: int) -> int:\n\n        def backtrack(i, total):\n            if i ==len(nums):\n                return  total == target\n\n            return (backtrack(i + 1, total + nums[i]) +\n                    backtrack(i + 1, total - nums[i]))\n\n        return backtrack(0, 0)",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Define recursive helper function backtrack that takes index i and running total.",
+          "Check if index i equals the length of nums.",
+          "Return 1 if total equals target, else return 0.",
+          "Recursively add result from adding current number to total.",
+          "Recursively add result from subtracting current number from total.",
+          "Return sum of both recursive branches.",
+          "Call backtrack starting from index 0 with total 0 and return the result."
+        ]
+      },
+      "javascript": {
+        "code": "var findTargetSumWays = function(nums, target) {\n\n    function backtrack(i, total) {\n        if (i === nums.length) {\n            return total === target ? 1 : 0;\n        }\n\n        return (backtrack(i + 1, total + nums[i]) +\n                backtrack(i + 1, total - nums[i]));\n    }\n\n    return backtrack(0, 0);\n};",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Define recursive helper function backtrack that takes index i and running total.",
+          "Check if index i equals the length of nums.",
+          "Return 1 if total equals target, else return 0.",
+          "Recursively add result from adding current number to total.",
+          "Recursively add result from subtracting current number from total.",
+          "Return sum of both recursive branches.",
+          "Call backtrack starting from index 0 with total 0 and return the result."
+        ]
+      },
+      "go": {
+        "code": "func findTargetSumWays(nums []int, target int) int {\n\n    var backtrack func(i, total int) int\n    backtrack = func(i, total int) int {\n        if i == len(nums) {\n            if total == target {\n                return 1\n            }\n            return 0\n        }\n\n        return (backtrack(i+1, total+nums[i]) +\n                backtrack(i+1, total-nums[i]))\n    }\n\n    return backtrack(0, 0)\n}",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Declare recursive helper function backtrack that takes index i and running total.",
+          "Define the backtrack function implementation.",
+          "Check if index i equals the length of nums.",
+          "Check if total equals target.",
+          "Return 1 indicating one valid expression found.",
+          "Return 0 indicating invalid expression.",
+          "Recursively add result from adding current number to total.",
+          "Recursively add result from subtracting current number from total.",
+          "Return sum of both recursive branches.",
+          "Call backtrack starting from index 0 with total 0 and return the result."
+        ]
+      },
+      "explanation": {
+        "overview": "This recursive solution explores all possible expressions by making a binary choice at each number: add it or subtract it. It counts all complete expressions that evaluate to the target sum.",
+        "step_by_step": {
+          "step_1": "Start at index 0 with a running total of 0",
+          "step_2": "At each number, make two recursive calls: one adding, one subtracting",
+          "step_3": "Pass the updated total to the next recursive level",
+          "step_4": "Base case: when all numbers are processed (i == len(nums))",
+          "step_5": "Check if the final total equals the target",
+          "step_6": "Return 1 if match (count this expression), 0 if no match",
+          "step_7": "Sum up all the 1s from valid expressions"
+        },
+        "why_it_works": "The algorithm works by exploring the complete decision tree of + and - assignments. Each number can have either sign, creating 2^n possible expressions. By trying all combinations and counting those that reach the target, we find the total number of valid expressions.",
+        "when_to_use": "Use this approach for understanding the problem structure or when the array is very small (n <= 15). It's educational but impractical for larger inputs due to exponential time complexity.",
+        "invariants": [
+          "At each level i, we've made decisions for nums[0] through nums[i-1]",
+          "The total parameter represents the cumulative sum with chosen signs",
+          "Each leaf in the recursion tree represents one complete expression"
+        ]
+      },
+      "walkthrough": {
+        "example": "nums = [1, 1, 1], target = 1",
+        "steps": [
+          {
+            "step": "Start: backtrack(0, 0)",
+            "state": "i=0, total=0, no decisions made yet",
+            "action": "Branch: +1 or -1"
+          },
+          {
+            "step": "Branch 1: backtrack(1, 1)",
+            "state": "i=1, total=1 (chose +1)",
+            "action": "Branch: +1 (total=2) or -1 (total=0)"
+          },
+          {
+            "step": "Branch 2: backtrack(1, -1)",
+            "state": "i=1, total=-1 (chose -1)",
+            "action": "Branch: +1 (total=0) or -1 (total=-2)"
+          },
+          {
+            "step": "Path: +1, +1, +1",
+            "state": "backtrack(3, 3)",
+            "action": "i=3, total=3 != 1, return 0"
+          },
+          {
+            "step": "Path: +1, +1, -1",
+            "state": "backtrack(3, 1)",
+            "action": "i=3, total=1 == 1, return 1"
+          },
+          {
+            "step": "Path: +1, -1, +1",
+            "state": "backtrack(3, 1)",
+            "action": "i=3, total=1 == 1, return 1"
+          },
+          {
+            "step": "Path: -1, +1, +1",
+            "state": "backtrack(3, 1)",
+            "action": "i=3, total=1 == 1, return 1"
+          },
+          {
+            "step": "Sum all valid paths",
+            "state": "Three paths reach target 1",
+            "action": "Return 3"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting to return a numeric value (1 or 0) in the base case",
+        "Not understanding that the function returns a count, not a boolean",
+        "Attempting to use this approach for arrays with length > 20",
+        "Confusing the running total with the target"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Add memoization to the recursive solution to cache results for each (index, total) state.",
+      "description": "Use recursion with a dictionary to store computed results for each state, avoiding redundant calculations and reducing time complexity from exponential to polynomial.",
+      "time_complexity": "O(n*m)",
+      "space_complexity": "O(n*m)",
+      "keywords": ["dynamic programming", "memoization", "top-down", "caching"],
+      "python": {
+        "code": "class Solution:\n    def findTargetSumWays(self, nums: List[int], target: int) -> int:\n        dp = {}  # (index, total) -> # of ways\n\n        def backtrack(i, total):\n            if i == len(nums):\n                return 1 if total == target else 0\n            if (i, total) in dp:\n                return dp[(i, total)]\n\n            dp[(i, total)] = (backtrack(i + 1, total + nums[i]) +\n                              backtrack(i + 1, total - nums[i]))\n            return dp[(i, total)]\n\n        return backtrack(0, 0)",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Initialize an empty dictionary dp for caching results.",
+          "Define recursive helper function backtrack that takes index i and running total.",
+          "Check if index i equals the length of nums.",
+          "Return 1 if total equals target, else return 0.",
+          "Check if the result for state (i, total) exists in dp.",
+          "Return the cached result from dp.",
+          "Compute result by adding outcomes from both adding and subtracting current number.",
+          "Store the computed result in dp.",
+          "Return the result.",
+          "Call backtrack starting from index 0 with total 0 and return the result."
+        ]
+      },
+      "javascript": {
+        "code": "var findTargetSumWays = function(nums, target) {\n    const dp = new Map();\n\n    function backtrack(i, total) {\n        if (i === nums.length) {\n            return total === target ? 1 : 0;\n        }\n        const key = `${i},${total}`;\n        if (dp.has(key)) {\n            return dp.get(key);\n        }\n\n        const result = (backtrack(i + 1, total + nums[i]) +\n                        backtrack(i + 1, total - nums[i]));\n        dp.set(key, result);\n        return result;\n    }\n\n    return backtrack(0, 0);\n};",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Initialize a Map for caching results.",
+          "Define recursive helper function backtrack that takes index i and running total.",
+          "Check if index i equals the length of nums.",
+          "Return 1 if total equals target, else return 0.",
+          "Create a string key from index i and total.",
+          "Check if the result for this key exists in dp.",
+          "Return the cached result from dp.",
+          "Compute result by adding outcomes from both adding and subtracting current number.",
+          "Store the result in dp with the current key.",
+          "Return the result.",
+          "Call backtrack starting from index 0 with total 0 and return the result."
+        ]
+      },
+      "go": {
+        "code": "func findTargetSumWays(nums []int, target int) int {\n    dp := make(map[[2]int]int)\n\n    var backtrack func(i, total int) int\n    backtrack = func(i, total int) int {\n        if i == len(nums) {\n            if total == target {\n                return 1\n            }\n            return 0\n        }\n        key := [2]int{i, total}\n        if val, ok := dp[key]; ok {\n            return val\n        }\n\n        result := (backtrack(i+1, total+nums[i]) +\n                   backtrack(i+1, total-nums[i]))\n        dp[key] = result\n        return result\n    }\n\n    return backtrack(0, 0)\n}",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Initialize a map for caching results with key type array of 2 integers.",
+          "Declare recursive helper function backtrack that takes index i and running total.",
+          "Define the backtrack function implementation.",
+          "Check if index i equals the length of nums.",
+          "Check if total equals target.",
+          "Return 1 indicating one valid expression found.",
+          "Return 0 indicating invalid expression.",
+          "Create a key from index i and total as an array.",
+          "Check if the result for this key exists in dp.",
+          "Return the cached result from dp.",
+          "Compute result by adding outcomes from both adding and subtracting current number.",
+          "Store the result in dp with the current key.",
+          "Return the result.",
+          "Call backtrack starting from index 0 with total 0 and return the result."
+        ]
+      },
+      "explanation": {
+        "overview": "This solution optimizes the recursive approach by caching results for each (index, total) state. Since many different paths lead to the same state, memoization dramatically improves performance.",
+        "step_by_step": {
+          "step_1": "Initialize a cache dictionary to store computed states",
+          "step_2": "Before computing a state, check if it exists in cache",
+          "step_3": "If cached, return the stored count immediately",
+          "step_4": "Otherwise, compute by recursively trying both + and - operations",
+          "step_5": "Store the sum of both branches in cache",
+          "step_6": "Return the cached result",
+          "step_7": "Each unique state is computed at most once"
+        },
+        "why_it_works": "Memoization works because many different decision paths lead to the same (index, total) state. For example, +1-2 and -2+1 both reach total=-1 at the same index. By caching these states, we avoid recomputing the same subproblems exponentially many times.",
+        "when_to_use": "Use this approach when you prefer recursive thinking but need better performance. It handles inputs up to n=20 efficiently and is easier to understand than bottom-up DP for many people.",
+        "invariants": [
+          "dp[(i, total)] stores the number of ways to reach target from index i with current total",
+          "Each state is computed at most once",
+          "The cache key uniquely identifies a state in the recursion tree"
+        ]
+      },
+      "walkthrough": {
+        "example": "nums = [1, 1, 1], target = 1",
+        "steps": [
+          {
+            "step": "Start: backtrack(0, 0)",
+            "state": "dp = {}, no cache hits yet",
+            "action": "Compute: try +1 and -1"
+          },
+          {
+            "step": "Call: backtrack(1, 1)",
+            "state": "First time seeing (1, 1)",
+            "action": "Not cached, compute recursively"
+          },
+          {
+            "step": "Call: backtrack(2, 2) from +1+1",
+            "state": "First time seeing (2, 2)",
+            "action": "Try +1 (total=3) and -1 (total=1)"
+          },
+          {
+            "step": "Call: backtrack(2, 0) from +1-1",
+            "state": "First time seeing (2, 0)",
+            "action": "Try +1 (total=1) and -1 (total=-1)"
+          },
+          {
+            "step": "Cache hit: backtrack(2, 0)",
+            "state": "Also reached from -1+1 path",
+            "action": "Return cached value instead of recomputing"
+          },
+          {
+            "step": "Build cache: dp[(2, 0)] = 1",
+            "state": "One way from (2, 0) to reach target",
+            "action": "Store for future use"
+          },
+          {
+            "step": "Final: dp[(0, 0)] = 3",
+            "state": "All states cached, overlapping subproblems exploited",
+            "action": "Return 3"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Not caching the result before returning",
+        "Forgetting to check cache before computing",
+        "Using total as-is in cache key without considering it can be negative",
+        "Not understanding that totals can range from -sum(nums) to +sum(nums)"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build the solution iteratively using an array of dictionaries, where each dictionary maps totals to their occurrence counts.",
+      "description": "Create an array of dictionaries where dp[i] maps each possible total to the number of ways to achieve it using the first i numbers. Build from i=0 to i=n.",
+      "time_complexity": "O(n*m)",
+      "space_complexity": "O(n*m)",
+      "keywords": ["dynamic programming", "bottom-up", "tabulation", "iterative"],
+      "python": {
+        "code": "class Solution:\n    def findTargetSumWays(self, nums: List[int], target: int) -> int:\n        n = len(nums)\n        dp = [defaultdict(int) for _ in range(n + 1)]\n        dp[0][0] = 1\n\n        for i in range(n):\n            for total, count in dp[i].items():\n                dp[i + 1][total + nums[i]] += count\n                dp[i + 1][total - nums[i]] += count\n\n        return dp[n][target]",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Store the length of nums in variable n.",
+          "Initialize an array of n + 1 defaultdicts for storing totals and their counts.",
+          "Set dp[0][0] to 1 representing one way to achieve total 0 with zero numbers.",
+          "Iterate through each number index from 0 to n - 1.",
+          "Iterate through each total and its count in dp[i].",
+          "Add count to dp[i + 1][total + nums[i]] for adding current number.",
+          "Add count to dp[i + 1][total - nums[i]] for subtracting current number.",
+          "Return the count for target in dp[n]."
+        ]
+      },
+      "javascript": {
+        "code": "var findTargetSumWays = function(nums, target) {\n    const n = nums.length;\n    const dp = Array(n + 1).fill(0).map(() => new Map());\n    dp[0].set(0, 1);\n\n    for (let i = 0; i < n; i++) {\n        for (const [total, count] of dp[i]) {\n            dp[i + 1].set(total + nums[i], \n                (dp[i + 1].get(total + nums[i]) || 0) + count);\n            dp[i + 1].set(total - nums[i], \n                (dp[i + 1].get(total - nums[i]) || 0) + count);\n        }\n    }\n\n    return dp[n].get(target) || 0;\n};",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Store the length of nums in variable n.",
+          "Initialize an array of n + 1 Maps for storing totals and their counts.",
+          "Set dp[0] Map with key 0 to value 1 representing base case.",
+          "Iterate through each number index from 0 to n - 1.",
+          "Iterate through each total and count pair in dp[i].",
+          "Update dp[i + 1] by adding count to the entry for total + nums[i].",
+          "Update dp[i + 1] by adding count to the entry for total - nums[i].",
+          "Return the count for target in dp[n], or 0 if not found."
+        ]
+      },
+      "go": {
+        "code": "func findTargetSumWays(nums []int, target int) int {\n    n := len(nums)\n    dp := make([]map[int]int, n+1)\n    for i := range dp {\n        dp[i] = make(map[int]int)\n    }\n    dp[0][0] = 1\n\n    for i := 0; i < n; i++ {\n        for total, count := range dp[i] {\n            dp[i+1][total+nums[i]] += count\n            dp[i+1][total-nums[i]] += count\n        }\n    }\n\n    return dp[n][target]\n}",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Store the length of nums in variable n.",
+          "Initialize a slice of n + 1 maps for storing totals and their counts.",
+          "Allocate each map in the slice.",
+          "Set dp[0][0] to 1 representing one way to achieve total 0 with zero numbers.",
+          "Iterate through each number index from 0 to n - 1.",
+          "Iterate through each total and count pair in dp[i].",
+          "Add count to dp[i + 1][total + nums[i]] for adding current number.",
+          "Add count to dp[i + 1][total - nums[i]] for subtracting current number.",
+          "Return the count for target in dp[n]."
+        ]
+      },
+      "explanation": {
+        "overview": "This bottom-up approach builds the solution iteratively by tracking all possible totals at each step. Each dictionary maps a total to the number of ways to achieve it using the first i numbers.",
+        "step_by_step": {
+          "step_1": "Create array of n+1 dictionaries (one for each index)",
+          "step_2": "Initialize dp[0][0] = 1 (one way to make 0 with no numbers)",
+          "step_3": "For each number at index i, process all totals from dp[i]",
+          "step_4": "For each (total, count) pair, propagate to two new totals in dp[i+1]",
+          "step_5": "Add count to dp[i+1][total + nums[i]] (choose + sign)",
+          "step_6": "Add count to dp[i+1][total - nums[i]] (choose - sign)",
+          "step_7": "After processing all numbers, return dp[n][target]"
+        },
+        "why_it_works": "The algorithm works by building up all possible totals incrementally. At each step, we know all ways to reach each total using the first i numbers. When we add number i+1, we create new totals by both adding and subtracting it, carrying forward the count of ways. This ensures we count all valid expressions.",
+        "when_to_use": "Use this approach when you prefer iterative solutions or need to examine the progression of states. It's more intuitive for people who think in terms of building solutions forward rather than recursing backward.",
+        "invariants": [
+          "dp[i] contains all reachable totals using nums[0:i] and their counts",
+          "The sum of all counts in dp[i] equals 2^i (all possible sign assignments)",
+          "Each total in dp[i+1] is derived from totals in dp[i]"
+        ]
+      },
+      "walkthrough": {
+        "example": "nums = [1, 2], target = 1",
+        "steps": [
+          {
+            "step": "Initialize",
+            "state": "dp[0] = {0: 1}",
+            "action": "Base case: one way to make 0 with no numbers"
+          },
+          {
+            "step": "Process nums[0] = 1",
+            "state": "i=0, dp[0] = {0: 1}",
+            "action": "Add 1 or subtract 1 from total 0"
+          },
+          {
+            "step": "Update dp[1]",
+            "state": "dp[1] = {1: 1, -1: 1}",
+            "action": "Two ways: +1 (total=1) or -1 (total=-1)"
+          },
+          {
+            "step": "Process nums[1] = 2 from total=1",
+            "state": "i=1, processing (1, 1) from dp[1]",
+            "action": "dp[2][3] += 1, dp[2][-1] += 1"
+          },
+          {
+            "step": "Process nums[1] = 2 from total=-1",
+            "state": "i=1, processing (-1, 1) from dp[1]",
+            "action": "dp[2][1] += 1, dp[2][-3] += 1"
+          },
+          {
+            "step": "Final state",
+            "state": "dp[2] = {3: 1, -1: 1, 1: 1, -3: 1}",
+            "action": "Four possible totals from four expressions"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[2][1] = 1",
+            "action": "One way to reach target 1: +1-2"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting to initialize dp[0][0] = 1",
+        "Using regular dict instead of defaultdict and getting KeyError",
+        "Not understanding that we need to iterate through items() snapshot, not the live dict",
+        "Confusing the index in dp array with the value of nums"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Space Optimized)",
+      "approach": "Optimize space by using only two dictionaries instead of an array of dictionaries, since each step only depends on the previous step.",
+      "description": "Reduce space complexity to O(m) by maintaining only the current and next dictionaries, swapping them after processing each number.",
+      "time_complexity": "O(n*m)",
+      "space_complexity": "O(m)",
+      "keywords": ["dynamic programming", "space optimization", "rolling dictionary", "optimal"],
+      "python": {
+        "code": "class Solution:\n    def findTargetSumWays(self, nums: List[int], target: int) -> int:\n        dp = defaultdict(int)\n        dp[0] = 1\n\n        for num in nums:\n            next_dp = defaultdict(int)\n            for total, count in dp.items():\n                next_dp[total + num] += count\n                next_dp[total - num] += count\n            dp = next_dp\n\n        return dp[target]",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Initialize a defaultdict dp for storing totals and their counts.",
+          "Set dp[0] to 1 representing one way to achieve total 0 initially.",
+          "Iterate through each number in nums.",
+          "Initialize a new defaultdict next_dp for the next iteration.",
+          "Iterate through each total and count pair in dp.",
+          "Add count to next_dp[total + num] for adding current number.",
+          "Add count to next_dp[total - num] for subtracting current number.",
+          "Update dp to next_dp for next iteration.",
+          "Return the count for target in dp."
+        ]
+      },
+      "javascript": {
+        "code": "var findTargetSumWays = function(nums, target) {\n    let dp = new Map();\n    dp.set(0, 1);\n\n    for (const num of nums) {\n        const next_dp = new Map();\n        for (const [total, count] of dp) {\n            next_dp.set(total + num, \n                (next_dp.get(total + num) || 0) + count);\n            next_dp.set(total - num, \n                (next_dp.get(total - num) || 0) + count);\n        }\n        dp = next_dp;\n    }\n\n    return dp.get(target) || 0;\n};",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Initialize a Map dp for storing totals and their counts.",
+          "Set dp with key 0 to value 1 representing base case.",
+          "Iterate through each number in nums.",
+          "Initialize a new Map next_dp for the next iteration.",
+          "Iterate through each total and count pair in dp.",
+          "Update next_dp by adding count to the entry for total + num.",
+          "Update next_dp by adding count to the entry for total - num.",
+          "Update dp to next_dp for next iteration.",
+          "Return the count for target in dp, or 0 if not found."
+        ]
+      },
+      "go": {
+        "code": "func findTargetSumWays(nums []int, target int) int {\n    dp := make(map[int]int)\n    dp[0] = 1\n\n    for _, num := range nums {\n        next_dp := make(map[int]int)\n        for total, count := range dp {\n            next_dp[total+num] += count\n            next_dp[total-num] += count\n        }\n        dp = next_dp\n    }\n\n    return dp[target]\n}",
+        "semantic": [
+          "Define the function findTargetSumWays that takes nums and target as input.",
+          "Initialize a map dp for storing totals and their counts.",
+          "Set dp[0] to 1 representing one way to achieve total 0 initially.",
+          "Iterate through each number in nums.",
+          "Initialize a new map next_dp for the next iteration.",
+          "Iterate through each total and count pair in dp.",
+          "Add count to next_dp[total + num] for adding current number.",
+          "Add count to next_dp[total - num] for subtracting current number.",
+          "Update dp to next_dp for next iteration.",
+          "Return the count for target in dp."
+        ]
+      },
+      "explanation": {
+        "overview": "This is the most space-efficient solution, using only two dictionaries instead of an array of n+1 dictionaries. Since each step only depends on the previous step's totals, we can use a rolling dictionary approach.",
+        "step_by_step": {
+          "step_1": "Initialize dp dictionary with base case: dp[0] = 1",
+          "step_2": "For each number in the array",
+          "step_3": "Create a new next_dp dictionary",
+          "step_4": "For each (total, count) in current dp",
+          "step_5": "Add count to next_dp[total + num] and next_dp[total - num]",
+          "step_6": "Replace dp with next_dp for the next iteration",
+          "step_7": "After all numbers processed, return dp[target]"
+        },
+        "why_it_works": "The algorithm works because we only need to remember the previous step's totals to compute the next step. By creating a fresh dictionary for each number and populating it from the previous dictionary, we maintain all necessary information while using O(m) space where m is the number of unique totals.",
+        "when_to_use": "Use this approach in production systems where memory is at a premium. It's the most elegant and efficient solution with optimal space complexity while maintaining the same time complexity.",
+        "invariants": [
+          "dp always contains all reachable totals for the numbers processed so far",
+          "After processing i numbers, dp represents all possible sums with their counts",
+          "The sum of all counts in dp equals 2^i (total number of expressions with i numbers)"
+        ]
+      },
+      "walkthrough": {
+        "example": "nums = [1, 1], target = 0",
+        "steps": [
+          {
+            "step": "Initialize",
+            "state": "dp = {0: 1}",
+            "action": "Base case: one way to make 0"
+          },
+          {
+            "step": "Process first 1",
+            "state": "num=1, dp = {0: 1}",
+            "action": "Create next_dp, add to both total+1 and total-1"
+          },
+          {
+            "step": "After first number",
+            "state": "dp = {1: 1, -1: 1}",
+            "action": "Two totals: +1 or -1"
+          },
+          {
+            "step": "Process second 1 from total=1",
+            "state": "num=1, (total=1, count=1)",
+            "action": "next_dp[2] += 1, next_dp[0] += 1"
+          },
+          {
+            "step": "Process second 1 from total=-1",
+            "state": "num=1, (total=-1, count=1)",
+            "action": "next_dp[0] += 1, next_dp[-2] += 1"
+          },
+          {
+            "step": "After second number",
+            "state": "dp = {2: 1, 0: 2, -2: 1}",
+            "action": "Four expressions: ++, +-, -+, --"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[0] = 2",
+            "action": "Two ways to reach 0: +1-1 and -1+1"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Modifying dp while iterating over it instead of creating next_dp",
+        "Forgetting to swap dp = next_dp after each iteration",
+        "Not initializing next_dp as a new dictionary for each number",
+        "Returning 0 when target doesn't exist in final dp instead of handling gracefully"
+      ]
+    }
+  ],
+  "followup_questions": [
+    "Can you solve this if the target can be any real number instead of an integer?",
+    "How would you modify the solution to print all valid expressions instead of just counting them?",
+    "What if you could use multiplication as well as addition and subtraction?",
+    "Can you prove that the space complexity cannot be better than O(sum of nums)?"
+  ],
+  "key_concepts": [
+    "Dynamic Programming",
+    "Backtracking",
+    "State Compression",
+    "Hash Map Optimization",
+    "Expression Building"
+  ],
+  "learning_objectives": [
+    "Master backtracking with memoization",
+    "Understand when to use dictionaries instead of arrays in DP",
+    "Learn to optimize space from O(n*m) to O(m)",
+    "Practice handling negative indices/values in DP",
+    "Recognize the pattern of counting valid assignments"
+  ],
+  "metadata": {
+    "difficulty_level": 7,
+    "problem_type": "Counting DP",
+    "domain": "Expression Evaluation",
+    "acceptance_rate": "46.2%",
+    "ai_generation_metadata": {
+      "generated_at": "2025-01-12",
+      "implementation_note": "All solutions tested and verified with example cases",
+      "completeness": "Full implementation with 4 progressive optimizations"
+    },
+    "spaced_repetition": {
+      "initial_interval_days": 1,
+      "ease_factor": 2.5,
+      "repetitions": 0,
+      "next_review_date": null
+    }
+  }
+}
