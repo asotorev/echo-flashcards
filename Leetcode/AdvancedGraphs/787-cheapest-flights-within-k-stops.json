@@ -55,7 +55,7 @@
                   "                nextStops = 1 + stops",
                   "                if dist[nei][nextStops + 1] > nextCst:",
                   "                    dist[nei][nextStops + 1] = nextCst",
-                  "                    heapq.heappush(minHeap, (nextCst, nei, nextStops))"
+                  "                    heapq.heappush(minHeap, (nextCst, nei, nextStops))",
                   "",
                   "        return -1"
                 ],
