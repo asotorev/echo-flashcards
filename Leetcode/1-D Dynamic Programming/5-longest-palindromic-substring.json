@@ -1,0 +1,491 @@
+{
+  "id": "5",
+  "title": "Longest Palindromic Substring",
+  "category": "1-D Dynamic Programming",
+  "difficulty": "Medium",
+  "ultimateGuide": "https://neetcode.io/problems/longest-palindromic-substring",
+  "problemStatement": "Given a string s, return the longest palindromic substring in s.\n\nA string is palindromic if it reads the same forward and backward.",
+  "examples": [
+    {
+      "input": "s = \"babad\"",
+      "output": "\"bab\"",
+      "explanation": "\"aba\" is also a valid answer."
+    },
+    {
+      "input": "s = \"cbbd\"",
+      "output": "\"bb\""
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 1000",
+    "s consist of only digits and English letters"
+  ],
+  "solutions": [
+    {
+      "name": "Brute Force",
+      "description": "Generate all possible substrings and check each one to see if it's a palindrome. Track the longest palindromic substring found. For each substring, use two pointers to verify if it reads the same forwards and backwards. This approach has cubic time complexity.",
+      "timeComplexity": "O(n³)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        res, resLen = \"\", 0\n\n        for i in range(len(s)):\n            for j in range(i, len(s)):\n                l, r = i, j\n                while l < r and s[l] == s[r]:\n                    l += 1\n                    r -= 1\n\n                if l >= r and resLen < (j - i + 1):\n                    res = s[i : j + 1]\n                    resLen = j - i + 1\n        return res",
+        "semanticLines": [
+          "Initialize result string to empty and result length to zero.",
+          "For each starting index i from zero to length of s minus one.",
+          "For each ending index j from i to length of s minus one.",
+          "Initialize left pointer to i and right pointer to j.",
+          "While left is less than right and characters at left and right are equal.",
+          "Move left pointer one step to the right.",
+          "Move right pointer one step to the left.",
+          "If left is greater than or equal to right meaning substring is palindrome and result length is less than current substring length.",
+          "Update result to substring from i to j plus one.",
+          "Update result length to j minus i plus one.",
+          "Return the result string."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    longestPalindrome(s) {\n        let res = \"\", resLen = 0;\n\n        for (let i = 0; i < s.length; i++) {\n            for (let j = i; j < s.length; j++) {\n                let l = i, r = j;\n                while (l < r && s[l] === s[r]) {\n                    l++;\n                    r--;\n                }\n\n                if (l >= r && resLen < (j - i + 1)) {\n                    res = s.substring(i, j + 1);\n                    resLen = j - i + 1;\n                }\n            }\n        }\n        return res;\n    }\n}",
+        "semanticLines": [
+          "Initialize result string to empty and result length to zero.",
+          "For each starting index i from zero to length of s minus one.",
+          "For each ending index j from i to length of s minus one.",
+          "Initialize left pointer to i and right pointer to j.",
+          "While left is less than right and characters at left and right are equal.",
+          "Move left pointer one step to the right.",
+          "Move right pointer one step to the left.",
+          "Close the while loop.",
+          "If left is greater than or equal to right meaning substring is palindrome and result length is less than current substring length.",
+          "Update result to substring from i to j plus one.",
+          "Update result length to j minus i plus one.",
+          "Close the palindrome check condition.",
+          "Close the inner loop.",
+          "Close the outer loop.",
+          "Return the result string.",
+          "Close the longestPalindrome method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func longestPalindrome(s string) string {\n    res := \"\"\n    resLen := 0\n\n    for i := 0; i < len(s); i++ {\n        for j := i; j < len(s); j++ {\n            l, r := i, j\n            for l < r && s[l] == s[r] {\n                l++\n                r--\n            }\n\n            if l >= r && resLen < (j-i+1) {\n                res = s[i : j+1]\n                resLen = j - i + 1\n            }\n        }\n    }\n    return res\n}",
+        "semanticLines": [
+          "Initialize result string to empty.",
+          "Initialize result length to zero.",
+          "For each starting index i from zero to length of s minus one.",
+          "For each ending index j from i to length of s minus one.",
+          "Initialize left pointer to i and right pointer to j.",
+          "While left is less than right and characters at left and right are equal.",
+          "Move left pointer one step to the right.",
+          "Move right pointer one step to the left.",
+          "Close the while loop.",
+          "If left is greater than or equal to right meaning substring is palindrome and result length is less than current substring length.",
+          "Update result to substring from i to j plus one.",
+          "Update result length to j minus i plus one.",
+          "Close the palindrome check condition.",
+          "Close the inner loop.",
+          "Close the outer loop.",
+          "Return the result string.",
+          "Close the longestPalindrome function."
+        ]
+      },
+      "detailedExplanation": "This brute force solution exhaustively checks all possible substrings. The outer two loops generate every substring by varying start index i and end index j. For each substring s[i:j+1], we use two pointers to check if it's a palindrome: start l at i and r at j, then move them toward each other while the characters match. If l >= r (pointers meet or cross), the substring is a palindrome. We track the longest palindrome found so far by comparing lengths. The time complexity is O(n³) because we have O(n²) substrings and checking each one takes O(n) time. The space complexity is O(n) for storing the result string.",
+      "commonMistakes": [
+        "Not handling the case where l == r correctly (single character is a palindrome)",
+        "Incorrect substring extraction (off-by-one errors with indices)",
+        "Not updating both res and resLen when finding longer palindrome",
+        "Comparing lengths incorrectly (should use j - i + 1, not j - i)",
+        "Starting inner loop at 0 instead of i (generates duplicate work)"
+      ],
+      "whyItWorks": "The algorithm correctly identifies palindromes by checking if characters at symmetric positions match. The two-pointer palindrome check works because if s[l] == s[r] for all pairs moving inward, the substring must read the same forwards and backwards. By checking all substrings, we're guaranteed to find the longest palindrome. The condition l >= r ensures we've checked all character pairs (when l > r, all pairs matched; when l == r, we have odd-length palindrome with middle character).",
+      "keyInsights": [
+        "Brute force: check all O(n²) substrings",
+        "Two-pointer technique verifies palindrome in O(n) time",
+        "Condition l >= r confirms palindrome (pointers met or crossed)",
+        "Track both result string and length to avoid redundant length calculations",
+        "Cubic time complexity makes this impractical for large inputs"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "s = \"babad\"",
+          "explanation": "Check substrings: i=0,j=0: 'b' is palindrome, res='b', len=1. i=0,j=1: 'ba' not palindrome. i=0,j=2: 'bab' is palindrome, res='bab', len=3. i=0,j=3: 'baba' not palindrome. i=0,j=4: 'babad' not palindrome. i=1,j=1: 'a' is palindrome, len not greater. i=1,j=2: 'ab' not palindrome. i=1,j=3: 'aba' is palindrome, len not greater than 3. i=1,j=4: 'abad' not palindrome. Continue checking... Return 'bab' with length 3."
+        },
+        "example2": {
+          "input": "s = \"cbbd\"",
+          "explanation": "Check all substrings. When i=1,j=2: substring 'bb' is palindrome with length 2, becomes the longest found. No longer palindrome found. Return 'bb'."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming",
+      "description": "Use a 2D DP table where dp[i][j] indicates whether substring s[i:j+1] is a palindrome. Build the table by checking smaller substrings first. A substring is a palindrome if its first and last characters match and the inner substring is also a palindrome (or length <= 2).",
+      "timeComplexity": "O(n²)",
+      "spaceComplexity": "O(n²)",
+      "python": {
+        "code": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        resIdx, resLen = 0, 0\n        n = len(s)\n\n        dp = [[False] * n for _ in range(n)]\n\n        for i in range(n - 1, -1, -1):\n            for j in range(i, n):\n                if s[i] == s[j] and (j - i <= 2 or dp[i + 1][j - 1]):\n                    dp[i][j] = True\n                    if resLen < (j - i + 1):\n                        resIdx = i\n                        resLen = j - i + 1\n\n        return s[resIdx : resIdx + resLen]",
+        "semanticLines": [
+          "Initialize result index to zero and result length to zero.",
+          "Get the length of string s.",
+          "Create a 2D dp table of False values with dimensions n by n.",
+          "For each starting index i from n minus one down to zero in reverse order.",
+          "For each ending index j from i to n minus one.",
+          "If character at i equals character at j and either substring length is less than or equal to two or inner substring is palindrome.",
+          "Set dp at i j to True indicating substring from i to j is palindrome.",
+          "If result length is less than current substring length.",
+          "Update result index to i.",
+          "Update result length to j minus i plus one.",
+          "Return substring from result index to result index plus result length."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    longestPalindrome(s) {\n        let resIdx = 0, resLen = 0;\n        const n = s.length;\n\n        const dp = Array.from({ length: n }, () => Array(n).fill(false));\n\n        for (let i = n - 1; i >= 0; i--) {\n            for (let j = i; j < n; j++) {\n                if (s[i] === s[j] && (j - i <= 2 || dp[i + 1][j - 1])) {\n                    dp[i][j] = true;\n                    if (resLen < (j - i + 1)) {\n                        resIdx = i;\n                        resLen = j - i + 1;\n                    }\n                }\n            }\n        }\n\n        return s.substring(resIdx, resIdx + resLen);\n    }\n}",
+        "semanticLines": [
+          "Initialize result index to zero and result length to zero.",
+          "Get the length of string s.",
+          "Create a 2D dp table of false values with dimensions n by n.",
+          "For each starting index i from n minus one down to zero in reverse order.",
+          "For each ending index j from i to n minus one.",
+          "If character at i equals character at j and either substring length is less than or equal to two or inner substring is palindrome.",
+          "Set dp at i j to true indicating substring from i to j is palindrome.",
+          "If result length is less than current substring length.",
+          "Update result index to i.",
+          "Update result length to j minus i plus one.",
+          "Close the length comparison condition.",
+          "Close the palindrome condition.",
+          "Close the inner loop.",
+          "Close the outer loop.",
+          "Return substring from result index to result index plus result length.",
+          "Close the longestPalindrome method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func longestPalindrome(s string) string {\n    resIdx, resLen := 0, 0\n    n := len(s)\n\n    dp := make([][]bool, n)\n    for i := range dp {\n        dp[i] = make([]bool, n)\n    }\n\n    for i := n - 1; i >= 0; i-- {\n        for j := i; j < n; j++ {\n            if s[i] == s[j] && (j-i <= 2 || dp[i+1][j-1]) {\n                dp[i][j] = true\n                if resLen < (j - i + 1) {\n                    resIdx = i\n                    resLen = j - i + 1\n                }\n            }\n        }\n    }\n\n    return s[resIdx : resIdx+resLen]\n}",
+        "semanticLines": [
+          "Initialize result index to zero and result length to zero.",
+          "Get the length of string s.",
+          "Create a 2D dp slice with n rows.",
+          "For each row in dp.",
+          "Initialize each row as a boolean slice of length n.",
+          "Close the initialization loop.",
+          "For each starting index i from n minus one down to zero in reverse order.",
+          "For each ending index j from i to n minus one.",
+          "If character at i equals character at j and either substring length is less than or equal to two or inner substring is palindrome.",
+          "Set dp at i j to true indicating substring from i to j is palindrome.",
+          "If result length is less than current substring length.",
+          "Update result index to i.",
+          "Update result length to j minus i plus one.",
+          "Close the length comparison condition.",
+          "Close the palindrome condition.",
+          "Close the inner loop.",
+          "Close the outer loop.",
+          "Return substring from result index to result index plus result length.",
+          "Close the longestPalindrome function."
+        ]
+      },
+      "detailedExplanation": "This DP solution builds a table where dp[i][j] represents whether substring s[i:j+1] is a palindrome. The key insight is that a substring is a palindrome if: (1) its outer characters match (s[i] == s[j]), and (2) its inner substring is a palindrome (dp[i+1][j-1]) OR the substring has length <= 2 (base cases). We fill the table by iterating i from right to left and j from i to right, ensuring that when we check dp[i+1][j-1], it has already been computed. For lengths 1 and 2, we don't need to check the inner substring (j - i <= 2 handles this). As we fill the table, we track the longest palindrome found by comparing substring lengths. This approach reduces time complexity to O(n²) by avoiding redundant palindrome checks through memoization.",
+      "commonMistakes": [
+        "Iterating in wrong order (must compute smaller substrings before larger ones)",
+        "Not handling base cases correctly (length 1 and 2 substrings)",
+        "Incorrect DP transition (forgetting to check outer characters match)",
+        "Off-by-one errors in substring extraction",
+        "Not initializing DP table properly (should be False by default)"
+      ],
+      "whyItWorks": "The DP approach works by building up from base cases (single characters and pairs) to larger substrings. The recurrence dp[i][j] = (s[i] == s[j]) AND (dp[i+1][j-1] OR j-i <= 2) correctly captures palindrome structure: outer characters must match, and either the inner part is a palindrome or there is no inner part (length <= 2). By iterating i backwards and j forwards from i, we ensure dependencies are satisfied. This avoids the O(n) palindrome check of the brute force approach by reusing previously computed results.",
+      "keyInsights": [
+        "2D DP table: dp[i][j] = true if s[i:j+1] is palindrome",
+        "Recurrence: s[i]==s[j] AND (j-i<=2 OR dp[i+1][j-1])",
+        "Iterate i backwards, j forwards to ensure dependencies computed",
+        "Base cases: length 1 (always palindrome) and length 2 (check if characters match)",
+        "O(n²) time by avoiding redundant palindrome checks"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "s = \"babad\"",
+          "explanation": "Build DP table bottom-up. i=4: dp[4][4]=true ('d'). i=3: dp[3][3]=true ('a'), dp[3][4]=false ('ad'). i=2: dp[2][2]=true ('b'), dp[2][3]=true ('ab'), dp[2][4]=false. i=1: dp[1][1]=true ('a'), dp[1][2]=false ('ab'), dp[1][3]=true ('aba', len=3, update resIdx=1, resLen=3), dp[1][4]=false. i=0: dp[0][0]=true ('b'), dp[0][1]=false ('ba'), dp[0][2]=true ('bab', len=3, don't update), dp[0][3]=false, dp[0][4]=false. Return s[1:1+3]='aba' or could be 'bab' depending on update order."
+        },
+        "example2": {
+          "input": "s = \"cbbd\"",
+          "explanation": "i=3: dp[3][3]=true. i=2: dp[2][2]=true, dp[2][3]=false. i=1: dp[1][1]=true, dp[1][2]=true ('bb', len=2, update resIdx=1, resLen=2), dp[1][3]=false. i=0: dp[0][0]=true, dp[0][1]=false, dp[0][2]=false, dp[0][3]=false. Return s[1:3]='bb'."
+        }
+      }
+    },
+    {
+      "name": "Two Pointers",
+      "description": "Expand around each possible center to find palindromes. For each position, treat it as the center of an odd-length palindrome, and also treat it with the next position as the center of an even-length palindrome. Expand outward while characters match, tracking the longest palindrome found.",
+      "timeComplexity": "O(n²)",
+      "spaceComplexity": "O(1)",
+      "python": {
+        "code": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        resIdx = 0\n        resLen = 0\n\n        for i in range(len(s)):\n            # odd length\n            l, r = i, i\n            while l >= 0 and r < len(s) and s[l] == s[r]:\n                if (r - l + 1) > resLen:\n                    resIdx = l\n                    resLen = r - l + 1\n                l -= 1\n                r += 1\n\n            # even length\n            l, r = i, i + 1\n            while l >= 0 and r < len(s) and s[l] == s[r]:\n                if (r - l + 1) > resLen:\n                    resIdx = l\n                    resLen = r - l + 1\n                l -= 1\n                r += 1\n\n        return s[resIdx : resIdx + resLen]",
+        "semanticLines": [
+          "Initialize result index to zero.",
+          "Initialize result length to zero.",
+          "For each index i from zero to length of s minus one.",
+          "Handle odd length palindromes by setting left and right pointers both to i.",
+          "While left is within bounds and right is within bounds and characters at left and right are equal.",
+          "If current palindrome length is greater than result length.",
+          "Update result index to left pointer position.",
+          "Update result length to r minus l plus one.",
+          "Move left pointer one step to the left.",
+          "Move right pointer one step to the right.",
+          "Handle even length palindromes by setting left to i and right to i plus one.",
+          "While left is within bounds and right is within bounds and characters at left and right are equal.",
+          "If current palindrome length is greater than result length.",
+          "Update result index to left pointer position.",
+          "Update result length to r minus l plus one.",
+          "Move left pointer one step to the left.",
+          "Move right pointer one step to the right.",
+          "Return substring from result index to result index plus result length."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    longestPalindrome(s) {\n        let resIdx = 0;\n        let resLen = 0;\n\n        for (let i = 0; i < s.length; i++) {\n            // odd length\n            let l = i, r = i;\n            while (l >= 0 && r < s.length && s[l] === s[r]) {\n                if ((r - l + 1) > resLen) {\n                    resIdx = l;\n                    resLen = r - l + 1;\n                }\n                l--;\n                r++;\n            }\n\n            // even length\n            l = i;\n            r = i + 1;\n            while (l >= 0 && r < s.length && s[l] === s[r]) {\n                if ((r - l + 1) > resLen) {\n                    resIdx = l;\n                    resLen = r - l + 1;\n                }\n                l--;\n                r++;\n            }\n        }\n\n        return s.substring(resIdx, resIdx + resLen);\n    }\n}",
+        "semanticLines": [
+          "Initialize result index to zero.",
+          "Initialize result length to zero.",
+          "For each index i from zero to length of s minus one.",
+          "Handle odd length palindromes by setting left and right pointers both to i.",
+          "While left is within bounds and right is within bounds and characters at left and right are equal.",
+          "If current palindrome length is greater than result length.",
+          "Update result index to left pointer position.",
+          "Update result length to r minus l plus one.",
+          "Close the length comparison condition.",
+          "Move left pointer one step to the left.",
+          "Move right pointer one step to the right.",
+          "Close the while loop for odd length.",
+          "Handle even length palindromes by setting left to i.",
+          "Set right to i plus one.",
+          "While left is within bounds and right is within bounds and characters at left and right are equal.",
+          "If current palindrome length is greater than result length.",
+          "Update result index to left pointer position.",
+          "Update result length to r minus l plus one.",
+          "Close the length comparison condition.",
+          "Move left pointer one step to the left.",
+          "Move right pointer one step to the right.",
+          "Close the while loop for even length.",
+          "Close the for loop.",
+          "Return substring from result index to result index plus result length.",
+          "Close the longestPalindrome method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func longestPalindrome(s string) string {\n    resIdx := 0\n    resLen := 0\n\n    for i := 0; i < len(s); i++ {\n        // odd length\n        l, r := i, i\n        for l >= 0 && r < len(s) && s[l] == s[r] {\n            if (r - l + 1) > resLen {\n                resIdx = l\n                resLen = r - l + 1\n            }\n            l--\n            r++\n        }\n\n        // even length\n        l, r = i, i+1\n        for l >= 0 && r < len(s) && s[l] == s[r] {\n            if (r - l + 1) > resLen {\n                resIdx = l\n                resLen = r - l + 1\n            }\n            l--\n            r++\n        }\n    }\n\n    return s[resIdx : resIdx+resLen]\n}",
+        "semanticLines": [
+          "Initialize result index to zero.",
+          "Initialize result length to zero.",
+          "For each index i from zero to length of s minus one.",
+          "Handle odd length palindromes by setting left and right pointers both to i.",
+          "While left is within bounds and right is within bounds and characters at left and right are equal.",
+          "If current palindrome length is greater than result length.",
+          "Update result index to left pointer position.",
+          "Update result length to r minus l plus one.",
+          "Close the length comparison condition.",
+          "Move left pointer one step to the left.",
+          "Move right pointer one step to the right.",
+          "Close the while loop for odd length.",
+          "Handle even length palindromes by setting left to i and right to i plus one.",
+          "While left is within bounds and right is within bounds and characters at left and right are equal.",
+          "If current palindrome length is greater than result length.",
+          "Update result index to left pointer position.",
+          "Update result length to r minus l plus one.",
+          "Close the length comparison condition.",
+          "Move left pointer one step to the left.",
+          "Move right pointer one step to the right.",
+          "Close the while loop for even length.",
+          "Close the for loop.",
+          "Return substring from result index to result index plus result length.",
+          "Close the longestPalindrome function."
+        ]
+      },
+      "detailedExplanation": "The expand-around-center approach treats each position (or pair of positions) as a potential palindrome center and expands outward. For each index i, we check two cases: (1) odd-length palindromes centered at i (start with l=r=i), and (2) even-length palindromes centered between i and i+1 (start with l=i, r=i+1). We expand outward (l--, r++) while the characters match and we're within bounds. During expansion, we track the longest palindrome found. This approach is more space-efficient than DP (O(1) extra space) while maintaining O(n²) time complexity. The key insight is that every palindrome has a center, which can be either a single character (odd length) or between two characters (even length).",
+      "commonMistakes": [
+        "Forgetting to handle even-length palindromes (only checking odd-length)",
+        "Not checking bounds before accessing string indices (array out of bounds)",
+        "Updating result after expanding instead of during expansion (off-by-one errors)",
+        "Starting expansion with l=i-1, r=i+1 (skips the center character)",
+        "Not handling single character strings correctly"
+      ],
+      "whyItWorks": "Every palindrome is symmetric around its center. By expanding from each possible center, we can find all palindromes. Odd-length palindromes have a single character center, while even-length palindromes have their center between two characters. Expanding outward while characters match naturally builds up the palindrome. We check n positions for odd-length and n-1 positions for even-length palindromes, and each expansion takes O(n) in the worst case, giving O(n²) total time. The space efficiency comes from not storing intermediate results - we just expand and update the maximum on the fly.",
+      "keyInsights": [
+        "Expand around center: every palindrome has a center point or pair",
+        "Two cases: odd-length (center at character) and even-length (center between characters)",
+        "Expand outward while characters match, updating maximum length",
+        "O(n²) time: n centers × O(n) expansion per center",
+        "O(1) extra space: no need to store intermediate results",
+        "More intuitive and space-efficient than DP approach"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "s = \"babad\"",
+          "explanation": "i=0: Odd from 'b': doesn't expand. Even from 'b','a': no match. i=1: Odd from 'a': expands to 'bab' (len=3), update resIdx=0, resLen=3. Even from 'a','b': no match. i=2: Odd from 'b': expands to 'aba' (len=3), don't update. Even from 'b','a': no match. i=3: Odd from 'a': doesn't expand. Even from 'a','d': no match. i=4: Odd from 'd': doesn't expand. Return s[0:3]='bab' or s[1:4]='aba' depending on which was found first."
+        },
+        "example2": {
+          "input": "s = \"cbbd\"",
+          "explanation": "i=0: Odd/even don't find longer palindrome. i=1: Odd from 'b' doesn't extend beyond single char. Even from 'b','b': expands to 'bb' (len=2), update resIdx=1, resLen=2. Can't expand further ('c' != 'd'). i=2,3: No longer palindrome found. Return s[1:3]='bb'."
+        }
+      }
+    },
+    {
+      "name": "Manacher's Algorithm",
+      "description": "Use Manacher's Algorithm to find the longest palindrome in linear time. Transform the string by inserting separators to handle both odd and even length palindromes uniformly. Use previously computed palindrome information to avoid redundant checks, leveraging the symmetry property of palindromes.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        def manacher(s):\n            t = '#' + '#'.join(s) + '#'\n            n = len(t)\n            p = [0] * n\n            l, r = 0, 0\n            for i in range(n):\n                p[i] = min(r - i, p[l + (r - i)]) if i < r else 0\n                while (i + p[i] + 1 < n and i - p[i] - 1 >= 0\n                       and t[i + p[i] + 1] == t[i - p[i] - 1]):\n                    p[i] += 1\n                if i + p[i] > r:\n                    l, r = i - p[i], i + p[i]\n            return p\n\n        p = manacher(s)\n        resLen, center_idx = max((v, i) for i, v in enumerate(p))\n        resIdx = (center_idx - resLen) // 2\n        return s[resIdx : resIdx + resLen]",
+        "semanticLines": [
+          "Define Manacher's algorithm function that takes string s as parameter.",
+          "Transform string by inserting hash symbols between characters and at boundaries.",
+          "Get the length of transformed string.",
+          "Create palindrome radius array initialized to zeros.",
+          "Initialize left and right boundaries of rightmost palindrome to zero.",
+          "For each index i in transformed string.",
+          "If i is within current rightmost palindrome, set initial radius using mirror property, otherwise set to zero.",
+          "While we can expand both sides and characters match.",
+          "Expand palindrome radius by one.",
+          "If current palindrome extends beyond rightmost, update left and right boundaries.",
+          "Return the palindrome radius array.",
+          "Call Manacher's algorithm on input string.",
+          "Find maximum radius and its center index from palindrome array.",
+          "Calculate starting index in original string using center and radius.",
+          "Return substring from result index to result index plus result length."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    longestPalindrome(s) {\n        const manacher = (s) => {\n            const t = '#' + s.split('').join('#') + '#';\n            const n = t.length;\n            const p = new Array(n).fill(0);\n            let l = 0, r = 0;\n            for (let i = 0; i < n; i++) {\n                p[i] = i < r ? Math.min(r - i, p[l + (r - i)]) : 0;\n                while (i + p[i] + 1 < n && i - p[i] - 1 >= 0\n                       && t[i + p[i] + 1] === t[i - p[i] - 1]) {\n                    p[i]++;\n                }\n                if (i + p[i] > r) {\n                    l = i - p[i];\n                    r = i + p[i];\n                }\n            }\n            return p;\n        };\n\n        const p = manacher(s);\n        let resLen = 0, centerIdx = 0;\n        for (let i = 0; i < p.length; i++) {\n            if (p[i] > resLen) {\n                resLen = p[i];\n                centerIdx = i;\n            }\n        }\n        const resIdx = Math.floor((centerIdx - resLen) / 2);\n        return s.substring(resIdx, resIdx + resLen);\n    }\n}",
+        "semanticLines": [
+          "Define Manacher's algorithm arrow function that takes string s as parameter.",
+          "Transform string by inserting hash symbols between characters and at boundaries.",
+          "Get the length of transformed string.",
+          "Create palindrome radius array initialized to zeros.",
+          "Initialize left and right boundaries of rightmost palindrome to zero.",
+          "For each index i in transformed string.",
+          "If i is within current rightmost palindrome, set initial radius using mirror property, otherwise set to zero.",
+          "While we can expand both sides and characters match.",
+          "Expand palindrome radius by one.",
+          "Close the expansion while loop.",
+          "If current palindrome extends beyond rightmost, update left and right boundaries.",
+          "Update left boundary.",
+          "Update right boundary.",
+          "Close the boundary update condition.",
+          "Close the for loop.",
+          "Return the palindrome radius array.",
+          "Close the Manacher function definition.",
+          "Call Manacher's algorithm on input string.",
+          "Initialize result length to zero and center index to zero.",
+          "For each index in palindrome array.",
+          "If current radius is greater than result length.",
+          "Update result length to current radius.",
+          "Update center index to current position.",
+          "Close the comparison condition.",
+          "Close the search loop.",
+          "Calculate starting index in original string using center and radius.",
+          "Return substring from result index to result index plus result length.",
+          "Close the longestPalindrome method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func longestPalindrome(s string) string {\n    manacher := func(s string) []int {\n        var sb strings.Builder\n        sb.WriteString(\"#\")\n        for _, ch := range s {\n            sb.WriteRune(ch)\n            sb.WriteString(\"#\")\n        }\n        t := sb.String()\n        n := len(t)\n        p := make([]int, n)\n        l, r := 0, 0\n        for i := 0; i < n; i++ {\n            if i < r {\n                p[i] = min(r-i, p[l+(r-i)])\n            } else {\n                p[i] = 0\n            }\n            for i+p[i]+1 < n && i-p[i]-1 >= 0 && t[i+p[i]+1] == t[i-p[i]-1] {\n                p[i]++\n            }\n            if i+p[i] > r {\n                l, r = i-p[i], i+p[i]\n            }\n        }\n        return p\n    }\n\n    p := manacher(s)\n    resLen, centerIdx := 0, 0\n    for i, v := range p {\n        if v > resLen {\n            resLen = v\n            centerIdx = i\n        }\n    }\n    resIdx := (centerIdx - resLen) / 2\n    return s[resIdx : resIdx+resLen]\n}\n\nfunc min(a, b int) int {\n    if a < b {\n        return a\n    }\n    return b\n}",
+        "semanticLines": [
+          "Define Manacher's algorithm function that takes string s as parameter.",
+          "Create a string builder.",
+          "Write initial hash symbol.",
+          "For each character in string.",
+          "Write the character.",
+          "Write a hash symbol separator.",
+          "Close the loop.",
+          "Get the transformed string.",
+          "Get the length of transformed string.",
+          "Create palindrome radius slice initialized to zeros.",
+          "Initialize left and right boundaries of rightmost palindrome to zero.",
+          "For each index i in transformed string.",
+          "If i is within current rightmost palindrome.",
+          "Set initial radius using mirror property and minimum.",
+          "Close the within boundary condition.",
+          "Otherwise set initial radius to zero.",
+          "Close the else block.",
+          "While we can expand both sides and characters match.",
+          "Expand palindrome radius by one.",
+          "Close the expansion while loop.",
+          "If current palindrome extends beyond rightmost.",
+          "Update left and right boundaries.",
+          "Close the boundary update condition.",
+          "Close the for loop.",
+          "Return the palindrome radius slice.",
+          "Close the Manacher function definition.",
+          "Call Manacher's algorithm on input string.",
+          "Initialize result length to zero and center index to zero.",
+          "For each index and value in palindrome slice.",
+          "If current radius is greater than result length.",
+          "Update result length to current radius.",
+          "Update center index to current position.",
+          "Close the comparison condition.",
+          "Close the search loop.",
+          "Calculate starting index in original string using center and radius.",
+          "Return substring from result index to result index plus result length.",
+          "Close the longestPalindrome function.",
+          "Define min helper function that returns the minimum of two integers.",
+          "If a is less than b.",
+          "Return a.",
+          "Close the comparison condition.",
+          "Return b.",
+          "Close the min function."
+        ]
+      },
+      "detailedExplanation": "Manacher's Algorithm achieves linear time complexity by cleverly reusing information about previously found palindromes. First, we transform the input by inserting '#' between characters (e.g., 'aba' becomes '#a#b#a#'), which allows us to handle odd and even length palindromes uniformly. We maintain an array p where p[i] represents the radius of the longest palindrome centered at i in the transformed string. We also track the rightmost palindrome boundary (l, r). For each position i, we can leverage symmetry: if i is within a known palindrome, we can initialize p[i] using the mirror position's value. We then try to expand from this starting point. If we expand beyond the current rightmost boundary, we update it. This avoids redundant comparisons. After building the p array, we find the maximum radius and map it back to the original string. The algorithm is O(n) because each character is examined at most twice - once when expanding, once when using symmetry.",
+      "commonMistakes": [
+        "Not transforming string correctly (missing '#' at boundaries or between chars)",
+        "Incorrect mirror calculation (should be l + (r - i), not r - i)",
+        "Not checking bounds before expanding (array access errors)",
+        "Incorrectly mapping back to original string indices",
+        "Not understanding why the algorithm is O(n) (each position examined limited times)"
+      ],
+      "whyItWorks": "Manacher's Algorithm exploits palindrome symmetry to avoid redundant work. When we know that position i is within a palindrome centered at c, we can use the palindrome radius at the mirror position (2*c - i) to initialize p[i]. This is valid because palindromes are symmetric. We still need to try expanding beyond this initial value, but we start from a better position. The key insight for O(n) complexity: each character is added to the rightmost boundary at most once (when we expand), and we examine it at most once when using symmetry. The transformation to add '#' is clever because it makes all palindromes have odd length in the transformed string, simplifying the algorithm.",
+      "keyInsights": [
+        "Transform string with separators to handle odd/even lengths uniformly",
+        "Use symmetry within known palindromes to initialize new palindrome radius",
+        "Track rightmost palindrome boundary to enable symmetry optimization",
+        "Each character examined at most twice, giving O(n) complexity",
+        "Most sophisticated but optimal algorithm for palindrome substring problem",
+        "Requires understanding of amortized analysis to see O(n) time"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "s = \"babad\"",
+          "explanation": "Transform: t = '#b#a#b#a#d#'. Build p array: p[0]=0, p[1]=0, p[2]=1, p[3]=0, p[4]=3 (center of 'bab'), p[5]=0, p[6]=3 (center of 'aba'), p[7]=0, p[8]=1, p[9]=0, p[10]=0. Max radius is 3 at indices 4 or 6. If at index 4: centerIdx=4, resLen=3, resIdx=(4-3)/2=0. Return s[0:3]='bab'."
+        },
+        "example2": {
+          "input": "s = \"cbbd\"",
+          "explanation": "Transform: t = '#c#b#b#d#'. Build p array: p[3]=0, p[4]=1 (center between 'b' and 'b'). Max radius is 1 at index 4. resIdx=(4-1)/2=1. Return s[1:2]='bb'."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "Think about what makes a string a palindrome - it reads the same forwards and backwards.",
+    "Can you check all possible substrings? What's the time complexity?",
+    "For dynamic programming, think about how you can use smaller palindromes to find larger ones.",
+    "Every palindrome has a center. How can you expand around each possible center?",
+    "For the optimal solution, research Manacher's Algorithm - it achieves O(n) by avoiding redundant comparisons."
+  ],
+  "followUpQuestions": [
+    "Can you find all palindromic substrings, not just the longest?",
+    "What if you needed to find the longest palindrome after deleting at most k characters?",
+    "How would you modify the solution to find the k longest palindromic substrings?",
+    "Can you solve this problem if the string is given as a stream?",
+    "What if you need to find the shortest palindrome by adding characters to the front?"
+  ],
+  "relatedProblems": [
+    "647. Palindromic Substrings",
+    "516. Longest Palindromic Subsequence",
+    "214. Shortest Palindrome",
+    "336. Palindrome Pairs",
+    "125. Valid Palindrome"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
