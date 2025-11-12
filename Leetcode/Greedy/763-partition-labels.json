@@ -1,0 +1,194 @@
+{
+  "decks": [
+    {
+      "deckName": "Greedy",
+      "cards": [
+        {
+          "problemNumber": 763,
+          "questionId": "763",
+          "title": "Partition Labels",
+          "difficulty": "Medium",
+          "tags": ["Hash Table", "Two Pointers", "String", "Greedy"],
+          "likes": 9876,
+          "dislikes": 345,
+          "problemStatement": "You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part.\n\nNote that the partition is done so that after concatenating all the parts in order, the resultant string should be s.\n\nReturn a list of integers representing the size of these parts.",
+          "examples": [
+            {
+              "input": "s = \"ababcbacadefegdehijhklij\"",
+              "output": "[9,7,8]",
+              "explanation": "The partition is \"ababcbaca\", \"defegde\", \"hijhklij\".\nThis is a partition so that each letter appears in at most one part.\nA partition like \"ababcbacadefegde\", \"hijhklij\" is incorrect, because it splits s into less parts."
+            },
+            {
+              "input": "s = \"eccbbbbdec\"",
+              "output": "[10]",
+              "explanation": "The entire string cannot be split into smaller parts."
+            }
+          ],
+          "constraints": [
+            "1 <= s.length <= 500",
+            "s consists of lowercase English letters"
+          ],
+          "solutions": [
+            {
+              "solutionId": "two-pointers-greedy",
+              "solutionName": "Two Pointers (Greedy)",
+              "solutionDescription": "First, record the last occurrence index of each character. Then iterate through the string, maintaining the farthest end point needed to include all characters seen so far. When the current index reaches this end point, we've found a complete partition.",
+              "timeComplexity": "O(n)",
+              "timeComplexityExplanation": "We iterate through the string twice: once to build the lastIndex map and once to create partitions.",
+              "spaceComplexity": "O(m)",
+              "spaceComplexityExplanation": "We store the last index for each unique character, where m is the number of unique characters (at most 26 for lowercase letters).",
+              "displayOrder": 1,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def partitionLabels(self, s: str) -> List[int]:",
+                    "        lastIndex = {}",
+                    "        for i, c in enumerate(s):",
+                    "            lastIndex[c] = i",
+                    "",
+                    "        res = []",
+                    "        size = end = 0",
+                    "        for i, c in enumerate(s):",
+                    "            size += 1",
+                    "            end = max(end, lastIndex[c])",
+                    "",
+                    "            if i == end:",
+                    "                res.append(size)",
+                    "                size = 0",
+                    "        return res"
+                  ],
+                  "semanticLines": [
+                    "Define function partitionLabels that accepts s.",
+                    "Create empty dictionary, assign to lastIndex.",
+                    "Loop through each index i and character c in s.",
+                    "Set lastIndex at c to i.",
+                    "",
+                    "Create empty list, assign to res.",
+                    "Initialize size and end to zero.",
+                    "Loop through each index i and character c in s.",
+                    "Increment size by one.",
+                    "Get maximum of end and lastIndex at c, assign to end.",
+                    "",
+                    "If i equals end.",
+                    "Append size to res.",
+                    "Set size to zero.",
+                    "Return res."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var partitionLabels = function(s) {",
+                    "    const lastIndex = new Map();",
+                    "    for (let i = 0; i < s.length; i++) {",
+                    "        lastIndex.set(s[i], i);",
+                    "    }",
+                    "",
+                    "    const res = [];",
+                    "    let size = 0, end = 0;",
+                    "    for (let i = 0; i < s.length; i++) {",
+                    "        size++;",
+                    "        end = Math.max(end, lastIndex.get(s[i]));",
+                    "",
+                    "        if (i === end) {",
+                    "            res.push(size);",
+                    "            size = 0;",
+                    "        }",
+                    "    }",
+                    "    return res;",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function partitionLabels that accepts s.",
+                    "Create empty Map, assign to lastIndex.",
+                    "Loop through each index i in s.",
+                    "Set lastIndex at s at i to i.",
+                    "",
+                    "",
+                    "Create empty array, assign to res.",
+                    "Initialize size and end to zero.",
+                    "Loop through each index i in s.",
+                    "Increment size.",
+                    "Get maximum of end and lastIndex get s at i, assign to end.",
+                    "",
+                    "If i equals end.",
+                    "Push size to res.",
+                    "Set size to zero.",
+                    "",
+                    "",
+                    "Return res.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func partitionLabels(s string) []int {",
+                    "    lastIndex := make(map[byte]int)",
+                    "    for i := 0; i < len(s); i++ {",
+                    "        lastIndex[s[i]] = i",
+                    "    }",
+                    "",
+                    "    res := []int{}",
+                    "    size, end := 0, 0",
+                    "    for i := 0; i < len(s); i++ {",
+                    "        size++",
+                    "        end = max(end, lastIndex[s[i]])",
+                    "",
+                    "        if i == end {",
+                    "            res = append(res, size)",
+                    "            size = 0",
+                    "        }",
+                    "    }",
+                    "    return res",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function partitionLabels that accepts s.",
+                    "Create empty map from byte to int, assign to lastIndex.",
+                    "Loop through each index i in s.",
+                    "Set lastIndex at s at i to i.",
+                    "",
+                    "",
+                    "Create empty int slice, assign to res.",
+                    "Initialize size and end to zero.",
+                    "Loop through each index i in s.",
+                    "Increment size.",
+                    "Get maximum of end and lastIndex at s at i, assign to end.",
+                    "",
+                    "If i equals end.",
+                    "Append size to res, assign to res.",
+                    "Set size to zero.",
+                    "",
+                    "",
+                    "Return res.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "s = \"ababcbacadefegdehijhklij\"",
+                "steps": [
+                  "Build lastIndex: {a:8, b:5, c:7, d:14, e:15, f:11, g:13, h:19, i:22, j:23, k:20, l:21}",
+                  "i=0, c='a': size=1, end=max(0,8)=8",
+                  "i=1, c='b': size=2, end=max(8,5)=8",
+                  "...",
+                  "i=8, c='a': size=9, end=max(8,8)=8, i==end, append 9, size=0",
+                  "i=9, c='d': size=1, end=max(0,14)=14",
+                  "...",
+                  "i=15, c='e': size=7, end=max(15,15)=15, i==end, append 7, size=0",
+                  "i=16, c='h': size=1, end=max(0,19)=19",
+                  "...",
+                  "i=23, c='j': size=8, end=max(23,23)=23, i==end, append 8",
+                  "Return [9,7,8]"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
