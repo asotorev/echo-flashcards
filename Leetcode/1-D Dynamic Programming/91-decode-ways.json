@@ -1,0 +1,482 @@
+{
+  "problemId": "91",
+  "title": "Decode Ways",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "String Decoding",
+  "similar_questions": ["639. Decode Ways II", "1977. Number of Ways to Separate Numbers"],
+  "real_life_domains": ["Cryptography", "Data Encoding", "Communication Systems", "Error Correction"],
+  "scenarios": [
+    {
+      "scenario": "Message decoding in communication systems",
+      "description": "Decoding numeric messages where each number or pair of numbers represents a character, commonly used in legacy communication protocols and encoding schemes."
+    },
+    {
+      "scenario": "Cryptographic analysis",
+      "description": "Analyzing the number of possible interpretations of an encoded message, which is crucial in cryptanalysis and understanding encryption strength."
+    },
+    {
+      "scenario": "Data compression and encoding",
+      "description": "Determining the number of valid decodings for compressed data where numeric codes represent different symbols or characters."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Use recursive backtracking to explore all possible ways to decode the string. At each position, try decoding a single digit (if valid) and a two-digit number (if valid). The base case is reaching the end of the string, which counts as one valid decoding. Invalid paths (starting with '0') return 0.",
+      "explanation": "The recursive solution explores all possible decoding paths through the string. At each index i, we have two choices: decode the current digit alone (if it's not '0') and continue from i+1, or decode the current digit with the next digit as a two-digit number (if they form a valid code 10-26) and continue from i+2. The recursion explores both paths and sums the results. When we reach the end of the string (i == len(s)), we've found one valid decoding. If we encounter a '0' at the start of our current position, it's invalid because '0' alone doesn't map to any letter.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def numDecodings(self, s: str) -> int:\n\n        def dfs(i):\n            if i == len(s):\n                return 1\n            if s[i] == '0':\n                return 0\n\n            res = dfs(i + 1)\n            if i < len(s) - 1:\n                if (s[i] == '1' or\n                   (s[i] == '2' and s[i + 1] < '7')):\n                    res += dfs(i + 2)\n\n            return res\n\n        return dfs(0)",
+          "semantic_descriptions": [
+            "If current index equals string length.",
+            "Return one for reaching end successfully.",
+            "If current character is zero.",
+            "Return zero for invalid decoding.",
+            "Recursively get count from decoding single digit.",
+            "If not at last character.",
+            "If current is one or current is two and next less than seven.",
+            "Add count from decoding two digits together.",
+            "Return total ways from this position.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var numDecodings = function(s) {\n    function dfs(i) {\n        if (i === s.length) {\n            return 1;\n        }\n        if (s[i] === '0') {\n            return 0;\n        }\n\n        let res = dfs(i + 1);\n        if (i < s.length - 1) {\n            if (s[i] === '1' ||\n               (s[i] === '2' && s[i + 1] < '7')) {\n                res += dfs(i + 2);\n            }\n        }\n\n        return res;\n    }\n\n    return dfs(0);\n};",
+          "semantic_descriptions": [
+            "If current index equals string length.",
+            "Return one for reaching end successfully.",
+            "If current character is zero.",
+            "Return zero for invalid decoding.",
+            "Recursively get count from decoding single digit.",
+            "If not at last character.",
+            "If current is one or current is two and next less than seven.",
+            "Add count from decoding two digits together.",
+            "Return total ways from this position.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func numDecodings(s string) int {\n    var dfs func(i int) int\n    dfs = func(i int) int {\n        if i == len(s) {\n            return 1\n        }\n        if s[i] == '0' {\n            return 0\n        }\n\n        res := dfs(i + 1)\n        if i < len(s) - 1 {\n            if s[i] == '1' ||\n               (s[i] == '2' && s[i + 1] < '7') {\n                res += dfs(i + 2)\n            }\n        }\n\n        return res\n    }\n\n    return dfs(0)\n}",
+          "semantic_descriptions": [
+            "Declare recursive function taking index parameter.",
+            "If current index equals string length.",
+            "Return one for reaching end successfully.",
+            "If current character is zero.",
+            "Return zero for invalid decoding.",
+            "Recursively get count from decoding single digit.",
+            "If not at last character.",
+            "If current is one or current is two and next less than seven.",
+            "Add count from decoding two digits together.",
+            "Return total ways from this position.",
+            "Start recursion from index zero."
+          ]
+        }
+      ],
+      "time_complexity": "O(2^n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "In the worst case, at each position we make two recursive calls (single digit and two digits), creating a binary tree of recursion with depth n. This results in O(2^n) time complexity. Many subproblems are computed multiple times.",
+        "space": "The recursion stack can go as deep as n levels (when we always decode single digits), requiring O(n) space for the call stack."
+      },
+      "why_it_works": "This solution works by systematically exploring all valid decoding paths. At each position, we check if we can decode a single digit (any digit except '0' maps to a letter) and/or two digits (10-26 map to letters). The key insight is that the number of ways to decode from position i equals the number of ways to decode from i+1 (if single digit is valid) plus the number of ways to decode from i+2 (if two digits form a valid code). The base case of returning 1 when i == len(s) represents successfully reaching the end with a valid decoding. Returning 0 for '0' handles the invalid case where '0' cannot be decoded alone.",
+      "constraints_examples": [
+        {
+          "input": "s = \"12\"",
+          "output": "2",
+          "explanation": "Can be decoded as '1' + '2' (AB) or '12' (L), giving 2 ways."
+        },
+        {
+          "input": "s = \"226\"",
+          "output": "3",
+          "explanation": "Can be decoded as '2'+'2'+'6' (BBF), '22'+'6' (VF), or '2'+'26' (BZ), giving 3 ways."
+        },
+        {
+          "input": "s = \"06\"",
+          "output": "0",
+          "explanation": "Cannot decode because '0' at the start is invalid, and '06' is not a valid code (only 10-26 are valid)."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to check if s[i] == '0' which is an invalid single digit.",
+        "Incorrectly checking two-digit validity - must be in range 10-26, so '27', '30', etc. are invalid.",
+        "Not checking bounds before accessing s[i + 1], leading to index out of bounds errors.",
+        "Missing the base case for i == len(s), which should return 1, not 0."
+      ],
+      "pro_tips": [
+        "The condition (s[i] == '1' or (s[i] == '2' and s[i + 1] < '7')) elegantly checks if two digits form a valid code (10-26).",
+        "This recursive solution has overlapping subproblems - the same index i is computed multiple times, making it a perfect candidate for memoization.",
+        "Understanding this solution is crucial before moving to the optimized DP versions."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"12\"",
+          "steps": [
+            "dfs(0): s[0]='1', res = dfs(1), check two-digit: '12' valid (s[0]='1') → res += dfs(2).",
+            "  dfs(1): s[1]='2', res = dfs(2), i=1 is last char, skip two-digit check.",
+            "    dfs(2): i == len(s) → return 1.",
+            "  dfs(1) returns 1.",
+            "  dfs(2): i == len(s) → return 1.",
+            "dfs(0): res = 1 + 1 = 2.",
+            "Return 2 (decodings: '1'+'2' and '12')."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Optimize the recursive solution by adding memoization. Store the result for each index in a dictionary to avoid recomputing the same subproblem multiple times. This transforms the exponential time complexity into linear time while maintaining the recursive structure.",
+      "explanation": "This solution is identical to the recursive approach but adds a memoization cache (dp dictionary) to store results for each index. Before computing dfs(i), we check if we've already computed it by looking in the dp dictionary. If found, we return the cached result immediately. Otherwise, we compute it using the same logic as the recursive solution and store it in dp before returning. The base case dp[len(s)] = 1 is initialized upfront. This eliminates redundant computations by ensuring each subproblem (each index) is solved exactly once.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def numDecodings(self, s: str) -> int:\n        dp = {len(s) : 1}\n\n        def dfs(i):\n            if i in dp:\n                return dp[i]\n            if s[i] == \"0\":\n                return 0\n\n            res = dfs(i + 1)\n            if i + 1 < len(s) and (\n                s[i] == \"1\" or s[i] == \"2\" and\n                s[i + 1] in \"0123456\"\n            ):\n                res += dfs(i + 2)\n            dp[i] = res\n            return res\n\n        return dfs(0)",
+          "semantic_descriptions": [
+            "Initialize cache with base case mapping end index to one.",
+            "If current index already computed.",
+            "Return cached result.",
+            "If current character is zero.",
+            "Return zero for invalid decoding.",
+            "Recursively get count from decoding single digit.",
+            "If next index exists and two digits form valid code.",
+            "Add count from decoding two digits together.",
+            "Store result in cache before returning.",
+            "Return total ways from this position.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var numDecodings = function(s) {\n    const dp = new Map();\n    dp.set(s.length, 1);\n\n    function dfs(i) {\n        if (dp.has(i)) {\n            return dp.get(i);\n        }\n        if (s[i] === \"0\") {\n            return 0;\n        }\n\n        let res = dfs(i + 1);\n        if (i + 1 < s.length && (\n            s[i] === \"1\" || s[i] === \"2\" &&\n            \"0123456\".includes(s[i + 1])\n        )) {\n            res += dfs(i + 2);\n        }\n        dp.set(i, res);\n        return res;\n    }\n\n    return dfs(0);\n};",
+          "semantic_descriptions": [
+            "Initialize cache map.",
+            "Set base case mapping end index to one.",
+            "If current index already computed.",
+            "Return cached result.",
+            "If current character is zero.",
+            "Return zero for invalid decoding.",
+            "Recursively get count from decoding single digit.",
+            "If next index exists and two digits form valid code.",
+            "Add count from decoding two digits together.",
+            "Store result in cache before returning.",
+            "Return total ways from this position.",
+            "Start recursion from index zero."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func numDecodings(s string) int {\n    dp := make(map[int]int)\n    dp[len(s)] = 1\n\n    var dfs func(i int) int\n    dfs = func(i int) int {\n        if val, exists := dp[i]; exists {\n            return val\n        }\n        if s[i] == '0' {\n            return 0\n        }\n\n        res := dfs(i + 1)\n        if i + 1 < len(s) && (\n            s[i] == '1' || s[i] == '2' &&\n            s[i + 1] >= '0' && s[i + 1] <= '6'\n        ) {\n            res += dfs(i + 2)\n        }\n        dp[i] = res\n        return res\n    }\n\n    return dfs(0)\n}",
+          "semantic_descriptions": [
+            "Initialize cache map.",
+            "Set base case mapping end index to one.",
+            "Declare recursive function taking index parameter.",
+            "If current index already computed.",
+            "Return cached result.",
+            "If current character is zero.",
+            "Return zero for invalid decoding.",
+            "Recursively get count from decoding single digit.",
+            "If next index exists and two digits form valid code.",
+            "Add count from decoding two digits together.",
+            "Store result in cache before returning.",
+            "Return total ways from this position.",
+            "Start recursion from index zero."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "Each index from 0 to n is computed exactly once due to memoization. Each computation does O(1) work, resulting in O(n) total time.",
+        "space": "The dp dictionary stores results for at most n indices, requiring O(n) space. The recursion stack also uses O(n) space in the worst case, so total space is O(n)."
+      },
+      "why_it_works": "Memoization transforms the exponential recursive solution into a polynomial one by eliminating redundant computations. The key insight is that the recursive solution has overlapping subproblems - dfs(i) may be called multiple times from different paths. By storing the result of dfs(i) the first time we compute it, all subsequent calls can retrieve the cached value in O(1) time instead of recomputing. This preserves the correctness of the recursive logic while achieving the efficiency of dynamic programming. The base case dp[len(s)] = 1 is crucial as it provides the foundation for all other computations.",
+      "constraints_examples": [
+        {
+          "input": "s = \"12\"",
+          "output": "2",
+          "explanation": "Cache builds: dp[2]=1, dp[1]=1, dp[0]=2. Final result is 2."
+        },
+        {
+          "input": "s = \"226\"",
+          "output": "3",
+          "explanation": "Cache builds: dp[3]=1, dp[2]=1, dp[1]=2, dp[0]=3. Final result is 3."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to initialize dp[len(s)] = 1, which is needed as the base case.",
+        "Storing the result in dp after returning instead of before, which defeats memoization.",
+        "Not checking if i is in dp before computing, which eliminates the benefit of memoization.",
+        "Using s[i + 1] in \"0123456\" which is a string membership check - ensure this works correctly in your language."
+      ],
+      "pro_tips": [
+        "Top-down DP (memoization) is often easier to understand and implement than bottom-up because it follows the natural recursive structure.",
+        "The check s[i + 1] in \"0123456\" is equivalent to s[i] == '2' and s[i + 1] <= '6', verifying valid two-digit codes 20-26.",
+        "Initializing dp with the base case {len(s): 1} simplifies the recursive function by handling the boundary condition upfront.",
+        "This pattern of adding memoization to recursion is applicable to many DP problems."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"226\"",
+          "steps": [
+            "Initialize dp = {3: 1}.",
+            "dfs(0): 0 not in dp, s[0]='2', res = dfs(1).",
+            "  dfs(1): 1 not in dp, s[1]='2', res = dfs(2).",
+            "    dfs(2): 2 not in dp, s[2]='6', res = dfs(3).",
+            "      dfs(3): 3 in dp → return 1.",
+            "    dfs(2): res = 1, i=2 is last char, skip two-digit, dp[2] = 1, return 1.",
+            "  dfs(1): res = 1, check two-digit: s[1]='2' and s[2]='6' in '0123456' → res += dfs(3).",
+            "    dfs(3): 3 in dp → return 1.",
+            "  dfs(1): res = 1 + 1 = 2, dp[1] = 2, return 2.",
+            "dfs(0): res = 2, check two-digit: s[0]='2' and s[1]='2' in '0123456' → res += dfs(2).",
+            "  dfs(2): 2 in dp → return 1.",
+            "dfs(0): res = 2 + 1 = 3, dp[0] = 3, return 3.",
+            "Return 3."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build the solution iteratively from the end of the string to the beginning. Use a dictionary where dp[i] represents the number of ways to decode the substring starting at index i. Iterate backward, computing dp[i] based on previously computed values dp[i+1] and dp[i+2].",
+      "explanation": "The bottom-up approach eliminates recursion by building the solution iteratively. We initialize dp[len(s)] = 1 as the base case. Then, we iterate from the last character backward to the first. For each position i, if s[i] is '0', there are no valid decodings from this position, so dp[i] = 0. Otherwise, we can decode the single digit, so dp[i] starts with dp[i+1] (the number of ways to decode from the next position). If we can also form a valid two-digit code with s[i] and s[i+1], we add dp[i+2] to account for those decodings. This iterative approach computes the same values as the top-down approach but in reverse order without recursion.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def numDecodings(self, s: str) -> int:\n        dp = {len(s): 1}\n        for i in range(len(s) - 1, -1, -1):\n            if s[i] == \"0\":\n                dp[i] = 0\n            else:\n                dp[i] = dp[i + 1]\n\n            if i + 1 < len(s) and (s[i] == \"1\" or\n               s[i] == \"2\" and s[i + 1] in \"0123456\"\n            ):\n                dp[i] += dp[i + 2]\n        return dp[0]",
+          "semantic_descriptions": [
+            "Initialize cache with base case mapping end index to one.",
+            "Loop backward from last character to first.",
+            "If current character is zero.",
+            "Set ways to zero for invalid position.",
+            "Otherwise set ways equal to ways from next position.",
+            "If next index exists and two digits form valid code.",
+            "Add ways from position two steps ahead.",
+            "Return ways to decode from start of string."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var numDecodings = function(s) {\n    const dp = new Map();\n    dp.set(s.length, 1);\n    for (let i = s.length - 1; i >= 0; i--) {\n        if (s[i] === \"0\") {\n            dp.set(i, 0);\n        } else {\n            dp.set(i, dp.get(i + 1));\n        }\n\n        if (i + 1 < s.length && (s[i] === \"1\" ||\n           s[i] === \"2\" && \"0123456\".includes(s[i + 1])\n        )) {\n            dp.set(i, dp.get(i) + dp.get(i + 2));\n        }\n    }\n    return dp.get(0);\n};",
+          "semantic_descriptions": [
+            "Initialize cache map.",
+            "Set base case mapping end index to one.",
+            "Loop backward from last character to first.",
+            "If current character is zero.",
+            "Set ways to zero for invalid position.",
+            "Otherwise set ways equal to ways from next position.",
+            "If next index exists and two digits form valid code.",
+            "Add ways from position two steps ahead to current ways.",
+            "Return ways to decode from start of string."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func numDecodings(s string) int {\n    dp := make(map[int]int)\n    dp[len(s)] = 1\n    for i := len(s) - 1; i >= 0; i-- {\n        if s[i] == '0' {\n            dp[i] = 0\n        } else {\n            dp[i] = dp[i + 1]\n        }\n\n        if i + 1 < len(s) && (s[i] == '1' ||\n           s[i] == '2' && s[i + 1] >= '0' && s[i + 1] <= '6'\n        ) {\n            dp[i] += dp[i + 2]\n        }\n    }\n    return dp[0]\n}",
+          "semantic_descriptions": [
+            "Initialize cache map.",
+            "Set base case mapping end index to one.",
+            "Loop backward from last character to first.",
+            "If current character is zero.",
+            "Set ways to zero for invalid position.",
+            "Otherwise set ways equal to ways from next position.",
+            "If next index exists and two digits form valid code.",
+            "Add ways from position two steps ahead.",
+            "Return ways to decode from start of string."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We iterate through the string once from end to beginning, performing O(1) operations at each position, resulting in O(n) time complexity.",
+        "space": "The dp dictionary stores values for n+1 indices (0 through n), requiring O(n) space."
+      },
+      "why_it_works": "Bottom-up DP works by building solutions to larger problems from solutions to smaller problems. The key recurrence relation is: dp[i] = dp[i+1] (if s[i] is valid single digit) + dp[i+2] (if s[i:i+2] is valid two-digit code). By iterating backward from the end, we ensure that when we compute dp[i], the values dp[i+1] and dp[i+2] have already been computed. The base case dp[len(s)] = 1 represents that there's one way to decode an empty string (do nothing). This approach avoids recursion entirely, making it more efficient in practice due to eliminating function call overhead.",
+      "constraints_examples": [
+        {
+          "input": "s = \"12\"",
+          "output": "2",
+          "explanation": "Build dp backward: dp[2]=1, dp[1]=1 (from dp[2]), dp[0]=1 (from dp[1]) + 1 (from dp[2]) = 2."
+        },
+        {
+          "input": "s = \"226\"",
+          "output": "3",
+          "explanation": "Build dp backward: dp[3]=1, dp[2]=1, dp[1]=1+1=2, dp[0]=2+1=3."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating forward instead of backward, which causes you to access dp[i+1] and dp[i+2] before they're computed.",
+        "Forgetting to initialize dp[len(s)] = 1 before the loop.",
+        "Not handling the case where s[i] == '0' separately, which should set dp[i] = 0.",
+        "Trying to access dp[i+2] when i is the second-to-last character without checking bounds (though the condition i + 1 < len(s) prevents this)."
+      ],
+      "pro_tips": [
+        "Bottom-up DP is generally more efficient than top-down because it avoids recursion overhead.",
+        "The iteration order (backward) is critical - we must compute smaller subproblems (larger indices) before larger subproblems (smaller indices).",
+        "You can visualize this as building a Fibonacci-like sequence where each value depends on the next two values.",
+        "This approach makes the space optimization in the next solution more obvious."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"226\"",
+          "steps": [
+            "Initialize dp = {3: 1}.",
+            "i = 2: s[2] = '6' != '0', dp[2] = dp[3] = 1. Check two-digit: i+1 = 3 >= len(s), skip. dp = {3:1, 2:1}.",
+            "i = 1: s[1] = '2' != '0', dp[1] = dp[2] = 1. Check two-digit: s[1]='2' and s[2]='6' in '0123456' → dp[1] += dp[3] = 1 + 1 = 2. dp = {3:1, 2:1, 1:2}.",
+            "i = 0: s[0] = '2' != '0', dp[0] = dp[1] = 2. Check two-digit: s[0]='2' and s[1]='2' in '0123456' → dp[0] += dp[2] = 2 + 1 = 3. dp = {3:1, 2:1, 1:2, 0:3}.",
+            "Return dp[0] = 3."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Space Optimized)",
+      "approach": "Optimize the bottom-up approach by observing that we only need the values at positions i+1 and i+2 to compute dp[i]. Instead of storing all n values in a dictionary, use three variables to track the current value, the next value, and the value two positions ahead. Shift these variables as we iterate backward.",
+      "explanation": "This solution recognizes that the bottom-up DP only needs the last two computed values (dp[i+1] and dp[i+2]) to compute the current value (dp[i]). We use three variables: dp (current value being computed), dp1 (value at i+1), and dp2 (value at i+2). We iterate backward just like the bottom-up solution. For each position, we compute dp using dp1 and dp2, then shift the variables: the new dp1 becomes the old dp, and the new dp2 becomes the old dp1. The current dp is reset to 0. After the loop, dp1 contains the answer (which was dp[0] before the final shift). This optimization reduces space complexity from O(n) to O(1).",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def numDecodings(self, s: str) -> int:\n        dp = dp2 = 0\n        dp1 = 1\n        for i in range(len(s) - 1, -1, -1):\n            if s[i] == \"0\":\n                dp = 0\n            else:\n                dp = dp1\n\n            if i + 1 < len(s) and (s[i] == \"1\" or\n               s[i] == \"2\" and s[i + 1] in \"0123456\"\n            ):\n                dp += dp2\n            dp, dp1, dp2 = 0, dp, dp1\n        return dp1",
+          "semantic_descriptions": [
+            "Initialize current and two-ahead to zero, next to one.",
+            "Loop backward from last character to first.",
+            "If current character is zero.",
+            "Set current ways to zero.",
+            "Otherwise set current ways equal to next ways.",
+            "If next index exists and two digits form valid code.",
+            "Add two-ahead ways to current ways.",
+            "Shift variables with current reset to zero, next becomes current, two-ahead becomes next.",
+            "Return next which holds ways from original start."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var numDecodings = function(s) {\n    let dp = 0, dp2 = 0;\n    let dp1 = 1;\n    for (let i = s.length - 1; i >= 0; i--) {\n        if (s[i] === \"0\") {\n            dp = 0;\n        } else {\n            dp = dp1;\n        }\n\n        if (i + 1 < s.length && (s[i] === \"1\" ||\n           s[i] === \"2\" && \"0123456\".includes(s[i + 1])\n        )) {\n            dp += dp2;\n        }\n        [dp, dp1, dp2] = [0, dp, dp1];\n    }\n    return dp1;\n};",
+          "semantic_descriptions": [
+            "Initialize current and two-ahead to zero.",
+            "Initialize next to one.",
+            "Loop backward from last character to first.",
+            "If current character is zero.",
+            "Set current ways to zero.",
+            "Otherwise set current ways equal to next ways.",
+            "If next index exists and two digits form valid code.",
+            "Add two-ahead ways to current ways.",
+            "Shift variables with current reset to zero, next becomes current, two-ahead becomes next.",
+            "Return next which holds ways from original start."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func numDecodings(s string) int {\n    dp, dp2 := 0, 0\n    dp1 := 1\n    for i := len(s) - 1; i >= 0; i-- {\n        if s[i] == '0' {\n            dp = 0\n        } else {\n            dp = dp1\n        }\n\n        if i + 1 < len(s) && (s[i] == '1' ||\n           s[i] == '2' && s[i + 1] >= '0' && s[i + 1] <= '6'\n        ) {\n            dp += dp2\n        }\n        dp, dp1, dp2 = 0, dp, dp1\n    }\n    return dp1\n}",
+          "semantic_descriptions": [
+            "Initialize current and two-ahead to zero.",
+            "Initialize next to one.",
+            "Loop backward from last character to first.",
+            "If current character is zero.",
+            "Set current ways to zero.",
+            "Otherwise set current ways equal to next ways.",
+            "If next index exists and two digits form valid code.",
+            "Add two-ahead ways to current ways.",
+            "Shift variables with current reset to zero, next becomes current, two-ahead becomes next.",
+            "Return next which holds ways from original start."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "We iterate through the string once from end to beginning, performing O(1) operations at each position, resulting in O(n) time complexity.",
+        "space": "We only use three variables (dp, dp1, dp2) regardless of input size, achieving O(1) constant space complexity."
+      },
+      "why_it_works": "This optimization works because of the Markov property of the DP recurrence: dp[i] only depends on dp[i+1] and dp[i+2], not on any earlier values. By maintaining a sliding window of three values and shifting them as we iterate, we achieve the same result as storing all values. The variable names represent: dp (current position being computed), dp1 (value at i+1, one position ahead), and dp2 (value at i+2, two positions ahead). After computing dp, we shift: what was dp becomes the new dp1 (next iteration's i+1), and what was dp1 becomes the new dp2 (next iteration's i+2). The pattern dp, dp1, dp2 = 0, dp, dp1 performs this shift efficiently. After the loop completes, dp1 holds the value that was originally dp[0].",
+      "constraints_examples": [
+        {
+          "input": "s = \"12\"",
+          "output": "2",
+          "explanation": "Variables shift: Initial (dp=0, dp1=1, dp2=0). i=1: dp=1, shift to (0,1,1). i=0: dp=1+1=2, shift to (0,2,1). Return dp1=2."
+        },
+        {
+          "input": "s = \"226\"",
+          "output": "3",
+          "explanation": "Variables shift through iterations to produce final answer in dp1 after all shifts."
+        }
+      ],
+      "common_mistakes": [
+        "Confusing the variable names and which represents which position - dp is current, dp1 is next (i+1), dp2 is two-ahead (i+2).",
+        "Forgetting to shift the variables after computing dp, which breaks the sliding window logic.",
+        "Shifting in the wrong order or forgetting to reset dp to 0, which causes incorrect values in subsequent iterations.",
+        "Returning dp instead of dp1 at the end - after the final shift, the answer is in dp1, not dp.",
+        "Not initializing dp1 to 1, which represents the base case dp[len(s)] = 1."
+      ],
+      "pro_tips": [
+        "The initialization dp1 = 1 represents the base case (one way to decode an empty suffix).",
+        "The pattern dp, dp1, dp2 = 0, dp, dp1 is a Pythonic way to shift variables in one line. In other languages, you might need a temporary variable.",
+        "This space optimization pattern is common in DP problems with Fibonacci-like recurrences (Fibonacci, climbing stairs, house robber, etc.).",
+        "Draw out the variable states for a small example to understand how the shifting works.",
+        "The reason we reset dp to 0 is that it will be recomputed in the next iteration, so its old value doesn't matter."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"226\"",
+          "steps": [
+            "Initialize dp = 0, dp1 = 1, dp2 = 0.",
+            "i = 2: s[2] = '6', dp = dp1 = 1. Check two-digit: i+1 >= len(s), skip. Shift: dp=0, dp1=1, dp2=1.",
+            "i = 1: s[1] = '2', dp = dp1 = 1. Check two-digit: s[1]='2' and s[2]='6' in '0123456' → dp += dp2 = 1 + 1 = 2. Shift: dp=0, dp1=2, dp2=1.",
+            "i = 0: s[0] = '2', dp = dp1 = 2. Check two-digit: s[0]='2' and s[1]='2' in '0123456' → dp += dp2 = 2 + 1 = 3. Shift: dp=0, dp1=3, dp2=2.",
+            "Return dp1 = 3."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution if there were wildcards (*) that could represent any digit 1-9?",
+      "hint": "This is LeetCode problem 639. You'd need to handle multiple cases for wildcards and use modulo arithmetic for large numbers."
+    },
+    {
+      "question": "Can you solve this problem if decoding could be done in reverse (from end to start)?",
+      "hint": "The logic would be similar, but you'd iterate forward and track decoding possibilities from the end."
+    },
+    {
+      "question": "How would you handle the case where codes could be 1-26 or 100-260 (two different ranges)?",
+      "hint": "Add another condition to check for three-digit codes and potentially add dp[i+3] to the recurrence."
+    }
+  ],
+  "related_topics": ["String", "Dynamic Programming", "Memoization", "Recursion"],
+  "hints": [
+    "Think about this problem like climbing stairs where you can take 1 or 2 steps, but with validity constraints.",
+    "At each position, you have at most two choices: decode one digit or decode two digits.",
+    "The number of ways to decode from position i equals the sum of ways from i+1 (single digit) and i+2 (two digits), if both are valid.",
+    "Start with the recursive solution, then add memoization, then convert to bottom-up, then optimize space."
+  ],
+  "notes": "This is a classic 1-D DP problem that demonstrates the progression from recursion to memoization to bottom-up to space-optimized DP. The key insight is recognizing the recurrence relation: dp[i] = dp[i+1] + dp[i+2] (with validity checks). Understanding the constraints (codes 1-26, no leading zeros) is crucial for correct implementation.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
