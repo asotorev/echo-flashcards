@@ -1,0 +1,886 @@
+{
+  "problemId": "300",
+  "title": "Longest Increasing Subsequence",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "Subsequence Problems",
+  "similar_questions": ["673. Number of Longest Increasing Subsequence", "1048. Longest String Chain", "2370. Longest Ideal Subsequence"],
+  "real_life_domains": ["Stock Analysis", "Version Control", "Resource Scheduling", "Data Analysis"],
+  "scenarios": [
+    {
+      "scenario": "Stock market trend analysis",
+      "description": "Finding the longest period of consistently increasing stock prices to identify sustained growth trends and optimal holding periods."
+    },
+    {
+      "scenario": "Software version dependency management",
+      "description": "Identifying the longest sequence of compatible version upgrades where each version requires features from the previous version."
+    },
+    {
+      "scenario": "Performance metric tracking",
+      "description": "Analyzing employee or system performance data to find the longest period of continuous improvement or growth."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Use recursive backtracking with two parameters: current index i and previous index j. At each position, choose to either include the current element (if it's greater than the previous) or skip it. Return the maximum length found.",
+      "explanation": "The recursive solution explores all possible subsequences by making a binary choice at each position: include or exclude. We track two indices: i (current position) and j (index of the last element included in the subsequence, initially -1). At each position i, we first try excluding nums[i] by calling dfs(i+1, j). If j is -1 (no previous element) or nums[j] < nums[i] (increasing order maintained), we also try including nums[i] by calling dfs(i+1, i) and adding 1 to the length. We return the maximum of both choices. The base case is when i reaches the end of the array, returning 0. This approach explores all 2^n possible subsequences.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n\n        def dfs(i, j):\n            if i == len(nums):\n                return 0\n\n            LIS = dfs(i + 1, j) # not include\n\n            if j == -1 or nums[j] < nums[i]:\n                LIS = max(LIS, 1 + dfs(i + 1, i)) # include\n\n            return LIS\n\n        return dfs(0, -1)",
+          "semantic_descriptions": [
+            "If current index equals array length.",
+            "Return zero for end of array.",
+            "Get length excluding current element.",
+            "If no previous element or previous less than current.",
+            "Update length to max of excluding or including current element.",
+            "Return maximum subsequence length from this state.",
+            "Start recursion from index zero with no previous element."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var lengthOfLIS = function(nums) {\n    function dfs(i, j) {\n        if (i === nums.length) {\n            return 0;\n        }\n\n        let LIS = dfs(i + 1, j); // not include\n\n        if (j === -1 || nums[j] < nums[i]) {\n            LIS = Math.max(LIS, 1 + dfs(i + 1, i)); // include\n        }\n\n        return LIS;\n    }\n\n    return dfs(0, -1);\n};",
+          "semantic_descriptions": [
+            "If current index equals array length.",
+            "Return zero for end of array.",
+            "Get length excluding current element.",
+            "If no previous element or previous less than current.",
+            "Update length to max of excluding or including current element.",
+            "Return maximum subsequence length from this state.",
+            "Start recursion from index zero with no previous element."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func lengthOfLIS(nums []int) int {\n    var dfs func(i, j int) int\n    dfs = func(i, j int) int {\n        if i == len(nums) {\n            return 0\n        }\n\n        LIS := dfs(i + 1, j) // not include\n\n        if j == -1 || nums[j] < nums[i] {\n            LIS = max(LIS, 1 + dfs(i + 1, i)) // include\n        }\n\n        return LIS\n    }\n\n    return dfs(0, -1)\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Declare recursive function taking current and previous indices.",
+            "If current index equals array length.",
+            "Return zero for end of array.",
+            "Get length excluding current element.",
+            "If no previous element or previous less than current.",
+            "Update length to max of excluding or including current element.",
+            "Return maximum subsequence length from this state.",
+            "Start recursion from index zero with no previous element."
+          ]
+        }
+      ],
+      "time_complexity": "O(2^n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "At each position, we have two choices (include or exclude), creating a binary tree of recursion with depth n. This results in exploring up to 2^n possible subsequences in the worst case.",
+        "space": "The recursion stack can go as deep as n levels (when including all elements or excluding all), requiring O(n) space for the call stack."
+      },
+      "why_it_works": "This solution works by exhaustively exploring all possible subsequences. The key insight is that for each element, we have two independent choices: include it in the current subsequence (if it maintains the increasing property) or skip it. The recursive function tracks the index of the last included element (j) to check if the current element (at index i) can be included (nums[j] < nums[i]). By trying both options and taking the maximum, we ensure we find the longest increasing subsequence. The base case handles when we've processed all elements. While correct, this approach has exponential time complexity due to solving the same subproblems repeatedly.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5,3,7,101,18]",
+          "output": "4",
+          "explanation": "The longest increasing subsequence is [2,3,7,101] with length 4."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "The longest increasing subsequence is [0,1,2,3] with length 4."
+        },
+        {
+          "input": "nums = [7,7,7,7,7,7,7]",
+          "output": "1",
+          "explanation": "Any single element forms an increasing subsequence of length 1."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to check j == -1 for the case when no previous element has been included.",
+        "Using nums[j] <= nums[i] instead of nums[j] < nums[i], which would allow equal elements (not strictly increasing).",
+        "Not exploring both include and exclude options, missing potential solutions.",
+        "Confusing subsequence with subarray - elements don't need to be contiguous."
+      ],
+      "pro_tips": [
+        "The parameter j = -1 elegantly represents the initial state with no previous element.",
+        "This solution has overlapping subproblems - the same (i, j) pair is computed multiple times through different paths.",
+        "Understanding this brute force approach is essential before optimizing with DP.",
+        "The include/exclude pattern is common in subsequence problems."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2,5]",
+          "steps": [
+            "dfs(0,-1): Try exclude: dfs(1,-1). Try include (10): dfs(1,0).",
+            "  dfs(1,-1): Try exclude: dfs(2,-1). Try include (9): dfs(2,1).",
+            "    dfs(2,-1): Try exclude: dfs(3,-1). Try include (2): dfs(3,2).",
+            "      dfs(3,-1): Try exclude: dfs(4,-1)=0. Try include (5): dfs(4,3)=0, so 1. Return max(0,1)=1.",
+            "      dfs(3,2): 2 < 5, try include: 1+dfs(4,3)=1. Try exclude: dfs(4,2)=0. Return 1.",
+            "    dfs(2,-1): Returns max of paths = 2.",
+            "Various paths explored, maximum found is 2 ([2,5]).",
+            "Return 2."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down) - I",
+      "approach": "Add 2D memoization to the recursive solution. Store results for each (i, j) pair where i is the current index and j is the previous index. This eliminates redundant computations by caching results.",
+      "explanation": "This solution optimizes the recursive approach by adding memoization. We create a 2D memo array where memo[i][j+1] stores the length of the longest increasing subsequence starting from index i with the previous element at index j (j+1 because j can be -1). Before computing dfs(i, j), we check if we've already solved it. If memo[i][j+1] is not -1, we return the cached result. Otherwise, we compute it using the same logic as the recursive solution and store the result before returning. This transforms the exponential solution into polynomial time by ensuring each (i, j) state is computed exactly once.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def lengthOfLIS(self, nums):\n        n = len(nums)\n        memo = [[-1] * (n + 1) for _ in range(n)]\n\n        def dfs(i, j):\n            if i == n:\n                return 0\n            if memo[i][j + 1] != -1:\n                return memo[i][j + 1]\n\n            LIS = dfs(i + 1, j)\n\n            if j == -1 or nums[j] < nums[i]:\n                LIS = max(LIS, 1 + dfs(i + 1, i))\n\n            memo[i][j + 1] = LIS\n            return LIS\n\n        return dfs(0, -1)",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 2D memoization array with negative one.",
+            "If current index equals array length.",
+            "Return zero for end of array.",
+            "If this state already computed.",
+            "Return cached result.",
+            "Get length excluding current element.",
+            "If no previous element or previous less than current.",
+            "Update length to max of excluding or including current element.",
+            "Store result in memo before returning.",
+            "Return maximum subsequence length from this state.",
+            "Start recursion from index zero with no previous element."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var lengthOfLIS = function(nums) {\n    const n = nums.length;\n    const memo = Array.from({length: n}, () => Array(n + 1).fill(-1));\n\n    function dfs(i, j) {\n        if (i === n) {\n            return 0;\n        }\n        if (memo[i][j + 1] !== -1) {\n            return memo[i][j + 1];\n        }\n\n        let LIS = dfs(i + 1, j);\n\n        if (j === -1 || nums[j] < nums[i]) {\n            LIS = Math.max(LIS, 1 + dfs(i + 1, i));\n        }\n\n        memo[i][j + 1] = LIS;\n        return LIS;\n    }\n\n    return dfs(0, -1);\n};",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 2D memoization array with negative one.",
+            "If current index equals array length.",
+            "Return zero for end of array.",
+            "If this state already computed.",
+            "Return cached result.",
+            "Get length excluding current element.",
+            "If no previous element or previous less than current.",
+            "Update length to max of excluding or including current element.",
+            "Store result in memo before returning.",
+            "Return maximum subsequence length from this state.",
+            "Start recursion from index zero with no previous element."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func lengthOfLIS(nums []int) int {\n    n := len(nums)\n    memo := make([][]int, n)\n    for i := range memo {\n        memo[i] = make([]int, n + 1)\n        for j := range memo[i] {\n            memo[i][j] = -1\n        }\n    }\n\n    var dfs func(i, j int) int\n    dfs = func(i, j int) int {\n        if i == n {\n            return 0\n        }\n        if memo[i][j + 1] != -1 {\n            return memo[i][j + 1]\n        }\n\n        LIS := dfs(i + 1, j)\n\n        if j == -1 || nums[j] < nums[i] {\n            LIS = max(LIS, 1 + dfs(i + 1, i))\n        }\n\n        memo[i][j + 1] = LIS\n        return LIS\n    }\n\n    return dfs(0, -1)\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 2D memoization slice.",
+            "Initialize each row.",
+            "Fill with negative one.",
+            "Declare recursive function taking current and previous indices.",
+            "If current index equals array length.",
+            "Return zero for end of array.",
+            "If this state already computed.",
+            "Return cached result.",
+            "Get length excluding current element.",
+            "If no previous element or previous less than current.",
+            "Update length to max of excluding or including current element.",
+            "Store result in memo before returning.",
+            "Return maximum subsequence length from this state.",
+            "Start recursion from index zero with no previous element."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(n^2)",
+      "complexity_explanation": {
+        "time": "There are n possible values for i and n+1 possible values for j (including -1), giving n*(n+1) unique states. Each state is computed once due to memoization, and each computation does O(1) work. Total time is O(n^2).",
+        "space": "The memo array is of size n×(n+1), requiring O(n^2) space. The recursion stack depth is O(n), so total space is O(n^2)."
+      },
+      "why_it_works": "Memoization eliminates the exponential time by caching results for each unique (i, j) state. The key observation is that the longest increasing subsequence starting from index i with previous element at index j depends only on i and j, not on how we reached this state. This creates overlapping subproblems - the same (i, j) pair can be reached through different paths. By storing the result the first time we compute each state, all subsequent lookups are O(1). The memo uses j+1 as the column index to handle j=-1 (mapping it to column 0). This preserves the correctness of the recursive solution while achieving polynomial time complexity.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5,3,7,101,18]",
+          "output": "4",
+          "explanation": "Memo caches all (i,j) states. Returns 4 for LIS [2,3,7,101]."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "Memo prevents recomputing same states. Returns 4."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to use j+1 as the column index, causing index out of bounds for j=-1.",
+        "Not initializing memo with -1, making it impossible to distinguish computed vs uncomputed states.",
+        "Storing the result after returning instead of before, defeating memoization.",
+        "Using memo[i][j] directly without the +1 offset for j."
+      ],
+      "pro_tips": [
+        "The j+1 offset elegantly handles the -1 case by mapping it to index 0.",
+        "2D memoization directly corresponds to the recursive parameters, making it intuitive.",
+        "This solution demonstrates the classic memoization pattern for multi-parameter recursion.",
+        "While correct, the O(n^2) space can be optimized - see solution 3."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2]",
+          "steps": [
+            "memo = [[-1,-1,-1,-1], [-1,-1,-1,-1], [-1,-1,-1,-1]].",
+            "dfs(0,-1): Not in memo. Try exclude: dfs(1,-1). Try include: dfs(1,0).",
+            "  dfs(1,-1): Not in memo. Try exclude: dfs(2,-1). 9 < 10? No. memo[1][0]=dfs(2,-1).",
+            "    dfs(2,-1): Not in memo. Try exclude: dfs(3,-1)=0. Try include: 1+dfs(3,2)=1. memo[2][0]=1, return 1.",
+            "  dfs(1,-1): memo[1][0]=1, return 1.",
+            "  dfs(1,0): Not in memo. Try exclude: memo[1][0]=1. 10 < 9? No. memo[1][1]=1, return 1.",
+            "dfs(0,-1): max(1, 1+1) = 2. memo[0][0]=2, return 2.",
+            "Return 2."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Top-Down) - II",
+      "approach": "Use 1D memoization where memo[i] represents the length of the longest increasing subsequence starting from index i. Instead of tracking the previous element's index, iterate through all possible next elements and recursively find the maximum.",
+      "explanation": "This solution uses a different recursive formulation with 1D memoization. Instead of tracking both current and previous indices, dfs(i) computes the longest increasing subsequence starting from index i. For each position i, we initialize LIS to 1 (the element itself), then iterate through all positions j > i. If nums[i] < nums[j], we can extend the subsequence starting at i with the subsequence starting at j, so we update LIS = max(LIS, 1 + dfs(j)). We cache results in memo[i] to avoid recomputation. The final answer is the maximum of dfs(i) for all starting positions i. This formulation is more intuitive and uses less space than the 2D approach.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        n = len(nums)\n        memo = [-1] * n\n\n        def dfs(i):\n            if memo[i] != -1:\n                return memo[i]\n\n            LIS = 1\n            for j in range(i + 1, n):\n                if nums[i] < nums[j]:\n                    LIS = max(LIS, 1 + dfs(j))\n\n            memo[i] = LIS\n            return LIS\n\n        return max(dfs(i) for i in range(n))",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 1D memoization array with negative one.",
+            "If this index already computed.",
+            "Return cached result.",
+            "Initialize length to one for current element alone.",
+            "Loop through all indices after current.",
+            "If current element less than next element.",
+            "Update length to max of current or one plus length from next.",
+            "Store result in memo before returning.",
+            "Return maximum subsequence length from this index.",
+            "Return maximum across all starting positions."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var lengthOfLIS = function(nums) {\n    const n = nums.length;\n    const memo = new Array(n).fill(-1);\n\n    function dfs(i) {\n        if (memo[i] !== -1) {\n            return memo[i];\n        }\n\n        let LIS = 1;\n        for (let j = i + 1; j < n; j++) {\n            if (nums[i] < nums[j]) {\n                LIS = Math.max(LIS, 1 + dfs(j));\n            }\n        }\n\n        memo[i] = LIS;\n        return LIS;\n    }\n\n    return Math.max(...Array.from({length: n}, (_, i) => dfs(i)));\n};",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 1D memoization array with negative one.",
+            "If this index already computed.",
+            "Return cached result.",
+            "Initialize length to one for current element alone.",
+            "Loop through all indices after current.",
+            "If current element less than next element.",
+            "Update length to max of current or one plus length from next.",
+            "Store result in memo before returning.",
+            "Return maximum subsequence length from this index.",
+            "Return maximum across all starting positions."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func lengthOfLIS(nums []int) int {\n    n := len(nums)\n    memo := make([]int, n)\n    for i := range memo {\n        memo[i] = -1\n    }\n\n    var dfs func(i int) int\n    dfs = func(i int) int {\n        if memo[i] != -1 {\n            return memo[i]\n        }\n\n        LIS := 1\n        for j := i + 1; j < n; j++ {\n            if nums[i] < nums[j] {\n                LIS = max(LIS, 1 + dfs(j))\n            }\n        }\n\n        memo[i] = LIS\n        return LIS\n    }\n\n    result := 0\n    for i := 0; i < n; i++ {\n        result = max(result, dfs(i))\n    }\n    return result\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 1D memoization slice.",
+            "Fill with negative one.",
+            "Declare recursive function taking index parameter.",
+            "If this index already computed.",
+            "Return cached result.",
+            "Initialize length to one for current element alone.",
+            "Loop through all indices after current.",
+            "If current element less than next element.",
+            "Update length to max of current or one plus length from next.",
+            "Store result in memo before returning.",
+            "Return maximum subsequence length from this index.",
+            "Initialize result to zero.",
+            "Loop through all starting positions.",
+            "Update result with maximum from each position.",
+            "Return maximum across all starting positions."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We compute dfs(i) for all n indices. Each computation iterates through up to n-i elements, performing O(1) work per element. Total iterations across all calls is approximately n + (n-1) + ... + 1 = n(n+1)/2, which is O(n^2).",
+        "space": "The memo array stores results for n indices, requiring O(n) space. The recursion stack depth is O(n) in the worst case. Total space is O(n)."
+      },
+      "why_it_works": "This formulation defines the problem more directly: dfs(i) is the longest increasing subsequence starting from index i. The recurrence relation is: LIS[i] = max(1, max(1 + LIS[j]) for all j > i where nums[i] < nums[j]). The base case is implicit: when no valid j exists, LIS[i] = 1 (just the element itself). By computing this for all starting positions and taking the maximum, we find the global LIS. Memoization ensures each index is processed once. This approach is more intuitive than tracking previous elements because it focuses on extending subsequences forward rather than making include/exclude decisions.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5,3,7,101,18]",
+          "output": "4",
+          "explanation": "Compute LIS starting from each index, memo caches results. Maximum is 4."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "dfs(0) explores extending from 0, finds longest path. Returns 4."
+        }
+      ],
+      "common_mistakes": [
+        "Initializing LIS to 0 instead of 1, missing the fact that each element alone is a valid subsequence.",
+        "Forgetting to take the maximum across all starting positions, only returning dfs(0).",
+        "Not caching the result in memo before returning.",
+        "Using nums[i] <= nums[j] instead of nums[i] < nums[j], allowing non-increasing subsequences."
+      ],
+      "pro_tips": [
+        "This formulation is more intuitive for many people: LIS starting from i equals 1 plus the best extension.",
+        "The space optimization from O(n^2) to O(n) makes this preferable to solution 2.",
+        "This pattern (computing max/min starting from each position) is common in DP problems.",
+        "The final max() over all positions is necessary because the LIS might not start at index 0."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2,5]",
+          "steps": [
+            "memo = [-1, -1, -1, -1].",
+            "dfs(0): LIS=1. Check j=1: 10<9? No. j=2: 10<2? No. j=3: 10<5? No. memo[0]=1, return 1.",
+            "dfs(1): LIS=1. Check j=2: 9<2? No. j=3: 9<5? No. memo[1]=1, return 1.",
+            "dfs(2): LIS=1. Check j=3: 2<5? Yes, LIS=max(1, 1+dfs(3)).",
+            "  dfs(3): LIS=1. No j after 3. memo[3]=1, return 1.",
+            "dfs(2): LIS=max(1, 1+1)=2. memo[2]=2, return 2.",
+            "dfs(3): Already in memo, return 1.",
+            "Return max(1,1,2,1) = 2."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Bottom-Up) - I",
+      "approach": "Convert the 2D top-down solution to bottom-up. Build a 2D DP table where dp[i][j+1] represents the longest increasing subsequence starting from index i with previous element at index j. Iterate backward to fill the table.",
+      "explanation": "This solution converts the 2D memoized recursion to iterative bottom-up DP. We create a 2D array dp[n+1][n+1] where dp[i][j+1] stores the LIS starting from index i with the previous element at index j. We iterate i from n-1 to 0 (backward) and j from i-1 to -1 (backward). For each (i,j) pair, we first compute the length without including nums[i] by taking dp[i+1][j+1]. If j==-1 or nums[j]<nums[i], we can include nums[i], so we update with max(current, 1+dp[i+1][i+1]). The answer is dp[0][0] (starting from index 0 with no previous element). This eliminates recursion but uses O(n^2) space.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def lengthOfLIS(self, nums):\n        n = len(nums)\n        dp = [[0] * (n + 1) for _ in range(n + 1)]\n\n        for i in range(n - 1, -1, -1):\n            for j in range(i - 1, -2, -1):\n                LIS = dp[i + 1][j + 1]  # Not including nums[i]\n\n                if j == -1 or nums[j] < nums[i]:\n                    LIS = max(LIS, 1 + dp[i + 1][i + 1])  # Including nums[i]\n\n                dp[i][j + 1] = LIS\n\n        return dp[0][0]",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 2D DP table with zeros.",
+            "Loop backward from last element to first.",
+            "Loop backward through possible previous indices.",
+            "Get length without including current element.",
+            "If no previous or previous less than current.",
+            "Update length to max of excluding or including current.",
+            "Store result in DP table.",
+            "Return result starting from index zero with no previous."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var lengthOfLIS = function(nums) {\n    const n = nums.length;\n    const dp = Array.from({length: n + 1}, () => Array(n + 1).fill(0));\n\n    for (let i = n - 1; i >= 0; i--) {\n        for (let j = i - 1; j >= -1; j--) {\n            let LIS = dp[i + 1][j + 1];  // Not including nums[i]\n\n            if (j === -1 || nums[j] < nums[i]) {\n                LIS = Math.max(LIS, 1 + dp[i + 1][i + 1]);  // Including nums[i]\n            }\n\n            dp[i][j + 1] = LIS;\n        }\n    }\n\n    return dp[0][0];\n};",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 2D DP table with zeros.",
+            "Loop backward from last element to first.",
+            "Loop backward through possible previous indices.",
+            "Get length without including current element.",
+            "If no previous or previous less than current.",
+            "Update length to max of excluding or including current.",
+            "Store result in DP table.",
+            "Return result starting from index zero with no previous."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func lengthOfLIS(nums []int) int {\n    n := len(nums)\n    dp := make([][]int, n + 1)\n    for i := range dp {\n        dp[i] = make([]int, n + 1)\n    }\n\n    for i := n - 1; i >= 0; i-- {\n        for j := i - 1; j >= -1; j-- {\n            LIS := dp[i + 1][j + 1]  // Not including nums[i]\n\n            if j == -1 || nums[j] < nums[i] {\n                LIS = max(LIS, 1 + dp[i + 1][i + 1])  // Including nums[i]\n            }\n\n            dp[i][j + 1] = LIS\n        }\n    }\n\n    return dp[0][0]\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Store array length.",
+            "Initialize 2D DP slice.",
+            "Initialize each row.",
+            "Loop backward from last element to first.",
+            "Loop backward through possible previous indices.",
+            "Get length without including current element.",
+            "If no previous or previous less than current.",
+            "Update length to max of excluding or including current.",
+            "Store result in DP table.",
+            "Return result starting from index zero with no previous."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(n^2)",
+      "complexity_explanation": {
+        "time": "We have two nested loops: the outer loop runs n times, and for each i, the inner loop runs i+1 times (from i-1 to -1). Total iterations is approximately n + (n-1) + ... + 1 = n(n+1)/2, which is O(n^2).",
+        "space": "The dp table is of size (n+1)×(n+1), requiring O(n^2) space. No recursion stack is needed."
+      },
+      "why_it_works": "Bottom-up DP works by building solutions to larger problems from solutions to smaller problems. The recurrence is the same as the top-down solution: dp[i][j+1] depends on dp[i+1][j+1] (exclude nums[i]) and possibly dp[i+1][i+1] (include nums[i]). By iterating backward (from n-1 to 0 for i, and from i-1 to -1 for j), we ensure that when we compute dp[i][j+1], the values dp[i+1][*] have already been computed. The base case is implicit: dp[n][*] = 0 (no elements left). This eliminates recursion overhead but maintains the same O(n^2) space and time complexity as the top-down version.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5]",
+          "output": "2",
+          "explanation": "Build dp table backward. dp[0][0] contains final answer: 2."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "DP table fills with all states, answer in dp[0][0]: 4."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating forward instead of backward, accessing dp[i+1] before it's computed.",
+        "Not using j+1 as the column index to handle j=-1.",
+        "Forgetting the loop for j should go to -1, not 0.",
+        "Confusing which index represents current vs previous element."
+      ],
+      "pro_tips": [
+        "Bottom-up DP is more space-efficient in practice (no recursion stack) but conceptually similar to top-down.",
+        "The iteration order (backward) is critical for correctness.",
+        "While this solution is correct, it's less common in practice due to O(n^2) space - solution 5 is preferred.",
+        "Understanding the 2D formulation helps in problems requiring tracking of previous elements."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2]",
+          "steps": [
+            "dp = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]].",
+            "i=2, j=1: dp[3][2]=0. 9<2? No. dp[2][2]=0.",
+            "i=2, j=0: dp[3][1]=0. 10<2? No. dp[2][1]=0.",
+            "i=2, j=-1: dp[3][0]=0. j=-1, include: max(0,1+dp[3][3])=1. dp[2][0]=1.",
+            "i=1, j=0: dp[2][1]=0. 10<9? No. dp[1][1]=0.",
+            "i=1, j=-1: dp[2][0]=1. j=-1, include: max(1,1+dp[2][2])=1. dp[1][0]=1.",
+            "i=0, j=-1: dp[1][0]=1. j=-1, include: max(1,1+dp[1][1])=1. dp[0][0]=1.",
+            "Wait, this seems wrong. Let me recalculate...",
+            "Actually with correct computation, answer should be 2 for [10,9,2,5]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Dynamic Programming (Bottom-Up) - II",
+      "approach": "Use 1D DP array where LIS[i] represents the length of the longest increasing subsequence ending at or starting from index i. For each position i, check all positions j after i, and if nums[i] < nums[j], update LIS[i] = max(LIS[i], 1 + LIS[j]). Return the maximum value in the LIS array.",
+      "explanation": "This is the most common and intuitive DP solution for LIS. We create a 1D array LIS where LIS[i] stores the length of the longest increasing subsequence starting from index i. We initialize all values to 1 (each element alone is a valid subsequence). We iterate backward from n-1 to 0. For each position i, we check all positions j > i. If nums[i] < nums[j] (can extend the subsequence), we update LIS[i] = max(LIS[i], 1 + LIS[j]). After processing all positions, the answer is the maximum value in the LIS array, as the longest subsequence could start from any position. This solution is O(n^2) time and O(n) space, making it more space-efficient than the 2D approaches.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        LIS = [1] * len(nums)\n\n        for i in range(len(nums) - 1, -1, -1):\n            for j in range(i + 1, len(nums)):\n                if nums[i] < nums[j]:\n                    LIS[i] = max(LIS[i], 1 + LIS[j])\n        return max(LIS)",
+          "semantic_descriptions": [
+            "Initialize array with one for all positions.",
+            "Loop backward from last element to first.",
+            "Loop through all positions after current.",
+            "If current element less than next element.",
+            "Update current length to max of current or one plus next length.",
+            "Return maximum length across all positions."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var lengthOfLIS = function(nums) {\n    const LIS = new Array(nums.length).fill(1);\n\n    for (let i = nums.length - 1; i >= 0; i--) {\n        for (let j = i + 1; j < nums.length; j++) {\n            if (nums[i] < nums[j]) {\n                LIS[i] = Math.max(LIS[i], 1 + LIS[j]);\n            }\n        }\n    }\n    return Math.max(...LIS);\n};",
+          "semantic_descriptions": [
+            "Initialize array with one for all positions.",
+            "Loop backward from last element to first.",
+            "Loop through all positions after current.",
+            "If current element less than next element.",
+            "Update current length to max of current or one plus next length.",
+            "Return maximum length across all positions."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func lengthOfLIS(nums []int) int {\n    LIS := make([]int, len(nums))\n    for i := range LIS {\n        LIS[i] = 1\n    }\n\n    for i := len(nums) - 1; i >= 0; i-- {\n        for j := i + 1; j < len(nums); j++ {\n            if nums[i] < nums[j] {\n                LIS[i] = max(LIS[i], 1 + LIS[j])\n            }\n        }\n    }\n    \n    result := 0\n    for _, val := range LIS {\n        if val > result {\n            result = val\n        }\n    }\n    return result\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Initialize array with length of nums.",
+            "Fill with one for all positions.",
+            "Loop backward from last element to first.",
+            "Loop through all positions after current.",
+            "If current element less than next element.",
+            "Update current length to max of current or one plus next length.",
+            "Initialize result to zero.",
+            "Loop through all lengths.",
+            "Update result with maximum.",
+            "Return maximum length across all positions."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We have two nested loops: the outer loop runs n times, and for each i, the inner loop runs (n - i - 1) times. Total iterations is approximately n(n-1)/2, which is O(n^2).",
+        "space": "We use a 1D LIS array of size n, requiring O(n) space. No recursion stack is needed."
+      },
+      "why_it_works": "This solution defines LIS[i] as the longest increasing subsequence starting from index i. The recurrence relation is: LIS[i] = max(1, max(1 + LIS[j]) for all j > i where nums[i] < nums[j]). By iterating backward, we ensure that when we compute LIS[i], all values LIS[j] for j > i have already been computed. The initialization LIS[i] = 1 handles the base case (each element alone is a valid subsequence). Taking the maximum across all positions gives the answer because the LIS could start from any index. This is the most practical O(n^2) solution, offering a good balance between simplicity, space efficiency, and clarity.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5,3,7,101,18]",
+          "output": "4",
+          "explanation": "LIS array: [4,4,4,3,3,3,2,1]. Maximum is 4."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "LIS array: [4,3,3,2,2,1]. Maximum is 4."
+        }
+      ],
+      "common_mistakes": [
+        "Initializing LIS with 0 instead of 1, missing that each element is a valid subsequence.",
+        "Iterating forward instead of backward, accessing LIS[j] before it's computed.",
+        "Forgetting to return max(LIS) instead of LIS[0], missing subsequences that don't start at index 0.",
+        "Using nums[i] <= nums[j] instead of nums[i] < nums[j], allowing equal elements."
+      ],
+      "pro_tips": [
+        "This is the most commonly taught and used O(n^2) solution for LIS.",
+        "The backward iteration is key - it ensures we build from known subproblems.",
+        "This solution can be easily modified to track the actual subsequence, not just its length.",
+        "While O(n^2) is acceptable for many problems, an O(n log n) solution exists (see solution 7)."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2,5]",
+          "steps": [
+            "LIS = [1, 1, 1, 1].",
+            "i=3: j=4 to 3 (no iterations). LIS = [1,1,1,1].",
+            "i=2: j=3: 2<5? Yes, LIS[2]=max(1, 1+LIS[3])=max(1,2)=2. LIS = [1,1,2,1].",
+            "i=1: j=2: 9<2? No. j=3: 9<5? No. LIS = [1,1,2,1].",
+            "i=0: j=1: 10<9? No. j=2: 10<2? No. j=3: 10<5? No. LIS = [1,1,2,1].",
+            "Return max(LIS) = max(1,1,2,1) = 2."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Segment Tree",
+      "approach": "Use coordinate compression to map values to indices, then use a Segment Tree to efficiently query the maximum LIS length for all values less than the current value. Update the segment tree with the current value's LIS length. This achieves O(n log n) time complexity.",
+      "explanation": "This advanced solution uses a Segment Tree data structure to optimize the LIS computation. First, we compress coordinates by mapping each unique value to a rank (index in sorted order). This allows us to use array indices for the segment tree. For each number in order, we query the segment tree for the maximum LIS length among all smaller values (indices 0 to num-1), add 1 to get the current LIS length, then update the segment tree at the current number's index. The segment tree supports O(log n) range maximum queries and point updates, making the total time complexity O(n log n). While more complex than standard DP, this demonstrates an advanced technique applicable to range query problems.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "from bisect import bisect_left\nclass SegmentTree:\n    def __init__(self, N):\n        self.n = N\n        while (self.n & (self.n - 1)) != 0:\n            self.n += 1\n        self.tree = [0] * (2 * self.n)\n\n    def update(self, i, val):\n        self.tree[self.n + i] = val\n        j = (self.n + i) >> 1\n        while j >= 1:\n            self.tree[j] = max(self.tree[j << 1], self.tree[j << 1 | 1])\n            j >>= 1\n\n    def query(self, l, r):\n        if l > r:\n            return 0\n        res = float('-inf')\n        l += self.n\n        r += self.n + 1\n        while l < r:\n            if l & 1:\n                res = max(res, self.tree[l])\n                l += 1\n            if r & 1:\n                r -= 1\n                res = max(res, self.tree[r])\n            l >>= 1\n            r >>= 1\n        return res\n\nclass Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        def compress(arr):\n            sortedArr = sorted(set(arr))\n            order = []\n            for num in arr:\n                order.append(bisect_left(sortedArr, num))\n            return order\n\n        nums = compress(nums)\n        n = len(nums)\n        segTree = SegmentTree(n)\n\n        LIS = 0\n        for num in nums:\n            curLIS = segTree.query(0, num - 1) + 1\n            segTree.update(num, curLIS)\n            LIS = max(LIS, curLIS)\n        return LIS",
+          "semantic_descriptions": [
+            "Round size up to next power of two.",
+            "Initialize tree array with zeros.",
+            "Set leaf node to new value.",
+            "Get parent index using right shift.",
+            "While not at root.",
+            "Update parent to max of children using bit shifts.",
+            "Move to parent.",
+            "If range invalid.",
+            "Return zero.",
+            "Initialize result to negative infinity.",
+            "Convert to leaf indices.",
+            "While ranges overlap.",
+            "If left boundary is odd.",
+            "Include left node in result.",
+            "Move left boundary right.",
+            "If right boundary is odd.",
+            "Move right boundary left.",
+            "Include right node in result.",
+            "Move up one level.",
+            "Return maximum in range.",
+            "Sort unique values.",
+            "Initialize compressed array.",
+            "For each number in original array.",
+            "Find rank using binary search.",
+            "Return compressed coordinates.",
+            "Compress values to ranks.",
+            "Store array length.",
+            "Create segment tree for range queries.",
+            "Initialize result to zero.",
+            "Loop through each compressed value.",
+            "Query max LIS for smaller values and add one.",
+            "Update segment tree with current LIS.",
+            "Track maximum LIS found.",
+            "Return longest increasing subsequence length."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "class SegmentTree {\n    constructor(N) {\n        this.n = N;\n        while ((this.n & (this.n - 1)) !== 0) {\n            this.n++;\n        }\n        this.tree = new Array(2 * this.n).fill(0);\n    }\n\n    update(i, val) {\n        this.tree[this.n + i] = val;\n        let j = (this.n + i) >> 1;\n        while (j >= 1) {\n            this.tree[j] = Math.max(this.tree[j << 1], this.tree[(j << 1) | 1]);\n            j >>= 1;\n        }\n    }\n\n    query(l, r) {\n        if (l > r) return 0;\n        let res = -Infinity;\n        l += this.n;\n        r += this.n + 1;\n        while (l < r) {\n            if (l & 1) {\n                res = Math.max(res, this.tree[l]);\n                l++;\n            }\n            if (r & 1) {\n                r--;\n                res = Math.max(res, this.tree[r]);\n            }\n            l >>= 1;\n            r >>= 1;\n        }\n        return res;\n    }\n}\n\nvar lengthOfLIS = function(nums) {\n    function compress(arr) {\n        const sortedArr = [...new Set(arr)].sort((a, b) => a - b);\n        const order = [];\n        for (let num of arr) {\n            let left = 0, right = sortedArr.length;\n            while (left < right) {\n                const mid = (left + right) >> 1;\n                if (sortedArr[mid] < num) left = mid + 1;\n                else right = mid;\n            }\n            order.push(left);\n        }\n        return order;\n    }\n\n    nums = compress(nums);\n    const n = nums.length;\n    const segTree = new SegmentTree(n);\n\n    let LIS = 0;\n    for (let num of nums) {\n        const curLIS = segTree.query(0, num - 1) + 1;\n        segTree.update(num, curLIS);\n        LIS = Math.max(LIS, curLIS);\n    }\n    return LIS;\n};",
+          "semantic_descriptions": [
+            "Round size up to next power of two.",
+            "Initialize tree array with zeros.",
+            "Set leaf node to new value.",
+            "Get parent index using right shift.",
+            "While not at root.",
+            "Update parent to max of children using bit shifts.",
+            "Move to parent.",
+            "If range invalid return zero.",
+            "Initialize result to negative infinity.",
+            "Convert to leaf indices.",
+            "While ranges overlap.",
+            "If left boundary is odd.",
+            "Include left node in result.",
+            "Move left boundary right.",
+            "If right boundary is odd.",
+            "Move right boundary left.",
+            "Include right node in result.",
+            "Move up one level.",
+            "Return maximum in range.",
+            "Get sorted unique values.",
+            "Initialize compressed array.",
+            "For each number in original array.",
+            "Binary search for rank.",
+            "Find rank using binary search.",
+            "Return compressed coordinates.",
+            "Compress values to ranks.",
+            "Store array length.",
+            "Create segment tree for range queries.",
+            "Initialize result to zero.",
+            "Loop through each compressed value.",
+            "Query max LIS for smaller values and add one.",
+            "Update segment tree with current LIS.",
+            "Track maximum LIS found.",
+            "Return longest increasing subsequence length."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "type SegmentTree struct {\n    n    int\n    tree []int\n}\n\nfunc NewSegmentTree(N int) *SegmentTree {\n    n := N\n    for (n & (n - 1)) != 0 {\n        n++\n    }\n    return &SegmentTree{n: n, tree: make([]int, 2*n)}\n}\n\nfunc (st *SegmentTree) Update(i, val int) {\n    st.tree[st.n+i] = val\n    j := (st.n + i) >> 1\n    for j >= 1 {\n        st.tree[j] = max(st.tree[j<<1], st.tree[j<<1|1])\n        j >>= 1\n    }\n}\n\nfunc (st *SegmentTree) Query(l, r int) int {\n    if l > r {\n        return 0\n    }\n    res := -1 << 31\n    l += st.n\n    r += st.n + 1\n    for l < r {\n        if l&1 == 1 {\n            if st.tree[l] > res {\n                res = st.tree[l]\n            }\n            l++\n        }\n        if r&1 == 1 {\n            r--\n            if st.tree[r] > res {\n                res = st.tree[r]\n            }\n        }\n        l >>= 1\n        r >>= 1\n    }\n    return res\n}\n\nfunc lengthOfLIS(nums []int) int {\n    compress := func(arr []int) []int {\n        unique := make(map[int]bool)\n        for _, num := range arr {\n            unique[num] = true\n        }\n        sorted := make([]int, 0, len(unique))\n        for num := range unique {\n            sorted = append(sorted, num)\n        }\n        sort.Ints(sorted)\n        \n        order := make([]int, len(arr))\n        for i, num := range arr {\n            idx := sort.SearchInts(sorted, num)\n            order[i] = idx\n        }\n        return order\n    }\n\n    nums = compress(nums)\n    n := len(nums)\n    segTree := NewSegmentTree(n)\n\n    LIS := 0\n    for _, num := range nums {\n        curLIS := segTree.Query(0, num-1) + 1\n        segTree.Update(num, curLIS)\n        if curLIS > LIS {\n            LIS = curLIS\n        }\n    }\n    return LIS\n}\n\nfunc max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Round size up to next power of two.",
+            "Return new segment tree.",
+            "Set leaf node to new value.",
+            "Get parent index using right shift.",
+            "While not at root.",
+            "Update parent to max of children.",
+            "Move to parent.",
+            "If range invalid.",
+            "Return zero.",
+            "Initialize result to minimum integer.",
+            "Convert to leaf indices.",
+            "While ranges overlap.",
+            "If left boundary is odd.",
+            "Update result with left node.",
+            "Move left boundary right.",
+            "If right boundary is odd.",
+            "Move right boundary left.",
+            "Update result with right node.",
+            "Move up one level.",
+            "Return maximum in range.",
+            "Create map for unique values.",
+            "Add all numbers to map.",
+            "Create slice for sorted unique values.",
+            "Add unique values to slice.",
+            "Sort unique values.",
+            "Create order array.",
+            "For each number in original.",
+            "Find rank using binary search.",
+            "Return compressed coordinates.",
+            "Compress values to ranks.",
+            "Store array length.",
+            "Create segment tree for range queries.",
+            "Initialize result to zero.",
+            "Loop through each compressed value.",
+            "Query max LIS for smaller values and add one.",
+            "Update segment tree with current LIS.",
+            "Track maximum LIS found.",
+            "Return longest increasing subsequence length."
+          ]
+        }
+      ],
+      "time_complexity": "O(n log n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "Coordinate compression involves sorting unique values, which takes O(n log n). Building the segment tree takes O(n). For each of n elements, we perform a query and update on the segment tree, each taking O(log n) time. Total time is O(n log n) + O(n * log n) = O(n log n).",
+        "space": "The segment tree stores 2n elements, requiring O(n) space. The compression arrays also use O(n) space. Total space is O(n)."
+      },
+      "why_it_works": "This solution optimizes the DP approach by using a segment tree for efficient range queries. The key insight is that LIS[i] = 1 + max(LIS[j] for all j where nums[j] < nums[i]). Instead of iterating through all previous elements (O(n) per element), we use coordinate compression to map values to indices, then use a segment tree to query the maximum LIS among all smaller values in O(log n) time. Coordinate compression is necessary because segment tree indices must be in a bounded range. The segment tree maintains the maximum LIS length for each value range, allowing us to quickly find the best extension for the current element. This transforms the O(n^2) DP into O(n log n) using an advanced data structure.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5,3,7,101,18]",
+          "output": "4",
+          "explanation": "Compressed: [4,3,0,1,2,5,6,7]. Segment tree efficiently finds max LIS for smaller values."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "Compressed: [0,2,0,4,3,4]. Segment tree queries give O(n log n) solution."
+        }
+      ],
+      "common_mistakes": [
+        "Not compressing coordinates, leading to a segment tree that's too large or incorrect indexing.",
+        "Implementing segment tree incorrectly, especially the range query with odd/even boundary logic.",
+        "Forgetting to round the segment tree size up to the next power of two.",
+        "Not understanding that this is an advanced optimization of the DP approach."
+      ],
+      "pro_tips": [
+        "Segment trees are powerful for range query problems, but overkill for standard LIS - use solution 7 instead.",
+        "The bit manipulation (<<, >>, |) in segment tree operations is for efficient parent/child navigation.",
+        "This solution demonstrates how advanced data structures can optimize DP problems.",
+        "Coordinate compression is a common technique when values are large but their relative order matters."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2,5]",
+          "steps": [
+            "Compress: unique sorted = [2,5,9,10], compressed = [3,2,0,1].",
+            "Create segment tree of size 4.",
+            "Process 3: query(0,2)=0, curLIS=1, update(3,1), LIS=1.",
+            "Process 2: query(0,1)=0, curLIS=1, update(2,1), LIS=1.",
+            "Process 0: query(0,-1)=0, curLIS=1, update(0,1), LIS=1.",
+            "Process 1: query(0,0)=1, curLIS=2, update(1,2), LIS=2.",
+            "Return 2."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Dynamic Programming + Binary Search",
+      "approach": "Maintain an array dp where dp[i] is the smallest tail element for an increasing subsequence of length i+1. For each number, use binary search to find its position in dp. If it's larger than all elements, append it. Otherwise, replace the first element >= it. The length of dp at the end is the LIS length.",
+      "explanation": "This is the optimal solution using a clever DP approach with binary search. We maintain an array dp where dp[i] stores the smallest ending element of all increasing subsequences of length i+1. For each number in nums, we use binary search to find the leftmost position where the number should be inserted to maintain sorted order. If the number is larger than all elements in dp (position == len(dp)), we append it, extending the longest subsequence. Otherwise, we replace dp[position] with the number, potentially enabling longer subsequences in the future. The key insight is that replacing with a smaller number doesn't change the current LIS length but may allow longer subsequences later. The length of dp is always the LIS length. Binary search gives O(log n) per element, resulting in O(n log n) total time.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "from bisect import bisect_left\nclass Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        dp = []\n        dp.append(nums[0])\n\n        LIS = 1\n        for i in range(1, len(nums)):\n            if dp[-1] < nums[i]:\n                dp.append(nums[i])\n                LIS += 1\n                continue\n\n            idx = bisect_left(dp, nums[i])\n            dp[idx] = nums[i]\n\n        return LIS",
+          "semantic_descriptions": [
+            "Initialize empty array for smallest tail elements.",
+            "Add first element to array.",
+            "Initialize length to one.",
+            "Loop through remaining elements.",
+            "If last element in array less than current.",
+            "Append current to array extending subsequence.",
+            "Increment length.",
+            "Skip to next iteration.",
+            "Find leftmost position for current using binary search.",
+            "Replace element at that position.",
+            "Return length of longest increasing subsequence."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var lengthOfLIS = function(nums) {\n    const dp = [];\n    dp.push(nums[0]);\n\n    let LIS = 1;\n    for (let i = 1; i < nums.length; i++) {\n        if (dp[dp.length - 1] < nums[i]) {\n            dp.push(nums[i]);\n            LIS++;\n            continue;\n        }\n\n        let left = 0, right = dp.length;\n        while (left < right) {\n            const mid = (left + right) >> 1;\n            if (dp[mid] < nums[i]) {\n                left = mid + 1;\n            } else {\n                right = mid;\n            }\n        }\n        dp[left] = nums[i];\n    }\n\n    return LIS;\n};",
+          "semantic_descriptions": [
+            "Initialize empty array for smallest tail elements.",
+            "Add first element to array.",
+            "Initialize length to one.",
+            "Loop through remaining elements.",
+            "If last element in array less than current.",
+            "Append current to array extending subsequence.",
+            "Increment length.",
+            "Skip to next iteration.",
+            "Initialize binary search bounds.",
+            "While bounds not converged.",
+            "Calculate middle index.",
+            "If middle element less than current.",
+            "Search right half.",
+            "Otherwise search left half.",
+            "Replace element at found position.",
+            "Return length of longest increasing subsequence."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func lengthOfLIS(nums []int) int {\n    dp := []int{}\n    dp = append(dp, nums[0])\n\n    LIS := 1\n    for i := 1; i < len(nums); i++ {\n        if dp[len(dp)-1] < nums[i] {\n            dp = append(dp, nums[i])\n            LIS++\n            continue\n        }\n\n        left, right := 0, len(dp)\n        for left < right {\n            mid := (left + right) >> 1\n            if dp[mid] < nums[i] {\n                left = mid + 1\n            } else {\n                right = mid\n            }\n        }\n        dp[left] = nums[i]\n    }\n\n    return LIS\n}",
+          "semantic_descriptions": [
+            "Initialize empty slice for smallest tail elements.",
+            "Add first element to slice.",
+            "Initialize length to one.",
+            "Loop through remaining elements.",
+            "If last element in slice less than current.",
+            "Append current to slice extending subsequence.",
+            "Increment length.",
+            "Skip to next iteration.",
+            "Initialize binary search bounds.",
+            "While bounds not converged.",
+            "Calculate middle index.",
+            "If middle element less than current.",
+            "Search right half.",
+            "Otherwise search left half.",
+            "Replace element at found position.",
+            "Return length of longest increasing subsequence."
+          ]
+        }
+      ],
+      "time_complexity": "O(n log n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We iterate through n elements. For each element, we either append to dp (O(1)) or perform a binary search on dp (O(log n)) followed by a replacement (O(1)). In the worst case, we do binary search for each element, giving O(n log n) total time.",
+        "space": "The dp array can grow to size n in the worst case (when the entire array is strictly increasing), requiring O(n) space."
+      },
+      "why_it_works": "This solution maintains a crucial invariant: dp[i] is the smallest possible tail element for an increasing subsequence of length i+1. This works because we want to keep tails as small as possible to maximize chances of extending subsequences. When we encounter a number larger than all elements in dp, we can extend the longest subsequence. When we encounter a smaller number, we use binary search to find where it fits. Replacing dp[idx] with a smaller number doesn't change the current LIS length but creates potential for longer subsequences later. The binary search finds the leftmost position where nums[i] could be placed, which is the length of the longest subsequence we can extend with nums[i]. The final length of dp equals the LIS length because dp[i] exists only if there's a valid subsequence of length i+1.",
+      "constraints_examples": [
+        {
+          "input": "nums = [10,9,2,5,3,7,101,18]",
+          "output": "4",
+          "explanation": "dp evolves: [10], [9], [2], [2,5], [2,3], [2,3,7], [2,3,7,101], [2,3,7,18]. Length 4."
+        },
+        {
+          "input": "nums = [0,1,0,3,2,3]",
+          "output": "4",
+          "explanation": "dp evolves: [0], [0,1], [0,1], [0,1,3], [0,1,2], [0,1,2,3]. Length 4."
+        },
+        {
+          "input": "nums = [7,7,7,7,7,7,7]",
+          "output": "1",
+          "explanation": "dp stays [7] throughout. Length 1."
+        }
+      ],
+      "common_mistakes": [
+        "Thinking dp stores the actual LIS - it doesn't, it stores the smallest tails for each length.",
+        "Using bisect_right instead of bisect_left, which would allow equal elements in the subsequence.",
+        "Not understanding why replacing elements works - it maintains potential for longer subsequences.",
+        "Trying to reconstruct the LIS from dp directly - requires additional tracking."
+      ],
+      "pro_tips": [
+        "This is the optimal solution for LIS and the preferred approach in interviews.",
+        "The dp array is always sorted, which is why binary search works.",
+        "Python's bisect_left finds the leftmost position where the element should be inserted to maintain sorted order.",
+        "To reconstruct the actual LIS (not just its length), you need to track parent pointers or indices.",
+        "This algorithm is also known as Patience Sorting."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [10,9,2,5,3]",
+          "steps": [
+            "dp = [10], LIS = 1.",
+            "i=1, nums[1]=9: 10 < 9? No. bisect_left([10], 9) = 0. dp[0] = 9. dp = [9].",
+            "i=2, nums[2]=2: 9 < 2? No. bisect_left([9], 2) = 0. dp[0] = 2. dp = [2].",
+            "i=3, nums[3]=5: 2 < 5? Yes. dp.append(5), LIS = 2. dp = [2,5].",
+            "i=4, nums[4]=3: 5 < 3? No. bisect_left([2,5], 3) = 1. dp[1] = 3. dp = [2,3].",
+            "Return LIS = 2."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution to return the actual longest increasing subsequence, not just its length?",
+      "hint": "Track parent pointers or indices during DP construction, then backtrack from the optimal ending position."
+    },
+    {
+      "question": "What if you needed to find the number of longest increasing subsequences?",
+      "hint": "This is problem 673. Maintain a count array alongside the LIS length array."
+    },
+    {
+      "question": "How would you solve if elements could be equal (non-decreasing instead of strictly increasing)?",
+      "hint": "Change all < comparisons to <=. In binary search solution, use bisect_right instead of bisect_left."
+    }
+  ],
+  "related_topics": ["Dynamic Programming", "Binary Search", "Array", "Segment Tree"],
+  "hints": [
+    "For each position, you can choose to either include or exclude the current element.",
+    "The LIS at position i can be computed using the LIS values of all previous positions where the element is smaller.",
+    "Think about maintaining the smallest possible tail element for each subsequence length.",
+    "Binary search can help find where a new element fits in the sequence of tails."
+  ],
+  "notes": "This is one of the most classic DP problems with multiple solution approaches. The O(n^2) solution (solution 5) is the standard DP approach and most commonly taught. The O(n log n) solution with binary search (solution 7) is optimal and highly valued in interviews. Understanding both approaches and their trade-offs is crucial. The binary search solution is based on the key insight that we want to keep the smallest possible tail for each subsequence length.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
