@@ -1,0 +1,528 @@
+{
+  "problemId": "322",
+  "title": "Coin Change",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "Unbounded Knapsack",
+  "similar_questions": ["518. Coin Change II", "983. Minimum Cost For Tickets", "1049. Last Stone Weight II"],
+  "real_life_domains": ["Finance", "Vending Machines", "Currency Exchange", "Resource Optimization"],
+  "scenarios": [
+    {
+      "scenario": "Vending machine change optimization",
+      "description": "Determining the minimum number of coins needed to dispense change in a vending machine or cash register, minimizing the number of coins given to customers."
+    },
+    {
+      "scenario": "Currency denomination design",
+      "description": "Analyzing optimal currency denominations for a country to minimize the average number of coins needed for transactions."
+    },
+    {
+      "scenario": "Resource allocation in manufacturing",
+      "description": "Finding the minimum number of standard-sized components needed to meet a specific total requirement in manufacturing or logistics."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Use recursive backtracking to try all possible combinations of coins. For each amount, try using each coin denomination and recursively solve for the remaining amount. Take the minimum across all choices. The base case is when amount reaches 0, which requires 0 coins.",
+      "explanation": "The recursive solution explores all possible ways to make change for the target amount. At each step, we try every coin denomination. If we can use a coin (amount - coin >= 0), we recursively solve for the remaining amount and add 1 to account for the current coin. We take the minimum across all coin choices. The function returns a large value (1e9) if it's impossible to make exact change from the current state, which gets filtered out by the min operation. After the recursion completes, if the result is still 1e9, it means no solution exists, so we return -1.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n\n        def dfs(amount):\n            if amount == 0:\n                return 0\n\n            res = 1e9\n            for coin in coins:\n                if amount - coin >= 0:\n                    res = min(res, 1 + dfs(amount - coin))\n            return res\n\n        minCoins = dfs(amount)\n        return -1 if minCoins >= 1e9 else minCoins",
+          "semantic_descriptions": [
+            "If amount equals zero.",
+            "Return zero coins needed.",
+            "Initialize result to very large value representing impossible.",
+            "Loop through each coin denomination.",
+            "If current coin does not exceed remaining amount.",
+            "Update result to minimum of current and one plus coins for remaining amount.",
+            "Return minimum coins needed for this amount.",
+            "Get minimum coins needed for target amount.",
+            "Return negative one if impossible, otherwise return minimum coins."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var coinChange = function(coins, amount) {\n    function dfs(amount) {\n        if (amount === 0) {\n            return 0;\n        }\n\n        let res = 1e9;\n        for (let coin of coins) {\n            if (amount - coin >= 0) {\n                res = Math.min(res, 1 + dfs(amount - coin));\n            }\n        }\n        return res;\n    }\n\n    const minCoins = dfs(amount);\n    return minCoins >= 1e9 ? -1 : minCoins;\n};",
+          "semantic_descriptions": [
+            "If amount equals zero.",
+            "Return zero coins needed.",
+            "Initialize result to very large value representing impossible.",
+            "Loop through each coin denomination.",
+            "If current coin does not exceed remaining amount.",
+            "Update result to minimum of current and one plus coins for remaining amount.",
+            "Return minimum coins needed for this amount.",
+            "Get minimum coins needed for target amount.",
+            "Return negative one if impossible, otherwise return minimum coins."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func coinChange(coins []int, amount int) int {\n    var dfs func(amount int) int\n    dfs = func(amount int) int {\n        if amount == 0 {\n            return 0\n        }\n\n        res := int(1e9)\n        for _, coin := range coins {\n            if amount - coin >= 0 {\n                res = min(res, 1 + dfs(amount - coin))\n            }\n        }\n        return res\n    }\n\n    minCoins := dfs(amount)\n    if minCoins >= int(1e9) {\n        return -1\n    }\n    return minCoins\n}\n\nfunc min(a, b int) int {\n    if a < b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Declare recursive function taking amount parameter.",
+            "If amount equals zero.",
+            "Return zero coins needed.",
+            "Initialize result to very large value representing impossible.",
+            "Loop through each coin denomination.",
+            "If current coin does not exceed remaining amount.",
+            "Update result to minimum of current and one plus coins for remaining amount.",
+            "Return minimum coins needed for this amount.",
+            "Get minimum coins needed for target amount.",
+            "If result is impossible value.",
+            "Return negative one.",
+            "Return minimum coins."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^t)",
+      "space_complexity": "O(t)",
+      "complexity_explanation": {
+        "time": "In the worst case, we explore all possible combinations of coins. At each level of recursion, we have n coin choices, and the maximum depth is t (when using coins of denomination 1). This creates an n-ary tree of depth t, resulting in O(n^t) time complexity. Many subproblems are computed multiple times.",
+        "space": "The recursion stack can go as deep as t levels (when repeatedly using the smallest coin), requiring O(t) space for the call stack."
+      },
+      "why_it_works": "This solution works by exhaustively trying all possible ways to make change. The key insight is that the minimum coins for amount A equals 1 plus the minimum coins for (A - coin) across all valid coin choices. By trying every coin and taking the minimum, we ensure we find the optimal solution. The base case of returning 0 for amount 0 provides the foundation. Using 1e9 as a sentinel value for impossible cases ensures these paths don't interfere with the min operation. This is a correct but inefficient solution due to overlapping subproblems.",
+      "constraints_examples": [
+        {
+          "input": "coins = [1,2,5], amount = 11",
+          "output": "3",
+          "explanation": "11 = 5 + 5 + 1, using 3 coins minimum."
+        },
+        {
+          "input": "coins = [2], amount = 3",
+          "output": "-1",
+          "explanation": "Cannot make amount 3 using only coin denomination 2."
+        },
+        {
+          "input": "coins = [1], amount = 0",
+          "output": "0",
+          "explanation": "No coins needed for amount 0."
+        }
+      ],
+      "common_mistakes": [
+        "Not handling the base case amount == 0 correctly, which should return 0, not 1.",
+        "Forgetting to check if amount - coin >= 0 before recursing, leading to infinite recursion or incorrect results.",
+        "Using 0 or -1 as the initial value of res instead of a large number, which breaks the min logic.",
+        "Not converting the sentinel value back to -1 at the end, returning a large number instead of -1 for impossible cases."
+      ],
+      "pro_tips": [
+        "The sentinel value 1e9 is chosen to be larger than any possible answer (since amount <= 10000 and min coin is 1).",
+        "This recursive solution clearly shows the overlapping subproblems that make it a candidate for dynamic programming optimization.",
+        "The expression '1 + dfs(amount - coin)' represents using one coin and solving for the remaining amount.",
+        "Understanding this brute force approach is crucial before moving to optimized DP solutions."
+      ],
+      "walkthroughs": [
+        {
+          "input": "coins = [1,2,5], amount = 5",
+          "steps": [
+            "dfs(5): Try coin 1 → 1 + dfs(4), coin 2 → 1 + dfs(3), coin 5 → 1 + dfs(0).",
+            "  dfs(0): return 0.",
+            "  So coin 5 path gives 1 + 0 = 1.",
+            "  dfs(4): Try coin 1 → 1 + dfs(3), coin 2 → 1 + dfs(2).",
+            "    dfs(3): Try coin 1 → 1 + dfs(2), coin 2 → 1 + dfs(1).",
+            "      dfs(2): Try coin 1 → 1 + dfs(1), coin 2 → 1 + dfs(0) = 1.",
+            "      dfs(1): Try coin 1 → 1 + dfs(0) = 1.",
+            "      dfs(2) returns min(1+1, 1) = 1.",
+            "    dfs(3) returns min(1+1, 1+1) = 2.",
+            "  dfs(4) returns min(1+2, 1+1) = 2.",
+            "dfs(5) returns min(1+2, 1+2, 1) = 1.",
+            "Return 1."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Optimize the recursive solution by adding memoization. Store the minimum coins needed for each amount in a memo dictionary to avoid recomputing the same subproblems. This transforms the exponential time complexity into polynomial time while maintaining the recursive structure.",
+      "explanation": "This solution is identical to the recursive approach but adds a memoization cache to store results for each amount. Before computing dfs(amount), we check if we've already computed it by looking in the memo dictionary. If found, we return the cached result immediately. Otherwise, we compute it using the same logic as the recursive solution and store it in memo before returning. This eliminates redundant computations by ensuring each amount is solved exactly once. The memo persists across all recursive calls, making subsequent lookups O(1).",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        memo = {}\n\n        def dfs(amount):\n            if amount == 0:\n                return 0\n            if amount in memo:\n                return memo[amount]\n\n            res = 1e9\n            for coin in coins:\n                if amount - coin >= 0:\n                    res = min(res, 1 + dfs(amount - coin))\n\n            memo[amount] = res\n            return res\n\n        minCoins = dfs(amount)\n        return -1 if minCoins >= 1e9 else minCoins",
+          "semantic_descriptions": [
+            "Initialize memoization cache as empty dictionary.",
+            "If amount equals zero.",
+            "Return zero coins needed.",
+            "If amount already computed.",
+            "Return cached result.",
+            "Initialize result to very large value representing impossible.",
+            "Loop through each coin denomination.",
+            "If current coin does not exceed remaining amount.",
+            "Update result to minimum of current and one plus coins for remaining amount.",
+            "Store result in cache before returning.",
+            "Return minimum coins needed for this amount.",
+            "Get minimum coins needed for target amount.",
+            "Return negative one if impossible, otherwise return minimum coins."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var coinChange = function(coins, amount) {\n    const memo = new Map();\n\n    function dfs(amount) {\n        if (amount === 0) {\n            return 0;\n        }\n        if (memo.has(amount)) {\n            return memo.get(amount);\n        }\n\n        let res = 1e9;\n        for (let coin of coins) {\n            if (amount - coin >= 0) {\n                res = Math.min(res, 1 + dfs(amount - coin));\n            }\n        }\n\n        memo.set(amount, res);\n        return res;\n    }\n\n    const minCoins = dfs(amount);\n    return minCoins >= 1e9 ? -1 : minCoins;\n};",
+          "semantic_descriptions": [
+            "Initialize memoization cache as map.",
+            "If amount equals zero.",
+            "Return zero coins needed.",
+            "If amount already computed.",
+            "Return cached result.",
+            "Initialize result to very large value representing impossible.",
+            "Loop through each coin denomination.",
+            "If current coin does not exceed remaining amount.",
+            "Update result to minimum of current and one plus coins for remaining amount.",
+            "Store result in cache before returning.",
+            "Return minimum coins needed for this amount.",
+            "Get minimum coins needed for target amount.",
+            "Return negative one if impossible, otherwise return minimum coins."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func coinChange(coins []int, amount int) int {\n    memo := make(map[int]int)\n\n    var dfs func(amount int) int\n    dfs = func(amount int) int {\n        if amount == 0 {\n            return 0\n        }\n        if val, exists := memo[amount]; exists {\n            return val\n        }\n\n        res := int(1e9)\n        for _, coin := range coins {\n            if amount - coin >= 0 {\n                res = min(res, 1 + dfs(amount - coin))\n            }\n        }\n\n        memo[amount] = res\n        return res\n    }\n\n    minCoins := dfs(amount)\n    if minCoins >= int(1e9) {\n        return -1\n    }\n    return minCoins\n}\n\nfunc min(a, b int) int {\n    if a < b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Initialize memoization cache as map.",
+            "Declare recursive function taking amount parameter.",
+            "If amount equals zero.",
+            "Return zero coins needed.",
+            "If amount already computed.",
+            "Return cached result.",
+            "Initialize result to very large value representing impossible.",
+            "Loop through each coin denomination.",
+            "If current coin does not exceed remaining amount.",
+            "Update result to minimum of current and one plus coins for remaining amount.",
+            "Store result in cache before returning.",
+            "Return minimum coins needed for this amount.",
+            "Get minimum coins needed for target amount.",
+            "If result is impossible value.",
+            "Return negative one.",
+            "Return minimum coins."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*t)",
+      "space_complexity": "O(t)",
+      "complexity_explanation": {
+        "time": "Each unique amount from 0 to t is computed exactly once due to memoization. For each amount, we try all n coins, performing O(n) work. Therefore, total time is O(n*t).",
+        "space": "The memo dictionary stores results for at most t different amounts, requiring O(t) space. The recursion stack can also be O(t) deep in the worst case, so total space is O(t)."
+      },
+      "why_it_works": "Memoization transforms the exponential recursive solution into a polynomial one by eliminating redundant computations. The key insight is that the recursive solution has overlapping subproblems - the same amount may be reached through different coin combinations. By storing the result for each amount the first time we compute it, all subsequent calls with the same amount can retrieve the cached value in O(1) time. This preserves the correctness of the recursive logic while achieving the efficiency of dynamic programming. Each unique amount is solved exactly once, and the optimal solution is built up from smaller subproblems.",
+      "constraints_examples": [
+        {
+          "input": "coins = [1,2,5], amount = 11",
+          "output": "3",
+          "explanation": "Memo builds: memo[0]=0, memo[1]=1, memo[2]=1, ..., memo[11]=3 (5+5+1)."
+        },
+        {
+          "input": "coins = [2], amount = 3",
+          "output": "-1",
+          "explanation": "memo[1] and memo[3] both store 1e9 indicating impossible, return -1."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to check if amount is in memo before computing, eliminating the benefit of memoization.",
+        "Storing the result in memo after returning instead of before, which defeats the purpose.",
+        "Not initializing the memo dictionary, causing key errors.",
+        "Trying to memoize the base case (amount 0) unnecessarily - it's already handled by the if statement."
+      ],
+      "pro_tips": [
+        "Top-down DP with memoization is often easier to understand and implement than bottom-up because it follows the natural recursive structure.",
+        "The memo dictionary only stores amounts that are actually reached, which can be fewer than t in some cases.",
+        "This pattern of adding memoization to recursion is applicable to many DP problems - identify overlapping subproblems first.",
+        "In interviews, starting with recursion and then adding memoization shows clear problem-solving progression."
+      ],
+      "walkthroughs": [
+        {
+          "input": "coins = [1,2,5], amount = 5",
+          "steps": [
+            "Initialize memo = {}.",
+            "dfs(5): Not in memo. Try coins.",
+            "  Try coin 5: 1 + dfs(0) = 1 + 0 = 1.",
+            "  Try coin 2: 1 + dfs(3).",
+            "    dfs(3): Not in memo. Try coins.",
+            "      Try coin 2: 1 + dfs(1).",
+            "        dfs(1): Not in memo. Try coin 1: 1 + dfs(0) = 1. memo[1] = 1, return 1.",
+            "      Try coin 1: 1 + dfs(2).",
+            "        dfs(2): Not in memo. Try coin 2: 1 + dfs(0) = 1. Try coin 1: 1 + memo[1] = 2. memo[2] = 1, return 1.",
+            "    dfs(3): min(1+1, 1+1) = 2. memo[3] = 2, return 2.",
+            "  Try coin 1: 1 + dfs(4).",
+            "    dfs(4): Not in memo. Eventually computes to 2. memo[4] = 2.",
+            "dfs(5): min(1, 1+2, 1+2) = 1. memo[5] = 1, return 1.",
+            "Return 1."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build the solution iteratively from amount 0 up to the target amount. Use an array dp where dp[a] represents the minimum coins needed for amount a. For each amount, try all coin denominations and take the minimum. This eliminates recursion entirely.",
+      "explanation": "The bottom-up approach builds the solution iteratively by solving for smaller amounts first. We create a dp array of size amount+1, where dp[a] represents the minimum coins needed for amount a. We initialize all values to amount+1 (an impossible value larger than any valid answer) except dp[0] = 0 (base case). Then we iterate through amounts 1 to target, and for each amount, we try every coin. If the coin doesn't exceed the current amount, we update dp[a] to be the minimum of its current value and 1 + dp[a - coin]. After filling the entire array, dp[amount] contains our answer, unless it's still amount+1, which means it's impossible.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        dp = [amount + 1] * (amount + 1)\n        dp[0] = 0\n\n        for a in range(1, amount + 1):\n            for c in coins:\n                if a - c >= 0:\n                    dp[a] = min(dp[a], 1 + dp[a - c])\n        return dp[amount] if dp[amount] != amount + 1 else -1",
+          "semantic_descriptions": [
+            "Initialize array with impossible value for all amounts.",
+            "Set base case of zero amount needing zero coins.",
+            "Loop through each amount from one to target.",
+            "Loop through each coin denomination.",
+            "If coin does not exceed current amount.",
+            "Update current amount to minimum of current and one plus coins for remaining.",
+            "Return result if possible, otherwise return negative one."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var coinChange = function(coins, amount) {\n    const dp = new Array(amount + 1).fill(amount + 1);\n    dp[0] = 0;\n\n    for (let a = 1; a <= amount; a++) {\n        for (let c of coins) {\n            if (a - c >= 0) {\n                dp[a] = Math.min(dp[a], 1 + dp[a - c]);\n            }\n        }\n    }\n    return dp[amount] !== amount + 1 ? dp[amount] : -1;\n};",
+          "semantic_descriptions": [
+            "Initialize array with impossible value for all amounts.",
+            "Set base case of zero amount needing zero coins.",
+            "Loop through each amount from one to target.",
+            "Loop through each coin denomination.",
+            "If coin does not exceed current amount.",
+            "Update current amount to minimum of current and one plus coins for remaining.",
+            "Return result if possible, otherwise return negative one."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func coinChange(coins []int, amount int) int {\n    dp := make([]int, amount + 1)\n    for i := range dp {\n        dp[i] = amount + 1\n    }\n    dp[0] = 0\n\n    for a := 1; a <= amount; a++ {\n        for _, c := range coins {\n            if a - c >= 0 {\n                dp[a] = min(dp[a], 1 + dp[a - c])\n            }\n        }\n    }\n    if dp[amount] != amount + 1 {\n        return dp[amount]\n    }\n    return -1\n}\n\nfunc min(a, b int) int {\n    if a < b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Initialize array with size amount plus one.",
+            "Fill array with impossible value for all amounts.",
+            "Set base case of zero amount needing zero coins.",
+            "Loop through each amount from one to target.",
+            "Loop through each coin denomination.",
+            "If coin does not exceed current amount.",
+            "Update current amount to minimum of current and one plus coins for remaining.",
+            "If final amount is possible.",
+            "Return result.",
+            "Return negative one for impossible."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*t)",
+      "space_complexity": "O(t)",
+      "complexity_explanation": {
+        "time": "We have nested loops: the outer loop iterates through amounts 1 to t, and the inner loop iterates through all n coins. For each amount-coin pair, we do O(1) work. Total time is O(n*t).",
+        "space": "We use a dp array of size amount+1, requiring O(t) space. No recursion stack is needed."
+      },
+      "why_it_works": "Bottom-up DP works by building solutions to larger problems from solutions to smaller problems. The key recurrence relation is: dp[a] = min(dp[a], 1 + dp[a - coin]) for all valid coins. By iterating through amounts from 1 to target, we ensure that when we compute dp[a], all values dp[a - coin] have already been computed (since a - coin < a). The initialization of dp[0] = 0 provides the base case. Using amount+1 as the initial value ensures it's larger than any valid answer (max coins needed is amount when using all 1s), so the min operation works correctly. This approach avoids recursion entirely, making it more efficient in practice.",
+      "constraints_examples": [
+        {
+          "input": "coins = [1,2,5], amount = 11",
+          "output": "3",
+          "explanation": "Build dp: dp[0]=0, dp[1]=1, dp[2]=1, dp[5]=1, dp[6]=2, ..., dp[11]=3."
+        },
+        {
+          "input": "coins = [2], amount = 3",
+          "output": "-1",
+          "explanation": "dp[3] remains 4 (amount+1) after trying all coins, return -1."
+        }
+      ],
+      "common_mistakes": [
+        "Initializing dp with 0 or infinity instead of amount+1, which breaks the comparison logic.",
+        "Forgetting to set dp[0] = 0, which is the crucial base case.",
+        "Iterating in the wrong order (backward instead of forward), though for this problem it still works due to the nature of the recurrence.",
+        "Not checking if dp[amount] is still the sentinel value before returning it.",
+        "Using dp[a] - c instead of a - c in the coin check condition."
+      ],
+      "pro_tips": [
+        "The value amount+1 is chosen as the sentinel because the maximum number of coins needed is amount (using all 1s), so amount+1 is safely larger than any valid answer.",
+        "Bottom-up DP is generally more efficient than top-down in practice because it avoids recursion overhead.",
+        "This is an example of the unbounded knapsack pattern where items (coins) can be used multiple times.",
+        "The inner loop (coins) and outer loop (amounts) can be swapped without affecting correctness for this problem.",
+        "This approach is optimal in both time and space complexity for this problem."
+      ],
+      "walkthroughs": [
+        {
+          "input": "coins = [1,2,5], amount = 5",
+          "steps": [
+            "Initialize dp = [0, 6, 6, 6, 6, 6] (amount+1 = 6).",
+            "a = 1: Try coin 1 → dp[1] = min(6, 1+dp[0]) = min(6, 1) = 1. dp = [0,1,6,6,6,6].",
+            "a = 2: Try coin 1 → dp[2] = min(6, 1+dp[1]) = 2. Try coin 2 → dp[2] = min(2, 1+dp[0]) = 1. dp = [0,1,1,6,6,6].",
+            "a = 3: Try coins → dp[3] = min(1+dp[2], 1+dp[1]) = 2. dp = [0,1,1,2,6,6].",
+            "a = 4: Try coins → dp[4] = min(1+dp[3], 1+dp[2]) = 2. dp = [0,1,1,2,2,6].",
+            "a = 5: Try coin 1 → dp[5] = min(6, 1+dp[4]) = 3. Try coin 2 → dp[5] = min(3, 1+dp[3]) = 3. Try coin 5 → dp[5] = min(3, 1+dp[0]) = 1. dp = [0,1,1,2,2,1].",
+            "Return dp[5] = 1."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Breadth First Search",
+      "approach": "Model the problem as a graph where each amount is a node, and edges represent adding a coin. Use BFS to find the shortest path from amount 0 to the target amount. The number of levels traversed represents the minimum number of coins needed.",
+      "explanation": "This solution treats the problem as finding the shortest path in an unweighted graph. We start from amount 0 and explore all amounts reachable by adding one coin (level 1), then all amounts reachable from those by adding another coin (level 2), and so on. Each level represents using one more coin. We use a queue for BFS and a seen array to avoid revisiting the same amount. For each amount in the queue, we try adding each coin denomination. If adding a coin gives us the target amount, we've found the minimum coins. If it gives a valid amount we haven't seen, we mark it as seen and add it to the queue. The level count tracks how many coins we've used.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        if amount == 0:\n            return 0\n\n        q = deque([0])\n        seen = [False] * (amount + 1)\n        seen[0] = True\n        res = 0\n\n        while q:\n            res += 1\n            for _ in range(len(q)):\n                cur = q.popleft()\n                for coin in coins:\n                    nxt = cur + coin\n                    if nxt == amount:\n                        return res\n                    if nxt > amount or seen[nxt]:\n                        continue\n                    seen[nxt] = True\n                    q.append(nxt)\n\n        return -1",
+          "semantic_descriptions": [
+            "If target amount is zero.",
+            "Return zero coins needed.",
+            "Initialize queue with starting amount zero.",
+            "Initialize seen array with all false values.",
+            "Mark zero amount as seen.",
+            "Initialize result counter to zero.",
+            "While queue has elements.",
+            "Increment level representing one more coin used.",
+            "Process all nodes at current level.",
+            "Remove current amount from queue.",
+            "Try adding each coin denomination.",
+            "Calculate next amount after adding coin.",
+            "If next amount equals target.",
+            "Return current number of coins.",
+            "If next exceeds target or already seen.",
+            "Skip this combination.",
+            "Mark next amount as seen.",
+            "Add next amount to queue for next level.",
+            "Return negative one if target unreachable."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var coinChange = function(coins, amount) {\n    if (amount === 0) {\n        return 0;\n    }\n\n    const q = [0];\n    const seen = new Array(amount + 1).fill(false);\n    seen[0] = true;\n    let res = 0;\n\n    while (q.length > 0) {\n        res++;\n        const levelSize = q.length;\n        for (let i = 0; i < levelSize; i++) {\n            const cur = q.shift();\n            for (let coin of coins) {\n                const nxt = cur + coin;\n                if (nxt === amount) {\n                    return res;\n                }\n                if (nxt > amount || seen[nxt]) {\n                    continue;\n                }\n                seen[nxt] = true;\n                q.push(nxt);\n            }\n        }\n    }\n\n    return -1;\n};",
+          "semantic_descriptions": [
+            "If target amount is zero.",
+            "Return zero coins needed.",
+            "Initialize queue with starting amount zero.",
+            "Initialize seen array with all false values.",
+            "Mark zero amount as seen.",
+            "Initialize result counter to zero.",
+            "While queue has elements.",
+            "Increment level representing one more coin used.",
+            "Store current level size.",
+            "Process all nodes at current level.",
+            "Remove current amount from queue.",
+            "Try adding each coin denomination.",
+            "Calculate next amount after adding coin.",
+            "If next amount equals target.",
+            "Return current number of coins.",
+            "If next exceeds target or already seen.",
+            "Skip this combination.",
+            "Mark next amount as seen.",
+            "Add next amount to queue for next level.",
+            "Return negative one if target unreachable."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func coinChange(coins []int, amount int) int {\n    if amount == 0 {\n        return 0\n    }\n\n    q := []int{0}\n    seen := make([]bool, amount + 1)\n    seen[0] = true\n    res := 0\n\n    for len(q) > 0 {\n        res++\n        levelSize := len(q)\n        for i := 0; i < levelSize; i++ {\n            cur := q[0]\n            q = q[1:]\n            for _, coin := range coins {\n                nxt := cur + coin\n                if nxt == amount {\n                    return res\n                }\n                if nxt > amount || seen[nxt] {\n                    continue\n                }\n                seen[nxt] = true\n                q = append(q, nxt)\n            }\n        }\n    }\n\n    return -1\n}",
+          "semantic_descriptions": [
+            "If target amount is zero.",
+            "Return zero coins needed.",
+            "Initialize queue with starting amount zero.",
+            "Initialize seen array with all false values.",
+            "Mark zero amount as seen.",
+            "Initialize result counter to zero.",
+            "While queue has elements.",
+            "Increment level representing one more coin used.",
+            "Store current level size.",
+            "Process all nodes at current level.",
+            "Get current amount from front.",
+            "Remove current from queue.",
+            "Try adding each coin denomination.",
+            "Calculate next amount after adding coin.",
+            "If next amount equals target.",
+            "Return current number of coins.",
+            "If next exceeds target or already seen.",
+            "Skip this combination.",
+            "Mark next amount as seen.",
+            "Add next amount to queue for next level.",
+            "Return negative one if target unreachable."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*t)",
+      "space_complexity": "O(t)",
+      "complexity_explanation": {
+        "time": "In the worst case, we visit every amount from 0 to t exactly once (marked in seen array). For each amount, we try all n coins. Therefore, total time is O(n*t).",
+        "space": "The queue can contain at most O(t) amounts at any level, and the seen array requires O(t) space. Total space is O(t)."
+      },
+      "why_it_works": "BFS works for this problem because it explores amounts level by level, where each level represents using one more coin. Since BFS explores in order of increasing depth, the first time we reach the target amount is guaranteed to be with the minimum number of coins (shortest path). The seen array prevents us from revisiting the same amount, avoiding infinite loops and duplicate work. This approach models the problem as an unweighted graph where each edge has weight 1 (adding one coin), making BFS the natural choice for finding the shortest path. The early return when nxt == amount is an optimization that stops as soon as we find the target.",
+      "constraints_examples": [
+        {
+          "input": "coins = [1,2,5], amount = 11",
+          "output": "3",
+          "explanation": "BFS explores: Level 0: {0}, Level 1: {1,2,5}, Level 2: {3,4,6,7,10}, Level 3: reaches 11, return 3."
+        },
+        {
+          "input": "coins = [2], amount = 3",
+          "output": "-1",
+          "explanation": "BFS explores: Level 0: {0}, Level 1: {2}, Level 2: {4}, never reaches 3, return -1."
+        }
+      ],
+      "common_mistakes": [
+        "Not processing the queue level by level, which makes it impossible to track the number of coins accurately.",
+        "Forgetting to mark amounts as seen before adding to the queue, leading to duplicate processing and potential infinite loops.",
+        "Not handling the amount == 0 base case at the start, which can cause issues.",
+        "Checking if nxt == amount after adding to the queue instead of immediately, missing the optimization.",
+        "Using seen[nxt] check after modifying it, which can cause logic errors."
+      ],
+      "pro_tips": [
+        "BFS is naturally suited for shortest path problems in unweighted graphs, making it intuitive for this problem.",
+        "The level-by-level processing pattern (storing levelSize = len(q) before the inner loop) is crucial for tracking depth.",
+        "The early return when nxt == amount is an important optimization that saves unnecessary exploration.",
+        "While BFS has the same time complexity as DP for this problem, DP is generally preferred for its simplicity and efficiency.",
+        "This BFS approach demonstrates an alternative perspective: graph traversal instead of dynamic programming."
+      ],
+      "walkthroughs": [
+        {
+          "input": "coins = [1,2,5], amount = 5",
+          "steps": [
+            "Initialize: q = [0], seen = [T,F,F,F,F,F], res = 0.",
+            "Level 1 (res = 1): Process amount 0.",
+            "  Add coin 1: nxt = 1, not target, mark seen, add to q.",
+            "  Add coin 2: nxt = 2, not target, mark seen, add to q.",
+            "  Add coin 5: nxt = 5, equals target! Return res = 1.",
+            "Return 1 (using one coin of denomination 5)."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution to return the actual coins used, not just the count?",
+      "hint": "Track parent pointers or maintain the path during DP/BFS. Backtrack from target to 0 to reconstruct the coin sequence."
+    },
+    {
+      "question": "What if you wanted to find the maximum number of coins instead of minimum?",
+      "hint": "Change min to max in the recurrence relation. Initialize dp with -infinity instead of amount+1."
+    },
+    {
+      "question": "How would you solve if each coin could only be used once (0/1 Knapsack variant)?",
+      "hint": "Use a 2D DP table where dp[i][a] represents using first i coins to make amount a. Or use 1D DP but iterate coins in outer loop and amounts backward in inner loop."
+    }
+  ],
+  "related_topics": ["Dynamic Programming", "Breadth-First Search", "Array", "Greedy"],
+  "hints": [
+    "This is a classic unbounded knapsack problem where coins can be used unlimited times.",
+    "The recurrence relation is: dp[amount] = min(dp[amount], 1 + dp[amount - coin]) for all valid coins.",
+    "Think of amount 0 as the base case requiring 0 coins, then build up to larger amounts.",
+    "BFS can solve this by treating it as finding the shortest path from 0 to the target amount."
+  ],
+  "notes": "This is one of the most fundamental DP problems demonstrating the unbounded knapsack pattern. The problem can be solved with multiple approaches (recursion, top-down DP, bottom-up DP, BFS), each offering different insights. The bottom-up DP solution is generally preferred for its simplicity and efficiency. Understanding the recurrence relation and how to build up from base cases is crucial.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
