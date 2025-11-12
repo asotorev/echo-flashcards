@@ -1,0 +1,837 @@
+{
+  "problemId": "416",
+  "title": "Partition Equal Subset Sum",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "0/1 Knapsack",
+  "similar_questions": ["698. Partition to K Equal Sum Subsets", "805. Split Array With Same Average", "1981. Minimize the Difference Between Target and Chosen Elements"],
+  "real_life_domains": ["Resource Allocation", "Load Balancing", "Fair Division", "Budget Planning"],
+  "scenarios": [
+    {
+      "scenario": "Server load balancing",
+      "description": "Distributing computational tasks across two servers to achieve equal workload, ensuring optimal resource utilization and performance."
+    },
+    {
+      "scenario": "Asset division in inheritance",
+      "description": "Fairly dividing a set of assets between two heirs such that each receives assets of equal total value."
+    },
+    {
+      "scenario": "Team assignment for competitions",
+      "description": "Splitting players with different skill levels into two teams with equal total skill points to ensure a fair match."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Use recursive backtracking to try all possible ways of selecting elements. For each element, we have two choices: include it in the current subset or exclude it. Check if we can form a subset with sum equal to half of the total sum.",
+      "explanation": "The recursive solution first checks if the total sum is odd - if so, we cannot partition into equal subsets. Then it calculates the target sum (total/2). For each element starting from index 0, we try two options: skip the element (move to next index with same target) or include it (move to next index with reduced target). The base case is when we've processed all elements - we return true if target is exactly 0, meaning we found a valid subset. If target becomes negative, we return false as we've exceeded the target. This explores all 2^n possible subsets.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        if sum(nums) % 2:\n            return False\n\n        def dfs(i, target):\n            if i >= len(nums):\n                return target == 0\n            if target < 0:\n                return False\n\n            return dfs(i + 1, target) or dfs(i + 1, target - nums[i])\n\n        return dfs(0, sum(nums) // 2)",
+          "semantic_descriptions": [
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "If current index beyond array.",
+            "Return true if target reached zero.",
+            "If target becomes negative.",
+            "Return false as overshot target.",
+            "Try excluding current element or including current element.",
+            "Start recursion from index zero with half of total sum."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    function dfs(i, target) {\n        if (i >= nums.length) {\n            return target === 0;\n        }\n        if (target < 0) {\n            return false;\n        }\n\n        return dfs(i + 1, target) || dfs(i + 1, target - nums[i]);\n    }\n\n    return dfs(0, total / 2);\n};",
+          "semantic_descriptions": [
+            "Calculate total sum of array.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "If current index beyond array.",
+            "Return true if target reached zero.",
+            "If target becomes negative.",
+            "Return false as overshot target.",
+            "Try excluding current element or including current element.",
+            "Start recursion from index zero with half of total sum."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    var dfs func(i, target int) bool\n    dfs = func(i, target int) bool {\n        if i >= len(nums) {\n            return target == 0\n        }\n        if target < 0 {\n            return false\n        }\n\n        return dfs(i + 1, target) || dfs(i + 1, target - nums[i])\n    }\n\n    return dfs(0, total / 2)\n}",
+          "semantic_descriptions": [
+            "Initialize total sum to zero.",
+            "Calculate total sum of array.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Declare recursive function taking index and target.",
+            "If current index beyond array.",
+            "Return true if target reached zero.",
+            "If target becomes negative.",
+            "Return false as overshot target.",
+            "Try excluding current element or including current element.",
+            "Start recursion from index zero with half of total sum."
+          ]
+        }
+      ],
+      "time_complexity": "O(2^n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "At each position, we make two recursive calls (include or exclude), creating a binary tree of depth n. This results in exploring up to 2^n possible subsets in the worst case.",
+        "space": "The recursion stack can go as deep as n levels (when processing all elements), requiring O(n) space for the call stack."
+      },
+      "why_it_works": "This solution works by systematically exploring all possible ways to select elements that sum to the target. The key insight is that if we can find any subset with sum equal to total/2, then the remaining elements must also sum to total/2 (since total - total/2 = total/2). We use backtracking to try both including and excluding each element. The base cases handle when we've processed all elements (check if target is 0) and when we've exceeded the target (return false). While correct, this exponential solution is inefficient due to solving the same subproblems repeatedly.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "Array can be partitioned as [1,5,5] and [11], both sum to 11."
+        },
+        {
+          "input": "nums = [1,2,3,5]",
+          "output": "false",
+          "explanation": "Total sum is 11 (odd), cannot partition into two equal subsets."
+        },
+        {
+          "input": "nums = [1,2,5]",
+          "output": "false",
+          "explanation": "No way to partition [1,2,5] into equal subsets with sum 4."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to check if total sum is odd before starting recursion.",
+        "Not handling the target < 0 case, leading to infinite recursion.",
+        "Checking target == 0 in the wrong order, after checking i >= len(nums).",
+        "Trying to track both subsets explicitly instead of just one."
+      ],
+      "pro_tips": [
+        "We only need to track one subset - if one subset sums to total/2, the other automatically does too.",
+        "The target < 0 check is an optimization to stop exploring invalid paths early.",
+        "This solution has overlapping subproblems - the same (i, target) state can be reached multiple times.",
+        "Understanding this brute force approach is essential before optimizing with DP."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "steps": [
+            "Total = 22, target = 11.",
+            "dfs(0,11): Try exclude nums[0]=1: dfs(1,11). Try include: dfs(1,10).",
+            "  dfs(1,11): Try exclude nums[1]=5: dfs(2,11). Try include: dfs(2,6).",
+            "    dfs(2,6): Try exclude nums[2]=11: dfs(3,6). Try include: dfs(3,-5) → false.",
+            "      dfs(3,6): Try exclude nums[3]=5: dfs(4,6). Try include: dfs(4,1).",
+            "        dfs(4,1): i >= 4, target != 0 → false.",
+            "      Back to dfs(1,10): Eventually finds dfs(4,0) → true.",
+            "Return true (partition: [1,5,5] and [11])."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Add 2D memoization to the recursive solution. Store results for each (index, target) pair to avoid recomputing the same subproblems. This transforms the exponential solution into polynomial time.",
+      "explanation": "This solution optimizes the recursive approach by adding memoization. We create a 2D memo array where memo[i][target] stores whether we can achieve the target sum using elements from index i onward. Before computing dfs(i, target), we check if it's already in memo. If so, return the cached result. Otherwise, compute it using the same logic as recursion: try excluding (dfs(i+1, target)) or including (dfs(i+1, target-nums[i])) the current element. Store the result in memo before returning. Base cases check if target is 0 (success) or if we've run out of elements or target is negative (failure). This eliminates redundant computations.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        total = sum(nums)\n        if total % 2 != 0:\n            return False\n\n        target = total // 2\n        n = len(nums)\n        memo = [[-1] * (target + 1) for _ in range(n + 1)]\n\n        def dfs(i, target):\n            if target == 0:\n                return True\n            if i >= n or target < 0:\n                return False\n            if memo[i][target] != -1:\n                return memo[i][target]\n\n            memo[i][target] = (dfs(i + 1, target) or\n                               dfs(i + 1, target - nums[i]))\n            return memo[i][target]\n\n        return dfs(0, target)",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Store array length.",
+            "Initialize 2D memo with negative one.",
+            "If target reached zero.",
+            "Return true for success.",
+            "If index out of bounds or target negative.",
+            "Return false for failure.",
+            "If this state already computed.",
+            "Return cached result.",
+            "Compute and store result of excluding or including current element.",
+            "Return computed result.",
+            "Start recursion from index zero with target sum."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    const target = Math.floor(total / 2);\n    const n = nums.length;\n    const memo = Array.from({length: n + 1}, () => Array(target + 1).fill(-1));\n\n    function dfs(i, target) {\n        if (target === 0) {\n            return true;\n        }\n        if (i >= n || target < 0) {\n            return false;\n        }\n        if (memo[i][target] !== -1) {\n            return memo[i][target];\n        }\n\n        memo[i][target] = dfs(i + 1, target) || dfs(i + 1, target - nums[i]) ? 1 : 0;\n        return memo[i][target];\n    }\n\n    return dfs(0, target);\n};",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Store array length.",
+            "Initialize 2D memo with negative one.",
+            "If target reached zero.",
+            "Return true for success.",
+            "If index out of bounds or target negative.",
+            "Return false for failure.",
+            "If this state already computed.",
+            "Return cached result.",
+            "Compute and store result of excluding or including current element.",
+            "Return computed result.",
+            "Start recursion from index zero with target sum."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    target := total / 2\n    n := len(nums)\n    memo := make([][]int, n + 1)\n    for i := range memo {\n        memo[i] = make([]int, target + 1)\n        for j := range memo[i] {\n            memo[i][j] = -1\n        }\n    }\n\n    var dfs func(i, target int) bool\n    dfs = func(i, target int) bool {\n        if target == 0 {\n            return true\n        }\n        if i >= n || target < 0 {\n            return false\n        }\n        if memo[i][target] != -1 {\n            return memo[i][target] == 1\n        }\n\n        result := dfs(i + 1, target) || dfs(i + 1, target - nums[i])\n        if result {\n            memo[i][target] = 1\n        } else {\n            memo[i][target] = 0\n        }\n        return result\n    }\n\n    return dfs(0, target)\n}",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Store array length.",
+            "Initialize 2D memo slice.",
+            "Fill each row.",
+            "Initialize with negative one.",
+            "Declare recursive function.",
+            "If target reached zero.",
+            "Return true for success.",
+            "If index out of bounds or target negative.",
+            "Return false for failure.",
+            "If this state already computed.",
+            "Return cached boolean result.",
+            "Compute result of excluding or including current element.",
+            "Store result in memo.",
+            "Return computed result.",
+            "Start recursion from index zero with target sum."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*target)",
+      "space_complexity": "O(n*target)",
+      "complexity_explanation": {
+        "time": "There are n possible indices and target+1 possible target values, giving n*(target+1) unique states. Each state is computed once due to memoization, and each computation does O(1) work. Total time is O(n*target).",
+        "space": "The memo array is of size (n+1)×(target+1), requiring O(n*target) space. The recursion stack depth is O(n), so total space is O(n*target)."
+      },
+      "why_it_works": "Memoization eliminates exponential time by caching results for each unique (index, target) state. The key observation is that whether we can achieve a target sum from index i onwards depends only on i and target, not on the path taken to reach this state. This creates overlapping subproblems - the same (i, target) pair can be reached through different element selection paths. By storing the result the first time we compute each state, all subsequent lookups are O(1). This preserves correctness while achieving polynomial time complexity. The memo table effectively builds a solution bottom-up as recursion unwinds.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "Memo caches states. Eventually finds path to target=11: [1,5,5]."
+        },
+        {
+          "input": "nums = [1,2,3,5]",
+          "output": "false",
+          "explanation": "Total=11 is odd, returns false immediately."
+        }
+      ],
+      "common_mistakes": [
+        "Not initializing memo with -1, making it impossible to distinguish computed vs uncomputed states.",
+        "Storing boolean directly in memo without converting to/from int in languages without nullable booleans.",
+        "Checking memo after computing the result instead of before.",
+        "Not storing the result in memo before returning."
+      ],
+      "pro_tips": [
+        "The memo array maps (index, remaining target) to achievability.",
+        "Top-down DP with memoization often mirrors the recursive logic more naturally.",
+        "This solution demonstrates the classic pattern of adding memoization to recursion.",
+        "The space can be optimized further - see later solutions."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5,11,5], target = 11",
+          "steps": [
+            "memo = [[-1]*12 for _ in range(5)].",
+            "dfs(0,11): Not in memo. Try exclude: dfs(1,11). Try include: dfs(1,10).",
+            "  dfs(1,11): Computed, eventually memo[1][11] = some value.",
+            "  dfs(1,10): Try exclude: dfs(2,10). Try include: dfs(2,5).",
+            "    dfs(2,5): Eventually finds path nums[3]=5, reaches target=0.",
+            "    memo[2][5] = True.",
+            "  memo[1][10] = True.",
+            "memo[0][11] = True, return True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build a 2D DP table iteratively where dp[i][j] represents whether we can achieve sum j using the first i elements. Fill the table row by row, and the answer is in dp[n][target].",
+      "explanation": "The bottom-up approach builds the solution iteratively without recursion. We create a 2D boolean table dp where dp[i][j] indicates whether we can achieve sum j using the first i elements from nums. We initialize the base case: dp[i][0] = True for all i (we can always achieve sum 0 by selecting nothing). Then we iterate through each element (i from 1 to n) and each possible sum (j from 1 to target). For each cell, if the current element nums[i-1] is <= j, we can either exclude it (dp[i-1][j]) or include it (dp[i-1][j-nums[i-1]]). Otherwise, we can only exclude it. The answer is dp[n][target]. This builds solutions from smaller subproblems to larger ones.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        total = sum(nums)\n        if total % 2 != 0:\n            return False\n\n        target = total // 2\n        n = len(nums)\n        dp = [[False] * (target + 1) for _ in range(n + 1)]\n\n        for i in range(n + 1):\n            dp[i][0] = True\n\n        for i in range(1, n + 1):\n            for j in range(1, target + 1):\n                if nums[i - 1] <= j:\n                    dp[i][j] = (dp[i - 1][j] or\n                                dp[i - 1][j - nums[i - 1]])\n                else:\n                    dp[i][j] = dp[i - 1][j]\n\n        return dp[n][target]",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Store array length.",
+            "Initialize 2D DP table with false.",
+            "Loop through all rows.",
+            "Set base case sum zero achievable with any elements.",
+            "Loop through each element starting from first.",
+            "Loop through each possible sum from one to target.",
+            "If current element not larger than current sum.",
+            "Can exclude element or include element.",
+            "Otherwise can only exclude element.",
+            "Return whether target sum achievable with all elements."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    const target = Math.floor(total / 2);\n    const n = nums.length;\n    const dp = Array.from({length: n + 1}, () => Array(target + 1).fill(false));\n\n    for (let i = 0; i <= n; i++) {\n        dp[i][0] = true;\n    }\n\n    for (let i = 1; i <= n; i++) {\n        for (let j = 1; j <= target; j++) {\n            if (nums[i - 1] <= j) {\n                dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];\n            } else {\n                dp[i][j] = dp[i - 1][j];\n            }\n        }\n    }\n\n    return dp[n][target];\n};",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Store array length.",
+            "Initialize 2D DP table with false.",
+            "Loop through all rows.",
+            "Set base case sum zero achievable with any elements.",
+            "Loop through each element starting from first.",
+            "Loop through each possible sum from one to target.",
+            "If current element not larger than current sum.",
+            "Can exclude element or include element.",
+            "Otherwise can only exclude element.",
+            "Return whether target sum achievable with all elements."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    target := total / 2\n    n := len(nums)\n    dp := make([][]bool, n + 1)\n    for i := range dp {\n        dp[i] = make([]bool, target + 1)\n    }\n\n    for i := 0; i <= n; i++ {\n        dp[i][0] = true\n    }\n\n    for i := 1; i <= n; i++ {\n        for j := 1; j <= target; j++ {\n            if nums[i - 1] <= j {\n                dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]\n            } else {\n                dp[i][j] = dp[i - 1][j]\n            }\n        }\n    }\n\n    return dp[n][target]\n}",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Store array length.",
+            "Initialize 2D DP slice.",
+            "Initialize each row.",
+            "Loop through all rows.",
+            "Set base case sum zero achievable with any elements.",
+            "Loop through each element starting from first.",
+            "Loop through each possible sum from one to target.",
+            "If current element not larger than current sum.",
+            "Can exclude element or include element.",
+            "Otherwise can only exclude element.",
+            "Return whether target sum achievable with all elements."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*target)",
+      "space_complexity": "O(n*target)",
+      "complexity_explanation": {
+        "time": "We have two nested loops: the outer loop runs n times (elements), and the inner loop runs target times (possible sums). Each cell computation is O(1). Total time is O(n*target).",
+        "space": "The dp table is of size (n+1)×(target+1), requiring O(n*target) space. No recursion stack is needed."
+      },
+      "why_it_works": "Bottom-up DP builds solutions iteratively from base cases. The recurrence relation is: dp[i][j] = dp[i-1][j] (exclude nums[i-1]) OR dp[i-1][j-nums[i-1]] (include nums[i-1], if possible). By filling the table row by row (for each element) and column by column (for each sum), we ensure that when computing dp[i][j], all values dp[i-1][*] have already been computed. The base case dp[*][0] = True (empty subset sums to 0) provides the foundation. This eliminates recursion overhead while maintaining the same time complexity as top-down. The table provides a clear visualization of which sums are achievable at each step.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "Build dp table. dp[4][11] = True via path including [1,5,5]."
+        },
+        {
+          "input": "nums = [1,2,5]",
+          "output": "false",
+          "explanation": "dp[3][4] = False as no combination sums to 4."
+        }
+      ],
+      "common_mistakes": [
+        "Using 0-indexed access nums[i] instead of nums[i-1] when i represents count of elements.",
+        "Not initializing the base case dp[*][0] = True.",
+        "Confusing the iteration order - must iterate elements before sums within each element.",
+        "Off-by-one errors in loop bounds or array indexing."
+      ],
+      "pro_tips": [
+        "The 2D table clearly shows the classic 0/1 knapsack pattern.",
+        "Bottom-up DP is more space-efficient in practice (no recursion stack).",
+        "Each row depends only on the previous row, enabling space optimization (see next solutions).",
+        "This solution is easier to understand and debug than recursion for many people."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5,11,5], target = 11",
+          "steps": [
+            "Initialize dp[5][12], set dp[*][0] = True.",
+            "i=1 (nums[0]=1): For j=1 to 11, dp[1][1]=True (can make 1), rest=False.",
+            "i=2 (nums[1]=5): dp[2][5]=True, dp[2][6]=True (1+5), etc.",
+            "i=3 (nums[2]=11): dp[3][11]=True, dp[3][12] would be True if existed.",
+            "i=4 (nums[3]=5): dp[4][11]=True (via multiple paths).",
+            "Return dp[4][11] = True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Space Optimized)",
+      "approach": "Optimize the 2D DP by observing that we only need the previous row to compute the current row. Use two 1D arrays that alternate roles, reducing space complexity from O(n*target) to O(target).",
+      "explanation": "This solution optimizes space by noticing that dp[i][j] only depends on dp[i-1][j] and dp[i-1][j-nums[i-1]], meaning we only need the previous row. We maintain two 1D arrays: dp (previous row) and nextDp (current row being computed). We initialize dp[0] = True (base case). For each element, we compute nextDp based on dp: for each sum j, if j >= nums[i], nextDp[j] = dp[j] OR dp[j-nums[i]]; otherwise nextDp[j] = dp[j]. After processing all sums for an element, we swap dp and nextDp. The answer is dp[target]. This reduces space from O(n*target) to O(target) while maintaining the same time complexity.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        if sum(nums) % 2:\n            return False\n\n        target = sum(nums) // 2\n        dp = [False] * (target + 1)\n        nextDp = [False] * (target + 1)\n\n        dp[0] = True\n        for i in range(len(nums)):\n            for j in range(1, target + 1):\n                if j >= nums[i]:\n                    nextDp[j] = dp[j] or dp[j - nums[i]]\n                else:\n                    nextDp[j] = dp[j]\n            dp, nextDp = nextDp, dp\n\n        return dp[target]",
+          "semantic_descriptions": [
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize previous row with false.",
+            "Initialize current row with false.",
+            "Set base case sum zero achievable.",
+            "Loop through each element.",
+            "Loop through each possible sum from one to target.",
+            "If sum large enough to include current element.",
+            "Can exclude element or include element.",
+            "Otherwise can only exclude element.",
+            "Swap rows for next iteration.",
+            "Return whether target sum achievable."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    const target = Math.floor(total / 2);\n    let dp = new Array(target + 1).fill(false);\n    let nextDp = new Array(target + 1).fill(false);\n\n    dp[0] = true;\n    for (let i = 0; i < nums.length; i++) {\n        for (let j = 1; j <= target; j++) {\n            if (j >= nums[i]) {\n                nextDp[j] = dp[j] || dp[j - nums[i]];\n            } else {\n                nextDp[j] = dp[j];\n            }\n        }\n        [dp, nextDp] = [nextDp, dp];\n    }\n\n    return dp[target];\n};",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize previous row with false.",
+            "Initialize current row with false.",
+            "Set base case sum zero achievable.",
+            "Loop through each element.",
+            "Loop through each possible sum from one to target.",
+            "If sum large enough to include current element.",
+            "Can exclude element or include element.",
+            "Otherwise can only exclude element.",
+            "Swap rows for next iteration.",
+            "Return whether target sum achievable."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    target := total / 2\n    dp := make([]bool, target + 1)\n    nextDp := make([]bool, target + 1)\n\n    dp[0] = true\n    for i := 0; i < len(nums); i++ {\n        for j := 1; j <= target; j++ {\n            if j >= nums[i] {\n                nextDp[j] = dp[j] || dp[j - nums[i]]\n            } else {\n                nextDp[j] = dp[j]\n            }\n        }\n        dp, nextDp = nextDp, dp\n    }\n\n    return dp[target]\n}",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize previous row with false.",
+            "Initialize current row with false.",
+            "Set base case sum zero achievable.",
+            "Loop through each element.",
+            "Loop through each possible sum from one to target.",
+            "If sum large enough to include current element.",
+            "Can exclude element or include element.",
+            "Otherwise can only exclude element.",
+            "Swap rows for next iteration.",
+            "Return whether target sum achievable."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*target)",
+      "space_complexity": "O(target)",
+      "complexity_explanation": {
+        "time": "We still have two nested loops: n elements and target possible sums, with O(1) work per cell. Total time is O(n*target), same as the 2D version.",
+        "space": "We use two 1D arrays of size target+1, requiring O(target) space total. This is a significant improvement over O(n*target)."
+      },
+      "why_it_works": "This optimization works because each row in the 2D DP table depends only on the previous row, not on any earlier rows. By maintaining just two arrays (current and previous), we can compute the same values. The swap operation makes the current row become the previous row for the next iteration. This preserves correctness because we never need to look back more than one row. The trade-off is slightly more complex code (managing two arrays and swapping) for significant space savings, especially when n is large.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "Space-optimized version computes same values as 2D, returns true."
+        },
+        {
+          "input": "nums = [1,2,5]",
+          "output": "false",
+          "explanation": "Returns false with O(target) space instead of O(n*target)."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to swap dp and nextDp after each element, causing incorrect results.",
+        "Modifying dp directly instead of building nextDp, which corrupts the previous row values.",
+        "Not resetting nextDp between iterations (though swapping handles this).",
+        "Confusing which array represents current vs previous row."
+      ],
+      "pro_tips": [
+        "The swap operation is crucial - it makes the computed row become the previous row for the next iteration.",
+        "This pattern of maintaining two arrays is common in DP space optimization.",
+        "We can optimize further to a single array (see next solution) with careful iteration order.",
+        "This solution demonstrates the principle: analyze dependencies to optimize space."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5], target = 3",
+          "steps": [
+            "dp = [T,F,F,F], nextDp = [F,F,F,F].",
+            "Process nums[0]=1:",
+            "  j=1: nextDp[1] = dp[1] or dp[0] = F or T = T.",
+            "  j=2: nextDp[2] = dp[2] or dp[1] = F.",
+            "  j=3: nextDp[3] = dp[3] or dp[2] = F.",
+            "  Swap: dp = [F,T,F,F].",
+            "Process nums[1]=5: Not enough to reach target=3 from dp.",
+            "Return dp[3] = False."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Dynamic Programming (Hash Set)",
+      "approach": "Use a hash set to track all achievable sums instead of a boolean array. For each element, create a new set containing all previous sums plus sums obtained by adding the current element. Check if target sum is ever achieved.",
+      "explanation": "This solution uses a set-based approach instead of arrays. We maintain a set dp containing all currently achievable sums, initialized with {0}. For each element (iterating backward for clarity), we create a new set nextDP. For each sum t in dp, we add both t (exclude current element) and t+nums[i] (include current element) to nextDP. As an optimization, if t+nums[i] equals target, we immediately return true. Otherwise, we update dp = nextDP and continue. If we process all elements without finding target, return false. This approach naturally handles sparse sums and can be more intuitive than arrays.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        if sum(nums) % 2:\n            return False\n\n        dp = set()\n        dp.add(0)\n        target = sum(nums) // 2\n\n        for i in range(len(nums) - 1, -1, -1):\n            nextDP = set()\n            for t in dp:\n                if (t + nums[i]) == target:\n                    return True\n                nextDP.add(t + nums[i])\n                nextDP.add(t)\n            dp = nextDP\n        return False",
+          "semantic_descriptions": [
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Initialize set with zero sum.",
+            "Add zero to achievable sums.",
+            "Calculate target as half of total.",
+            "Loop backward through each element.",
+            "Initialize new set for next iteration.",
+            "Loop through each currently achievable sum.",
+            "If adding current element reaches target.",
+            "Return true immediately.",
+            "Add sum with current element included.",
+            "Add sum with current element excluded.",
+            "Update set for next iteration.",
+            "Return false if target never reached."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    let dp = new Set();\n    dp.add(0);\n    const target = Math.floor(total / 2);\n\n    for (let i = nums.length - 1; i >= 0; i--) {\n        const nextDP = new Set();\n        for (let t of dp) {\n            if (t + nums[i] === target) {\n                return true;\n            }\n            nextDP.add(t + nums[i]);\n            nextDP.add(t);\n        }\n        dp = nextDP;\n    }\n    return false;\n};",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Initialize set with zero sum.",
+            "Add zero to achievable sums.",
+            "Calculate target as half of total.",
+            "Loop backward through each element.",
+            "Initialize new set for next iteration.",
+            "Loop through each currently achievable sum.",
+            "If adding current element reaches target.",
+            "Return true immediately.",
+            "Add sum with current element included.",
+            "Add sum with current element excluded.",
+            "Update set for next iteration.",
+            "Return false if target never reached."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    dp := make(map[int]bool)\n    dp[0] = true\n    target := total / 2\n\n    for i := len(nums) - 1; i >= 0; i-- {\n        nextDP := make(map[int]bool)\n        for t := range dp {\n            if t + nums[i] == target {\n                return true\n            }\n            nextDP[t + nums[i]] = true\n            nextDP[t] = true\n        }\n        dp = nextDP\n    }\n    return false\n}",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Initialize map for achievable sums.",
+            "Add zero to achievable sums.",
+            "Calculate target as half of total.",
+            "Loop backward through each element.",
+            "Initialize new map for next iteration.",
+            "Loop through each currently achievable sum.",
+            "If adding current element reaches target.",
+            "Return true immediately.",
+            "Add sum with current element included.",
+            "Add sum with current element excluded.",
+            "Update map for next iteration.",
+            "Return false if target never reached."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*target)",
+      "space_complexity": "O(target)",
+      "complexity_explanation": {
+        "time": "For each of n elements, we iterate through all achievable sums in dp. In the worst case, there can be up to target+1 achievable sums. Each iteration does O(1) work. Total time is O(n*target).",
+        "space": "The set can contain at most target+1 distinct sums (0 through target), requiring O(target) space."
+      },
+      "why_it_works": "This set-based approach maintains the invariant that dp contains all sums achievable using the elements processed so far. For each new element, we generate all possible new sums by either including it (t + nums[i]) or excluding it (t). The early return optimization when we hit target is a significant practical improvement. Sets naturally handle duplicates and provide O(1) average-case lookup/insertion. This approach is particularly elegant and intuitive - we're literally building up all possible subset sums. The backward iteration is stylistic; forward iteration works equally well.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "Set grows: {0} → {0,5} → {0,5,11,16} → {0,5,10,11,15,16,21,27} eventually contains 11."
+        },
+        {
+          "input": "nums = [1,2,5]",
+          "output": "false",
+          "explanation": "Set never contains 4 (target for sum 8)."
+        }
+      ],
+      "common_mistakes": [
+        "Modifying dp while iterating over it, causing undefined behavior or missing sums.",
+        "Not creating nextDP, trying to add directly to dp during iteration.",
+        "Forgetting to include the current sum t (exclude case) in nextDP.",
+        "Not initializing dp with 0 as the base case."
+      ],
+      "pro_tips": [
+        "The early return when finding target can significantly improve performance.",
+        "Sets are ideal when the number of achievable sums is sparse relative to target.",
+        "This approach generalizes well to variations like 'find all possible subset sums'.",
+        "Python sets use hashing, providing O(1) average-case operations."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5,11,5], target = 11",
+          "steps": [
+            "dp = {0}.",
+            "Process nums[3]=5: nextDP = {0, 5}. dp = {0, 5}.",
+            "Process nums[2]=11: For t=0: 0+11=11==target → Return True immediately.",
+            "Return True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Dynamic Programming (Optimal)",
+      "approach": "Use a single 1D boolean array and iterate backward through possible sums for each element. This eliminates the need for two arrays while maintaining correctness. This is the most space-efficient standard DP approach.",
+      "explanation": "This is the optimal standard DP solution. We use a single 1D array dp where dp[j] indicates whether sum j is achievable. The key insight is that by iterating backward through sums (from target down to nums[i]), we avoid overwriting values we still need to read in the same iteration. For each element nums[i], we iterate j from target down to nums[i]. For each j, we update dp[j] = dp[j] OR dp[j-nums[i]]. The backward iteration ensures that when we read dp[j-nums[i]], it still contains the value from the previous element (before including nums[i]), not a value that includes nums[i] multiple times. This is the most elegant and commonly used solution.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: list[int]) -> bool:\n        if sum(nums) % 2:\n            return False\n\n        target = sum(nums) // 2\n        dp = [False] * (target + 1)\n\n        dp[0] = True\n        for num in nums:\n            for j in range(target, num - 1, -1):\n                dp[j] = dp[j] or dp[j - num]\n\n        return dp[target]",
+          "semantic_descriptions": [
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize array with false for all sums.",
+            "Set base case sum zero achievable.",
+            "Loop through each element.",
+            "Loop backward from target down to current element.",
+            "Can exclude element or include element.",
+            "Return whether target sum achievable."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    const target = Math.floor(total / 2);\n    const dp = new Array(target + 1).fill(false);\n\n    dp[0] = true;\n    for (let num of nums) {\n        for (let j = target; j >= num; j--) {\n            dp[j] = dp[j] || dp[j - num];\n        }\n    }\n\n    return dp[target];\n};",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize array with false for all sums.",
+            "Set base case sum zero achievable.",
+            "Loop through each element.",
+            "Loop backward from target down to current element.",
+            "Can exclude element or include element.",
+            "Return whether target sum achievable."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    target := total / 2\n    dp := make([]bool, target + 1)\n\n    dp[0] = true\n    for _, num := range nums {\n        for j := target; j >= num; j-- {\n            dp[j] = dp[j] || dp[j - num]\n        }\n    }\n\n    return dp[target]\n}",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize array with false for all sums.",
+            "Set base case sum zero achievable.",
+            "Loop through each element.",
+            "Loop backward from target down to current element.",
+            "Can exclude element or include element.",
+            "Return whether target sum achievable."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*target)",
+      "space_complexity": "O(target)",
+      "complexity_explanation": {
+        "time": "For each of n elements, we iterate through at most target positions in the dp array, performing O(1) work per position. Total time is O(n*target).",
+        "space": "We use a single 1D array of size target+1, requiring O(target) space. This is optimal for standard DP approaches."
+      },
+      "why_it_works": "The critical insight is the backward iteration. When we process element nums[i], we update dp[j] based on dp[j-nums[i]]. If we iterated forward, we might update dp[j-nums[i]] first, then incorrectly use this updated value when computing dp[j], effectively using nums[i] multiple times. By iterating backward, when we compute dp[j], the value dp[j-nums[i]] still represents achievability without nums[i] (or with previous elements only), ensuring each element is used at most once. This preserves the 0/1 knapsack property. The OR operation combines the exclude (dp[j]) and include (dp[j-num]) cases.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "dp evolves: [T,F,...] → [T,T,F,...] → [T,T,F,F,F,T,T,...] → eventually dp[11]=True."
+        },
+        {
+          "input": "nums = [1,2,5]",
+          "output": "false",
+          "explanation": "dp never sets dp[4]=True."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating forward instead of backward, causing elements to be used multiple times.",
+        "Starting the inner loop at 1 instead of num, missing the boundary condition.",
+        "Not understanding why backward iteration is necessary for correctness.",
+        "Forgetting to initialize dp[0] = True."
+      ],
+      "pro_tips": [
+        "This is the most elegant and commonly used solution - memorize this pattern for 0/1 knapsack problems.",
+        "The backward iteration is the key trick that enables single-array optimization.",
+        "This pattern generalizes to other 0/1 knapsack variants.",
+        "For unbounded knapsack (items can be used multiple times), iterate forward instead."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5,11,5], target = 11",
+          "steps": [
+            "dp = [T,F,F,F,F,F,F,F,F,F,F,F].",
+            "Process num=1: j=11 to 1 backward.",
+            "  j=1: dp[1] = dp[1] or dp[0] = F or T = T. dp = [T,T,F,...].",
+            "Process num=5: j=11 to 5 backward.",
+            "  j=6: dp[6] = dp[6] or dp[1] = F or T = T.",
+            "  j=5: dp[5] = dp[5] or dp[0] = F or T = T. dp = [T,T,F,F,F,T,T,...].",
+            "Process num=11: dp[11] becomes True.",
+            "Return dp[11] = True."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Dynamic Programming (Bitset)",
+      "approach": "Use bit manipulation to represent the DP state. Each bit position represents whether that sum is achievable. Use bitwise OR and left shift operations to efficiently update the state for each element. This is a low-level optimization for competitive programming.",
+      "explanation": "This advanced solution uses bitwise operations for ultimate efficiency. We represent the DP state as a single integer (bitset) where bit i is 1 if sum i is achievable, 0 otherwise. We initialize with dp = 1 (bit 0 set, representing sum 0). For each element num, we compute dp |= (dp << num), which means: shift dp left by num positions (creating new achievable sums by adding num to all previous sums) and OR with original dp (preserving exclude case). After processing all elements, we check if bit at position target is set using (dp & (1 << target)) != 0. This uses bitwise operations to parallelize the DP updates, though in practice it's mainly a space optimization and coding challenge.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def canPartition(self, nums: list[int]) -> bool:\n        total = sum(nums)\n        if total % 2 != 0:\n            return False\n\n        target = total // 2\n        dp = 1 << 0\n\n        for num in nums:\n            dp |= dp << num\n\n        return (dp & (1 << target)) != 0",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize bitset with bit zero set representing sum zero.",
+            "Loop through each element.",
+            "Shift bitset left by element value and OR with original.",
+            "Check if bit at target position is set."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var canPartition = function(nums) {\n    const total = nums.reduce((a, b) => a + b, 0);\n    if (total % 2 !== 0) {\n        return false;\n    }\n\n    const target = Math.floor(total / 2);\n    let dp = 1n << 0n;\n\n    for (let num of nums) {\n        dp |= dp << BigInt(num);\n    }\n\n    return (dp & (1n << BigInt(target))) !== 0n;\n};",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize bitset with bit zero set using BigInt.",
+            "Loop through each element.",
+            "Shift bitset left by element value and OR with original using BigInt.",
+            "Check if bit at target position is set using BigInt."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "import \"math/big\"\n\nfunc canPartition(nums []int) bool {\n    total := 0\n    for _, num := range nums {\n        total += num\n    }\n    if total % 2 != 0 {\n        return false\n    }\n\n    target := total / 2\n    dp := big.NewInt(1)\n\n    for _, num := range nums {\n        shifted := new(big.Int).Lsh(dp, uint(num))\n        dp.Or(dp, shifted)\n    }\n\n    return dp.Bit(target) == 1\n}",
+          "semantic_descriptions": [
+            "Calculate total sum.",
+            "If total sum is odd.",
+            "Return false as equal partition impossible.",
+            "Calculate target as half of total.",
+            "Initialize bitset with bit zero set using big integer.",
+            "Loop through each element.",
+            "Create shifted version of bitset left by element value.",
+            "OR original with shifted.",
+            "Check if bit at target position is set."
+          ]
+        }
+      ],
+      "time_complexity": "O(n*target)",
+      "space_complexity": "O(target)",
+      "complexity_explanation": {
+        "time": "For each of n elements, we perform a left shift operation (O(target/w) where w is word size, typically constant) and an OR operation. In practice, this is O(n*target) with very low constant factors due to bitwise operations being hardware-optimized.",
+        "space": "The bitset requires target+1 bits, which is approximately target/8 bytes (or target/64 64-bit words). This is O(target) in bit space, more compact than boolean arrays."
+      },
+      "why_it_works": "This solution encodes the entire DP state in a single bitset. The operation dp |= (dp << num) is equivalent to the standard DP update: for each achievable sum j (represented by bit j being 1), we can now also achieve sum j+num (by shifting). The OR operation combines the exclude case (original dp) with the include case (dp << num). This effectively parallelizes the DP updates using bitwise operations. The final check (dp & (1 << target)) != 0 tests if bit target is set. While conceptually elegant, this is mainly useful for competitive programming where bitwise operations are highly optimized and when target is not too large.",
+      "constraints_examples": [
+        {
+          "input": "nums = [1,5,11,5]",
+          "output": "true",
+          "explanation": "Bitset evolves with each shift-and-OR, eventually has bit 11 set."
+        },
+        {
+          "input": "nums = [1,2,5]",
+          "output": "false",
+          "explanation": "Bitset never sets bit 4."
+        }
+      ],
+      "common_mistakes": [
+        "Not using BigInt in JavaScript for large target values, causing incorrect results.",
+        "Not understanding that this is just a bit-level representation of the standard DP.",
+        "Trying to use this approach when target is extremely large (memory issues).",
+        "Confusing bitwise operations - << is shift left, & is AND, | is OR."
+      ],
+      "pro_tips": [
+        "This is primarily a competitive programming optimization, not recommended for interviews unless specifically asked.",
+        "The bitset approach is most beneficial when word-level parallelism can be exploited.",
+        "In Python, integers can be arbitrarily large, so this works for any target.",
+        "Understanding this solution demonstrates mastery of bit manipulation.",
+        "For clarity in production code, use solution 6 instead."
+      ],
+      "walkthroughs": [
+        {
+          "input": "nums = [1,5], target = 3",
+          "steps": [
+            "dp = 0b1 (binary: 1, bit 0 set).",
+            "Process num=1: dp << 1 = 0b10, dp |= 0b10 → dp = 0b11 (bits 0 and 1 set).",
+            "Process num=5: dp << 5 = 0b1100000, dp |= 0b1100000 → dp = 0b1100011 (bits 0,1,5,6 set).",
+            "Check bit 3: (dp & 0b1000) = 0 → False.",
+            "Return False."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution to return the actual partition subsets, not just whether partitioning is possible?",
+      "hint": "Track parent pointers or maintain the path during DP. Backtrack from dp[target] = True to reconstruct which elements were included."
+    },
+    {
+      "question": "What if you needed to partition into k equal subsets instead of 2?",
+      "hint": "This is problem 698. Use backtracking with k buckets, trying to fill each bucket to target/k. Much more complex than the 2-partition case."
+    },
+    {
+      "question": "How would you handle the case where elements can be negative?",
+      "hint": "Use offset indexing in DP to handle negative sums. The problem becomes finding if any subset sums to (total-negative_sum)/2."
+    }
+  ],
+  "related_topics": ["Dynamic Programming", "Array", "0/1 Knapsack", "Bit Manipulation"],
+  "hints": [
+    "If the total sum is odd, it's impossible to partition into two equal subsets.",
+    "The problem reduces to: can we find a subset that sums to total/2?",
+    "This is a classic 0/1 knapsack problem - each element can be included or excluded once.",
+    "DP state: dp[i] = true if we can achieve sum i using some subset of elements."
+  ],
+  "notes": "This is one of the most fundamental 0/1 knapsack problems. The key insight is reducing the partition problem to a subset sum problem. Solution 6 (single array with backward iteration) is the most commonly used and should be memorized. Understanding why backward iteration is necessary is crucial. The problem demonstrates the evolution from recursion to memoization to iterative DP to space-optimized DP. The bitset solution (7) is an advanced optimization mainly for competitive programming.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
