@@ -1,0 +1,308 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #72 - Edit Distance",
+      "description": "Find the minimum number of operations (insert, delete, replace) required to convert word1 to word2",
+      "cards": [
+        {
+          "id": "leetcode_72_edit_distance",
+          "question": "Edit Distance: Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word: Insert a character, Delete a character, Replace a character.",
+          "solutions": [
+            {
+              "name": "Recursion",
+              "type": "brute-force",
+              "explanation": "Use recursion to explore all possible edit sequences. For each position (i,j), if characters match, move both pointers forward. If they don't match, try all three operations: delete from word1 (i+1,j), delete from word2 (i,j+1), or replace (i+1,j+1), taking minimum plus 1. Base cases: if one word exhausted, return remaining length of other word. Explores all possibilities with exponential time.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method minDistance that accepts self, word1, and word2, returns integer.",
+                    "Get length of word1 as m and length of word2 as n.",
+                    "Define nested function dfs that accepts indices i and j.",
+                    "Check if i equals m (word1 exhausted).",
+                    "If true, return n minus j (remaining characters in word2 need to be inserted).",
+                    "Check if j equals n (word2 exhausted).",
+                    "If true, return m minus i (remaining characters in word1 need to be deleted).",
+                    "Check if word1 at i equals word2 at j (characters match).",
+                    "If true, return dfs of i plus one comma j plus one (no operation needed).",
+                    "Calculate res as minimum of dfs of i plus one comma j (delete) and dfs of i comma j plus one (insert).",
+                    "Update res to minimum of res and dfs of i plus one comma j plus one (replace).",
+                    "Return res plus one (add cost of operation).",
+                    "Call dfs with zero comma zero and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def minDistance(self, word1: str, word2: str) -> int:",
+                    "        m, n = len(word1), len(word2)",
+                    "",
+                    "        def dfs(i, j):",
+                    "            if i == m:",
+                    "                return n - j",
+                    "            if j == n:",
+                    "                return m - i",
+                    "            if word1[i] == word2[j]:",
+                    "                return dfs(i + 1, j + 1)",
+                    "            res = min(dfs(i + 1, j), dfs(i, j + 1))",
+                    "            res = min(res, dfs(i + 1, j + 1))",
+                    "            return res + 1",
+                    "",
+                    "        return dfs(0, 0)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(3^(m+n))",
+              "timeDescription": "Each position can branch into three recursive calls (insert, delete, replace), creating exponential branching with 3^(m+n) possible paths in worst case",
+              "spaceComplexity": "O(m+n)",
+              "spaceDescription": "Recursion stack depth proportional to sum of string lengths",
+              "exampleWalkthrough": "Given word1='horse', word2='ros': dfs(0,0) compares 'h' vs 'r', not match. Tries dfs(1,0) delete h, dfs(0,1) insert r, dfs(1,1) replace h with r. Each branches further. dfs(1,1) compares 'o' vs 'o', match, returns dfs(2,2). Tree explodes exponentially with overlapping subproblems.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Dynamic Programming (Top-Down)",
+              "type": "optimal",
+              "explanation": "Optimize recursion with memoization using cache dictionary. Store results indexed by (i,j) position in both words. Before computing, check if result exists in cache. Same recursive logic but each state computed only once. If characters match, no operation needed. Otherwise try delete, insert, replace and take minimum plus 1. Reduces exponential time to O(m*n).",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method minDistance that accepts self, word1, and word2, returns integer.",
+                    "Get length of word1 as m and length of word2 as n.",
+                    "Create empty dictionary dp for memoization.",
+                    "Define nested function dfs that accepts indices i and j.",
+                    "Check if i equals m (word1 exhausted).",
+                    "If true, return n minus j.",
+                    "Check if j equals n (word2 exhausted).",
+                    "If true, return m minus i.",
+                    "Check if tuple i comma j is in dp cache.",
+                    "If true, return cached dp at i comma j.",
+                    "Check if word1 at i equals word2 at j.",
+                    "If true, set dp at i comma j to dfs of i plus one comma j plus one.",
+                    "Else (characters don't match).",
+                    "Calculate res as minimum of dfs of i plus one comma j (delete) and dfs of i comma j plus one (insert).",
+                    "Update res to minimum of res and dfs of i plus one comma j plus one (replace).",
+                    "Set dp at i comma j to res plus one.",
+                    "Return dp at i comma j.",
+                    "Call dfs with zero comma zero and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def minDistance(self, word1: str, word2: str) -> int:",
+                    "        m, n = len(word1), len(word2)",
+                    "",
+                    "        dp = {}",
+                    "        def dfs(i, j):",
+                    "            if i == m:",
+                    "                return n - j",
+                    "            if j == n:",
+                    "                return m - i",
+                    "            if (i, j) in dp:",
+                    "                return dp[(i, j)]",
+                    "",
+                    "            if word1[i] == word2[j]:",
+                    "                dp[(i, j)] = dfs(i + 1, j + 1)",
+                    "            else:",
+                    "                res = min(dfs(i + 1, j), dfs(i, j + 1))",
+                    "                res = min(res, dfs(i + 1, j + 1))",
+                    "                dp[(i, j)] = res + 1",
+                    "            return dp[(i, j)]",
+                    "",
+                    "        return dfs(0, 0)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Each of m*n states computed once and cached, total work proportional to grid size",
+              "spaceComplexity": "O(m*n)",
+              "spaceDescription": "Cache stores up to m*n subproblem results plus O(m+n) recursion stack",
+              "exampleWalkthrough": "Given word1='horse', word2='ros': dfs(0,0) checks 'h' vs 'r', no match. Computes min(dfs(1,0), dfs(0,1), dfs(1,1))+1 and caches result. Each subproblem like dfs(1,1) computed once. When 'o'=='o' at dfs(1,1), returns dfs(2,2) immediately. Cache grows with visited (i,j) pairs. Final answer from cache[0,0]=3.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Dynamic Programming (Bottom-Up)",
+              "type": "optimal",
+              "explanation": "Build 2D DP table iteratively from bottom-right to top-left. dp[i][j] represents min operations to convert word1[i:] to word2[j:]. Initialize base cases: last column with remaining word1 length, last row with remaining word2 length. For each cell, if characters match take dp[i+1][j+1], else take minimum of delete dp[i+1][j], insert dp[i][j+1], replace dp[i+1][j+1] plus 1. Iterative approach avoiding recursion.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method minDistance that accepts self, word1, and word2, returns integer.",
+                    "Create 2D dp table with dimensions len of word1 plus one by len of word2 plus one, initialized to infinity.",
+                    "Loop j from zero to len of word2 plus one inclusive.",
+                    "Set dp at len of word1 at j to len of word2 minus j (base case: word1 exhausted).",
+                    "Loop i from zero to len of word1 plus one inclusive.",
+                    "Set dp at i at len of word2 to len of word1 minus i (base case: word2 exhausted).",
+                    "Loop i from len of word1 minus one down to zero inclusive.",
+                    "Loop j from len of word2 minus one down to zero inclusive.",
+                    "Check if word1 at i equals word2 at j.",
+                    "If true, set dp at i at j to dp at i plus one at j plus one.",
+                    "Else (characters don't match).",
+                    "Set dp at i at j to one plus minimum of dp at i plus one at j, dp at i at j plus one, dp at i plus one at j plus one.",
+                    "Return dp at zero at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def minDistance(self, word1: str, word2: str) -> int:",
+                    "        dp = [[float(\"inf\")] * (len(word2) + 1) for i in range(len(word1) + 1)]",
+                    "",
+                    "        for j in range(len(word2) + 1):",
+                    "            dp[len(word1)][j] = len(word2) - j",
+                    "        for i in range(len(word1) + 1):",
+                    "            dp[i][len(word2)] = len(word1) - i",
+                    "",
+                    "        for i in range(len(word1) - 1, -1, -1):",
+                    "            for j in range(len(word2) - 1, -1, -1):",
+                    "                if word1[i] == word2[j]:",
+                    "                    dp[i][j] = dp[i + 1][j + 1]",
+                    "                else:",
+                    "                    dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])",
+                    "        return dp[0][0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Nested loops iterate through all m*n cells of dp table once",
+              "spaceComplexity": "O(m*n)",
+              "spaceDescription": "2D dp table of size (m+1) x (n+1) to store all subproblem results",
+              "exampleWalkthrough": "Given word1='horse' (m=5), word2='ros' (n=3): Create 6x4 table. Initialize dp[5][*]=[3,2,1,0] and dp[*][3]=[5,4,3,2,1,0]. For i=4,j=2: 'e' vs 's', dp[4][2]=1+min(dp[5][2],dp[4][3],dp[5][3])=1+min(1,4,0)=1. Continue filling. dp[0][0] gives final answer 3.",
+              "displayOrder": 3
+            },
+            {
+              "name": "Dynamic Programming (Space Optimized)",
+              "type": "optimal",
+              "explanation": "Optimize space using two 1D arrays instead of 2D table. Current row depends only on previous row. Swap longer word to word1 to minimize space (use shorter word length for array size). Use dp for previous row and nextDp for current row. After processing each row, copy nextDp to dp. Reduces space from O(m*n) to O(min(m,n)) while maintaining O(m*n) time.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method minDistance that accepts self, word1, and word2, returns integer.",
+                    "Get length of word1 as m and length of word2 as n.",
+                    "Check if m is less than n (swap to ensure word1 is longer).",
+                    "If true, swap m and n, and swap word1 and word2.",
+                    "Create dp array of length n plus one, initialized to zeros.",
+                    "Create nextDp array of length n plus one, initialized to zeros.",
+                    "Loop j from zero to n plus one inclusive.",
+                    "Set dp at j to n minus j (base case initialization).",
+                    "Loop i from m minus one down to zero inclusive.",
+                    "Set nextDp at n to m minus i (base case for current row).",
+                    "Loop j from n minus one down to zero inclusive.",
+                    "Check if word1 at i equals word2 at j.",
+                    "If true, set nextDp at j to dp at j plus one.",
+                    "Else (characters don't match).",
+                    "Set nextDp at j to one plus minimum of dp at j, nextDp at j plus one, dp at j plus one.",
+                    "Copy nextDp to dp using slice notation.",
+                    "Return dp at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def minDistance(self, word1: str, word2: str) -> int:",
+                    "        m, n = len(word1), len(word2)",
+                    "        if m < n:",
+                    "            m, n = n, m",
+                    "            word1, word2 = word2, word1",
+                    "",
+                    "        dp = [0] * (n + 1)",
+                    "        nextDp = [0] * (n + 1)",
+                    "",
+                    "        for j in range(n + 1):",
+                    "            dp[j] = n - j",
+                    "",
+                    "        for i in range(m - 1, -1, -1):",
+                    "            nextDp[n] = m - i",
+                    "            for j in range(n - 1, -1, -1):",
+                    "                if word1[i] == word2[j]:",
+                    "                    nextDp[j] = dp[j + 1]",
+                    "                else:",
+                    "                    nextDp[j] = 1 + min(dp[j], nextDp[j + 1], dp[j + 1])",
+                    "            dp = nextDp[:]",
+                    "",
+                    "        return dp[0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Nested loops still process all m*n state transitions",
+              "spaceComplexity": "O(min(m,n))",
+              "spaceDescription": "Two 1D arrays of size min(m,n)+1, using shorter word length for optimization",
+              "exampleWalkthrough": "Given word1='horse', word2='ros': Since m=5 > n=3, keep as is. Initialize dp=[3,2,1,0]. For i=4: nextDp[3]=1, process j=2,1,0 using dp values, dp becomes nextDp. For i=3,2,1,0: continue processing. Final dp[0]=3. Space used: only two arrays of size 4.",
+              "displayOrder": 4
+            },
+            {
+              "name": "Dynamic Programming (Optimal)",
+              "type": "optimal",
+              "explanation": "Further optimize space using single array with diagonal tracking. Use variable nextDp to track diagonal value before overwriting. Swap words to minimize array size. Initialize dp with base case values. Process right-to-left, tracking diagonal in nextDp variable, updating dp[j] while preserving old value for next iteration. Most space-efficient solution using O(min(m,n)) space with single array.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method minDistance that accepts self, word1, and word2, returns integer.",
+                    "Get length of word1 as m and length of word2 as n.",
+                    "Check if m is less than n (swap to ensure word1 is longer).",
+                    "If true, swap m and n, and swap word1 and word2.",
+                    "Create dp array as list comprehension with n minus i for i from zero to n plus one.",
+                    "Loop i from m minus one down to zero inclusive.",
+                    "Set nextDp to dp at n (save diagonal value).",
+                    "Set dp at n to m minus i (base case for current position).",
+                    "Loop j from n minus one down to zero inclusive.",
+                    "Set temp to dp at j (save current value before overwriting).",
+                    "Check if word1 at i equals word2 at j.",
+                    "If true, set dp at j to nextDp (diagonal value, no operation needed).",
+                    "Else (characters don't match).",
+                    "Set dp at j to one plus minimum of dp at j, dp at j plus one, nextDp.",
+                    "Set nextDp to temp (update diagonal for next iteration).",
+                    "Return dp at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def minDistance(self, word1: str, word2: str) -> int:",
+                    "        m, n = len(word1), len(word2)",
+                    "        if m < n:",
+                    "            m, n = n, m",
+                    "            word1, word2 = word2, word1",
+                    "",
+                    "        dp = [n - i for i in range(n + 1)]",
+                    "",
+                    "        for i in range(m - 1, -1, -1):",
+                    "            nextDp = dp[n]",
+                    "            dp[n] = m - i",
+                    "            for j in range(n - 1, -1, -1):",
+                    "                temp = dp[j]",
+                    "                if word1[i] == word2[j]:",
+                    "                    dp[j] = nextDp",
+                    "                else:",
+                    "                    dp[j] = 1 + min(dp[j], dp[j + 1], nextDp)",
+                    "                nextDp = temp",
+                    "        return dp[0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Same nested loops processing all state transitions",
+              "spaceComplexity": "O(min(m,n))",
+              "spaceDescription": "Single 1D array of size min(m,n)+1 plus one variable for diagonal tracking",
+              "exampleWalkthrough": "Given word1='horse', word2='ros': Initialize dp=[3,2,1,0]. For i=4: nextDp=dp[3]=0, dp[3]=1. For j=2: temp=dp[2]=1, 'e'!='s', dp[2]=1+min(1,0,0)=1, nextDp=1. Continue j=1,0. Repeat for i=3,2,1,0 reusing dp array. Final dp[0]=3. Minimal space: one array plus two variables.",
+              "displayOrder": 5
+            }
+          ],
+          "tags": [
+            "dynamic-programming",
+            "2d-dp",
+            "string",
+            "recursion",
+            "memoization",
+            "space-optimization",
+            "leetcode-medium"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #312 - Burst Balloons",
+      "description": "Find the maximum coins you can collect by bursting balloons wisely where bursting balloon i gives coins equal to nums[i-1] * nums[i] * nums[i+1]",
+      "cards": [
+        {
+          "id": "leetcode_312_burst_balloons",
+          "question": "Burst Balloons: You are given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If you burst balloon i you will get nums[i-1] * nums[i] * nums[i+1] coins. If i-1 or i+1 goes out of bounds of the array, then treat it as if there is a balloon with a 1 painted on it. Return the maximum coins you can collect by bursting the balloons wisely.",
+          "solutions": [
+            {
+              "name": "Brute Force (Recursion)",
+              "type": "brute-force",
+              "explanation": "Add boundary balloons with value 1 at both ends. Recursively try bursting each balloon and explore all possible orders. For each balloon i, calculate coins as nums[i-1] * nums[i] * nums[i+1], then recursively solve for remaining balloons by removing i from array. Base case when only boundary balloons remain. Explores all n! orderings leading to exponential time.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method maxCoins that accepts self and list nums, returns integer.",
+                    "Add boundary balloons: set nums to list containing one, all elements of nums, and one.",
+                    "Define nested function dfs that accepts nums list.",
+                    "Check if length of nums equals two (only boundary balloons remain).",
+                    "If true, return zero as base case.",
+                    "Initialize maxCoins to zero.",
+                    "Loop i from one to length of nums minus one exclusive.",
+                    "Calculate coins as nums at i minus one times nums at i times nums at i plus one.",
+                    "Add to coins the result of dfs with nums sliced from zero to i concatenated with nums sliced from i plus one to end.",
+                    "Update maxCoins to maximum of maxCoins and coins.",
+                    "Return maxCoins.",
+                    "Call dfs with nums and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def maxCoins(self, nums: List[int]) -> int:",
+                    "        nums = [1] + nums + [1]",
+                    "",
+                    "        def dfs(nums):",
+                    "            if len(nums) == 2:",
+                    "                return 0",
+                    "",
+                    "            maxCoins = 0",
+                    "            for i in range(1, len(nums) - 1):",
+                    "                coins = nums[i - 1] * nums[i] * nums[i + 1]",
+                    "                coins += dfs(nums[:i] + nums[i + 1:])",
+                    "                maxCoins = max(maxCoins, coins)",
+                    "            return maxCoins",
+                    "",
+                    "        return dfs(nums)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n * 2^n)",
+              "timeDescription": "For each of 2^n subsets of balloons, we iterate through n balloons to choose which to burst, resulting in exponential time",
+              "spaceComplexity": "O(n * 2^n)",
+              "spaceDescription": "Recursion stack depth up to n levels, and at each level we create new arrays of varying sizes, total space is exponential",
+              "exampleWalkthrough": "Given nums=[3,1,5,8]: Add boundaries [1,3,1,5,8,1]. Try bursting each: burst 3 gives 1*3*1=3 plus dfs([1,1,5,8,1]). Burst 1 gives 1*1*5=5 plus dfs([1,3,5,8,1]). Continue recursively exploring all orderings. Tree of possibilities explodes exponentially.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Dynamic Programming (Top-Down)",
+              "type": "optimal",
+              "explanation": "Key insight: instead of choosing which balloon to burst first, choose which balloon to burst LAST in a range. Add boundary balloons. Use memoization with dp[(l,r)] storing max coins for bursting balloons in range [l,r]. For each range, try each balloon i as the last to burst, calculating coins as nums[l-1] * nums[i] * nums[r+1] plus results from left [l,i-1] and right [i+1,r] subranges. Cache results to avoid recomputation.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method maxCoins that accepts self and list nums, returns integer.",
+                    "Add boundary balloons: set nums to list containing one, all elements of nums, and one.",
+                    "Create empty dictionary dp for memoization.",
+                    "Define nested function dfs that accepts left l and right r indices.",
+                    "Check if l is greater than r (invalid range).",
+                    "If true, return zero as base case.",
+                    "Check if tuple l comma r is in dp cache.",
+                    "If true, return cached dp at l comma r.",
+                    "Initialize dp at l comma r to zero.",
+                    "Loop i from l to r plus one inclusive.",
+                    "Calculate coins as nums at l minus one times nums at i times nums at r plus one.",
+                    "Add to coins the result of dfs with l comma i minus one plus dfs with i plus one comma r.",
+                    "Update dp at l comma r to maximum of dp at l comma r and coins.",
+                    "Return dp at l comma r.",
+                    "Call dfs with one comma length of nums minus two and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def maxCoins(self, nums: List[int]) -> int:",
+                    "        nums = [1] + nums + [1]",
+                    "        dp = {}",
+                    "        def dfs(l, r):",
+                    "            if l > r:",
+                    "                return 0",
+                    "            if (l, r) in dp:",
+                    "                return dp[(l, r)]",
+                    "",
+                    "            dp[(l, r)] = 0",
+                    "            for i in range(l, r + 1):",
+                    "                coins = nums[l - 1] * nums[i] * nums[r + 1]",
+                    "                coins += dfs(l, i - 1) + dfs(i + 1, r)",
+                    "                dp[(l, r)] = max(dp[(l, r)], coins)",
+                    "            return dp[(l, r)]",
+                    "",
+                    "        return dfs(1, len(nums) - 2)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^3)",
+              "timeDescription": "There are O(n^2) possible ranges [l,r], and for each range we try n balloons as the last to burst, giving O(n^3) total",
+              "spaceComplexity": "O(n^2)",
+              "spaceDescription": "Cache stores up to O(n^2) range results, plus O(n) recursion stack depth",
+              "exampleWalkthrough": "Given nums=[3,1,5,8] becomes [1,3,1,5,8,1]. Call dfs(1,4). Try i=1 as last: coins=1*3*1=3 + dfs(1,0) + dfs(2,4). Try i=2: coins=1*1*1=1 + dfs(1,1) + dfs(3,4). Continue trying all i in range. Cache each (l,r) result. Subproblems like dfs(1,1), dfs(2,4) computed once and reused.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Dynamic Programming (Bottom-Up)",
+              "type": "optimal",
+              "explanation": "Build 2D DP table iteratively. dp[l][r] stores max coins for range [l,r]. Add boundary balloons to nums. Build table bottom-up by processing ranges in increasing length order. For each range [l,r], try each balloon i as last to burst, computing coins as nums[l-1] * nums[i] * nums[r+1] plus dp[l][i-1] plus dp[i+1][r]. Iterative approach avoiding recursion overhead.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method maxCoins that accepts self and list nums, returns integer.",
+                    "Get length of nums as n.",
+                    "Create new_nums as list containing one, all elements of nums, and one.",
+                    "Create 2D dp table with dimensions n plus two by n plus two, initialized to zero.",
+                    "Loop l from n down to one inclusive.",
+                    "Loop r from l to n plus one inclusive.",
+                    "Loop i from l to r plus one inclusive.",
+                    "Calculate coins as new_nums at l minus one times new_nums at i times new_nums at r plus one.",
+                    "Add to coins the sum of dp at l at i minus one and dp at i plus one at r.",
+                    "Update dp at l at r to maximum of dp at l at r and coins.",
+                    "Return dp at one at n."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def maxCoins(self, nums):",
+                    "        n = len(nums)",
+                    "        new_nums = [1] + nums + [1]",
+                    "",
+                    "        dp = [[0] * (n + 2) for _ in range(n + 2)]",
+                    "        for l in range(n, 0, -1):",
+                    "            for r in range(l, n + 1):",
+                    "                for i in range(l, r + 1):",
+                    "                    coins = new_nums[l - 1] * new_nums[i] * new_nums[r + 1]",
+                    "                    coins += dp[l][i - 1] + dp[i + 1][r]",
+                    "                    dp[l][r] = max(dp[l][r], coins)",
+                    "",
+                    "        return dp[1][n]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(n^3)",
+              "timeDescription": "Three nested loops: outer two iterate through O(n^2) ranges, inner loop tries n balloons for each range",
+              "spaceComplexity": "O(n^2)",
+              "spaceDescription": "2D dp table of size (n+2) x (n+2) to store all subproblem results",
+              "exampleWalkthrough": "Given nums=[3,1,5,8], n=4, new_nums=[1,3,1,5,8,1]. Create 6x6 dp table. Start l=4,r=4: try i=4, dp[4][4]=1*8*1=8. Then l=3,r=3: dp[3][3]=1*5*1=5. Build up ranges: l=3,r=4, l=2,r=4, etc. Finally compute dp[1][4] using all previously computed smaller ranges. Return dp[1][4].",
+              "displayOrder": 3
+            }
+          ],
+          "tags": [
+            "dynamic-programming",
+            "2d-dp",
+            "interval-dp",
+            "recursion",
+            "memoization",
+            "leetcode-hard"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}

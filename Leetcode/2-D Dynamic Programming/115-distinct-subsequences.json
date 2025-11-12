@@ -1,0 +1,286 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #115 - Distinct Subsequences",
+      "description": "Count the number of distinct subsequences of string s that equal string t",
+      "cards": [
+        {
+          "id": "leetcode_115_distinct_subsequences",
+          "question": "Distinct Subsequences: Given two strings s and t, return the number of distinct subsequences of s which equals t. A subsequence of a string is a new string formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters.",
+          "solutions": [
+            {
+              "name": "Recursion",
+              "type": "brute-force",
+              "explanation": "Use recursion to explore all possible subsequences. Early exit if t is longer than s. For each position (i,j), always have option to skip character in s (i+1,j). If characters match, also have option to use it (i+1,j+1). Base case: when t is fully matched (j==len(t)) return 1, when s exhausted but t not matched return 0. Sums all valid subsequences but explores exponentially many paths.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method numDistinct that accepts self, string s, and string t, returns integer.",
+                    "Check if length of t is greater than length of s (impossible case).",
+                    "If true, return zero.",
+                    "Define nested function dfs that accepts indices i and j.",
+                    "Check if j equals length of t (t fully matched).",
+                    "If true, return one (found valid subsequence).",
+                    "Check if i equals length of s (s exhausted but t not matched).",
+                    "If true, return zero.",
+                    "Set res to dfs of i plus one comma j (skip current character in s).",
+                    "Check if s at i equals t at j (characters match).",
+                    "If true, add dfs of i plus one comma j plus one to res (use current character).",
+                    "Return res.",
+                    "Call dfs with zero comma zero and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def numDistinct(self, s: str, t: str) -> int:",
+                    "        if len(t) > len(s):",
+                    "            return 0",
+                    "",
+                    "        def dfs(i, j):",
+                    "            if j == len(t):",
+                    "                return 1",
+                    "            if i == len(s):",
+                    "                return 0",
+                    "",
+                    "            res = dfs(i + 1, j)",
+                    "            if s[i] == t[j]:",
+                    "                res += dfs(i + 1, j + 1)",
+                    "            return res",
+                    "",
+                    "        return dfs(0, 0)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(2^m)",
+              "timeDescription": "For each character in s we have two choices (skip or use), creating binary tree of height m with 2^m paths to explore",
+              "spaceComplexity": "O(m)",
+              "spaceDescription": "Recursion stack depth proportional to length of string s",
+              "exampleWalkthrough": "Given s='rabbbit', t='rabbit': dfs(0,0) tries skip 'r' via dfs(1,0) and use 'r' via dfs(1,1). dfs(1,0) continues with 'a' at i=1. Tree branches exponentially. Multiple paths lead to valid subsequences: using first two b's or last two b's, etc. Counts all distinct ways to form t from s.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Dynamic Programming (Top-Down)",
+              "type": "optimal",
+              "explanation": "Optimize recursion with memoization using cache dictionary. Store results indexed by (i,j) position in both strings. Before computing, check if result exists in cache. Same recursive logic: always option to skip s[i], if match also option to use it. Cache prevents recomputation of overlapping subproblems. Reduces exponential time to O(m*n) by computing each state once.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method numDistinct that accepts self, string s, and string t, returns integer.",
+                    "Check if length of t is greater than length of s.",
+                    "If true, return zero.",
+                    "Create empty dictionary dp for memoization.",
+                    "Define nested function dfs that accepts indices i and j.",
+                    "Check if j equals length of t.",
+                    "If true, return one.",
+                    "Check if i equals length of s.",
+                    "If true, return zero.",
+                    "Check if tuple i comma j is in dp cache.",
+                    "If true, return cached dp at i comma j.",
+                    "Set res to dfs of i plus one comma j.",
+                    "Check if s at i equals t at j.",
+                    "If true, add dfs of i plus one comma j plus one to res.",
+                    "Set dp at i comma j to res.",
+                    "Return res.",
+                    "Call dfs with zero comma zero and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def numDistinct(self, s: str, t: str) -> int:",
+                    "        if len(t) > len(s):",
+                    "            return 0",
+                    "",
+                    "        dp = {}",
+                    "        def dfs(i, j):",
+                    "            if j == len(t):",
+                    "                return 1",
+                    "            if i == len(s):",
+                    "                return 0",
+                    "            if (i, j) in dp:",
+                    "                return dp[(i, j)]",
+                    "",
+                    "            res = dfs(i + 1, j)",
+                    "            if s[i] == t[j]:",
+                    "                res += dfs(i + 1, j + 1)",
+                    "            dp[(i, j)] = res",
+                    "            return res",
+                    "",
+                    "        return dfs(0, 0)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Each of m*n states computed once and cached, total work proportional to grid size",
+              "spaceComplexity": "O(m*n)",
+              "spaceDescription": "Cache stores up to m*n subproblem results plus O(m) recursion stack",
+              "exampleWalkthrough": "Given s='rabbbit', t='rabbit': dfs(0,0) checks 'r'=='r', computes dfs(1,0)+dfs(1,1) and caches. dfs(1,1) checks 'a'=='a', computes dfs(2,1)+dfs(2,2). Each (i,j) computed once. When same state needed again like dfs(3,2), returns cached value immediately. Final cache[(0,0)] gives total count of 3.",
+              "displayOrder": 2
+            },
+            {
+              "name": "Dynamic Programming (Bottom-Up)",
+              "type": "optimal",
+              "explanation": "Build 2D DP table iteratively from bottom-right to top-left. dp[i][j] represents number of distinct subsequences of s[i:] that equal t[j:]. Initialize last column: dp[i][n]=1 for all i (empty string t matched). For each cell, always include dp[i+1][j] (skip s[i]). If s[i]==t[j], add dp[i+1][j+1] (use s[i]). Iterative approach avoiding recursion overhead.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method numDistinct that accepts self, string s, and string t, returns integer.",
+                    "Get length of s as m and length of t as n.",
+                    "Create 2D dp table with dimensions m plus one by n plus one, initialized to zero.",
+                    "Loop i from zero to m plus one inclusive.",
+                    "Set dp at i at n to one (base case: empty t is matched).",
+                    "Loop i from m minus one down to zero inclusive.",
+                    "Loop j from n minus one down to zero inclusive.",
+                    "Set dp at i at j to dp at i plus one at j (skip current character in s).",
+                    "Check if s at i equals t at j.",
+                    "If true, add dp at i plus one at j plus one to dp at i at j (use current character).",
+                    "Return dp at zero at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def numDistinct(self, s: str, t: str) -> int:",
+                    "        m, n = len(s), len(t)",
+                    "        dp = [[0] * (n + 1) for _ in range(m + 1)]",
+                    "",
+                    "        for i in range(m + 1):",
+                    "            dp[i][n] = 1",
+                    "",
+                    "        for i in range(m - 1, -1, -1):",
+                    "            for j in range(n - 1, -1, -1):",
+                    "                dp[i][j] = dp[i + 1][j]",
+                    "                if s[i] == t[j]:",
+                    "                    dp[i][j] += dp[i + 1][j + 1]",
+                    "",
+                    "        return dp[0][0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Nested loops iterate through all m*n cells of dp table once",
+              "spaceComplexity": "O(m*n)",
+              "spaceDescription": "2D dp table of size (m+1) x (n+1) to store all subproblem results",
+              "exampleWalkthrough": "Given s='rabbbit' (m=7), t='rabbit' (n=6): Create 8x7 table. Initialize dp[*][6]=[1,1,1,1,1,1,1,1]. For i=6,j=5: 't'=='t', dp[6][5]=dp[7][5]+dp[7][6]=0+1=1. For i=5,j=5: 'i'!='t', dp[5][5]=dp[6][5]=1. Build table bottom-up. dp[0][0] gives final answer 3.",
+              "displayOrder": 3
+            },
+            {
+              "name": "Dynamic Programming (Space Optimized)",
+              "type": "optimal",
+              "explanation": "Optimize space using two 1D arrays instead of 2D table. Current row depends only on previous row. Use dp for previous row and nextDp for current row. Initialize both with base case dp[n]=1. After processing each row, copy nextDp to dp. Reduces space from O(m*n) to O(n) while maintaining O(m*n) time complexity.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method numDistinct that accepts self, string s, and string t, returns integer.",
+                    "Get length of s as m and length of t as n.",
+                    "Create dp array of length n plus one, initialized to zeros.",
+                    "Create nextDp array of length n plus one, initialized to zeros.",
+                    "Set dp at n to one and nextDp at n to one (base case).",
+                    "Loop i from m minus one down to zero inclusive.",
+                    "Loop j from n minus one down to zero inclusive.",
+                    "Set nextDp at j to dp at j (skip current character).",
+                    "Check if s at i equals t at j.",
+                    "If true, add dp at j plus one to nextDp at j (use current character).",
+                    "Copy nextDp to dp using slice notation.",
+                    "Return dp at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def numDistinct(self, s: str, t: str) -> int:",
+                    "        m, n = len(s), len(t)",
+                    "        dp = [0] * (n + 1)",
+                    "        nextDp = [0] * (n + 1)",
+                    "",
+                    "        dp[n] = nextDp[n] = 1",
+                    "        for i in range(m - 1, -1, -1):",
+                    "            for j in range(n - 1, -1, -1):",
+                    "                nextDp[j] = dp[j]",
+                    "                if s[i] == t[j]:",
+                    "                    nextDp[j] += dp[j + 1]",
+                    "            dp = nextDp[:]",
+                    "",
+                    "        return dp[0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Nested loops still process all m*n state transitions",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Two 1D arrays of size n+1, reusing space for each row",
+              "exampleWalkthrough": "Given s='rabbbit', t='rabbit': Initialize dp=[0,0,0,0,0,0,1], nextDp=[0,0,0,0,0,0,1]. For i=6: process j=5,4,3,2,1,0, dp becomes nextDp values. For i=5,4,3,2,1,0: continue processing using previous dp. Final dp[0]=3. Space used: only two arrays of size 7.",
+              "displayOrder": 4
+            },
+            {
+              "name": "Dynamic Programming (Optimal)",
+              "type": "optimal",
+              "explanation": "Further optimize space using single array with variable tracking. Use prev variable to track diagonal value (dp[j+1] from previous iteration) before overwriting. Initialize dp[n]=1. Process right-to-left, saving dp[j] to temp before updating, using prev for diagonal access. Update prev to temp for next iteration. Most space-efficient solution using O(n) space with single array and one variable.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method numDistinct that accepts self, string s, and string t, returns integer.",
+                    "Get length of s as m and length of t as n.",
+                    "Create dp array of length n plus one, initialized to zeros.",
+                    "Set dp at n to one (base case).",
+                    "Loop i from m minus one down to zero inclusive.",
+                    "Set prev to one (tracks diagonal value, starts at dp[n]).",
+                    "Loop j from n minus one down to zero inclusive.",
+                    "Set res to dp at j (skip current character).",
+                    "Check if s at i equals t at j.",
+                    "If true, add prev to res (use current character, prev holds diagonal).",
+                    "Set prev to dp at j (save current value for next iteration's diagonal).",
+                    "Set dp at j to res (update current position).",
+                    "Return dp at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def numDistinct(self, s: str, t: str) -> int:",
+                    "        m, n = len(s), len(t)",
+                    "        dp = [0] * (n + 1)",
+                    "",
+                    "        dp[n] = 1",
+                    "        for i in range(m - 1, -1, -1):",
+                    "            prev = 1",
+                    "            for j in range(n - 1, -1, -1):",
+                    "                res = dp[j]",
+                    "                if s[i] == t[j]:",
+                    "                    res += prev",
+                    "",
+                    "                prev = dp[j]",
+                    "                dp[j] = res",
+                    "",
+                    "        return dp[0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Same nested loops processing all state transitions",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Single 1D array of size n+1 plus one variable for diagonal tracking",
+              "exampleWalkthrough": "Given s='rabbbit', t='rabbit': Initialize dp=[0,0,0,0,0,0,1]. For i=6: prev=1, j=5: 't'=='t', res=0+1=1, prev=0, dp[5]=1. Continue j=4,3,2,1,0. For i=5,4,3,2,1,0: reuse dp array with prev tracking diagonal. Final dp[0]=3. Minimal space: one array plus prev variable.",
+              "displayOrder": 5
+            }
+          ],
+          "tags": [
+            "dynamic-programming",
+            "2d-dp",
+            "string",
+            "subsequence",
+            "recursion",
+            "memoization",
+            "space-optimization",
+            "leetcode-hard"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
