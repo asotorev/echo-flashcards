@@ -1,0 +1,616 @@
+{
+  "problemId": "647",
+  "title": "Palindromic Substrings",
+  "difficulty": "Medium",
+  "category": "1-D Dynamic Programming",
+  "subcategory": "Palindrome Detection",
+  "similar_questions": ["5. Longest Palindromic Substring", "516. Longest Palindromic Subsequence"],
+  "real_life_domains": ["Text Analysis", "Pattern Recognition", "Bioinformatics", "Data Validation"],
+  "scenarios": [
+    {
+      "scenario": "DNA sequence analysis in bioinformatics",
+      "description": "Identifying palindromic sequences in DNA strands which often indicate important biological features like restriction sites or regulatory elements."
+    },
+    {
+      "scenario": "Text pattern recognition",
+      "description": "Analyzing text for palindromic patterns used in linguistic analysis, poetry structure identification, or cryptographic applications."
+    },
+    {
+      "scenario": "Data validation and error detection",
+      "description": "Detecting symmetric patterns in data streams that might indicate specific events, errors, or structure in encoded information."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Brute Force",
+      "approach": "Check all possible substrings and verify each one for palindrome property using two pointers. For each starting position, consider all ending positions and validate if the substring is a palindrome by comparing characters from both ends moving inward.",
+      "explanation": "The brute force approach generates all possible substrings by choosing each starting index and each ending index, then checks if each substring is a palindrome. For each substring from index i to j, we use two pointers starting at i and j, moving them toward each other while checking if characters match. If all character pairs match (when pointers meet or cross), the substring is a palindrome and we increment the count. This ensures we examine every possible substring exactly once.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        res = 0\n\n        for i in range(len(s)):\n            for j in range(i, len(s)):\n                l, r = i, j\n                while l < r and s[l] == s[r]:\n                    l += 1\n                    r -= 1\n                res += (l >= r)\n\n        return res",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each possible starting index.",
+            "Loop through each possible ending index from start.",
+            "Set left pointer to start index.",
+            "Set right pointer to end index.",
+            "While left is less than right and characters match.",
+            "Move left pointer one step right.",
+            "Move right pointer one step left.",
+            "Add one to result if pointers met or crossed, indicating palindrome.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var countSubstrings = function(s) {\n    let res = 0;\n\n    for (let i = 0; i < s.length; i++) {\n        for (let j = i; j < s.length; j++) {\n            let l = i, r = j;\n            while (l < r && s[l] === s[r]) {\n                l++;\n                r--;\n            }\n            res += (l >= r) ? 1 : 0;\n        }\n    }\n\n    return res;\n};",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each possible starting index.",
+            "Loop through each possible ending index from start.",
+            "Set left pointer to start index and right to end index.",
+            "While left is less than right and characters match.",
+            "Move left pointer one step right.",
+            "Move right pointer one step left.",
+            "Add one to result if pointers met or crossed, else add zero.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func countSubstrings(s string) int {\n    res := 0\n\n    for i := 0; i < len(s); i++ {\n        for j := i; j < len(s); j++ {\n            l, r := i, j\n            for l < r && s[l] == s[r] {\n                l++\n                r--\n            }\n            if l >= r {\n                res++\n            }\n        }\n    }\n\n    return res\n}",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each possible starting index.",
+            "Loop through each possible ending index from start.",
+            "Set left pointer to start index and right to end index.",
+            "While left is less than right and characters match.",
+            "Move left pointer one step right.",
+            "Move right pointer one step left.",
+            "If pointers met or crossed, increment result.",
+            "Return total count of palindromic substrings."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^3)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "We have two nested loops to generate all substrings which takes O(n^2) time. For each substring, we verify if it's a palindrome using two pointers which takes O(n) time in the worst case. Therefore, total time complexity is O(n^3).",
+        "space": "We only use a constant amount of extra space for variables (res, i, j, l, r), regardless of input size."
+      },
+      "why_it_works": "This approach works because it systematically examines every possible substring of the input string. By using two nested loops, we generate all possible (start, end) pairs which represent all substrings. For each substring, the two-pointer technique efficiently verifies if it's a palindrome by comparing characters from both ends moving toward the center. When the pointers meet or cross (l >= r), we've verified all character pairs match, confirming it's a palindrome. The boolean condition (l >= r) evaluates to True/1 when it's a palindrome and False/0 otherwise, allowing us to accumulate the count directly.",
+      "constraints_examples": [
+        {
+          "input": "s = \"abc\"",
+          "output": "3",
+          "explanation": "Three palindromic substrings: 'a', 'b', 'c'. Each single character is a palindrome by definition."
+        },
+        {
+          "input": "s = \"aaa\"",
+          "output": "6",
+          "explanation": "Six palindromic substrings: 'a', 'a', 'a', 'aa', 'aa', 'aaa'. All substrings of identical characters are palindromes."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting that single characters are always palindromes and starting j from i+1 instead of i.",
+        "Not handling the case where l == r correctly (odd-length palindrome with center character).",
+        "Using string slicing to check palindromes which adds extra O(n) time and space for substring creation.",
+        "Counting the same palindrome multiple times by not carefully managing loop boundaries."
+      ],
+      "pro_tips": [
+        "The condition (l >= r) elegantly handles both odd and even length palindromes: l == r means odd-length with one center character, l > r means even-length where pointers crossed.",
+        "Converting the boolean to int using addition (res += (l >= r)) is more concise than using if-else statements.",
+        "This brute force approach provides a clear baseline to understand the problem before optimizing."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"aba\"",
+          "steps": [
+            "Initialize res = 0.",
+            "i = 0, j = 0: Check 'a' → l = 0, r = 0 → l >= r (True) → res = 1.",
+            "i = 0, j = 1: Check 'ab' → l = 0, r = 1, s[0] != s[1] → l < r (False) → res = 1.",
+            "i = 0, j = 2: Check 'aba' → l = 0, r = 2, s[0] == s[2] → l = 1, r = 1 → l >= r (True) → res = 2.",
+            "i = 1, j = 1: Check 'b' → l = 1, r = 1 → l >= r (True) → res = 3.",
+            "i = 1, j = 2: Check 'ba' → l = 1, r = 2, s[1] != s[2] → l < r (False) → res = 3.",
+            "i = 2, j = 2: Check 'a' → l = 2, r = 2 → l >= r (True) → res = 4.",
+            "Return 4 (palindromes: 'a', 'aba', 'b', 'a')."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming",
+      "approach": "Build a 2D DP table where dp[i][j] represents whether substring from index i to j is a palindrome. Use previously computed results for smaller substrings to determine if larger substrings are palindromes. A substring is a palindrome if its first and last characters match and the substring between them is also a palindrome.",
+      "explanation": "We create a 2D boolean table dp where dp[i][j] is True if substring s[i:j+1] is a palindrome. We fill this table in a bottom-up manner, starting from the end of the string and moving backward for the starting index, and forward for the ending index. For each cell, we check if s[i] == s[j]. If characters match and either the substring is very small (length <= 3) or the inner substring dp[i+1][j-1] is a palindrome, then dp[i][j] is True. Every time we mark dp[i][j] as True, we increment the count. This approach eliminates redundant palindrome checks by reusing previously computed results.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        n, res = len(s), 0\n        dp = [[False] * n for _ in range(n)]\n\n        for i in range(n - 1, -1, -1):\n            for j in range(i, n):\n                if s[i] == s[j] and (j - i <= 2 or dp[i + 1][j - 1]):\n                    dp[i][j] = True\n                    res += 1\n\n        return res",
+          "semantic_descriptions": [
+            "Store string length and initialize result counter to zero.",
+            "Create 2D boolean table with all False values.",
+            "Loop from end of string backward for starting index.",
+            "Loop from current start to end for ending index.",
+            "If characters match and substring is short or inner part is palindrome.",
+            "Mark current substring as palindrome.",
+            "Increment palindrome count.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var countSubstrings = function(s) {\n    const n = s.length;\n    let res = 0;\n    const dp = Array.from({length: n}, () => Array(n).fill(false));\n\n    for (let i = n - 1; i >= 0; i--) {\n        for (let j = i; j < n; j++) {\n            if (s[i] === s[j] && (j - i <= 2 || dp[i + 1][j - 1])) {\n                dp[i][j] = true;\n                res++;\n            }\n        }\n    }\n\n    return res;\n};",
+          "semantic_descriptions": [
+            "Store string length.",
+            "Initialize result counter to zero.",
+            "Create 2D boolean table with all false values.",
+            "Loop from end of string backward for starting index.",
+            "Loop from current start to end for ending index.",
+            "If characters match and substring is short or inner part is palindrome.",
+            "Mark current substring as palindrome.",
+            "Increment palindrome count.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func countSubstrings(s string) int {\n    n := len(s)\n    res := 0\n    dp := make([][]bool, n)\n    for i := range dp {\n        dp[i] = make([]bool, n)\n    }\n\n    for i := n - 1; i >= 0; i-- {\n        for j := i; j < n; j++ {\n            if s[i] == s[j] && (j - i <= 2 || dp[i+1][j-1]) {\n                dp[i][j] = true\n                res++\n            }\n        }\n    }\n\n    return res\n}",
+          "semantic_descriptions": [
+            "Store string length.",
+            "Initialize result counter to zero.",
+            "Create 2D boolean slice with n rows.",
+            "Initialize each row with n boolean values.",
+            "Loop from end of string backward for starting index.",
+            "Loop from current start to end for ending index.",
+            "If characters match and substring is short or inner part is palindrome.",
+            "Mark current substring as palindrome.",
+            "Increment palindrome count.",
+            "Return total count of palindromic substrings."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(n^2)",
+      "complexity_explanation": {
+        "time": "We have two nested loops, each running at most n times, where we perform O(1) operations in each iteration. The total number of cells we fill in the DP table is approximately n^2/2, which is O(n^2).",
+        "space": "We use a 2D DP table of size n x n to store whether each substring is a palindrome, requiring O(n^2) space."
+      },
+      "why_it_works": "This approach leverages the recursive nature of palindromes: a string is a palindrome if its first and last characters match and the substring between them is also a palindrome. By iterating from the end of the string backward for the starting index and forward for the ending index, we ensure that when we check dp[i+1][j-1], it has already been computed. The condition (j - i <= 2) handles base cases: single characters (i == j), two-character strings (j - i == 1), and three-character strings (j - i == 2) where we only need to check if endpoints match. For longer strings, we also check if the inner substring is a palindrome using dp[i+1][j-1]. This eliminates redundant work by storing and reusing results.",
+      "constraints_examples": [
+        {
+          "input": "s = \"abc\"",
+          "output": "3",
+          "explanation": "DP table fills to show only single characters are palindromes: dp[0][0]=T, dp[1][1]=T, dp[2][2]=T, giving count of 3."
+        },
+        {
+          "input": "s = \"aaa\"",
+          "output": "6",
+          "explanation": "DP table shows all substrings are palindromes: single chars (3), two-char pairs (2), three-char string (1), total 6."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating in the wrong order (forward for i) which causes you to access dp[i+1][j-1] before it's computed.",
+        "Not handling the base case condition (j - i <= 2) correctly, leading to incorrect palindrome detection for short strings.",
+        "Forgetting to increment res when marking dp[i][j] as True.",
+        "Creating the DP table but not initializing it with False values in languages that don't default to false/0."
+      ],
+      "pro_tips": [
+        "The condition (j - i <= 2) elegantly handles three cases: i == j (length 1), j - i == 1 (length 2), and j - i == 2 (length 3), all of which only need endpoint comparison.",
+        "Iterating i backward and j forward ensures we build results for larger substrings using already-computed smaller substrings.",
+        "The DP table can be visualized as upper triangular since we only fill entries where j >= i.",
+        "This approach is a classic example of converting a recursive solution with overlapping subproblems into an iterative bottom-up DP solution."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"aba\"",
+          "steps": [
+            "Initialize n = 3, res = 0, dp = 3x3 False table.",
+            "i = 2, j = 2: s[2] == s[2], j - i = 0 <= 2 → dp[2][2] = True, res = 1.",
+            "i = 1, j = 1: s[1] == s[1], j - i = 0 <= 2 → dp[1][1] = True, res = 2.",
+            "i = 1, j = 2: s[1] != s[2] → dp[1][2] = False.",
+            "i = 0, j = 0: s[0] == s[0], j - i = 0 <= 2 → dp[0][0] = True, res = 3.",
+            "i = 0, j = 1: s[0] != s[1] → dp[0][1] = False.",
+            "i = 0, j = 2: s[0] == s[2], j - i = 2 <= 2 → dp[0][2] = True, res = 4.",
+            "Return 4 (palindromes: 'a', 'b', 'a', 'aba')."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Two Pointers",
+      "approach": "For each character position, treat it as a potential center of a palindrome and expand outward in both directions while characters match. Handle both odd-length palindromes (single character center) and even-length palindromes (two character center). Count each valid palindrome found during expansion.",
+      "explanation": "Instead of checking all possible substrings, we observe that every palindrome has a center. For odd-length palindromes, the center is a single character, and for even-length palindromes, the center is between two characters. We iterate through each position in the string and expand around it. For each position i, we expand in two scenarios: treating i as the center of an odd-length palindrome (l = r = i) and treating i and i+1 as the center of an even-length palindrome (l = i, r = i+1). In each expansion, we check if characters at l and r match, increment the count if they do, then move l left and r right. We continue until characters don't match or we go out of bounds.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        res = 0\n\n        for i in range(len(s)):\n            # odd length\n            l, r = i, i\n            while l >= 0 and r < len(s) and s[l] == s[r]:\n                res += 1\n                l -= 1\n                r += 1\n\n            # even length\n            l, r = i, i + 1\n            while l >= 0 and r < len(s) and s[l] == s[r]:\n                res += 1\n                l -= 1\n                r += 1\n\n        return res",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each character position as potential center.",
+            "Set both pointers to current position for odd-length palindromes.",
+            "While pointers are in bounds and characters match.",
+            "Increment palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Set left pointer to current position and right to next for even-length.",
+            "While pointers are in bounds and characters match.",
+            "Increment palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var countSubstrings = function(s) {\n    let res = 0;\n\n    for (let i = 0; i < s.length; i++) {\n        // odd length\n        let l = i, r = i;\n        while (l >= 0 && r < s.length && s[l] === s[r]) {\n            res++;\n            l--;\n            r++;\n        }\n\n        // even length\n        l = i;\n        r = i + 1;\n        while (l >= 0 && r < s.length && s[l] === s[r]) {\n            res++;\n            l--;\n            r++;\n        }\n    }\n\n    return res;\n};",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each character position as potential center.",
+            "Set both pointers to current position for odd-length palindromes.",
+            "While pointers are in bounds and characters match.",
+            "Increment palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Set left pointer to current position.",
+            "Set right pointer to next position for even-length.",
+            "While pointers are in bounds and characters match.",
+            "Increment palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func countSubstrings(s string) int {\n    res := 0\n\n    for i := 0; i < len(s); i++ {\n        // odd length\n        l, r := i, i\n        for l >= 0 && r < len(s) && s[l] == s[r] {\n            res++\n            l--\n            r++\n        }\n\n        // even length\n        l, r = i, i + 1\n        for l >= 0 && r < len(s) && s[l] == s[r] {\n            res++\n            l--\n            r++\n        }\n    }\n\n    return res\n}",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each character position as potential center.",
+            "Set both pointers to current position for odd-length palindromes.",
+            "While pointers are in bounds and characters match.",
+            "Increment palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Set left to current position and right to next for even-length.",
+            "While pointers are in bounds and characters match.",
+            "Increment palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Return total count of palindromic substrings."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "For each of the n positions, we expand outward up to n/2 times in each direction in the worst case (for strings like 'aaa'). This gives us O(n) work per position, resulting in O(n^2) total time.",
+        "space": "We only use a constant amount of extra space for variables (res, i, l, r), regardless of input size."
+      },
+      "why_it_works": "This approach works because it exploits the symmetry property of palindromes. Every palindrome is symmetric around its center, so if we start from a center and expand outward, we can identify all palindromes with that center. By treating each position as a potential center and expanding while characters match, we find all palindromes efficiently. We handle both odd and even length palindromes by using two different starting configurations: for odd lengths, both pointers start at the same position (single center), and for even lengths, they start at adjacent positions (center between two characters). This ensures we count all possible palindromes exactly once.",
+      "constraints_examples": [
+        {
+          "input": "s = \"abc\"",
+          "output": "3",
+          "explanation": "Each position i expands: i=0 finds 'a', i=1 finds 'b', i=2 finds 'c'. No multi-character palindromes exist."
+        },
+        {
+          "input": "s = \"aaa\"",
+          "output": "6",
+          "explanation": "i=0: odd='a','aa','aaa' (3), even='aa' (1). i=1: odd='a','aa' (wait, let me recalculate). i=0: odd='a', even='aa'. i=1: odd='a','aaa', even='aa'. i=2: odd='a'. Total: 6 palindromes."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to handle even-length palindromes by only checking odd-length centers.",
+        "Incrementing the count after moving pointers instead of before, which misses counting the initial matching pair.",
+        "Not checking bounds (l >= 0 and r < len(s)) before accessing characters, leading to index errors.",
+        "Trying to optimize by skipping centers, which can miss some palindromes."
+      ],
+      "pro_tips": [
+        "The expand-around-center approach is more intuitive than DP and uses O(1) space.",
+        "For each center, we expand and count immediately, which is more cache-friendly than accessing a 2D DP table.",
+        "This approach naturally handles both odd and even length palindromes without complex conditionals.",
+        "The while loop condition order matters: check bounds first to prevent index errors before checking character equality."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"aba\"",
+          "steps": [
+            "Initialize res = 0.",
+            "i = 0, odd-length: l = 0, r = 0 → 'a' matches → res = 1, l = -1 (out of bounds, stop).",
+            "i = 0, even-length: l = 0, r = 1 → 'a' != 'b' → stop.",
+            "i = 1, odd-length: l = 1, r = 1 → 'b' matches → res = 2, l = 0, r = 2 → 'a' == 'a' → res = 3, l = -1 (stop).",
+            "i = 1, even-length: l = 1, r = 2 → 'b' != 'a' → stop.",
+            "i = 2, odd-length: l = 2, r = 2 → 'a' matches → res = 4, l = 1, r = 3 (out of bounds, stop).",
+            "i = 2, even-length: l = 2, r = 3 (out of bounds, stop).",
+            "Return 4 (palindromes: 'a', 'b', 'aba', 'a')."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Two Pointers (Optimal)",
+      "approach": "Same expand-around-center strategy as the previous solution, but refactored with a helper function to eliminate code duplication. For each position, call the helper function twice: once for odd-length palindromes and once for even-length palindromes. The helper function expands outward and returns the count of palindromes found.",
+      "explanation": "This is a cleaner implementation of the expand-around-center approach. We extract the expansion logic into a separate helper function countPali that takes the string and initial left and right pointers. The helper expands while characters match, counting each valid palindrome, and returns the total count for that center. In the main function, for each position i, we call countPali twice: with (i, i) for odd-length palindromes and (i, i+1) for even-length palindromes, accumulating the counts. This refactoring improves code maintainability and readability without changing the algorithm's efficiency.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n\n    def countSubstrings(self, s: str) -> int:\n        res = 0\n\n        for i in range(len(s)):\n            res += self.countPali(s, i, i)\n            res += self.countPali(s, i, i + 1)\n        return res\n\n    def countPali(self, s, l, r):\n        res = 0\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1\n        return res",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each character position as potential center.",
+            "Add count of odd-length palindromes centered at current position.",
+            "Add count of even-length palindromes centered between current and next.",
+            "Return total count of palindromic substrings.",
+            "Initialize local counter to zero in helper.",
+            "While pointers are in bounds and characters match.",
+            "Increment local palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Return count of palindromes found from this center."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var countSubstrings = function(s) {\n    let res = 0;\n\n    for (let i = 0; i < s.length; i++) {\n        res += countPali(s, i, i);\n        res += countPali(s, i, i + 1);\n    }\n    return res;\n};\n\nfunction countPali(s, l, r) {\n    let res = 0;\n    while (l >= 0 && r < s.length && s[l] === s[r]) {\n        res++;\n        l--;\n        r++;\n    }\n    return res;\n}",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each character position as potential center.",
+            "Add count of odd-length palindromes centered at current position.",
+            "Add count of even-length palindromes centered between current and next.",
+            "Return total count of palindromic substrings.",
+            "Initialize local counter to zero in helper.",
+            "While pointers are in bounds and characters match.",
+            "Increment local palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Return count of palindromes found from this center."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func countSubstrings(s string) int {\n    res := 0\n\n    for i := 0; i < len(s); i++ {\n        res += countPali(s, i, i)\n        res += countPali(s, i, i + 1)\n    }\n    return res\n}\n\nfunc countPali(s string, l int, r int) int {\n    res := 0\n    for l >= 0 && r < len(s) && s[l] == s[r] {\n        res++\n        l--\n        r++\n    }\n    return res\n}",
+          "semantic_descriptions": [
+            "Initialize result counter to zero.",
+            "Loop through each character position as potential center.",
+            "Add count of odd-length palindromes centered at current position.",
+            "Add count of even-length palindromes centered between current and next.",
+            "Return total count of palindromic substrings.",
+            "Initialize local counter to zero in helper.",
+            "While pointers are in bounds and characters match.",
+            "Increment local palindrome count.",
+            "Move left pointer one step left.",
+            "Move right pointer one step right.",
+            "Return count of palindromes found from this center."
+          ]
+        }
+      ],
+      "time_complexity": "O(n^2)",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "Same as the previous two-pointer approach. For each of the n positions, we expand outward up to n/2 times in each direction in the worst case. This gives us O(n) work per position, resulting in O(n^2) total time.",
+        "space": "We only use a constant amount of extra space for variables. The helper function uses stack space, but it's O(1) per call and not recursive, so total space is O(1)."
+      },
+      "why_it_works": "This solution works for the same reason as the previous two-pointer approach: it exploits palindrome symmetry by expanding from each potential center. The refactoring into a helper function doesn't change the algorithm's correctness or efficiency, it only improves code organization. The helper function encapsulates the expansion logic, making the main function cleaner and easier to understand. By calling countPali with different initial pointer positions (i, i) and (i, i+1), we handle both odd and even length palindromes. The helper returns the count of palindromes found from each center, which we accumulate in the main function.",
+      "constraints_examples": [
+        {
+          "input": "s = \"abc\"",
+          "output": "3",
+          "explanation": "For each position: i=0 returns 1+0=1, i=1 returns 1+0=1, i=2 returns 1+0=1. Total: 3."
+        },
+        {
+          "input": "s = \"aaa\"",
+          "output": "6",
+          "explanation": "i=0: countPali(0,0)=1, countPali(0,1)=2. i=1: countPali(1,1)=1, countPali(1,2)=1. i=2: countPali(2,2)=1, countPali(2,3)=0. Total: 6."
+        }
+      ],
+      "common_mistakes": [
+        "Forgetting to return the count from the helper function.",
+        "Passing incorrect initial pointer values to the helper function.",
+        "Modifying the helper function to work in-place on a global counter, which can lead to confusion and bugs.",
+        "Not handling the bounds checking properly in the helper function."
+      ],
+      "pro_tips": [
+        "Extracting repeated logic into helper functions improves code maintainability and reduces the chance of bugs.",
+        "The helper function can be easily tested independently for correctness.",
+        "This pattern of using a helper for expansion is common in palindrome problems and can be reused.",
+        "In languages that support closures or lambdas, you could define the helper inline to access the string without passing it as a parameter."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"aba\"",
+          "steps": [
+            "Initialize res = 0.",
+            "i = 0: countPali(s, 0, 0) → expands 'a', returns 1 → res = 1.",
+            "i = 0: countPali(s, 0, 1) → 'a' != 'b', returns 0 → res = 1.",
+            "i = 1: countPali(s, 1, 1) → expands 'b', then 'aba', returns 2 → res = 3.",
+            "i = 1: countPali(s, 1, 2) → 'b' != 'a', returns 0 → res = 3.",
+            "i = 2: countPali(s, 2, 2) → expands 'a', returns 1 → res = 4.",
+            "i = 2: countPali(s, 2, 3) → out of bounds, returns 0 → res = 4.",
+            "Return 4 (palindromes: 'a', 'b', 'aba', 'a')."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Manacher's Algorithm",
+      "approach": "Transform the input string by inserting a special character between every character and at the boundaries to handle both odd and even length palindromes uniformly. Build a palindrome radius array using previously computed information to avoid redundant comparisons. The radius array stores how far each center can expand as a palindrome. Sum up the number of palindromes by analyzing the radius values.",
+      "explanation": "Manacher's algorithm achieves linear time complexity by cleverly reusing information about previously found palindromes. First, we transform the string by inserting '#' characters between every character (e.g., 'aba' becomes '#a#b#a#'). This makes all palindromes odd-length in the transformed string. We then build an array p where p[i] represents the radius of the longest palindrome centered at i. The key insight is that if we've found a palindrome centered at c extending to right boundary r, then for any position i within that palindrome, we can use the mirror position i' = c - (i - c) to initialize p[i] based on p[i'], avoiding redundant comparisons. We expand each center only when necessary. Finally, we convert the radius values to palindrome counts: a radius of k means there are (k+1)/2 palindromes of various lengths centered at that position.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n\n        def manacher(s):\n            t = '#' + '#'.join(s) + '#'\n            n = len(t)\n            p = [0] * n\n            l, r = 0, 0\n            for i in range(n):\n                p[i] = min(r - i, p[l + (r - i)]) if i < r else 0\n                while (i + p[i] + 1 < n and i - p[i] - 1 >= 0\n                       and t[i + p[i] + 1] == t[i - p[i] - 1]):\n                    p[i] += 1\n                if i + p[i] > r:\n                    l, r = i - p[i], i + p[i]\n            return p\n\n        p = manacher(s)\n        res = 0\n        for i in p:\n            res += (i + 1) // 2\n        return res",
+          "semantic_descriptions": [
+            "Transform string by inserting hash between all characters.",
+            "Get length of transformed string.",
+            "Initialize palindrome radius array with zeros.",
+            "Initialize left and right boundaries of rightmost palindrome to zero.",
+            "Loop through each position in transformed string.",
+            "Initialize radius using mirror position if inside known palindrome, else zero.",
+            "While expansion stays in bounds and characters match.",
+            "Increment radius for current center.",
+            "If current palindrome extends beyond rightmost boundary.",
+            "Update left and right boundaries to current palindrome.",
+            "Return the palindrome radius array.",
+            "Get radius array from helper function.",
+            "Initialize result counter to zero.",
+            "Loop through each radius value.",
+            "Add number of palindromes contributed by this center.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var countSubstrings = function(s) {\n    function manacher(s) {\n        const t = '#' + s.split('').join('#') + '#';\n        const n = t.length;\n        const p = new Array(n).fill(0);\n        let l = 0, r = 0;\n        for (let i = 0; i < n; i++) {\n            p[i] = i < r ? Math.min(r - i, p[l + (r - i)]) : 0;\n            while (i + p[i] + 1 < n && i - p[i] - 1 >= 0\n                   && t[i + p[i] + 1] === t[i - p[i] - 1]) {\n                p[i]++;\n            }\n            if (i + p[i] > r) {\n                l = i - p[i];\n                r = i + p[i];\n            }\n        }\n        return p;\n    }\n\n    const p = manacher(s);\n    let res = 0;\n    for (let i of p) {\n        res += Math.floor((i + 1) / 2);\n    }\n    return res;\n};",
+          "semantic_descriptions": [
+            "Transform string by inserting hash between all characters.",
+            "Get length of transformed string.",
+            "Initialize palindrome radius array with zeros.",
+            "Initialize left and right boundaries of rightmost palindrome to zero.",
+            "Loop through each position in transformed string.",
+            "Initialize radius using mirror position if inside known palindrome, else zero.",
+            "While expansion stays in bounds and characters match.",
+            "Increment radius for current center.",
+            "If current palindrome extends beyond rightmost boundary.",
+            "Update left boundary to current palindrome left edge.",
+            "Update right boundary to current palindrome right edge.",
+            "Return the palindrome radius array.",
+            "Get radius array from helper function.",
+            "Initialize result counter to zero.",
+            "Loop through each radius value.",
+            "Add number of palindromes contributed by this center.",
+            "Return total count of palindromic substrings."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func countSubstrings(s string) int {\n    manacher := func(s string) []int {\n        t := \"#\"\n        for _, ch := range s {\n            t += string(ch) + \"#\"\n        }\n        n := len(t)\n        p := make([]int, n)\n        l, r := 0, 0\n        for i := 0; i < n; i++ {\n            if i < r {\n                mirror := l + (r - i)\n                p[i] = min(r - i, p[mirror])\n            }\n            for i + p[i] + 1 < n && i - p[i] - 1 >= 0 && t[i + p[i] + 1] == t[i - p[i] - 1] {\n                p[i]++\n            }\n            if i + p[i] > r {\n                l = i - p[i]\n                r = i + p[i]\n            }\n        }\n        return p\n    }\n\n    p := manacher(s)\n    res := 0\n    for _, radius := range p {\n        res += (radius + 1) / 2\n    }\n    return res\n}\n\nfunc min(a, b int) int {\n    if a < b {\n        return a\n    }\n    return b\n}",
+          "semantic_descriptions": [
+            "Start transformed string with hash.",
+            "Append each character followed by hash to transformed string.",
+            "Get length of transformed string.",
+            "Initialize palindrome radius slice with zeros.",
+            "Initialize left and right boundaries of rightmost palindrome to zero.",
+            "Loop through each position in transformed string.",
+            "If position is inside known palindrome.",
+            "Calculate mirror position relative to center.",
+            "Initialize radius using mirror value bounded by remaining space.",
+            "While expansion stays in bounds and characters match.",
+            "Increment radius for current center.",
+            "If current palindrome extends beyond rightmost boundary.",
+            "Update left boundary to current palindrome left edge.",
+            "Update right boundary to current palindrome right edge.",
+            "Return the palindrome radius slice.",
+            "Get radius slice from helper function.",
+            "Initialize result counter to zero.",
+            "Loop through each radius value.",
+            "Add number of palindromes contributed by this center.",
+            "Return total count of palindromic substrings."
+          ]
+        }
+      ],
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "Although there are nested loops, each position in the transformed string is visited at most twice: once when it becomes the current center i, and potentially once when expanding from another center. The right boundary r only moves forward, never backward, and we never expand beyond r from the same center twice. This ensures the total number of operations is linear in n.",
+        "space": "We create a transformed string t of length 2n+1 and a palindrome radius array p of the same length, both requiring O(n) space."
+      },
+      "why_it_works": "Manacher's algorithm works by exploiting the symmetry of palindromes in two ways. First, transforming the string with '#' delimiters makes all palindromes odd-length, simplifying the logic. Second, when we know there's a large palindrome centered at c extending to r, and we're examining a position i inside this palindrome, we can use information from the mirror position i' (where i' is on the opposite side of c from i). Specifically, p[i] can be initialized to min(p[i'], r - i) because the substring around i mirrors the substring around i' up to the boundary r. This initialization saves redundant character comparisons. We only expand when necessary, and the right boundary r monotonically increases, ensuring each character participates in expansions a limited number of times. The formula (radius + 1) / 2 converts each radius to the count of distinct palindromes because a radius k in the transformed string represents k+1 characters, which corresponds to (k+1)/2 original palindromes.",
+      "constraints_examples": [
+        {
+          "input": "s = \"abc\"",
+          "output": "3",
+          "explanation": "Transformed: '#a#b#c#'. Radius array p might be [0,1,0,1,0,1,0]. Sum of (p[i]+1)/2 = 1+1+1 = 3."
+        },
+        {
+          "input": "s = \"aaa\"",
+          "output": "6",
+          "explanation": "Transformed: '#a#a#a#'. Algorithm finds all palindromes efficiently and sums them using radius array."
+        }
+      ],
+      "common_mistakes": [
+        "Not understanding why the transformation with '#' works - it unifies handling of odd and even length palindromes.",
+        "Incorrectly computing the mirror index i' = l + (r - i) or confusing it with 2*c - i.",
+        "Forgetting to update the (l, r) boundaries when the current palindrome extends beyond r.",
+        "Not understanding the formula (radius + 1) / 2 for converting radius to palindrome count.",
+        "Thinking the nested loops make this O(n^2) without recognizing that r only moves forward."
+      ],
+      "pro_tips": [
+        "Manacher's algorithm is a famous interview topic and demonstrating understanding of it shows advanced algorithmic knowledge.",
+        "The transformation with '#' is a key insight that simplifies the logic significantly.",
+        "Understanding why this is O(n) requires recognizing that the right boundary r moves monotonically forward and each position is processed a bounded number of times.",
+        "The formula (radius + 1) / 2 works because in the transformed string, a radius k means we have k+1 characters in the palindrome (including the center), which corresponds to (k+1)/2 characters in the original string, and each forms a distinct palindrome.",
+        "While Manacher's is optimal in theory, the two-pointer approach with O(n^2) worst-case is often simpler and sufficient for typical string lengths."
+      ],
+      "walkthroughs": [
+        {
+          "input": "s = \"aba\"",
+          "steps": [
+            "Transform: t = '#a#b#a#', n = 7.",
+            "Initialize: p = [0,0,0,0,0,0,0], l = 0, r = 0.",
+            "i = 0: p[0] = 0 (not inside any palindrome), expand: t[1]='a' != t[-1] (out of bounds), p[0] = 0.",
+            "i = 1: p[1] = 0, expand: t[2]='#' == t[0]='#' → p[1] = 1, t[3]='b' != t[-1] (stop), p[1] = 1, update l=0, r=2.",
+            "i = 2: p[2] = min(2-2, p[0+(2-2)]) = min(0, 0) = 0, expand: t[3]='b' != t[1]='a', p[2] = 0.",
+            "i = 3: p[3] = 0, expand: t[4]='#' == t[2]='#' → p[3] = 1, t[5]='a' == t[1]='a' → p[3] = 2, t[6]='#' == t[0]='#' → p[3] = 3, t[7]=OOB (stop), p[3] = 3, update l=0, r=6.",
+            "i = 4: p[4] = min(6-4, p[0+(6-4)]) = min(2, p[2]) = min(2, 0) = 0, expand: t[5]='a' != t[3]='b', p[4] = 0.",
+            "i = 5: p[5] = min(6-5, p[0+(6-5)]) = min(1, p[1]) = min(1, 1) = 1, expand: t[7]=OOB, p[5] = 1.",
+            "i = 6: p[6] = 0, expand: t[7]=OOB, p[6] = 0.",
+            "p = [0,1,0,3,0,1,0]. Sum: (0+1)/2 + (1+1)/2 + (0+1)/2 + (3+1)/2 + (0+1)/2 + (1+1)/2 + (0+1)/2 = 0+1+0+2+0+1+0 = 4.",
+            "Return 4."
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution to return the actual palindromic substrings instead of just counting them?",
+      "hint": "Store the substrings during expansion or DP table traversal. Be mindful of memory usage with large inputs."
+    },
+    {
+      "question": "Can you optimize the space complexity of the DP solution?",
+      "hint": "You only need to check dp[i+1][j-1], so you might be able to use a 1D array with careful iteration order. However, this is tricky and may not be worth the complexity."
+    },
+    {
+      "question": "How would you find the longest palindromic substring that appears most frequently?",
+      "hint": "Use a hash map to count occurrences of each palindromic substring, then find the longest one with the highest count."
+    }
+  ],
+  "related_topics": ["Two Pointers", "String", "Dynamic Programming", "Manacher's Algorithm"],
+  "hints": [
+    "How many palindromes can be in a string? n single characters, possibly n-1 two-character pairs, etc.",
+    "Think about how palindromes are symmetric around their center.",
+    "Can you reuse information about smaller palindromes to detect larger ones?",
+    "Manacher's algorithm can solve this in O(n) time, but understanding the two-pointer approach is more important for interviews."
+  ],
+  "notes": "This problem is excellent for practicing multiple approaches with different time-space tradeoffs. The two-pointer expand-around-center approach is usually the most practical and interview-friendly. Manacher's algorithm is a fascinating optimization but complex to implement correctly under time pressure.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
