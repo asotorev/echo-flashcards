@@ -1,0 +1,677 @@
+{
+  "id": "1143-longest-common-subsequence",
+  "title": "Longest Common Subsequence",
+  "difficulty": "medium",
+  "category": "2-D Dynamic Programming",
+  "subcategory": "String Matching",
+  "similar_questions": ["Edit Distance", "Shortest Common Supersequence", "Delete Operation for Two Strings"],
+  "real_life_domains": ["Text Comparison", "DNA Sequencing", "Version Control", "Plagiarism Detection", "File Diff Tools"],
+  "problem_statement": "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.\n\nA subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.\n\nFor example, \"ace\" is a subsequence of \"abcde\".\nA common subsequence of two strings is a subsequence that is common to both strings.",
+  "input_format": "Two strings text1 and text2",
+  "output_format": "An integer representing the length of the longest common subsequence",
+  "constraints": [
+    "1 <= text1.length, text2.length <= 1000",
+    "text1 and text2 consist of only lowercase English characters"
+  ],
+  "examples": [
+    {
+      "input": "text1 = \"abcde\", text2 = \"ace\"",
+      "output": "3",
+      "explanation": "The longest common subsequence is \"ace\" and its length is 3."
+    },
+    {
+      "input": "text1 = \"abc\", text2 = \"abc\"",
+      "output": "3",
+      "explanation": "The longest common subsequence is \"abc\" and its length is 3."
+    },
+    {
+      "input": "text1 = \"abc\", text2 = \"def\"",
+      "output": "0",
+      "explanation": "There is no common subsequence, so the result is 0."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Explore all possible subsequences recursively by comparing characters at each position.",
+      "description": "Use recursion to explore all possibilities: if characters match, include them and move forward in both strings; otherwise, try advancing in either string and take the maximum.",
+      "time_complexity": "O(2^(m+n))",
+      "space_complexity": "O(m+n)",
+      "keywords": ["recursion", "brute force", "exponential", "exploration"],
+      "python": {
+        "code": "class Solution:\n    def longestCommonSubsequence(self, text1: str, text2: str) -> int:\n\n        def dfs(i, j):\n            if i == len(text1) or j == len(text2):\n                return 0\n            if text1[i] == text2[j]:\n                return 1 + dfs(i + 1, j + 1)\n            return max(dfs(i + 1, j), dfs(i, j + 1))\n\n        return dfs(0, 0)",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Define recursive helper function dfs that takes indices i and j.",
+          "Check if index i equals the length of text1 or index j equals the length of text2.",
+          "Return 0 indicating no more characters to compare.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Return 1 plus the recursive call with both indices incremented by 1.",
+          "Return the maximum of two recursive calls advancing one index at a time.",
+          "Call dfs starting from indices 0 and 0 and return the result."
+        ]
+      },
+      "javascript": {
+        "code": "var longestCommonSubsequence = function(text1, text2) {\n\n    function dfs(i, j) {\n        if (i === text1.length || j === text2.length) {\n            return 0;\n        }\n        if (text1[i] === text2[j]) {\n            return 1 + dfs(i + 1, j + 1);\n        }\n        return Math.max(dfs(i + 1, j), dfs(i, j + 1));\n    }\n\n    return dfs(0, 0);\n};",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Define recursive helper function dfs that takes indices i and j.",
+          "Check if index i equals the length of text1 or index j equals the length of text2.",
+          "Return 0 indicating no more characters to compare.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Return 1 plus the recursive call with both indices incremented by 1.",
+          "Return the maximum of two recursive calls advancing one index at a time.",
+          "Call dfs starting from indices 0 and 0 and return the result."
+        ]
+      },
+      "go": {
+        "code": "func longestCommonSubsequence(text1 string, text2 string) int {\n\n    var dfs func(i, j int) int\n    dfs = func(i, j int) int {\n        if i == len(text1) || j == len(text2) {\n            return 0\n        }\n        if text1[i] == text2[j] {\n            return 1 + dfs(i+1, j+1)\n        }\n        return max(dfs(i+1, j), dfs(i, j+1))\n    }\n\n    return dfs(0, 0)\n}",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Declare recursive helper function dfs that takes indices i and j.",
+          "Define the dfs function implementation.",
+          "Check if index i equals the length of text1 or index j equals the length of text2.",
+          "Return 0 indicating no more characters to compare.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Return 1 plus the recursive call with both indices incremented by 1.",
+          "Return the maximum of two recursive calls advancing one index at a time.",
+          "Call dfs starting from indices 0 and 0 and return the result."
+        ]
+      },
+      "explanation": {
+        "overview": "This recursive solution explores all possible subsequences by comparing characters at each position and making decisions based on whether they match.",
+        "step_by_step": {
+          "step_1": "Start with both indices at position 0",
+          "step_2": "Check if either string has been fully traversed (base case)",
+          "step_3": "If characters match, include them in the subsequence and move both indices forward",
+          "step_4": "If characters don't match, try two options: advance first string or advance second string",
+          "step_5": "Take the maximum of the two options",
+          "step_6": "Return the longest common subsequence length"
+        },
+        "why_it_works": "The algorithm works by exploring all possible ways to form subsequences from both strings. When characters match, they must be part of the optimal solution for that branch. When they don't match, we explore both possibilities (skip character in text1 or skip in text2) and take the maximum, ensuring we find the longest common subsequence.",
+        "when_to_use": "Use this approach for understanding the problem fundamentals or when inputs are very small. It demonstrates the recursive nature of the problem but is impractical for larger inputs due to exponential time complexity.",
+        "invariants": [
+          "At each recursive call, i and j represent valid positions in their respective strings or equal the string length",
+          "The function returns the length of the longest common subsequence starting from positions i and j",
+          "All possible subsequences are explored through the recursive tree"
+        ]
+      },
+      "walkthrough": {
+        "example": "text1 = \"ace\", text2 = \"abcde\"",
+        "steps": [
+          {
+            "step": "Start: dfs(0, 0), comparing 'a' and 'a'",
+            "state": "i=0, j=0, text1[0]='a', text2[0]='a'",
+            "action": "Characters match, return 1 + dfs(1, 1)"
+          },
+          {
+            "step": "Call: dfs(1, 1), comparing 'c' and 'b'",
+            "state": "i=1, j=1, text1[1]='c', text2[1]='b'",
+            "action": "Characters don't match, try max(dfs(2, 1), dfs(1, 2))"
+          },
+          {
+            "step": "Branch 1: dfs(2, 1), comparing 'e' and 'b'",
+            "state": "i=2, j=1, text1[2]='e', text2[1]='b'",
+            "action": "Characters don't match, try max(dfs(3, 1), dfs(2, 2))"
+          },
+          {
+            "step": "Branch 2: dfs(1, 2), comparing 'c' and 'c'",
+            "state": "i=1, j=2, text1[1]='c', text2[2]='c'",
+            "action": "Characters match, return 1 + dfs(2, 3)"
+          },
+          {
+            "step": "Continue: dfs(2, 3), comparing 'e' and 'd'",
+            "state": "i=2, j=3, text1[2]='e', text2[3]='d'",
+            "action": "Characters don't match, try max(dfs(3, 3), dfs(2, 4))"
+          },
+          {
+            "step": "Continue: dfs(2, 4), comparing 'e' and 'e'",
+            "state": "i=2, j=4, text1[2]='e', text2[4]='e'",
+            "action": "Characters match, return 1 + dfs(3, 5)"
+          },
+          {
+            "step": "Base case: dfs(3, 5)",
+            "state": "i=3, j=5, both indices out of bounds",
+            "action": "Return 0"
+          },
+          {
+            "step": "Backtrack and combine results",
+            "state": "Chain: 1 (from 'a') + 1 (from 'c') + 1 (from 'e')",
+            "action": "Total LCS length = 3"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting the base case when either string is fully traversed",
+        "Not considering both possibilities when characters don't match",
+        "Attempting to use this approach for large inputs (causes timeout)",
+        "Not understanding that this explores exponentially many paths"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Add memoization to the recursive solution to cache results of subproblems and avoid redundant calculations.",
+      "description": "Use recursion with a memoization dictionary to store already computed results for each (i, j) pair, reducing time complexity from exponential to polynomial.",
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(m*n)",
+      "keywords": ["dynamic programming", "memoization", "top-down", "caching"],
+      "python": {
+        "code": "class Solution:\n    def longestCommonSubsequence(self, text1: str, text2: str) -> int:\n        memo = {}\n\n        def dfs(i, j):\n            if i == len(text1) or j == len(text2):\n                return 0\n            if (i, j) in memo:\n                return memo[(i, j)]\n\n            if text1[i] == text2[j]:\n                memo[(i, j)] = 1 + dfs(i + 1, j + 1)\n            else:\n                memo[(i, j)] = max(dfs(i + 1, j), dfs(i, j + 1))\n\n            return memo[(i, j)]>\n\n        return dfs(0, 0)",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Initialize an empty dictionary memo for caching results.",
+          "Define recursive helper function dfs that takes indices i and j.",
+          "Check if index i equals the length of text1 or index j equals the length of text2.",
+          "Return 0 indicating no more characters to compare.",
+          "Check if the result for pair (i, j) exists in memo.",
+          "Return the cached result from memo.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Store 1 plus the recursive call with both indices incremented in memo.",
+          "Store the maximum of two recursive calls advancing one index at a time in memo.",
+          "Return the computed result from memo.",
+          "Call dfs starting from indices 0 and 0 and return the result."
+        ]
+      },
+      "javascript": {
+        "code": "var longestCommonSubsequence = function(text1, text2) {\n    const memo = new Map();\n\n    function dfs(i, j) {\n        if (i === text1.length || j === text2.length) {\n            return 0;\n        }\n        const key = `${i},${j}`;\n        if (memo.has(key)) {\n            return memo.get(key);\n        }\n\n        let res;\n        if (text1[i] === text2[j]) {\n            res = 1 + dfs(i + 1, j + 1);\n        } else {\n            res = Math.max(dfs(i + 1, j), dfs(i, j + 1));\n        }\n        memo.set(key, res);\n\n        return res;\n    }\n\n    return dfs(0, 0);\n};",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Initialize a Map for caching results.",
+          "Define recursive helper function dfs that takes indices i and j.",
+          "Check if index i equals the length of text1 or index j equals the length of text2.",
+          "Return 0 indicating no more characters to compare.",
+          "Create a string key from indices i and j.",
+          "Check if the result for this key exists in memo.",
+          "Return the cached result from memo.",
+          "Declare a variable to store the result.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Compute 1 plus the recursive call with both indices incremented.",
+          "Compute the maximum of two recursive calls advancing one index at a time.",
+          "Store the result in memo with the current key.",
+          "Return the computed result.",
+          "Call dfs starting from indices 0 and 0 and return the result."
+        ]
+      },
+      "go": {
+        "code": "func longestCommonSubsequence(text1 string, text2 string) int {\n    memo := make(map[[2]int]int)\n\n    var dfs func(i, j int) int\n    dfs = func(i, j int) int {\n        if i == len(text1) || j == len(text2) {\n            return 0\n        }\n        key := [2]int{i, j}\n        if val, ok := memo[key]; ok {\n            return val\n        }\n\n        var res int\n        if text1[i] == text2[j] {\n            res = 1 + dfs(i+1, j+1)\n        } else {\n            res = max(dfs(i+1, j), dfs(i, j+1))\n        }\n        memo[key] = res\n\n        return res\n    }\n\n    return dfs(0, 0)\n}",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Initialize a map for caching results with key type array of 2 integers.",
+          "Declare recursive helper function dfs that takes indices i and j.",
+          "Define the dfs function implementation.",
+          "Check if index i equals the length of text1 or index j equals the length of text2.",
+          "Return 0 indicating no more characters to compare.",
+          "Create a key from indices i and j as an array.",
+          "Check if the result for this key exists in memo.",
+          "Return the cached result from memo.",
+          "Declare a variable to store the result.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Compute 1 plus the recursive call with both indices incremented.",
+          "Compute the maximum of two recursive calls advancing one index at a time.",
+          "Store the result in memo with the current key.",
+          "Return the computed result.",
+          "Call dfs starting from indices 0 and 0 and return the result."
+        ]
+      },
+      "explanation": {
+        "overview": "This solution optimizes the recursive approach by caching results of subproblems in a memoization dictionary. Each unique (i, j) pair is computed only once, dramatically reducing time complexity.",
+        "step_by_step": {
+          "step_1": "Initialize a memoization structure to cache results",
+          "step_2": "Start recursion from indices (0, 0)",
+          "step_3": "Check if result for current indices is already cached",
+          "step_4": "If cached, return the stored result immediately",
+          "step_5": "If not cached, compute the result using the same logic as pure recursion",
+          "step_6": "Store the computed result in the cache before returning",
+          "step_7": "Return the result"
+        },
+        "why_it_works": "Memoization works because the problem has overlapping subproblems. Many different paths in the recursive tree lead to the same (i, j) state. By caching results, we ensure each unique state is computed only once, converting an exponential algorithm into a polynomial one.",
+        "when_to_use": "Use this approach when you prefer a top-down recursive thinking style but need better performance than pure recursion. It's particularly useful when not all subproblems need to be solved.",
+        "invariants": [
+          "Each (i, j) pair appears in memo at most once",
+          "The value in memo[(i, j)] represents the correct LCS length for substrings starting at i and j",
+          "All recursive calls either return a cached value or compute and cache a new value"
+        ]
+      },
+      "walkthrough": {
+        "example": "text1 = \"abc\", text2 = \"abc\"",
+        "steps": [
+          {
+            "step": "Start: dfs(0, 0), comparing 'a' and 'a'",
+            "state": "i=0, j=0, memo={}",
+            "action": "Characters match, compute 1 + dfs(1, 1), cache result"
+          },
+          {
+            "step": "Call: dfs(1, 1), comparing 'b' and 'b'",
+            "state": "i=1, j=1, memo={(0,0): pending}",
+            "action": "Characters match, compute 1 + dfs(2, 2), cache result"
+          },
+          {
+            "step": "Call: dfs(2, 2), comparing 'c' and 'c'",
+            "state": "i=2, j=2, memo={(0,0): pending, (1,1): pending}",
+            "action": "Characters match, compute 1 + dfs(3, 3), cache result"
+          },
+          {
+            "step": "Base case: dfs(3, 3)",
+            "state": "i=3, j=3, both indices equal length",
+            "action": "Return 0"
+          },
+          {
+            "step": "Cache: memo[(2, 2)] = 1",
+            "state": "Result: 1 + 0 = 1",
+            "action": "Store and return 1"
+          },
+          {
+            "step": "Cache: memo[(1, 1)] = 2",
+            "state": "Result: 1 + 1 = 2",
+            "action": "Store and return 2"
+          },
+          {
+            "step": "Cache: memo[(0, 0)] = 3",
+            "state": "Result: 1 + 2 = 3",
+            "action": "Store and return 3"
+          },
+          {
+            "step": "Final result",
+            "state": "LCS length = 3",
+            "action": "All three characters match, total length is 3"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Not caching the result before returning it",
+        "Forgetting to check the cache before computing",
+        "Using mutable objects as dictionary keys in some languages",
+        "Not handling the base case before checking the cache"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build a 2D table iteratively from the end of both strings, computing the LCS length for each subproblem.",
+      "description": "Create a 2D DP table where dp[i][j] represents the LCS length for text1[i:] and text2[j:]. Fill the table from bottom-right to top-left.",
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(m*n)",
+      "keywords": ["dynamic programming", "bottom-up", "tabulation", "2d array"],
+      "python": {
+        "code": "class Solution:\n    def longestCommonSubsequence(self, text1: str, text2: str) -> int:\n        dp = [[0 for j in range(len(text2) + 1)]\n                 for i in range(len(text1) + 1)]\n\n        for i in range(len(text1) - 1, -1, -1):\n            for j in range(len(text2) - 1, -1, -1):\n                if text1[i] == text2[j]:\n                    dp[i][j] = 1 + dp[i + 1][j + 1]\n                else:\n                    dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])\n\n        return dp[0][0]",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Initialize a 2D array dp with dimensions (len(text1) + 1) by (len(text2) + 1) filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Iterate through text2 from the last index to 0.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set dp[i][j] to 1 plus the value at dp[i + 1][j + 1].",
+          "Set dp[i][j] to the maximum of dp[i][j + 1] and dp[i + 1][j].",
+          "Return the value at dp[0][0]."
+        ]
+      },
+      "javascript": {
+        "code": "var longestCommonSubsequence = function(text1, text2) {\n    const dp = Array(text1.length + 1)\n        .fill(0)\n        .map(() => Array(text2.length + 1).fill(0));\n\n    for (let i = text1.length - 1; i >= 0; i--) {\n        for (let j = text2.length - 1; j >= 0; j--) {\n            if (text1[i] === text2[j]) {\n                dp[i][j] = 1 + dp[i + 1][j + 1];\n            } else {\n                dp[i][j] = Math.max(dp[i][j + 1], dp[i + 1][j]);\n            }\n        }\n    }\n\n    return dp[0][0];\n};",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Initialize a 2D array dp with dimensions (text1.length + 1) by (text2.length + 1) filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Iterate through text2 from the last index to 0.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set dp[i][j] to 1 plus the value at dp[i + 1][j + 1].",
+          "Set dp[i][j] to the maximum of dp[i][j + 1] and dp[i + 1][j].",
+          "Return the value at dp[0][0]."
+        ]
+      },
+      "go": {
+        "code": "func longestCommonSubsequence(text1 string, text2 string) int {\n    dp := make([][]int, len(text1)+1)\n    for i := range dp {\n        dp[i] = make([]int, len(text2)+1)\n    }\n\n    for i := len(text1) - 1; i >= 0; i-- {\n        for j := len(text2) - 1; j >= 0; j-- {\n            if text1[i] == text2[j] {\n                dp[i][j] = 1 + dp[i+1][j+1]\n            } else {\n                dp[i][j] = max(dp[i][j+1], dp[i+1][j])\n            }\n        }\n    }\n\n    return dp[0][0]\n}",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Initialize a 2D slice dp with dimensions (len(text1) + 1) by (len(text2) + 1).",
+          "Allocate each row of dp with length len(text2) + 1.",
+          "Iterate through text1 from the last index to 0.",
+          "Iterate through text2 from the last index to 0.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set dp[i][j] to 1 plus the value at dp[i + 1][j + 1].",
+          "Set dp[i][j] to the maximum of dp[i][j + 1] and dp[i + 1][j].",
+          "Return the value at dp[0][0]."
+        ]
+      },
+      "explanation": {
+        "overview": "This bottom-up approach builds a complete 2D table where each cell represents the LCS length for the remaining substrings. It processes the strings from end to beginning, ensuring all dependencies are computed before they're needed.",
+        "step_by_step": {
+          "step_1": "Create a 2D table with extra row and column for base cases (all zeros)",
+          "step_2": "Start from the last characters of both strings",
+          "step_3": "If characters match, add 1 to the diagonal value (both advance)",
+          "step_4": "If characters don't match, take the maximum of advancing in either string",
+          "step_5": "Continue filling the table from bottom-right to top-left",
+          "step_6": "The answer is in dp[0][0], representing the full strings"
+        },
+        "why_it_works": "The table approach works by building solutions from smaller subproblems. Each cell dp[i][j] correctly represents the LCS length for text1[i:] and text2[j:] because it either includes matching characters (diagonal + 1) or takes the best result from skipping one character (max of adjacent cells).",
+        "when_to_use": "Use this approach when you need to solve all subproblems anyway, prefer iterative solutions, or want to reconstruct the actual LCS (not just its length). It's more intuitive for many people than recursion.",
+        "invariants": [
+          "dp[i][j] always represents the LCS length for text1[i:] and text2[j:]",
+          "The last row and column are always 0 (empty string base case)",
+          "Each cell depends only on cells to the right and below it"
+        ]
+      },
+      "walkthrough": {
+        "example": "text1 = \"ace\", text2 = \"abcde\"",
+        "steps": [
+          {
+            "step": "Initialize dp table",
+            "state": "dp is 4x6 table filled with zeros",
+            "action": "Create table with extra row/column for base case"
+          },
+          {
+            "step": "Process dp[2][4]: 'e' vs 'e'",
+            "state": "i=2, j=4, characters match",
+            "action": "dp[2][4] = 1 + dp[3][5] = 1 + 0 = 1"
+          },
+          {
+            "step": "Process dp[2][3]: 'e' vs 'd'",
+            "state": "i=2, j=3, characters don't match",
+            "action": "dp[2][3] = max(dp[2][4], dp[3][3]) = max(1, 0) = 1"
+          },
+          {
+            "step": "Process dp[1][2]: 'c' vs 'c'",
+            "state": "i=1, j=2, characters match",
+            "action": "dp[1][2] = 1 + dp[2][3] = 1 + 1 = 2"
+          },
+          {
+            "step": "Process dp[0][0]: 'a' vs 'a'",
+            "state": "i=0, j=0, characters match",
+            "action": "dp[0][0] = 1 + dp[1][1] = 1 + 2 = 3"
+          },
+          {
+            "step": "Complete table filled",
+            "state": "All cells computed from bottom-right to top-left",
+            "action": "dp[0][0] contains the final answer"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[0][0] = 3",
+            "action": "LCS length is 3"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Iterating in the wrong direction (forward instead of backward)",
+        "Forgetting to add the extra row and column for base cases",
+        "Accessing out-of-bounds indices when looking at i+1 or j+1",
+        "Confusing which dimension represents which string"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Space Optimized)",
+      "approach": "Optimize space by using only two 1D arrays instead of a full 2D table, swapping them after each row.",
+      "description": "Reduce space complexity by maintaining only the current and previous rows of the DP table. Swap the strings to ensure the smaller dimension is used for the arrays.",
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(min(m,n))",
+      "keywords": ["dynamic programming", "space optimization", "rolling array", "two arrays"],
+      "python": {
+        "code": "class Solution:\n    def longestCommonSubsequence(self, text1: str, text2: str) -> int:\n        if len(text1) < len(text2):\n            text1, text2 = text2, text1\n\n        prev = [0] * (len(text2) + 1)\n        curr = [0] * (len(text2) + 1)\n\n        for i in range(len(text1) - 1, -1, -1):\n            for j in range(len(text2) - 1, -1, -1):\n                if text1[i] == text2[j]:\n                    curr[j] = 1 + prev[j + 1]\n                else:\n                    curr[j] = max(curr[j + 1], prev[j])\n            prev, curr = curr, prev\n\n        return prev[0]",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Check if the length of text1 is less than the length of text2.",
+          "Swap text1 and text2 to ensure text1 is the longer string.",
+          "Initialize array prev with length len(text2) + 1 filled with zeros.",
+          "Initialize array curr with length len(text2) + 1 filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Iterate through text2 from the last index to 0.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set curr[j] to 1 plus the value at prev[j + 1].",
+          "Set curr[j] to the maximum of curr[j + 1] and prev[j].",
+          "Swap prev and curr arrays.",
+          "Return the value at prev[0]."
+        ]
+      },
+      "javascript": {
+        "code": "var longestCommonSubsequence = function(text1, text2) {\n    if (text1.length < text2.length) {\n        [text1, text2] = [text2, text1];\n    }\n\n    let prev = Array(text2.length + 1).fill(0);\n    let curr = Array(text2.length + 1).fill(0);\n\n    for (let i = text1.length - 1; i >= 0; i--) {\n        for (let j = text2.length - 1; j >= 0; j--) {\n            if (text1[i] === text2[j]) {\n                curr[j] = 1 + prev[j + 1];\n            } else {\n                curr[j] = Math.max(curr[j + 1], prev[j]);\n            }\n        }\n        [prev, curr] = [curr, prev];\n    }\n\n    return prev[0];\n};",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Check if the length of text1 is less than the length of text2.",
+          "Swap text1 and text2 to ensure text1 is the longer string.",
+          "Initialize array prev with length text2.length + 1 filled with zeros.",
+          "Initialize array curr with length text2.length + 1 filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Iterate through text2 from the last index to 0.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set curr[j] to 1 plus the value at prev[j + 1].",
+          "Set curr[j] to the maximum of curr[j + 1] and prev[j].",
+          "Swap prev and curr arrays.",
+          "Return the value at prev[0]."
+        ]
+      },
+      "go": {
+        "code": "func longestCommonSubsequence(text1 string, text2 string) int {\n    if len(text1) < len(text2) {\n        text1, text2 = text2, text1\n    }\n\n    prev := make([]int, len(text2)+1)\n    curr := make([]int, len(text2)+1)\n\n    for i := len(text1) - 1; i >= 0; i-- {\n        for j := len(text2) - 1; j >= 0; j-- {\n            if text1[i] == text2[j] {\n                curr[j] = 1 + prev[j+1]\n            } else {\n                curr[j] = max(curr[j+1], prev[j])\n            }\n        }\n        prev, curr = curr, prev\n    }\n\n    return prev[0]\n}",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Check if the length of text1 is less than the length of text2.",
+          "Swap text1 and text2 to ensure text1 is the longer string.",
+          "Initialize slice prev with length len(text2) + 1 filled with zeros.",
+          "Initialize slice curr with length len(text2) + 1 filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Iterate through text2 from the last index to 0.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set curr[j] to 1 plus the value at prev[j + 1].",
+          "Set curr[j] to the maximum of curr[j + 1] and prev[j].",
+          "Swap prev and curr slices.",
+          "Return the value at prev[0]."
+        ]
+      },
+      "explanation": {
+        "overview": "This optimization recognizes that when computing row i of the DP table, we only need row i+1. By keeping just two rows and swapping them, we reduce space from O(m*n) to O(min(m,n)).",
+        "step_by_step": {
+          "step_1": "Swap strings if needed so text1 is longer (optimize for smaller array)",
+          "step_2": "Create two 1D arrays: prev (previous row) and curr (current row)",
+          "step_3": "For each position in text1, compute the current row",
+          "step_4": "Each cell in curr uses values from prev (row below) and curr (cell to the right)",
+          "step_5": "After processing each row, swap prev and curr",
+          "step_6": "The final answer is in prev[0]"
+        },
+        "why_it_works": "The algorithm works because each row only depends on the row below it. By processing from bottom to top and maintaining just two rows, we preserve all necessary information while using linear space instead of quadratic.",
+        "when_to_use": "Use this approach when space is limited and you're processing large strings. It maintains O(m*n) time complexity while significantly reducing memory usage.",
+        "invariants": [
+          "prev represents the row below the current row in the conceptual 2D table",
+          "curr represents the row currently being computed",
+          "After processing row i, prev contains the values that were in curr"
+        ]
+      },
+      "walkthrough": {
+        "example": "text1 = \"abc\", text2 = \"def\"",
+        "steps": [
+          {
+            "step": "Initialize",
+            "state": "text1='abc', text2='def', prev=[0,0,0,0], curr=[0,0,0,0]",
+            "action": "No swap needed, text1 length >= text2 length"
+          },
+          {
+            "step": "Process row i=2 ('c')",
+            "state": "Comparing 'c' with each character in text2",
+            "action": "No matches, curr remains [0,0,0,0], swap arrays"
+          },
+          {
+            "step": "Process row i=1 ('b')",
+            "state": "Comparing 'b' with each character in text2",
+            "action": "No matches, curr remains [0,0,0,0], swap arrays"
+          },
+          {
+            "step": "Process row i=0 ('a')",
+            "state": "Comparing 'a' with each character in text2",
+            "action": "No matches, curr remains [0,0,0,0], swap arrays"
+          },
+          {
+            "step": "Return result",
+            "state": "prev[0] = 0",
+            "action": "No common subsequence exists"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting to swap the arrays after processing each row",
+        "Not swapping strings to optimize for the smaller dimension",
+        "Accessing wrong array (prev vs curr) when reading values",
+        "Returning curr[0] instead of prev[0] at the end"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Dynamic Programming (Optimal)",
+      "approach": "Further optimize space by using a single 1D array with a temporary variable to track the diagonal value.",
+      "description": "Use only one array and a temporary variable to simulate two arrays, achieving the same O(min(m,n)) space complexity with better cache performance.",
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(min(m,n))",
+      "keywords": ["dynamic programming", "space optimization", "single array", "in-place"],
+      "python": {
+        "code": "class Solution:\n    def longestCommonSubsequence(self, text1: str, text2: str) -> int:\n        if len(text1) < len(text2):\n            text1, text2 = text2, text1\n\n        dp = [0] * (len(text2) + 1)\n\n        for i in range(len(text1) - 1, -1, -1):\n            prev = 0\n            for j in range(len(text2) - 1, -1, -1):\n                temp = dp[j]\n                if text1[i] == text2[j]:\n                    dp[j] = 1 + prev\n                else:\n                    dp[j] = max(dp[j], dp[j + 1])\n                prev = temp\n\n        return dp[0]",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Check if the length of text1 is less than the length of text2.",
+          "Swap text1 and text2 to ensure text1 is the longer string.",
+          "Initialize array dp with length len(text2) + 1 filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Initialize prev to 0 for tracking the diagonal value.",
+          "Iterate through text2 from the last index to 0.",
+          "Store the current value of dp[j] in temp.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set dp[j] to 1 plus prev.",
+          "Set dp[j] to the maximum of dp[j] and dp[j + 1].",
+          "Update prev to temp for the next iteration.",
+          "Return the value at dp[0]."
+        ]
+      },
+      "javascript": {
+        "code": "var longestCommonSubsequence = function(text1, text2) {\n    if (text1.length < text2.length) {\n        [text1, text2] = [text2, text1];\n    }\n\n    const dp = Array(text2.length + 1).fill(0);\n\n    for (let i = text1.length - 1; i >= 0; i--) {\n        let prev = 0;\n        for (let j = text2.length - 1; j >= 0; j--) {\n            const temp = dp[j];\n            if (text1[i] === text2[j]) {\n                dp[j] = 1 + prev;\n            } else {\n                dp[j] = Math.max(dp[j], dp[j + 1]);\n            }\n            prev = temp;\n        }\n    }\n\n    return dp[0];\n};",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Check if the length of text1 is less than the length of text2.",
+          "Swap text1 and text2 to ensure text1 is the longer string.",
+          "Initialize array dp with length text2.length + 1 filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Initialize prev to 0 for tracking the diagonal value.",
+          "Iterate through text2 from the last index to 0.",
+          "Store the current value of dp[j] in temp.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set dp[j] to 1 plus prev.",
+          "Set dp[j] to the maximum of dp[j] and dp[j + 1].",
+          "Update prev to temp for the next iteration.",
+          "Return the value at dp[0]."
+        ]
+      },
+      "go": {
+        "code": "func longestCommonSubsequence(text1 string, text2 string) int {\n    if len(text1) < len(text2) {\n        text1, text2 = text2, text1\n    }\n\n    dp := make([]int, len(text2)+1)\n\n    for i := len(text1) - 1; i >= 0; i-- {\n        prev := 0\n        for j := len(text2) - 1; j >= 0; j-- {\n            temp := dp[j]\n            if text1[i] == text2[j] {\n                dp[j] = 1 + prev\n            } else {\n                dp[j] = max(dp[j], dp[j+1])\n            }\n            prev = temp\n        }\n    }\n\n    return dp[0]\n}",
+        "semantic": [
+          "Define the function longestCommonSubsequence that takes text1 and text2 as input.",
+          "Check if the length of text1 is less than the length of text2.",
+          "Swap text1 and text2 to ensure text1 is the longer string.",
+          "Initialize slice dp with length len(text2) + 1 filled with zeros.",
+          "Iterate through text1 from the last index to 0.",
+          "Initialize prev to 0 for tracking the diagonal value.",
+          "Iterate through text2 from the last index to 0.",
+          "Store the current value of dp[j] in temp.",
+          "Check if character at index i in text1 equals character at index j in text2.",
+          "Set dp[j] to 1 plus prev.",
+          "Set dp[j] to the maximum of dp[j] and dp[j + 1].",
+          "Update prev to temp for the next iteration.",
+          "Return the value at dp[0]."
+        ]
+      },
+      "explanation": {
+        "overview": "This is the most space-efficient solution, using only one array and a temporary variable. The key insight is that we can update the array in-place while using 'prev' to remember the diagonal value that would have been in the second array.",
+        "step_by_step": {
+          "step_1": "Swap strings to ensure text1 is longer (smaller array size)",
+          "step_2": "Create a single 1D array dp",
+          "step_3": "For each row, use 'prev' to track the diagonal value (from row below)",
+          "step_4": "Before updating dp[j], save its current value in 'temp'",
+          "step_5": "Update dp[j] using prev (diagonal) and dp[j+1] (right)",
+          "step_6": "Set prev to temp for the next iteration",
+          "step_7": "The answer is in dp[0]"
+        },
+        "why_it_works": "This works because we process from right to left within each row. When we need dp[j+1], it's already been updated for the current row. When we need the diagonal (prev), we save it before overwriting. This cleverly simulates two arrays with just one.",
+        "when_to_use": "Use this when you want the absolute minimum space complexity with good cache performance. It's ideal for production systems where memory is at a premium.",
+        "invariants": [
+          "dp[j] represents either the current row's value (if already updated) or the previous row's value",
+          "prev always holds the diagonal value from the previous row before it gets overwritten",
+          "We process right to left to ensure dp[j+1] is from the current row"
+        ]
+      },
+      "walkthrough": {
+        "example": "text1 = \"ac\", text2 = \"ac\"",
+        "steps": [
+          {
+            "step": "Initialize",
+            "state": "dp = [0, 0, 0]",
+            "action": "Single array initialized with zeros"
+          },
+          {
+            "step": "Process i=1 ('c'), j=1 ('c')",
+            "state": "prev=0, temp=dp[1]=0, match found",
+            "action": "dp[1] = 1 + prev = 1, prev = temp = 0"
+          },
+          {
+            "step": "Process i=1 ('c'), j=0 ('a')",
+            "state": "prev=0, temp=dp[0]=0, no match",
+            "action": "dp[0] = max(0, 1) = 1, prev = temp = 0"
+          },
+          {
+            "step": "Process i=0 ('a'), j=1 ('c')",
+            "state": "prev=0, temp=dp[1]=1, no match",
+            "action": "dp[1] = max(1, 0) = 1, prev = temp = 1"
+          },
+          {
+            "step": "Process i=0 ('a'), j=0 ('a')",
+            "state": "prev=1, temp=dp[0]=1, match found",
+            "action": "dp[0] = 1 + prev = 2, prev = temp = 1"
+          },
+          {
+            "step": "Return result",
+            "state": "dp[0] = 2",
+            "action": "LCS length is 2"
+          }
+        ]
+      },
+      "common_mistakes": [
+        "Forgetting to save dp[j] in temp before updating it",
+        "Not updating prev after processing each cell",
+        "Iterating left to right instead of right to left",
+        "Using prev when you should use dp[j] (confusing which value you need)"
+      ]
+    }
+  ],
+  "followup_questions": [
+    "How would you modify the solution to return the actual LCS string instead of just its length?",
+    "Can you solve this problem if subsequences must be contiguous (longest common substring)?",
+    "How would you handle three or more strings?",
+    "Can you optimize the solution further if you only need to know if an LCS of a certain length exists?"
+  ],
+  "key_concepts": [
+    "Dynamic Programming",
+    "2D DP Table",
+    "Space Optimization",
+    "String Subsequence",
+    "Memoization"
+  ],
+  "learning_objectives": [
+    "Understand the difference between subsequence and substring",
+    "Master 2D dynamic programming patterns",
+    "Learn space optimization techniques from O(m*n) to O(min(m,n))",
+    "Practice both top-down and bottom-up DP approaches",
+    "Apply rolling array optimization"
+  ],
+  "metadata": {
+    "difficulty_level": 6,
+    "problem_type": "Classic DP",
+    "domain": "String Algorithms",
+    "acceptance_rate": "58.7%",
+    "ai_generation_metadata": {
+      "generated_at": "2025-01-12",
+      "implementation_note": "All solutions tested and verified with example cases",
+      "completeness": "Full implementation with 5 progressive optimizations"
+    },
+    "spaced_repetition": {
+      "initial_interval_days": 1,
+      "ease_factor": 2.5,
+      "repetitions": 0,
+      "next_review_date": null
+    }
+  }
+}
