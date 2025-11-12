@@ -1,0 +1,661 @@
+{
+  "problemId": "62",
+  "title": "Unique Paths",
+  "difficulty": "Medium",
+  "category": "2-D Dynamic Programming",
+  "subcategory": "Grid Traversal",
+  "similar_questions": ["63. Unique Paths II", "64. Minimum Path Sum", "980. Unique Paths III"],
+  "real_life_domains": ["Robotics Navigation", "Route Planning", "Game Development", "Logistics"],
+  "scenarios": [
+    {
+      "scenario": "Robot navigation in warehouses",
+      "description": "Calculating the number of possible paths a warehouse robot can take to reach its destination when it can only move forward or right due to physical constraints."
+    },
+    {
+      "scenario": "Game level design",
+      "description": "Determining the number of unique ways a player can traverse a grid-based game level when movement is restricted to specific directions."
+    },
+    {
+      "scenario": "Street grid navigation",
+      "description": "Computing the number of different routes to travel from one intersection to another in a city with a rectangular street grid, moving only east or south."
+    }
+  ],
+  "solutions": [
+    {
+      "id": 1,
+      "title": "Recursion",
+      "approach": "Use recursive exploration to try all possible paths from the starting position to the destination. At each cell, we can move either right or down, and recursively count paths from those positions. The base case is reaching the destination cell.",
+      "explanation": "The recursive solution explores all possible paths by making a choice at each position: move right (j+1) or move down (i+1). When we reach the destination cell (m-1, n-1), we've found one valid path and return 1. If we go out of bounds (i >= m or j >= n), that path is invalid and returns 0. The total paths from any position equals the sum of paths from moving right plus paths from moving down. This creates a binary tree of recursion where each path from root to leaf represents one possible route through the grid. While correct, this has exponential time complexity due to recomputing the same positions multiple times.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n\n        def dfs(i, j):\n            if i == (m - 1) and j == (n - 1):\n                return 1\n            if i >= m or j >= n:\n                return 0\n            return dfs(i, j + 1) + dfs(i + 1, j)\n\n        return dfs(0, 0)",
+          "semantic_descriptions": [
+            "If current position is destination cell.",
+            "Return one for reaching destination.",
+            "If current position is out of bounds.",
+            "Return zero for invalid path.",
+            "Return sum of paths moving right and paths moving down.",
+            "Start recursion from top-left corner."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var uniquePaths = function(m, n) {\n    function dfs(i, j) {\n        if (i === m - 1 && j === n - 1) {\n            return 1;\n        }\n        if (i >= m || j >= n) {\n            return 0;\n        }\n        return dfs(i, j + 1) + dfs(i + 1, j);\n    }\n\n    return dfs(0, 0);\n};",
+          "semantic_descriptions": [
+            "If current position is destination cell.",
+            "Return one for reaching destination.",
+            "If current position is out of bounds.",
+            "Return zero for invalid path.",
+            "Return sum of paths moving right and paths moving down.",
+            "Start recursion from top-left corner."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func uniquePaths(m int, n int) int {\n    var dfs func(i, j int) int\n    dfs = func(i, j int) int {\n        if i == m - 1 && j == n - 1 {\n            return 1\n        }\n        if i >= m || j >= n {\n            return 0\n        }\n        return dfs(i, j + 1) + dfs(i + 1, j)\n    }\n\n    return dfs(0, 0)\n}",
+          "semantic_descriptions": [
+            "Declare recursive function taking row and column.",
+            "If current position is destination cell.",
+            "Return one for reaching destination.",
+            "If current position is out of bounds.",
+            "Return zero for invalid path.",
+            "Return sum of paths moving right and paths moving down.",
+            "Start recursion from top-left corner."
+          ]
+        }
+      ],
+      "time_complexity": "O(2^(m+n))",
+      "space_complexity": "O(m+n)",
+      "complexity_explanation": {
+        "time": "At each cell, we make two recursive calls (right and down), creating a binary tree of recursion. The maximum depth is m+n-2 (the path length from (0,0) to (m-1,n-1)). This results in approximately 2^(m+n) recursive calls in the worst case.",
+        "space": "The recursion stack depth is at most m+n-2 (the length of any path from start to end), requiring O(m+n) space."
+      },
+      "why_it_works": "This solution works by exhaustively exploring all possible paths through the grid. The key insight is that from any cell (i,j), the number of paths to the destination equals the sum of paths from the cell to the right (i,j+1) and the cell below (i+1,j). The base case handles reaching the destination (return 1) and going out of bounds (return 0). By recursively summing these values, we count all valid paths. However, this approach recomputes the same cell positions many times through different paths, leading to exponential time complexity. This is a classic problem with overlapping subproblems, making it ideal for dynamic programming optimization.",
+      "constraints_examples": [
+        {
+          "input": "m = 3, n = 7",
+          "output": "28",
+          "explanation": "There are 28 unique paths from (0,0) to (2,6) in a 3×7 grid."
+        },
+        {
+          "input": "m = 3, n = 2",
+          "output": "3",
+          "explanation": "From (0,0) to (2,1): Right→Down→Down, Down→Right→Down, Down→Down→Right."
+        },
+        {
+          "input": "m = 1, n = 1",
+          "output": "1",
+          "explanation": "Single cell, already at destination."
+        }
+      ],
+      "common_mistakes": [
+        "Using incorrect base case conditions, like checking i > m instead of i >= m.",
+        "Not handling the destination cell correctly, checking i == m instead of i == m-1.",
+        "Forgetting to check both boundary conditions (i >= m and j >= n).",
+        "Trying to optimize by checking bounds before the destination check, which can miss the valid end case."
+      ],
+      "pro_tips": [
+        "The order of base case checks matters: check destination before bounds to avoid missing the valid endpoint.",
+        "This problem has optimal substructure: solution for (i,j) depends on solutions for (i+1,j) and (i,j+1).",
+        "The recursion naturally represents the problem structure: sum of two simpler subproblems.",
+        "Understanding this solution is essential before moving to DP optimizations."
+      ],
+      "walkthroughs": [
+        {
+          "input": "m = 3, n = 3",
+          "steps": [
+            "dfs(0,0): Not destination, not out of bounds.",
+            "  Try right: dfs(0,1) + Try down: dfs(1,0).",
+            "    dfs(0,1): Try right: dfs(0,2) + Try down: dfs(1,1).",
+            "      dfs(0,2): Try right: dfs(0,3)=0 + Try down: dfs(1,2).",
+            "        dfs(1,2): Try right: dfs(1,3)=0 + Try down: dfs(2,2).",
+            "          dfs(2,2): Destination reached, return 1.",
+            "        dfs(1,2) returns 1.",
+            "      dfs(0,2) returns 1.",
+            "    Multiple paths explored recursively...",
+            "Final result: 6 unique paths."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dynamic Programming (Top-Down)",
+      "approach": "Add memoization to the recursive solution by caching results for each (i,j) position. This eliminates redundant computations by ensuring each cell is calculated only once.",
+      "explanation": "This solution optimizes the recursive approach by adding a 2D memoization array. The memo array stores the number of unique paths from each cell (i,j) to the destination. Before computing dfs(i,j), we check if memo[i][j] has already been calculated (not -1). If so, return the cached value immediately. Otherwise, compute it using the same recursive logic (sum of paths from right and down), store it in memo[i][j], and return it. This transforms the exponential solution into polynomial time by ensuring each of the m×n cells is computed exactly once. The memo array effectively builds a solution bottom-up as recursion unwinds.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        memo = [[-1] * n for _ in range(m)]\n        def dfs(i, j):\n            if i == (m - 1) and j == (n - 1):\n                return 1\n            if i >= m or j >= n:\n                return 0\n            if memo[i][j] != -1:\n                return memo[i][j]\n\n            memo[i][j] =  dfs(i, j + 1) + dfs(i + 1, j)\n            return memo[i][j]\n\n        return dfs(0, 0)",
+          "semantic_descriptions": [
+            "Initialize 2D memoization array with negative one.",
+            "If current position is destination cell.",
+            "Return one for reaching destination.",
+            "If current position is out of bounds.",
+            "Return zero for invalid path.",
+            "If this cell already computed.",
+            "Return cached result.",
+            "Compute and store sum of paths moving right and paths moving down.",
+            "Return computed result.",
+            "Start recursion from top-left corner."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var uniquePaths = function(m, n) {\n    const memo = Array.from({length: m}, () => Array(n).fill(-1));\n    \n    function dfs(i, j) {\n        if (i === m - 1 && j === n - 1) {\n            return 1;\n        }\n        if (i >= m || j >= n) {\n            return 0;\n        }\n        if (memo[i][j] !== -1) {\n            return memo[i][j];\n        }\n\n        memo[i][j] = dfs(i, j + 1) + dfs(i + 1, j);\n        return memo[i][j];\n    }\n\n    return dfs(0, 0);\n};",
+          "semantic_descriptions": [
+            "Initialize 2D memoization array with negative one.",
+            "If current position is destination cell.",
+            "Return one for reaching destination.",
+            "If current position is out of bounds.",
+            "Return zero for invalid path.",
+            "If this cell already computed.",
+            "Return cached result.",
+            "Compute and store sum of paths moving right and paths moving down.",
+            "Return computed result.",
+            "Start recursion from top-left corner."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func uniquePaths(m int, n int) int {\n    memo := make([][]int, m)\n    for i := range memo {\n        memo[i] = make([]int, n)\n        for j := range memo[i] {\n            memo[i][j] = -1\n        }\n    }\n\n    var dfs func(i, j int) int\n    dfs = func(i, j int) int {\n        if i == m - 1 && j == n - 1 {\n            return 1\n        }\n        if i >= m || j >= n {\n            return 0\n        }\n        if memo[i][j] != -1 {\n            return memo[i][j]\n        }\n\n        memo[i][j] = dfs(i, j + 1) + dfs(i + 1, j)\n        return memo[i][j]\n    }\n\n    return dfs(0, 0)\n}",
+          "semantic_descriptions": [
+            "Initialize 2D memoization slice.",
+            "Fill each row with negative one.",
+            "Declare recursive function taking row and column.",
+            "If current position is destination cell.",
+            "Return one for reaching destination.",
+            "If current position is out of bounds.",
+            "Return zero for invalid path.",
+            "If this cell already computed.",
+            "Return cached result.",
+            "Compute and store sum of paths moving right and paths moving down.",
+            "Return computed result.",
+            "Start recursion from top-left corner."
+          ]
+        }
+      ],
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(m*n)",
+      "complexity_explanation": {
+        "time": "Each of the m×n cells is computed exactly once due to memoization. Each computation does O(1) work (two lookups and one addition). Total time is O(m×n).",
+        "space": "The memo array requires O(m×n) space. The recursion stack depth is O(m+n) in the worst case. Total space is dominated by the memo array at O(m×n)."
+      },
+      "why_it_works": "Memoization eliminates exponential time by caching results for each cell. The key observation is that the number of paths from cell (i,j) to the destination depends only on (i,j), not on the path taken to reach (i,j). This creates overlapping subproblems - the same cell is reached through many different paths during recursion. By storing the result the first time we compute each cell, all subsequent visits to that cell return the cached value in O(1) time. This preserves the correctness of the recursive logic while achieving polynomial time complexity.",
+      "constraints_examples": [
+        {
+          "input": "m = 3, n = 7",
+          "output": "28",
+          "explanation": "Memo caches results for all cells, computing each only once. Returns 28."
+        },
+        {
+          "input": "m = 3, n = 2",
+          "output": "3",
+          "explanation": "Small grid, memo prevents redundant computation. Returns 3."
+        }
+      ],
+      "common_mistakes": [
+        "Not initializing memo with -1, making it impossible to distinguish computed vs uncomputed cells.",
+        "Checking memo after computing the result instead of before, defeating memoization.",
+        "Not storing the result in memo before returning.",
+        "Using 0 as the sentinel value in memo, which conflicts with valid results."
+      ],
+      "pro_tips": [
+        "Initializing with -1 is standard practice for memoization when 0 is a valid result.",
+        "Top-down DP with memoization often mirrors recursive logic more naturally than bottom-up.",
+        "The memo array effectively builds solutions as recursion unwinds.",
+        "This pattern of adding memoization to recursion is widely applicable."
+      ],
+      "walkthroughs": [
+        {
+          "input": "m = 3, n = 3",
+          "steps": [
+            "memo = [[-1,-1,-1], [-1,-1,-1], [-1,-1,-1]].",
+            "dfs(0,0): Not in memo. Compute dfs(0,1) + dfs(1,0).",
+            "  dfs(0,1): Not in memo. Compute dfs(0,2) + dfs(1,1).",
+            "    dfs(0,2): Not in memo. Compute dfs(0,3)=0 + dfs(1,2).",
+            "      dfs(1,2): Compute dfs(1,3)=0 + dfs(2,2)=1. memo[1][2]=1.",
+            "    dfs(0,2): memo[0][2]=1.",
+            "  Eventually memo fills with computed values.",
+            "dfs(0,0): memo[0][0]=6, return 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dynamic Programming (Bottom-Up)",
+      "approach": "Build a 2D DP table iteratively from the destination backward to the starting position. Each cell stores the number of unique paths from that cell to the destination. Fill the table using previously computed values.",
+      "explanation": "The bottom-up approach builds the solution iteratively without recursion. We create a 2D array dp where dp[i][j] represents the number of unique paths from cell (i,j) to the destination (m-1,n-1). We initialize dp[m-1][n-1] = 1 (already at destination). Then we iterate backward from (m-1,n-1) to (0,0). For each cell, dp[i][j] equals dp[i+1][j] (paths from below) plus dp[i][j+1] (paths from right). The key is using += to add to the existing value at dp[i][j], which starts at 0 except for the destination. The answer is dp[0][0]. This eliminates recursion entirely while maintaining the same time complexity.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        dp = [[0] * (n + 1) for _ in range(m + 1)]\n        dp[m - 1][n - 1] = 1\n\n        for i in range(m - 1, -1, -1):\n            for j in range(n - 1, -1, -1):\n                dp[i][j] += dp[i + 1][j] + dp[i][j + 1]\n\n        return dp[0][0]",
+          "semantic_descriptions": [
+            "Initialize 2D array with zeros, extra row and column for boundaries.",
+            "Set destination cell to one path.",
+            "Loop backward from last row to first.",
+            "Loop backward from last column to first.",
+            "Add paths from cell below and cell to right.",
+            "Return paths from starting cell."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var uniquePaths = function(m, n) {\n    const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));\n    dp[m - 1][n - 1] = 1;\n\n    for (let i = m - 1; i >= 0; i--) {\n        for (let j = n - 1; j >= 0; j--) {\n            dp[i][j] += dp[i + 1][j] + dp[i][j + 1];\n        }\n    }\n\n    return dp[0][0];\n};",
+          "semantic_descriptions": [
+            "Initialize 2D array with zeros, extra row and column for boundaries.",
+            "Set destination cell to one path.",
+            "Loop backward from last row to first.",
+            "Loop backward from last column to first.",
+            "Add paths from cell below and cell to right.",
+            "Return paths from starting cell."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func uniquePaths(m int, n int) int {\n    dp := make([][]int, m + 1)\n    for i := range dp {\n        dp[i] = make([]int, n + 1)\n    }\n    dp[m - 1][n - 1] = 1\n\n    for i := m - 1; i >= 0; i-- {\n        for j := n - 1; j >= 0; j-- {\n            dp[i][j] += dp[i + 1][j] + dp[i][j + 1]\n        }\n    }\n\n    return dp[0][0]\n}",
+          "semantic_descriptions": [
+            "Initialize 2D slice with extra row and column.",
+            "Fill each row with zeros.",
+            "Set destination cell to one path.",
+            "Loop backward from last row to first.",
+            "Loop backward from last column to first.",
+            "Add paths from cell below and cell to right.",
+            "Return paths from starting cell."
+          ]
+        }
+      ],
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(m*n)",
+      "complexity_explanation": {
+        "time": "We iterate through all m×n cells once, performing O(1) work per cell (two lookups and one addition). Total time is O(m×n).",
+        "space": "The dp array is of size (m+1)×(n+1), requiring O(m×n) space. No recursion stack is needed."
+      },
+      "why_it_works": "Bottom-up DP builds solutions iteratively from base cases. The recurrence relation is: dp[i][j] = dp[i+1][j] + dp[i][j+1]. By iterating backward (from m-1 to 0 for rows, n-1 to 0 for columns), we ensure that when computing dp[i][j], the values dp[i+1][j] and dp[i][j+1] have already been computed. The extra row and column (size m+1 and n+1) with zeros act as boundaries, automatically handling the out-of-bounds cases without explicit checks. The += operator adds to the initial value at dp[i][j], which starts at 0 (or 1 for the destination), elegantly handling the base case.",
+      "constraints_examples": [
+        {
+          "input": "m = 3, n = 7",
+          "output": "28",
+          "explanation": "Build dp table backward from destination. dp[0][0] = 28."
+        },
+        {
+          "input": "m = 3, n = 2",
+          "output": "3",
+          "explanation": "dp table fills: destination→start. dp[0][0] = 3."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating forward instead of backward, accessing dp[i+1][j] before it's computed.",
+        "Not adding extra row/column for boundaries, requiring explicit bounds checking.",
+        "Using = instead of += when dp[i][j] is the destination (would overwrite the 1).",
+        "Forgetting to initialize dp[m-1][n-1] = 1."
+      ],
+      "pro_tips": [
+        "The extra row and column eliminate the need for boundary checks, simplifying the code.",
+        "Using += instead of = makes the destination initialization work seamlessly.",
+        "Bottom-up DP is generally more space-efficient in practice (no recursion stack).",
+        "The iteration order (backward) is crucial for correctness."
+      ],
+      "walkthroughs": [
+        {
+          "input": "m = 3, n = 3",
+          "steps": [
+            "dp = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]. Set dp[2][2]=1.",
+            "i=2, j=2: dp[2][2] += dp[3][2]=0 + dp[2][3]=0. dp[2][2]=1.",
+            "i=2, j=1: dp[2][1] += dp[3][1]=0 + dp[2][2]=1. dp[2][1]=1.",
+            "i=2, j=0: dp[2][0] += dp[3][0]=0 + dp[2][1]=1. dp[2][0]=1.",
+            "i=1, j=2: dp[1][2] += dp[2][2]=1 + dp[1][3]=0. dp[1][2]=1.",
+            "i=1, j=1: dp[1][1] += dp[2][1]=1 + dp[1][2]=1. dp[1][1]=2.",
+            "i=1, j=0: dp[1][0] += dp[2][0]=1 + dp[1][1]=2. dp[1][0]=3.",
+            "i=0: Similarly fills dp[0][*] = [6,3,1,0].",
+            "Return dp[0][0] = 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dynamic Programming (Space Optimized)",
+      "approach": "Optimize space by observing that we only need two rows at a time: the current row and the previous row (row below). Use two 1D arrays that alternate, reducing space from O(m×n) to O(n).",
+      "explanation": "This solution optimizes space by noticing that dp[i][j] only depends on dp[i+1][j] (from the row below) and dp[i][j+1] (from the same row to the right). We maintain two 1D arrays: row (representing the row below) and newRow (current row being computed). We initialize row with all 1s (last row has 1 path to destination from each cell). For each row from m-2 down to 0, we create newRow initialized with all 1s (rightmost column has 1 path). Then we iterate from n-2 to 0, computing newRow[j] = newRow[j+1] + row[j]. After processing a row, we update row = newRow. The answer is row[0]. This reduces space from O(m×n) to O(n).",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        row = [1] * n\n\n        for i in range(m - 1):\n            newRow = [1] * n\n            for j in range(n - 2, -1, -1):\n                newRow[j] = newRow[j + 1] + row[j]\n            row = newRow\n        return row[0]",
+          "semantic_descriptions": [
+            "Initialize previous row with all ones.",
+            "Loop through rows from second-to-last up to first.",
+            "Initialize new row with all ones for rightmost column.",
+            "Loop backward from second-to-last column to first.",
+            "Set current cell to sum of cell to right and cell below.",
+            "Update previous row to current row.",
+            "Return first element of final row."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var uniquePaths = function(m, n) {\n    let row = new Array(n).fill(1);\n\n    for (let i = 0; i < m - 1; i++) {\n        let newRow = new Array(n).fill(1);\n        for (let j = n - 2; j >= 0; j--) {\n            newRow[j] = newRow[j + 1] + row[j];\n        }\n        row = newRow;\n    }\n    return row[0];\n};",
+          "semantic_descriptions": [
+            "Initialize previous row with all ones.",
+            "Loop through rows from second-to-last up to first.",
+            "Initialize new row with all ones for rightmost column.",
+            "Loop backward from second-to-last column to first.",
+            "Set current cell to sum of cell to right and cell below.",
+            "Update previous row to current row.",
+            "Return first element of final row."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func uniquePaths(m int, n int) int {\n    row := make([]int, n)\n    for j := range row {\n        row[j] = 1\n    }\n\n    for i := 0; i < m - 1; i++ {\n        newRow := make([]int, n)\n        for j := range newRow {\n            newRow[j] = 1\n        }\n        for j := n - 2; j >= 0; j-- {\n            newRow[j] = newRow[j + 1] + row[j]\n        }\n        row = newRow\n    }\n    return row[0]\n}",
+          "semantic_descriptions": [
+            "Initialize previous row slice.",
+            "Fill with all ones.",
+            "Loop through rows from second-to-last up to first.",
+            "Initialize new row slice.",
+            "Fill with all ones for rightmost column.",
+            "Loop backward from second-to-last column to first.",
+            "Set current cell to sum of cell to right and cell below.",
+            "Update previous row to current row.",
+            "Return first element of final row."
+          ]
+        }
+      ],
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We still process all m×n cells: m-1 rows, each with n cells. Each cell requires O(1) work. Total time is O(m×n).",
+        "space": "We use two 1D arrays of size n (row and newRow), requiring O(n) space total. This is a significant improvement over O(m×n)."
+      },
+      "why_it_works": "This optimization works because each cell in the DP table depends only on the cell to its right (same row) and the cell below (next row). By maintaining just two rows (current and previous), we can compute the same values as the 2D approach. The initialization of newRow with all 1s represents that the rightmost column always has 1 path (can only go down). The iteration backward through columns ensures we use newRow[j+1] after it's computed. Updating row = newRow makes the current row become the previous row for the next iteration. This preserves correctness while significantly reducing space.",
+      "constraints_examples": [
+        {
+          "input": "m = 3, n = 7",
+          "output": "28",
+          "explanation": "Space-optimized version computes same values using O(7) space instead of O(21)."
+        },
+        {
+          "input": "m = 3, n = 2",
+          "output": "3",
+          "explanation": "Uses O(2) space instead of O(6)."
+        }
+      ],
+      "common_mistakes": [
+        "Not initializing newRow with all 1s, missing the rightmost column base case.",
+        "Iterating forward through columns instead of backward, using newRow[j+1] before it's computed.",
+        "Forgetting to update row = newRow after each iteration.",
+        "Modifying row directly instead of building newRow, corrupting previous row values."
+      ],
+      "pro_tips": [
+        "Initializing newRow with all 1s handles the rightmost column boundary elegantly.",
+        "The backward iteration through columns is crucial for correctness.",
+        "This pattern of maintaining two arrays is common in DP space optimization.",
+        "Space can be optimized further to a single array (see next solution)."
+      ],
+      "walkthroughs": [
+        {
+          "input": "m = 3, n = 3",
+          "steps": [
+            "row = [1,1,1] (last row).",
+            "i=0 (row m-2): newRow = [1,1,1].",
+            "  j=1: newRow[1] = newRow[2]=1 + row[1]=1 = 2.",
+            "  j=0: newRow[0] = newRow[1]=2 + row[0]=1 = 3.",
+            "  row = [3,2,1].",
+            "i=1 (row m-3=0): newRow = [1,1,1].",
+            "  j=1: newRow[1] = newRow[2]=1 + row[1]=2 = 3.",
+            "  j=0: newRow[0] = newRow[1]=3 + row[0]=3 = 6.",
+            "  row = [6,3,1].",
+            "Return row[0] = 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Dynamic Programming (Optimal)",
+      "approach": "Further optimize space by using a single 1D array. Update the array in-place from right to left, so each cell uses the already-updated value to its right and the old value at its own position (representing the cell below).",
+      "explanation": "This is the most space-efficient DP solution using a single 1D array. We initialize dp with all 1s (representing the last row where each cell has 1 path to destination). We iterate through rows from m-2 down to 0. For each row, we iterate through columns from n-2 down to 0, updating dp[j] += dp[j+1]. This works because dp[j] currently holds the value from the row below, and dp[j+1] was just updated to hold the value for the current row at column j+1. By updating in-place from right to left, we avoid overwriting values we still need. The answer is dp[0]. This achieves O(n) space, which is optimal for this approach.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        dp = [1] * n\n        for i in range(m - 2, -1, -1):\n            for j in range(n - 2, -1, -1):\n                dp[j] += dp[j + 1]\n\n        return dp[0]",
+          "semantic_descriptions": [
+            "Initialize array with all ones representing last row.",
+            "Loop backward from second-to-last row to first.",
+            "Loop backward from second-to-last column to first.",
+            "Add value from cell to right to current cell.",
+            "Return first element representing paths from top-left."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var uniquePaths = function(m, n) {\n    const dp = new Array(n).fill(1);\n    for (let i = m - 2; i >= 0; i--) {\n        for (let j = n - 2; j >= 0; j--) {\n            dp[j] += dp[j + 1];\n        }\n    }\n\n    return dp[0];\n};",
+          "semantic_descriptions": [
+            "Initialize array with all ones representing last row.",
+            "Loop backward from second-to-last row to first.",
+            "Loop backward from second-to-last column to first.",
+            "Add value from cell to right to current cell.",
+            "Return first element representing paths from top-left."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func uniquePaths(m int, n int) int {\n    dp := make([]int, n)\n    for j := range dp {\n        dp[j] = 1\n    }\n    for i := m - 2; i >= 0; i-- {\n        for j := n - 2; j >= 0; j-- {\n            dp[j] += dp[j + 1]\n        }\n    }\n\n    return dp[0]\n}",
+          "semantic_descriptions": [
+            "Initialize array with size n.",
+            "Fill with all ones representing last row.",
+            "Loop backward from second-to-last row to first.",
+            "Loop backward from second-to-last column to first.",
+            "Add value from cell to right to current cell.",
+            "Return first element representing paths from top-left."
+          ]
+        }
+      ],
+      "time_complexity": "O(m*n)",
+      "space_complexity": "O(n)",
+      "complexity_explanation": {
+        "time": "We process (m-1)×(n-1) cells, performing O(1) work per cell. Total time is O(m×n).",
+        "space": "We use a single 1D array of size n, requiring O(n) space. This is optimal for standard DP approaches."
+      },
+      "why_it_works": "This solution uses the key insight that dp[j] += dp[j+1] works because: before the update, dp[j] contains the value from the row below (what we need), and dp[j+1] was just updated to contain the value for the current row to the right (what we need). By iterating right-to-left, we ensure dp[j+1] is updated before we use it for dp[j]. The initial dp array represents the last row (all 1s). As we process each row backward, dp transforms to represent that row. After processing all rows, dp represents the first row, with dp[0] being the answer. This elegant in-place update eliminates the need for two arrays.",
+      "constraints_examples": [
+        {
+          "input": "m = 3, n = 7",
+          "output": "28",
+          "explanation": "Single array evolves through iterations to represent each row. Final dp[0] = 28."
+        },
+        {
+          "input": "m = 3, n = 2",
+          "output": "3",
+          "explanation": "dp transforms: [1,1] → [2,1] → [3,1]. Return 3."
+        }
+      ],
+      "common_mistakes": [
+        "Iterating forward through columns, using dp[j+1] before it's updated for the current row.",
+        "Starting loops at wrong indices (should be m-2 and n-2, not m-1 and n-1).",
+        "Using = instead of +=, overwriting the value from the row below.",
+        "Not understanding why the rightto-left iteration order is necessary."
+      ],
+      "pro_tips": [
+        "This is the most elegant DP solution, requiring minimal code and optimal space.",
+        "The += operator is key: it combines the current value (from row below) with dp[j+1] (from current row).",
+        "Understanding why right-to-left iteration works is crucial for similar optimizations.",
+        "This solution is often preferred in interviews for its elegance and efficiency."
+      ],
+      "walkthroughs": [
+        {
+          "input": "m = 3, n = 3",
+          "steps": [
+            "dp = [1,1,1] (last row).",
+            "i=1 (row m-2):",
+            "  j=1: dp[1] += dp[2] = 1 + 1 = 2. dp = [1,2,1].",
+            "  j=0: dp[0] += dp[1] = 1 + 2 = 3. dp = [3,2,1].",
+            "i=0 (row m-3):",
+            "  j=1: dp[1] += dp[2] = 2 + 1 = 3. dp = [3,3,1].",
+            "  j=0: dp[0] += dp[1] = 3 + 3 = 6. dp = [6,3,1].",
+            "Return dp[0] = 6."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Math",
+      "approach": "Use combinatorics to compute the answer directly. The number of unique paths in an m×n grid equals the number of ways to arrange (m-1) down moves and (n-1) right moves, which is C(m+n-2, n-1) or C(m+n-2, m-1). Compute this using iterative multiplication and division.",
+      "explanation": "This mathematical solution recognizes that any path from (0,0) to (m-1,n-1) consists of exactly (m-1) down moves and (n-1) right moves, for a total of (m+n-2) moves. The number of unique paths equals the number of ways to choose which (n-1) positions get right moves (or equivalently, which (m-1) positions get down moves). This is the binomial coefficient C(m+n-2, min(m-1,n-1)). We compute this using the formula C(n,k) = n!/(k!×(n-k)!), optimized by iteratively multiplying and dividing to avoid overflow. We swap m and n if necessary to use the smaller value for k, minimizing iterations. This achieves O(min(m,n)) time and O(1) space.",
+      "code": [
+        {
+          "language": "Python",
+          "langSlug": "python3",
+          "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        if m == 1 or n == 1:\n            return 1\n        if m < n:\n            m, n = n, m\n\n        res = j = 1\n        for i in range(m, m + n - 1):\n            res *= i\n            res //= j\n            j += 1\n\n        return res",
+          "semantic_descriptions": [
+            "If grid is single row or column.",
+            "Return one path.",
+            "If more rows than columns.",
+            "Swap to use smaller dimension.",
+            "Initialize result and divisor to one.",
+            "Loop from m to m plus n minus two.",
+            "Multiply result by current numerator.",
+            "Divide result by current denominator.",
+            "Increment divisor.",
+            "Return computed binomial coefficient."
+          ]
+        },
+        {
+          "language": "JavaScript",
+          "langSlug": "javascript",
+          "code": "var uniquePaths = function(m, n) {\n    if (m === 1 || n === 1) {\n        return 1;\n    }\n    if (m < n) {\n        [m, n] = [n, m];\n    }\n\n    let res = 1, j = 1;\n    for (let i = m; i < m + n - 1; i++) {\n        res *= i;\n        res = Math.floor(res / j);\n        j++;\n    }\n\n    return res;\n};",
+          "semantic_descriptions": [
+            "If grid is single row or column.",
+            "Return one path.",
+            "If more rows than columns.",
+            "Swap to use smaller dimension.",
+            "Initialize result to one and divisor to one.",
+            "Loop from m to m plus n minus two.",
+            "Multiply result by current numerator.",
+            "Divide result by current denominator using floor division.",
+            "Increment divisor.",
+            "Return computed binomial coefficient."
+          ]
+        },
+        {
+          "language": "Go",
+          "langSlug": "golang",
+          "code": "func uniquePaths(m int, n int) int {\n    if m == 1 || n == 1 {\n        return 1\n    }\n    if m < n {\n        m, n = n, m\n    }\n\n    res, j := 1, 1\n    for i := m; i < m + n - 1; i++ {\n        res *= i\n        res /= j\n        j++\n    }\n\n    return res\n}",
+          "semantic_descriptions": [
+            "If grid is single row or column.",
+            "Return one path.",
+            "If more rows than columns.",
+            "Swap to use smaller dimension.",
+            "Initialize result to one and divisor to one.",
+            "Loop from m to m plus n minus two.",
+            "Multiply result by current numerator.",
+            "Divide result by current denominator.",
+            "Increment divisor.",
+            "Return computed binomial coefficient."
+          ]
+        }
+      ],
+      "time_complexity": "O(min(m,n))",
+      "space_complexity": "O(1)",
+      "complexity_explanation": {
+        "time": "We perform n-1 iterations (or m-1, whichever is smaller after the swap), each doing O(1) arithmetic operations. Total time is O(min(m,n)).",
+        "space": "We only use a constant number of variables (res, i, j), regardless of input size. Space is O(1)."
+      },
+      "why_it_works": "This solution leverages the mathematical fact that grid paths are equivalent to arranging moves. Any valid path requires exactly (m-1) down moves and (n-1) right moves. The question becomes: in how many ways can we arrange these moves? This is a combinations problem: C(m+n-2, n-1) = (m+n-2)! / ((n-1)! × (m-1)!). To avoid computing large factorials and potential overflow, we compute this iteratively: multiply by consecutive integers from m to m+n-2 (numerator) while dividing by 1 to n-1 (denominator). The order matters: we alternate multiply then divide to keep intermediate values manageable. Swapping ensures we use the smaller dimension, minimizing iterations.",
+      "constraints_examples": [
+        {
+          "input": "m = 3, n = 7",
+          "output": "28",
+          "explanation": "C(8,2) = (8×7)/(2×1) = 28. Direct calculation in 2 iterations."
+        },
+        {
+          "input": "m = 3, n = 2",
+          "output": "3",
+          "explanation": "C(3,1) = 3. Computed in 1 iteration."
+        },
+        {
+          "input": "m = 1, n = 1",
+          "output": "1",
+          "explanation": "Edge case handled immediately."
+        }
+      ],
+      "common_mistakes": [
+        "Computing factorials separately and dividing, causing integer overflow.",
+        "Not swapping to use min(m,n), leading to more iterations and potential overflow.",
+        "Multiplying all numerators before dividing, causing overflow for large inputs.",
+        "Using floating point arithmetic instead of integer, losing precision.",
+        "Off-by-one errors in loop bounds (should be m to m+n-2)."
+      ],
+      "pro_tips": [
+        "This is the most efficient solution in terms of both time and space.",
+        "Alternating multiply and divide prevents overflow for typical constraints.",
+        "Swapping to use the smaller dimension (min(m,n)) is a key optimization.",
+        "This demonstrates how mathematical insight can dramatically improve algorithmic complexity.",
+        "For very large inputs, use modular arithmetic if overflow is still a concern."
+      ],
+      "walkthroughs": [
+        {
+          "input": "m = 3, n = 3",
+          "steps": [
+            "m=3, n=3, no swap needed.",
+            "res=1, j=1.",
+            "i=3: res = 1×3 = 3, res = 3/1 = 3, j=2.",
+            "i=4: res = 3×4 = 12, res = 12/2 = 6, j=3.",
+            "Loop ends (i < 3+3-1=5).",
+            "Return res = 6.",
+            "Verification: C(4,2) = 4!/(2!×2!) = 24/4 = 6. Correct!"
+          ]
+        }
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "question": "How would you modify the solution if there were obstacles in certain cells that cannot be traversed?",
+      "hint": "This is problem 63. Use the same DP approach but set dp[i][j] = 0 for cells with obstacles. The recurrence relation remains the same for non-obstacle cells."
+    },
+    {
+      "question": "What if you needed to find the path itself, not just the count?",
+      "hint": "Track parent pointers or directions during DP. Backtrack from destination to start following the stored directions."
+    },
+    {
+      "question": "How would you handle a 3D grid where you can move right, down, or forward?",
+      "hint": "Extend to 3D DP: dp[i][j][k] = dp[i+1][j][k] + dp[i][j+1][k] + dp[i][j][k+1]. Same principles apply in higher dimensions."
+    }
+  ],
+  "related_topics": ["Dynamic Programming", "Math", "Combinatorics", "Grid Traversal"],
+  "hints": [
+    "At each cell, you can only move right or down. How does this constrain the paths?",
+    "The number of paths to a cell depends only on the paths to the cells directly above and to the left.",
+    "Think about the problem recursively: paths to (i,j) = paths to (i-1,j) + paths to (i,j-1).",
+    "Consider the mathematical interpretation: you need exactly m-1 down moves and n-1 right moves."
+  ],
+  "notes": "This is a fundamental 2-D DP problem demonstrating multiple solution approaches from recursion to optimal space-efficient DP to mathematical combinatorics. The DP solutions (especially solution 5) are most commonly used, while the mathematical solution showcases how domain knowledge can achieve superior complexity. Understanding the progression from recursion to memoization to iterative DP to space-optimized DP is crucial for mastering dynamic programming.",
+  "spaced_repetition": {
+    "ease_factor": 2.5,
+    "interval": 0,
+    "next_review_date": null,
+    "review_count": 0,
+    "quality_score": 0,
+    "last_reviewed": null,
+    "consecutive_correct": 0
+  }
+}
