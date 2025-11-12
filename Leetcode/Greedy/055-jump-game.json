@@ -1,0 +1,599 @@
+{
+  "decks": [
+    {
+      "deckName": "Greedy",
+      "cards": [
+        {
+          "problemNumber": 55,
+          "questionId": "55",
+          "title": "Jump Game",
+          "difficulty": "Medium",
+          "tags": ["Array", "Dynamic Programming", "Greedy"],
+          "likes": 18234,
+          "dislikes": 1123,
+          "problemStatement": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.\n\nReturn true if you can reach the last index, or false otherwise.",
+          "examples": [
+            {
+              "input": "nums = [2,3,1,1,4]",
+              "output": "true",
+              "explanation": "Jump 1 step from index 0 to 1, then 3 steps to the last index."
+            },
+            {
+              "input": "nums = [3,2,1,0,4]",
+              "output": "false",
+              "explanation": "You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index."
+            }
+          ],
+          "constraints": [
+            "1 <= nums.length <= 10^4",
+            "0 <= nums[i] <= 10^5"
+          ],
+          "solutions": [
+            {
+              "solutionId": "greedy",
+              "solutionName": "Greedy",
+              "solutionDescription": "Work backwards from the end, tracking the leftmost position that can reach the goal. If a position can jump to or past the current goal, update the goal to that position. The array is jumpable if goal reaches index 0.",
+              "timeComplexity": "O(n)",
+              "timeComplexityExplanation": "We iterate through the array once from right to left.",
+              "spaceComplexity": "O(1)",
+              "spaceComplexityExplanation": "We only use a single variable to track the goal position.",
+              "displayOrder": 1,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def canJump(self, nums: List[int]) -> bool:",
+                    "        goal = len(nums) - 1",
+                    "",
+                    "        for i in range(len(nums) - 2, -1, -1):",
+                    "            if i + nums[i] >= goal:",
+                    "                goal = i",
+                    "        return goal == 0"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Get length of nums minus one, assign to goal.",
+                    "",
+                    "Loop from second-to-last index down to zero, assign to i.",
+                    "If i plus nums at i is greater than or equal to goal.",
+                    "Set goal to i.",
+                    "Return whether goal equals zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var canJump = function(nums) {",
+                    "    let goal = nums.length - 1;",
+                    "",
+                    "    for (let i = nums.length - 2; i >= 0; i--) {",
+                    "        if (i + nums[i] >= goal) {",
+                    "            goal = i;",
+                    "        }",
+                    "    }",
+                    "    return goal === 0;",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Get length of nums minus one, assign to goal.",
+                    "",
+                    "Loop from second-to-last index down to zero, assign to i.",
+                    "If i plus nums at i is greater than or equal to goal.",
+                    "Set goal to i.",
+                    "",
+                    "",
+                    "Return whether goal equals zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func canJump(nums []int) bool {",
+                    "    goal := len(nums) - 1",
+                    "",
+                    "    for i := len(nums) - 2; i >= 0; i-- {",
+                    "        if i + nums[i] >= goal {",
+                    "            goal = i",
+                    "        }",
+                    "    }",
+                    "    return goal == 0",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Get length of nums minus one, assign to goal.",
+                    "",
+                    "Loop from second-to-last index down to zero, assign to i.",
+                    "If i plus nums at i is greater than or equal to goal.",
+                    "Set goal to i.",
+                    "",
+                    "",
+                    "Return whether goal equals zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Initialize goal = 4 (last index)",
+                  "At i=3: 3+1=4 >= 4, so goal=3",
+                  "At i=2: 2+1=3 >= 3, so goal=2",
+                  "At i=1: 1+3=4 >= 2, so goal=1",
+                  "At i=0: 0+2=2 >= 1, so goal=0",
+                  "goal == 0, return true"
+                ]
+              }
+            },
+            {
+              "solutionId": "dp-bottom-up",
+              "solutionName": "Dynamic Programming (Bottom-Up)",
+              "solutionDescription": "Build a DP array where dp[i] represents whether we can reach the last index from position i. Fill the array from right to left, marking a position as reachable if any position within its jump range is reachable.",
+              "timeComplexity": "O(n^2)",
+              "timeComplexityExplanation": "For each position, we may check up to n positions within its jump range.",
+              "spaceComplexity": "O(n)",
+              "spaceComplexityExplanation": "We use a DP array of size n to store reachability information.",
+              "displayOrder": 2,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def canJump(self, nums: List[int]) -> bool:",
+                    "        n = len(nums)",
+                    "        dp = [False] * n",
+                    "        dp[-1] = True",
+                    "",
+                    "        for i in range(n - 2, -1, -1):",
+                    "            end = min(n, i + nums[i] + 1)",
+                    "            for j in range(i + 1, end):",
+                    "                if dp[j]:",
+                    "                    dp[i] = True",
+                    "                    break",
+                    "        return dp[0]"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Get length of nums, assign to n.",
+                    "Create array of False with n elements, assign to dp.",
+                    "Set last element of dp to True.",
+                    "",
+                    "Loop from n minus two down to zero, assign to i.",
+                    "Get minimum of n and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "If dp at j is True.",
+                    "Set dp at i to True.",
+                    "Break from loop.",
+                    "Return dp at zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var canJump = function(nums) {",
+                    "    const n = nums.length;",
+                    "    const dp = new Array(n).fill(false);",
+                    "    dp[n - 1] = true;",
+                    "",
+                    "    for (let i = n - 2; i >= 0; i--) {",
+                    "        const end = Math.min(n, i + nums[i] + 1);",
+                    "        for (let j = i + 1; j < end; j++) {",
+                    "            if (dp[j]) {",
+                    "                dp[i] = true;",
+                    "                break;",
+                    "            }",
+                    "        }",
+                    "    }",
+                    "    return dp[0];",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Get length of nums, assign to n.",
+                    "Create array of false with n elements, assign to dp.",
+                    "Set element at n minus one of dp to true.",
+                    "",
+                    "Loop from n minus two down to zero, assign to i.",
+                    "Get minimum of n and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "If dp at j is true.",
+                    "Set dp at i to true.",
+                    "Break from loop.",
+                    "",
+                    "",
+                    "",
+                    "Return dp at zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func canJump(nums []int) bool {",
+                    "    n := len(nums)",
+                    "    dp := make([]bool, n)",
+                    "    dp[n - 1] = true",
+                    "",
+                    "    for i := n - 2; i >= 0; i-- {",
+                    "        end := min(n, i + nums[i] + 1)",
+                    "        for j := i + 1; j < end; j++ {",
+                    "            if dp[j] {",
+                    "                dp[i] = true",
+                    "                break",
+                    "            }",
+                    "        }",
+                    "    }",
+                    "    return dp[0]",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Get length of nums, assign to n.",
+                    "Create boolean slice with n elements, assign to dp.",
+                    "Set element at n minus one of dp to true.",
+                    "",
+                    "Loop from n minus two down to zero, assign to i.",
+                    "Get minimum of n and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "If dp at j is true.",
+                    "Set dp at i to true.",
+                    "Break from loop.",
+                    "",
+                    "",
+                    "",
+                    "Return dp at zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Initialize dp = [False, False, False, False, True]",
+                  "At i=3: Check positions 4-4, dp[4]=True, so dp[3]=True",
+                  "At i=2: Check positions 3-3, dp[3]=True, so dp[2]=True",
+                  "At i=1: Check positions 2-4, dp[2]=True, so dp[1]=True",
+                  "At i=0: Check positions 1-2, dp[1]=True, so dp[0]=True",
+                  "Return dp[0]=True"
+                ]
+              }
+            },
+            {
+              "solutionId": "dp-top-down",
+              "solutionName": "Dynamic Programming (Top-Down)",
+              "solutionDescription": "Use memoized recursion to check if we can reach the last index from any position. For each position, try all possible jumps and cache the result to avoid recomputation.",
+              "timeComplexity": "O(n^2)",
+              "timeComplexityExplanation": "Each position is computed once, and from each position we may check up to n positions.",
+              "spaceComplexity": "O(n)",
+              "spaceComplexityExplanation": "We use a memoization dictionary and recursion stack of size n.",
+              "displayOrder": 3,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def canJump(self, nums: List[int]) -> bool:",
+                    "        memo = {}",
+                    "",
+                    "        def dfs(i):",
+                    "            if i in memo:",
+                    "                return memo[i]",
+                    "            if i == len(nums) - 1:",
+                    "                return True",
+                    "            if nums[i] == 0:",
+                    "                return False",
+                    "",
+                    "            end = min(len(nums), i + nums[i] + 1)",
+                    "            for j in range(i + 1, end):",
+                    "                if dfs(j):",
+                    "                    memo[i] = True",
+                    "                    return True",
+                    "            memo[i] = False",
+                    "            return False",
+                    "",
+                    "        return dfs(0)"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Create empty dictionary, assign to memo.",
+                    "",
+                    "Define function dfs that accepts i.",
+                    "If i is in memo.",
+                    "Return memo at i.",
+                    "If i equals length of nums minus one.",
+                    "Return True.",
+                    "If nums at i equals zero.",
+                    "Return False.",
+                    "",
+                    "Get minimum of length of nums and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "If dfs of j is True.",
+                    "Set memo at i to True.",
+                    "Return True.",
+                    "Set memo at i to False.",
+                    "Return False.",
+                    "",
+                    "Return dfs of zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var canJump = function(nums) {",
+                    "    const memo = new Map();",
+                    "",
+                    "    const dfs = (i) => {",
+                    "        if (memo.has(i)) {",
+                    "            return memo.get(i);",
+                    "        }",
+                    "        if (i === nums.length - 1) {",
+                    "            return true;",
+                    "        }",
+                    "        if (nums[i] === 0) {",
+                    "            return false;",
+                    "        }",
+                    "",
+                    "        const end = Math.min(nums.length, i + nums[i] + 1);",
+                    "        for (let j = i + 1; j < end; j++) {",
+                    "            if (dfs(j)) {",
+                    "                memo.set(i, true);",
+                    "                return true;",
+                    "            }",
+                    "        }",
+                    "        memo.set(i, false);",
+                    "        return false;",
+                    "    };",
+                    "",
+                    "    return dfs(0);",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Create empty Map, assign to memo.",
+                    "",
+                    "Define function dfs that accepts i.",
+                    "If memo has i.",
+                    "Return memo get i.",
+                    "",
+                    "If i equals length of nums minus one.",
+                    "Return true.",
+                    "",
+                    "If nums at i equals zero.",
+                    "Return false.",
+                    "",
+                    "",
+                    "Get minimum of length of nums and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "If dfs of j is true.",
+                    "Set memo at i to true.",
+                    "Return true.",
+                    "",
+                    "",
+                    "Set memo at i to false.",
+                    "Return false.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func canJump(nums []int) bool {",
+                    "    memo := make(map[int]bool)",
+                    "",
+                    "    var dfs func(int) bool",
+                    "    dfs = func(i int) bool {",
+                    "        if val, ok := memo[i]; ok {",
+                    "            return val",
+                    "        }",
+                    "        if i == len(nums) - 1 {",
+                    "            return true",
+                    "        }",
+                    "        if nums[i] == 0 {",
+                    "            return false",
+                    "        }",
+                    "",
+                    "        end := min(len(nums), i + nums[i] + 1)",
+                    "        for j := i + 1; j < end; j++ {",
+                    "            if dfs(j) {",
+                    "                memo[i] = true",
+                    "                return true",
+                    "            }",
+                    "        }",
+                    "        memo[i] = false",
+                    "        return false",
+                    "    }",
+                    "",
+                    "    return dfs(0)",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Create empty map from int to bool, assign to memo.",
+                    "",
+                    "Declare dfs as function variable.",
+                    "Define dfs as function that accepts i.",
+                    "If val and ok from memo at i.",
+                    "Return val.",
+                    "",
+                    "If i equals length of nums minus one.",
+                    "Return true.",
+                    "",
+                    "If nums at i equals zero.",
+                    "Return false.",
+                    "",
+                    "",
+                    "Get minimum of length of nums and i plus nums at i plus one, assign to end.",
+                    "Loop from i plus one to end exclusive, assign to j.",
+                    "If dfs of j is true.",
+                    "Set memo at i to true.",
+                    "Return true.",
+                    "",
+                    "",
+                    "Set memo at i to false.",
+                    "Return false.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Call dfs(0): nums[0]=2, try positions 1-2",
+                  "Call dfs(1): nums[1]=3, try positions 2-4",
+                  "Call dfs(2): nums[2]=1, try position 3",
+                  "Call dfs(3): nums[3]=1, try position 4",
+                  "Call dfs(4): reached last index, return True",
+                  "Memoize results and propagate True back to dfs(0)",
+                  "Return True"
+                ]
+              }
+            },
+            {
+              "solutionId": "recursion",
+              "solutionName": "Recursion",
+              "solutionDescription": "Use pure recursion to explore all possible jump sequences. From each position, try all valid jumps and recursively check if any path reaches the last index.",
+              "timeComplexity": "O(n!)",
+              "timeComplexityExplanation": "In the worst case, we explore all possible jump combinations, leading to factorial time complexity.",
+              "spaceComplexity": "O(n)",
+              "spaceComplexityExplanation": "The recursion stack can go as deep as n levels.",
+              "displayOrder": 4,
+              "languageImplementations": [
+                {
+                  "language": "Python",
+                  "codeLines": [
+                    "class Solution:",
+                    "    def canJump(self, nums: List[int]) -> bool:",
+                    "        def dfs(i):",
+                    "            if i == len(nums) - 1:",
+                    "                return True",
+                    "            end = min(len(nums) - 1, i + nums[i])",
+                    "            for j in range(i + 1, end + 1):",
+                    "                if dfs(j):",
+                    "                    return True",
+                    "            return False",
+                    "",
+                    "        return dfs(0)"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Define function dfs that accepts i.",
+                    "If i equals length of nums minus one.",
+                    "Return True.",
+                    "Get minimum of length of nums minus one and i plus nums at i, assign to end.",
+                    "Loop from i plus one to end plus one, assign to j.",
+                    "If dfs of j is True.",
+                    "Return True.",
+                    "Return False.",
+                    "",
+                    "Return dfs of zero."
+                  ]
+                },
+                {
+                  "language": "JavaScript",
+                  "codeLines": [
+                    "var canJump = function(nums) {",
+                    "    const dfs = (i) => {",
+                    "        if (i === nums.length - 1) {",
+                    "            return true;",
+                    "        }",
+                    "        const end = Math.min(nums.length - 1, i + nums[i]);",
+                    "        for (let j = i + 1; j <= end; j++) {",
+                    "            if (dfs(j)) {",
+                    "                return true;",
+                    "            }",
+                    "        }",
+                    "        return false;",
+                    "    };",
+                    "",
+                    "    return dfs(0);",
+                    "};"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Define function dfs that accepts i.",
+                    "If i equals length of nums minus one.",
+                    "Return true.",
+                    "",
+                    "Get minimum of length of nums minus one and i plus nums at i, assign to end.",
+                    "Loop from i plus one to end plus one, assign to j.",
+                    "If dfs of j is true.",
+                    "Return true.",
+                    "",
+                    "",
+                    "Return false.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                },
+                {
+                  "language": "Go",
+                  "codeLines": [
+                    "func canJump(nums []int) bool {",
+                    "    var dfs func(int) bool",
+                    "    dfs = func(i int) bool {",
+                    "        if i == len(nums) - 1 {",
+                    "            return true",
+                    "        }",
+                    "        end := min(len(nums) - 1, i + nums[i])",
+                    "        for j := i + 1; j <= end; j++ {",
+                    "            if dfs(j) {",
+                    "                return true",
+                    "            }",
+                    "        }",
+                    "        return false",
+                    "    }",
+                    "",
+                    "    return dfs(0)",
+                    "}"
+                  ],
+                  "semanticLines": [
+                    "Define function canJump that accepts nums.",
+                    "Declare dfs as function variable.",
+                    "Define dfs as function that accepts i.",
+                    "If i equals length of nums minus one.",
+                    "Return true.",
+                    "",
+                    "Get minimum of length of nums minus one and i plus nums at i, assign to end.",
+                    "Loop from i plus one to end plus one, assign to j.",
+                    "If dfs of j is true.",
+                    "Return true.",
+                    "",
+                    "",
+                    "Return false.",
+                    "",
+                    "",
+                    "Return dfs of zero.",
+                    ""
+                  ]
+                }
+              ],
+              "exampleWalkthrough": {
+                "example": "nums = [2,3,1,1,4]",
+                "steps": [
+                  "Call dfs(0): nums[0]=2, try positions 1-2",
+                  "Call dfs(1): nums[1]=3, try positions 2-4",
+                  "Call dfs(2): nums[2]=1, try position 3",
+                  "Call dfs(3): nums[3]=1, try position 4",
+                  "Call dfs(4): reached last index, return True",
+                  "Propagate True back through all recursive calls",
+                  "Return True"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
