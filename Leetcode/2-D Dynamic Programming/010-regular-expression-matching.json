@@ -1,0 +1,311 @@
+{
+  "decks": [
+    {
+      "name": "LeetCode #10 - Regular Expression Matching",
+      "description": "Implement regular expression matching with support for '.' and '*' where '.' matches any single character and '*' matches zero or more of the preceding element",
+      "cards": [
+        {
+          "id": "leetcode_10_regular_expression_matching",
+          "question": "Regular Expression Matching: Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where '.' matches any single character and '*' matches zero or more of the preceding element. The matching should cover the entire input string (not partial).",
+          "solutions": [
+            {
+              "name": "Recursion",
+              "type": "brute-force",
+              "explanation": "Use recursion to explore all possible matches. For each position, check if current characters match. If next character is '*', try both using and not using the star (two recursive branches). If characters match without star, advance both pointers. Base case: when pattern is exhausted, check if string is also exhausted. Explores all possibilities but has exponential time complexity.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method isMatch that accepts self, string s, and pattern p, returns boolean.",
+                    "Get length of s as m and length of p as n.",
+                    "Define nested function dfs that accepts indices i and j.",
+                    "Check if j equals n (pattern exhausted).",
+                    "If true, return whether i equals m (string also exhausted).",
+                    "Calculate match as i less than m and either s at i equals p at j or p at j equals dot.",
+                    "Check if j plus one is less than n and p at j plus one equals asterisk.",
+                    "If true, return dfs of i comma j plus two (don't use star) or match and dfs of i plus one comma j (use star).",
+                    "Check if match is true.",
+                    "If true, return dfs of i plus one comma j plus one.",
+                    "Return False.",
+                    "Call dfs with zero comma zero and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def isMatch(self, s: str, p: str) -> bool:",
+                    "        m, n = len(s), len(p)",
+                    "",
+                    "        def dfs(i, j):",
+                    "            if j == n:",
+                    "                return i == m",
+                    "",
+                    "            match = i < m and (s[i] == p[j] or p[j] == \".\")",
+                    "            if (j + 1) < n and p[j + 1] == \"*\":",
+                    "                return (dfs(i, j + 2) or",
+                    "                       (match and dfs(i + 1, j)))",
+                    "            if match:",
+                    "                return dfs(i + 1, j + 1)",
+                    "            return False",
+                    "",
+                    "        return dfs(0, 0)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(2^(m+n))",
+              "timeDescription": "Exponential time as each position can branch into two recursive calls for star patterns, creating 2^(m+n) possible paths in worst case",
+              "spaceComplexity": "O(m+n)",
+              "spaceDescription": "Recursion stack depth proportional to sum of string and pattern lengths",
+              "exampleWalkthrough": "Given s='aa', p='a*': dfs(0,0) checks 'a' matches 'a' and next is '*'. Tries dfs(0,2) (skip star, fail) and dfs(1,0) (use star). dfs(1,0) matches second 'a', tries dfs(1,2) (skip) and dfs(2,0) (use). dfs(2,0) has j=0 < n=2 and i=2=m, tries dfs(2,2) which returns True as both exhausted.",
+              "displayOrder": 1
+            },
+            {
+              "name": "Dynamic Programming (Top-Down)",
+              "type": "optimal",
+              "explanation": "Optimize recursion with memoization using cache dictionary. Store results of subproblems indexed by (i, j) position in string and pattern. Before computing, check if result exists in cache. Same recursive logic as brute force but each state computed only once. Reduces exponential time to O(m*n) by avoiding redundant calculations.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method isMatch that accepts self, string s, and pattern p, returns boolean.",
+                    "Get length of s as m and length of p as n.",
+                    "Create empty dictionary cache.",
+                    "Define nested function dfs that accepts indices i and j.",
+                    "Check if j equals n (pattern exhausted).",
+                    "If true, return whether i equals m (string also exhausted).",
+                    "Check if tuple i comma j is in cache.",
+                    "If true, return cached result at i comma j.",
+                    "Calculate match as i less than m and either s at i equals p at j or p at j equals dot.",
+                    "Check if j plus one is less than n and p at j plus one equals asterisk.",
+                    "If true, set cache at i comma j to dfs of i comma j plus two or match and dfs of i plus one comma j.",
+                    "Return cache at i comma j.",
+                    "Check if match is true.",
+                    "If true, set cache at i comma j to dfs of i plus one comma j plus one.",
+                    "Return cache at i comma j.",
+                    "Set cache at i comma j to False.",
+                    "Return False.",
+                    "Call dfs with zero comma zero and return result."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def isMatch(self, s: str, p: str) -> bool:",
+                    "        m, n = len(s), len(p)",
+                    "        cache = {}",
+                    "",
+                    "        def dfs(i, j):",
+                    "            if j == n:",
+                    "                return i == m",
+                    "            if (i, j) in cache:",
+                    "                return cache[(i, j)]",
+                    "",
+                    "            match = i < m and (s[i] == p[j] or p[j] == \".\")",
+                    "            if (j + 1) < n and p[j + 1] == \"*\":",
+                    "                cache[(i, j)] = (dfs(i, j + 2) or",
+                    "                                (match and dfs(i + 1, j)))",
+                    "                return cache[(i, j)]",
+                    "",
+                    "            if match:",
+                    "                cache[(i, j)] = dfs(i + 1, j + 1)",
+                    "                return cache[(i, j)]",
+                    "",
+                    "            cache[(i, j)] = False",
+                    "            return False",
+                    "",
+                    "        return dfs(0, 0)"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Each of m*n states computed once and cached, total work proportional to grid size",
+              "spaceComplexity": "O(m*n)",
+              "spaceDescription": "Cache stores up to m*n subproblem results plus O(m+n) recursion stack",
+              "exampleWalkthrough": "Given s='aa', p='a*': dfs(0,0) computes and caches result. When dfs(1,0) is called, it computes match. If dfs(2,0) needs same (i,j) pair later, returns cached value immediately instead of recomputing. Cache grows to store all visited (i,j) pairs. Final answer retrieved from cache[0,0].",
+              "displayOrder": 2
+            },
+            {
+              "name": "Dynamic Programming (Bottom-Up)",
+              "type": "optimal",
+              "explanation": "Build 2D DP table iteratively from bottom-right to top-left. dp[i][j] represents whether s[i:] matches p[j:]. Initialize dp[m][n]=True (both empty). For each cell, check if characters match and handle star patterns. If star exists, either skip pattern (dp[i][j+2]) or use star if match (dp[i+1][j]). Iterative approach avoiding recursion overhead.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method isMatch that accepts self, string s, and pattern p, returns boolean.",
+                    "Create 2D dp table with dimensions len of s plus one by len of p plus one, initialized to False.",
+                    "Set dp at len of s at len of p to True (base case: both empty strings match).",
+                    "Loop i from len of s down to zero inclusive.",
+                    "Loop j from len of p minus one down to zero inclusive.",
+                    "Calculate match as i less than len of s and either s at i equals p at j or p at j equals dot.",
+                    "Check if j plus one is less than len of p and p at j plus one equals asterisk.",
+                    "If true, set dp at i at j to dp at i at j plus two (don't use star).",
+                    "Check if match is true.",
+                    "If true, set dp at i at j to dp at i plus one at j or dp at i at j (use star).",
+                    "Else if match is true.",
+                    "Set dp at i at j to dp at i plus one at j plus one.",
+                    "Return dp at zero at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def isMatch(self, s: str, p: str) -> bool:",
+                    "        dp = [[False] * (len(p) + 1) for i in range(len(s) + 1)]",
+                    "        dp[len(s)][len(p)] = True",
+                    "",
+                    "        for i in range(len(s), -1, -1):",
+                    "            for j in range(len(p) - 1, -1, -1):",
+                    "                match = i < len(s) and (s[i] == p[j] or p[j] == \".\")",
+                    "",
+                    "                if (j + 1) < len(p) and p[j + 1] == \"*\":",
+                    "                    dp[i][j] = dp[i][j + 2]",
+                    "                    if match:",
+                    "                        dp[i][j] = dp[i + 1][j] or dp[i][j]",
+                    "                elif match:",
+                    "                    dp[i][j] = dp[i + 1][j + 1]",
+                    "",
+                    "        return dp[0][0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Nested loops iterate through all m*n cells of dp table once",
+              "spaceComplexity": "O(m*n)",
+              "spaceDescription": "2D dp table of size (m+1) x (n+1) to store all subproblem results",
+              "exampleWalkthrough": "Given s='aa', p='a*': Create 3x3 table. Set dp[2][2]=True. For i=2,j=1: pattern 'a*', dp[2][1]=dp[2][3]=False. For i=1,j=1: match='a'=='a*', dp[1][1]=dp[1][3] or dp[2][1]=False. For i=1,j=0: match, has '*', dp[1][0]=dp[2][0]=True. For i=0,j=0: match, has '*', dp[0][0]=dp[1][0]=True.",
+              "displayOrder": 3
+            },
+            {
+              "name": "Dynamic Programming (Space Optimized)",
+              "type": "optimal",
+              "explanation": "Optimize space by using only two 1D arrays instead of full 2D table. Current row (nextDp) depends only on previous row (dp). After processing each row, swap arrays. Reduces space from O(m*n) to O(n) while maintaining same time complexity. Iterate through string positions, updating pattern positions for each.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method isMatch that accepts self, string s, and pattern p, returns boolean.",
+                    "Create dp array of length len of p plus one, initialized to False.",
+                    "Set dp at len of p to True.",
+                    "Loop i from len of s down to zero inclusive.",
+                    "Create nextDp array of length len of p plus one, initialized to False.",
+                    "Set nextDp at len of p to True if i equals len of s, else False.",
+                    "Loop j from len of p minus one down to zero inclusive.",
+                    "Calculate match as i less than len of s and either s at i equals p at j or p at j equals dot.",
+                    "Check if j plus one is less than len of p and p at j plus one equals asterisk.",
+                    "If true, set nextDp at j to nextDp at j plus two.",
+                    "Check if match is true.",
+                    "If true, set nextDp at j to nextDp at j or dp at j (bitwise or equals).",
+                    "Else if match is true.",
+                    "Set nextDp at j to dp at j plus one.",
+                    "Set dp to nextDp.",
+                    "Return dp at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def isMatch(self, s: str, p: str) -> bool:",
+                    "        dp = [False] * (len(p) + 1)",
+                    "        dp[len(p)] = True",
+                    "",
+                    "        for i in range(len(s), -1, -1):",
+                    "            nextDp = [False] * (len(p) + 1)",
+                    "            nextDp[len(p)] = (i == len(s))",
+                    "",
+                    "            for j in range(len(p) - 1, -1, -1):",
+                    "                match = i < len(s) and (s[i] == p[j] or p[j] == \".\")",
+                    "",
+                    "                if (j + 1) < len(p) and p[j + 1] == \"*\":",
+                    "                    nextDp[j] = nextDp[j + 2]",
+                    "                    if match:",
+                    "                        nextDp[j] |= dp[j]",
+                    "                elif match:",
+                    "                    nextDp[j] = dp[j + 1]",
+                    "",
+                    "            dp = nextDp",
+                    "",
+                    "        return dp[0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Nested loops still process all m*n state transitions",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Only two 1D arrays of size n+1 needed, reusing space for each row",
+              "exampleWalkthrough": "Given s='aa', p='a*': Start with dp=[False,False,True]. For i=2: nextDp processes pattern, dp becomes new values. For i=1: nextDp uses previous dp values to compute current row. For i=0: final computation uses previous row. Result at dp[0] gives answer, using only O(n) space throughout.",
+              "displayOrder": 4
+            },
+            {
+              "name": "Dynamic Programming (Optimal)",
+              "type": "optimal",
+              "explanation": "Further optimize space by using single array with careful value swapping. Use variable dp1 to track previous diagonal value before overwriting. Process pattern right-to-left within string top-to-bottom loop. Update dp[j] while preserving dp1 for next iteration. Most space-efficient solution using only O(n) space with single array and one variable.",
+              "languageImplementations": [
+                {
+                  "language": "python",
+                  "semanticLines": [
+                    "Define class Solution.",
+                    "Define method isMatch that accepts self, string s, and pattern p, returns boolean.",
+                    "Create dp array of length len of p plus one, initialized to False.",
+                    "Set dp at len of p to True.",
+                    "Loop i from len of s down to zero inclusive.",
+                    "Set dp1 to dp at len of p (save diagonal value).",
+                    "Set dp at len of p to True if i equals len of s, else False.",
+                    "Loop j from len of p minus one down to zero inclusive.",
+                    "Calculate match as i less than len of s and either s at i equals p at j or p at j equals dot.",
+                    "Set res to False.",
+                    "Check if j plus one is less than len of p and p at j plus one equals asterisk.",
+                    "If true, set res to dp at j plus two.",
+                    "Check if match is true.",
+                    "If true, set res to res or dp at j (bitwise or equals).",
+                    "Else if match is true.",
+                    "Set res to dp1.",
+                    "Update dp at j and dp1 using simultaneous assignment: dp at j becomes res, dp1 becomes old dp at j.",
+                    "Return dp at zero."
+                  ],
+                  "codeLines": [
+                    "class Solution:",
+                    "    def isMatch(self, s: str, p: str) -> bool:",
+                    "        dp = [False] * (len(p) + 1)",
+                    "        dp[len(p)] = True",
+                    "",
+                    "        for i in range(len(s), -1, -1):",
+                    "            dp1 = dp[len(p)]",
+                    "            dp[len(p)] = (i == len(s))",
+                    "",
+                    "            for j in range(len(p) - 1, -1, -1):",
+                    "                match = i < len(s) and (s[i] == p[j] or p[j] == \".\")",
+                    "                res = False",
+                    "                if (j + 1) < len(p) and p[j + 1] == \"*\":",
+                    "                    res = dp[j + 2]",
+                    "                    if match:",
+                    "                        res |= dp[j]",
+                    "                elif match:",
+                    "                    res = dp1",
+                    "                dp[j], dp1 = res, dp[j]",
+                    "",
+                    "        return dp[0]"
+                  ]
+                }
+              ],
+              "timeComplexity": "O(m*n)",
+              "timeDescription": "Same nested loops processing all state transitions",
+              "spaceComplexity": "O(n)",
+              "spaceDescription": "Single 1D array of size n+1 plus one variable for diagonal tracking",
+              "exampleWalkthrough": "Given s='aa', p='a*': Initialize dp=[False,False,True]. For i=2: dp1 saves diagonal, update dp[2], process j backwards updating dp[j] and swapping dp1. For i=1,0: continue same pattern reusing dp array. Final dp[0] contains answer. Space used: just one array and dp1 variable.",
+              "displayOrder": 5
+            }
+          ],
+          "tags": [
+            "dynamic-programming",
+            "2d-dp",
+            "recursion",
+            "memoization",
+            "string-matching",
+            "leetcode-hard"
+          ],
+          "nextReviewDate": null,
+          "reviewCount": 0,
+          "easeFactor": 2.5,
+          "consecutiveCorrect": 0
+        }
+      ]
+    }
+  ]
+}
