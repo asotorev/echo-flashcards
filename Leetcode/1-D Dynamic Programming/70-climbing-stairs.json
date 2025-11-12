@@ -1,0 +1,559 @@
+{
+  "id": "70",
+  "title": "Climbing Stairs",
+  "category": "1-D Dynamic Programming",
+  "difficulty": "Easy",
+  "ultimateGuide": "https://neetcode.io/problems/climbing-stairs",
+  "problemStatement": "You are climbing a staircase. It takes n steps to reach the top.\n\nEach time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "2",
+      "explanation": "There are two ways to climb to the top:\n1. 1 step + 1 step\n2. 2 steps"
+    },
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "There are three ways to climb to the top:\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step"
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 45"
+  ],
+  "solutions": [
+    {
+      "name": "Recursion",
+      "description": "Use pure recursion to explore all possible climbing paths. From each step, try both climbing 1 step and climbing 2 steps. Count the number of valid paths that reach exactly step n. This brute force approach has exponential time complexity due to overlapping subproblems.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n\n        def dfs(i):\n            if i >= n:\n                return i == n\n            return dfs(i + 1) + dfs(i + 2)\n\n        return dfs(0)",
+        "semanticLines": [
+          "Define a depth-first search function that takes current step i as parameter.",
+          "If current step i is greater than or equal to n.",
+          "Return one if i equals n, otherwise return zero.",
+          "Return the sum of ways from taking one step and taking two steps.",
+          "Call depth-first search starting from step zero."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    climbStairs(n) {\n\n        const dfs = (i) => {\n            if (i >= n) {\n                return i === n ? 1 : 0;\n            }\n            return dfs(i + 1) + dfs(i + 2);\n        };\n\n        return dfs(0);\n    }\n}",
+        "semanticLines": [
+          "Define a depth-first search arrow function that takes current step i as parameter.",
+          "If current step i is greater than or equal to n.",
+          "Return one if i equals n, otherwise return zero.",
+          "Close the base case condition.",
+          "Return the sum of ways from taking one step and taking two steps.",
+          "Close the depth-first search function definition.",
+          "Call depth-first search starting from step zero.",
+          "Close the climbStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func climbStairs(n int) int {\n\n    var dfs func(int) int\n    dfs = func(i int) int {\n        if i >= n {\n            if i == n {\n                return 1\n            }\n            return 0\n        }\n        return dfs(i + 1) + dfs(i + 2)\n    }\n\n    return dfs(0)\n}",
+        "semanticLines": [
+          "Declare a depth-first search function variable that takes an integer and returns an integer.",
+          "Define the depth-first search function that takes current step i as parameter.",
+          "If current step i is greater than or equal to n.",
+          "If i equals n.",
+          "Return one.",
+          "Close the exact match condition.",
+          "Return zero.",
+          "Close the base case condition.",
+          "Return the sum of ways from taking one step and taking two steps.",
+          "Close the depth-first search function definition.",
+          "Call depth-first search starting from step zero.",
+          "Close the climbStairs function."
+        ]
+      },
+      "detailedExplanation": "This naive recursive approach directly models the problem: from any step i, we can reach step n by taking 1 step (to i+1) or 2 steps (to i+2). We recursively explore both options and sum the results. The base case returns 1 when we reach exactly step n (valid path) or 0 if we overshoot (invalid path). The recursive tree has exponential size because we recompute the same subproblems many times. For example, to compute climbStairs(5), we compute climbStairs(4) and climbStairs(3), but climbStairs(4) also computes climbStairs(3), leading to redundant work. This solution demonstrates the problem structure but is impractical for large n.",
+      "commonMistakes": [
+        "Returning 1 for both i == n and i > n (counting invalid paths)",
+        "Not handling the base case correctly (infinite recursion)",
+        "Starting from n and going down instead of 0 going up (inverting the logic)",
+        "Forgetting that we need to sum both recursive calls (missing combinations)"
+      ],
+      "whyItWorks": "The recursion correctly enumerates all possible climbing sequences by exploring both choices at each step. The base case correctly identifies valid paths (reaching exactly step n) versus invalid paths (overshooting). Summing the results from both branches counts all distinct paths. However, the exponential time complexity makes it impractical for n > 30.",
+      "keyInsights": [
+        "Problem has optimal substructure: solution depends on solutions to smaller subproblems",
+        "From step i, can reach n via step i+1 or step i+2",
+        "Base case distinguishes valid (i == n) from invalid (i > n) paths",
+        "Exponential time due to overlapping subproblems being recomputed",
+        "This approach reveals the Fibonacci pattern: f(n) = f(n-1) + f(n-2)"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 3",
+          "explanation": "dfs(0) calls dfs(1) and dfs(2). dfs(1) calls dfs(2) and dfs(3). dfs(2) calls dfs(3) and dfs(4). dfs(3) returns 1 (i==n). dfs(4) returns 0 (i>n). So dfs(2) = 1+0 = 1. dfs(1)'s first call dfs(2) = 1, second call dfs(3) = 1. So dfs(1) = 1+1 = 2. dfs(0)'s first call dfs(1) = 2, second call dfs(2) = 1. So dfs(0) = 2+1 = 3."
+        },
+        "example2": {
+          "input": "n = 2",
+          "explanation": "dfs(0) calls dfs(1) and dfs(2). dfs(1) calls dfs(2) and dfs(3). dfs(2) returns 1 (i==n). dfs(3) returns 0 (i>n). So dfs(1) = 1+0 = 1. dfs(0)'s first call dfs(1) = 1, second call dfs(2) = 1. So dfs(0) = 1+1 = 2."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Top-Down)",
+      "description": "Optimize the recursive solution using memoization. Cache the result of each subproblem in an array to avoid recomputation. When we encounter a subproblem we've already solved, return the cached result immediately. This reduces time complexity from exponential to linear.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        cache = [-1] * n\n        def dfs(i):\n            if i >= n:\n                return i == n\n            if cache[i] != -1:\n                return cache[i]\n            cache[i] = dfs(i + 1) + dfs(i + 2)\n            return cache[i]\n\n        return dfs(0)",
+        "semanticLines": [
+          "Create a cache list of negative one values with length n.",
+          "Define a depth-first search function that takes current step i as parameter.",
+          "If current step i is greater than or equal to n.",
+          "Return one if i equals n, otherwise return zero.",
+          "If the cache at index i is not negative one.",
+          "Return the cached value at index i.",
+          "Compute and store the sum of ways from taking one step and taking two steps in cache at index i.",
+          "Return the cached value at index i.",
+          "Call depth-first search starting from step zero."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    climbStairs(n) {\n        const cache = new Array(n).fill(-1);\n        const dfs = (i) => {\n            if (i >= n) {\n                return i === n ? 1 : 0;\n            }\n            if (cache[i] !== -1) {\n                return cache[i];\n            }\n            cache[i] = dfs(i + 1) + dfs(i + 2);\n            return cache[i];\n        };\n\n        return dfs(0);\n    }\n}",
+        "semanticLines": [
+          "Create a cache array of negative one values with length n.",
+          "Define a depth-first search arrow function that takes current step i as parameter.",
+          "If current step i is greater than or equal to n.",
+          "Return one if i equals n, otherwise return zero.",
+          "Close the base case condition.",
+          "If the cache at index i is not negative one.",
+          "Return the cached value at index i.",
+          "Close the cache hit condition.",
+          "Compute and store the sum of ways from taking one step and taking two steps in cache at index i.",
+          "Return the cached value at index i.",
+          "Close the depth-first search function definition.",
+          "Call depth-first search starting from step zero.",
+          "Close the climbStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func climbStairs(n int) int {\n    cache := make([]int, n)\n    for i := range cache {\n        cache[i] = -1\n    }\n    \n    var dfs func(int) int\n    dfs = func(i int) int {\n        if i >= n {\n            if i == n {\n                return 1\n            }\n            return 0\n        }\n        if cache[i] != -1 {\n            return cache[i]\n        }\n        cache[i] = dfs(i + 1) + dfs(i + 2)\n        return cache[i]\n    }\n\n    return dfs(0)\n}",
+        "semanticLines": [
+          "Create a cache integer slice of length n.",
+          "For each index in the cache slice.",
+          "Initialize cache value to negative one.",
+          "Close the initialization loop.",
+          "Declare a depth-first search function variable that takes an integer and returns an integer.",
+          "Define the depth-first search function that takes current step i as parameter.",
+          "If current step i is greater than or equal to n.",
+          "If i equals n.",
+          "Return one.",
+          "Close the exact match condition.",
+          "Return zero.",
+          "Close the base case condition.",
+          "If the cache at index i is not negative one.",
+          "Return the cached value at index i.",
+          "Close the cache hit condition.",
+          "Compute and store the sum of ways from taking one step and taking two steps in cache at index i.",
+          "Return the cached value at index i.",
+          "Close the depth-first search function definition.",
+          "Call depth-first search starting from step zero.",
+          "Close the climbStairs function."
+        ]
+      },
+      "detailedExplanation": "This memoized solution adds a cache array to store previously computed results. Before making recursive calls, we check if the result for the current step is already cached. If so, we return it immediately without recomputing. Otherwise, we compute it recursively and store it in the cache before returning. This eliminates the redundant computation that made the pure recursive solution exponential. Each of the n steps is computed exactly once, giving us O(n) time complexity. The space complexity is O(n) for the cache array plus O(n) for the recursion stack depth.",
+      "commonMistakes": [
+        "Using 0 as the cache sentinel value (conflicts with valid results)",
+        "Not initializing the cache array properly (undefined behavior)",
+        "Forgetting to store the result in cache before returning (no memoization benefit)",
+        "Caching the wrong values or at wrong indices (incorrect results)",
+        "Not checking cache before making recursive calls (defeating the purpose)"
+      ],
+      "whyItWorks": "Memoization transforms the exponential recursive tree into a linear computation. Each subproblem is solved exactly once - the first time it's encountered, we compute and cache it; subsequent encounters return the cached value immediately. Since there are n unique subproblems (one for each step from 0 to n-1), and each takes O(1) time to compute (after its dependencies are cached), the total time is O(n). This top-down approach is intuitive because it follows the natural recursive structure of the problem.",
+      "keyInsights": [
+        "Memoization eliminates overlapping subproblem recomputation",
+        "Cache array maps step indices to number of ways to reach goal",
+        "Each subproblem solved exactly once, reducing exponential to linear time",
+        "Recursion depth is O(n) in worst case (stepping 1 at a time)",
+        "Top-down approach: start with problem, break into subproblems as needed"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 3",
+          "explanation": "cache=[-1,-1,-1]. dfs(0): cache[0]==-1, compute. Call dfs(1): cache[1]==-1, compute. Call dfs(2): cache[2]==-1, compute. Call dfs(3): return 1. Call dfs(4): return 0. cache[2]=1+0=1. Return 1. Back to dfs(1). Call dfs(3): return 1. cache[1]=1+1=2. Return 2. Back to dfs(0). Call dfs(2): cache[2]==1 (hit!), return 1. cache[0]=2+1=3. Return 3."
+        },
+        "example2": {
+          "input": "n = 2",
+          "explanation": "cache=[-1,-1]. dfs(0): cache[0]==-1, compute. Call dfs(1): cache[1]==-1, compute. Call dfs(2): return 1. Call dfs(3): return 0. cache[1]=1+0=1. Return 1. Back to dfs(0). Call dfs(2): return 1. cache[0]=1+1=2. Return 2."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Bottom-Up)",
+      "description": "Use iterative dynamic programming with tabulation. Build up the solution from base cases to the target. Create a DP array where dp[i] represents the number of ways to reach step i. Use the recurrence relation dp[i] = dp[i-1] + dp[i-2] to fill the array from left to right.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        if n <= 2:\n            return n\n        dp = [0] * (n + 1)\n        dp[1], dp[2] = 1, 2\n        for i in range(3, n + 1):\n            dp[i] = dp[i - 1] + dp[i - 2]\n        return dp[n]",
+        "semanticLines": [
+          "If n is less than or equal to two.",
+          "Return n as the base case result.",
+          "Create a dp array of zeros with length n plus one.",
+          "Initialize dp at index one to one and dp at index two to two.",
+          "For each step i from three to n inclusive.",
+          "Set dp at index i to the sum of dp at index i minus one and dp at index i minus two.",
+          "Return dp at index n as the final result."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    climbStairs(n) {\n        if (n <= 2) {\n            return n;\n        }\n        const dp = new Array(n + 1).fill(0);\n        dp[1] = 1;\n        dp[2] = 2;\n        for (let i = 3; i <= n; i++) {\n            dp[i] = dp[i - 1] + dp[i - 2];\n        }\n        return dp[n];\n    }\n}",
+        "semanticLines": [
+          "If n is less than or equal to two.",
+          "Return n as the base case result.",
+          "Close the base case condition.",
+          "Create a dp array of zeros with length n plus one.",
+          "Initialize dp at index one to one.",
+          "Initialize dp at index two to two.",
+          "For each step i from three to n inclusive.",
+          "Set dp at index i to the sum of dp at index i minus one and dp at index i minus two.",
+          "Close the loop.",
+          "Return dp at index n as the final result.",
+          "Close the climbStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func climbStairs(n int) int {\n    if n <= 2 {\n        return n\n    }\n    dp := make([]int, n+1)\n    dp[1], dp[2] = 1, 2\n    for i := 3; i <= n; i++ {\n        dp[i] = dp[i-1] + dp[i-2]\n    }\n    return dp[n]\n}",
+        "semanticLines": [
+          "If n is less than or equal to two.",
+          "Return n as the base case result.",
+          "Close the base case condition.",
+          "Create a dp integer slice of length n plus one.",
+          "Initialize dp at index one to one and dp at index two to two.",
+          "For each step i from three to n inclusive.",
+          "Set dp at index i to the sum of dp at index i minus one and dp at index i minus two.",
+          "Close the loop.",
+          "Return dp at index n as the final result.",
+          "Close the climbStairs function."
+        ]
+      },
+      "detailedExplanation": "This bottom-up DP approach builds the solution iteratively from smallest subproblems to the target. We create a DP array where dp[i] represents the number of distinct ways to reach step i. The base cases are: dp[1] = 1 (one way to reach step 1) and dp[2] = 2 (two ways: 1+1 or 2). For any step i ≥ 3, we can reach it from step i-1 (by taking 1 step) or from step i-2 (by taking 2 steps). Therefore, dp[i] = dp[i-1] + dp[i-2]. This is the Fibonacci recurrence! We fill the array left to right, and each entry depends only on the two previous entries. Finally, dp[n] contains our answer. This approach avoids recursion overhead and is conceptually simpler than memoization.",
+      "commonMistakes": [
+        "Off-by-one errors in array indexing (using n instead of n+1 for array size)",
+        "Incorrect base cases (dp[1]=1 and dp[2]=2, not dp[0] and dp[1])",
+        "Starting the loop at wrong index (should start at 3, not 2 or 1)",
+        "Not handling n <= 2 separately (array access errors)",
+        "Confusing the problem with 0-indexed Fibonacci (this is 1-indexed)"
+      ],
+      "whyItWorks": "The bottom-up approach systematically builds the solution by recognizing that to reach step i, we must have come from either step i-1 or step i-2. Since we know the number of ways to reach those earlier steps (already computed and stored in the DP array), we simply sum them. This recurrence relation correctly counts all distinct paths because every path to step i must pass through either i-1 or i-2, and paths through i-1 are disjoint from paths through i-2. By computing in order from smallest to largest, we ensure all dependencies are satisfied.",
+      "keyInsights": [
+        "Problem reduces to Fibonacci sequence starting from F(1)=1, F(2)=2",
+        "Bottom-up approach: build solution from base cases upward",
+        "Recurrence relation: ways[i] = ways[i-1] + ways[i-2]",
+        "No recursion overhead, just a simple loop",
+        "DP array stores all intermediate results for potential reuse"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5",
+          "explanation": "n > 2, so create dp=[0,1,2,0,0,0]. Loop i=3: dp[3]=dp[2]+dp[1]=2+1=3. Loop i=4: dp[4]=dp[3]+dp[2]=3+2=5. Loop i=5: dp[5]=dp[4]+dp[3]=5+3=8. Return dp[5]=8."
+        },
+        "example2": {
+          "input": "n = 2",
+          "explanation": "n <= 2, so return n=2 directly."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Space Optimized)",
+      "description": "Optimize the bottom-up DP solution to use constant space. Since each step only depends on the previous two steps, we only need to track two variables instead of an entire array. Use two pointers that slide forward through the computation.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "python": {
+        "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        one, two = 1, 1\n\n        for i in range(n - 1):\n            temp = one\n            one = one + two\n            two = temp\n\n        return one",
+        "semanticLines": [
+          "Initialize one to one representing ways to reach step n.",
+          "Initialize two to one representing ways to reach step n minus one.",
+          "For each iteration from zero to n minus two.",
+          "Store the current value of one in temp.",
+          "Update one to the sum of one and two.",
+          "Update two to the old value of one stored in temp.",
+          "Return one as the number of ways to reach step n."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    climbStairs(n) {\n        let one = 1, two = 1;\n\n        for (let i = 0; i < n - 1; i++) {\n            const temp = one;\n            one = one + two;\n            two = temp;\n        }\n\n        return one;\n    }\n}",
+        "semanticLines": [
+          "Initialize one to one representing ways to reach step n.",
+          "Initialize two to one representing ways to reach step n minus one.",
+          "For each iteration from zero to n minus two.",
+          "Store the current value of one in temp.",
+          "Update one to the sum of one and two.",
+          "Update two to the old value of one stored in temp.",
+          "Close the loop.",
+          "Return one as the number of ways to reach step n.",
+          "Close the climbStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func climbStairs(n int) int {\n    one, two := 1, 1\n\n    for i := 0; i < n-1; i++ {\n        temp := one\n        one = one + two\n        two = temp\n    }\n\n    return one\n}",
+        "semanticLines": [
+          "Initialize one to one representing ways to reach step n.",
+          "Initialize two to one representing ways to reach step n minus one.",
+          "For each iteration from zero to n minus two.",
+          "Store the current value of one in temp.",
+          "Update one to the sum of one and two.",
+          "Update two to the old value of one stored in temp.",
+          "Close the loop.",
+          "Return one as the number of ways to reach step n.",
+          "Close the climbStairs function."
+        ]
+      },
+      "detailedExplanation": "This space-optimized solution recognizes that we only need the last two values in the DP computation, not the entire array. We maintain two variables: 'one' represents the number of ways to reach the current step, and 'two' represents the ways to reach the previous step. We iterate n-1 times, each time computing the new 'one' as the sum of the current 'one' and 'two', then shifting 'two' to hold the old 'one'. This effectively simulates sliding a window of size 2 through the DP array. The initialization one=1, two=1 corresponds to dp[1]=1 and dp[2]=2 in the array approach (but we're working backwards from n). After n-1 iterations, 'one' contains the answer. This achieves O(1) space complexity while maintaining O(n) time complexity.",
+      "commonMistakes": [
+        "Incorrect initialization (should be one=1, two=1 for this sliding window approach)",
+        "Forgetting to use temp variable (causes incorrect update order)",
+        "Looping n times instead of n-1 times (off-by-one error)",
+        "Confusing which variable represents which step (one is current, two is previous)",
+        "Trying to update both variables simultaneously without temp (race condition)"
+      ],
+      "whyItWorks": "The key observation is that the recurrence relation dp[i] = dp[i-1] + dp[i-2] only looks back two steps. We don't need to remember all previous values, just the most recent two. By maintaining a sliding window of two variables and updating them in sequence, we compute the same values as the array approach but use constant space. The loop runs n-1 times because we start with the base cases already loaded (conceptually at positions n and n-1, working backwards) and need n-1 updates to reach position 0.",
+      "keyInsights": [
+        "Only last two DP values needed for each computation",
+        "Sliding window technique reduces O(n) space to O(1)",
+        "Same time complexity as array approach but better space efficiency",
+        "Variables slide backwards: one is current, two is previous",
+        "Optimal solution for this problem in terms of space-time trade-off"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5",
+          "explanation": "one=1, two=1. Iteration 0: temp=1, one=1+1=2, two=1. Iteration 1: temp=2, one=2+1=3, two=2. Iteration 2: temp=3, one=3+2=5, two=3. Iteration 3: temp=5, one=5+3=8, two=5. Return one=8."
+        },
+        "example2": {
+          "input": "n = 1",
+          "explanation": "one=1, two=1. Loop runs 0 times (n-1=0). Return one=1."
+        }
+      }
+    },
+    {
+      "name": "Matrix Exponentiation",
+      "description": "Use matrix exponentiation to compute the nth Fibonacci number in logarithmic time. Represent the Fibonacci recurrence as matrix multiplication and use fast exponentiation with repeated squaring. The transformation matrix [[1,1],[1,0]] raised to the nth power gives the result.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "python": {
+        "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        if n == 1:\n            return 1\n\n        def matrix_mult(A, B):\n            return [[A[0][0] * B[0][0] + A[0][1] * B[1][0],\n                     A[0][0] * B[0][1] + A[0][1] * B[1][1]],\n                    [A[1][0] * B[0][0] + A[1][1] * B[1][0],\n                     A[1][0] * B[0][1] + A[1][1] * B[1][1]]]\n\n        def matrix_pow(M, p):\n            result = [[1, 0], [0, 1]]\n            base = M\n\n            while p:\n                if p % 2 == 1:\n                    result = matrix_mult(result, base)\n                base = matrix_mult(base, base)\n                p //= 2\n\n            return result\n\n        M = [[1, 1], [1, 0]]\n        result = matrix_pow(M, n)\n        return result[0][0]",
+        "semanticLines": [
+          "If n equals one.",
+          "Return one as the base case.",
+          "Define a matrix multiplication function that takes two 2x2 matrices A and B.",
+          "Return a new 2x2 matrix with element zero zero computed from A and B.",
+          "Return element zero one computed from A and B.",
+          "Return element one zero computed from A and B.",
+          "Return element one one computed from A and B.",
+          "Define a matrix power function that takes matrix M and power p.",
+          "Initialize result to the 2x2 identity matrix.",
+          "Initialize base to matrix M.",
+          "While power p is greater than zero.",
+          "If p is odd.",
+          "Multiply result by base.",
+          "Square the base matrix.",
+          "Divide p by two using integer division.",
+          "Return the result matrix.",
+          "Create the Fibonacci transformation matrix.",
+          "Compute the matrix raised to power n.",
+          "Return the top-left element of the result matrix."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    climbStairs(n) {\n        if (n === 1) {\n            return 1;\n        }\n\n        const matrixMult = (A, B) => {\n            return [\n                [A[0][0] * B[0][0] + A[0][1] * B[1][0],\n                 A[0][0] * B[0][1] + A[0][1] * B[1][1]],\n                [A[1][0] * B[0][0] + A[1][1] * B[1][0],\n                 A[1][0] * B[0][1] + A[1][1] * B[1][1]]\n            ];\n        };\n\n        const matrixPow = (M, p) => {\n            let result = [[1, 0], [0, 1]];\n            let base = M;\n\n            while (p > 0) {\n                if (p % 2 === 1) {\n                    result = matrixMult(result, base);\n                }\n                base = matrixMult(base, base);\n                p = Math.floor(p / 2);\n            }\n\n            return result;\n        };\n\n        const M = [[1, 1], [1, 0]];\n        const result = matrixPow(M, n);\n        return result[0][0];\n    }\n}",
+        "semanticLines": [
+          "If n equals one.",
+          "Return one as the base case.",
+          "Close the base case condition.",
+          "Define a matrix multiplication arrow function that takes two 2x2 matrices A and B.",
+          "Return a new 2x2 matrix array.",
+          "Compute first row with element zero zero from A and B.",
+          "Compute element zero one from A and B.",
+          "Close first row array.",
+          "Compute second row with element one zero from A and B.",
+          "Compute element one one from A and B.",
+          "Close second row array.",
+          "Close the return array.",
+          "Close the matrix multiplication function.",
+          "Define a matrix power arrow function that takes matrix M and power p.",
+          "Initialize result to the 2x2 identity matrix.",
+          "Initialize base to matrix M.",
+          "While power p is greater than zero.",
+          "If p is odd.",
+          "Multiply result by base.",
+          "Close the odd power condition.",
+          "Square the base matrix.",
+          "Divide p by two using Math floor.",
+          "Close the while loop.",
+          "Return the result matrix.",
+          "Close the matrix power function.",
+          "Create the Fibonacci transformation matrix.",
+          "Compute the matrix raised to power n.",
+          "Return the top-left element of the result matrix.",
+          "Close the climbStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func climbStairs(n int) int {\n    if n == 1 {\n        return 1\n    }\n\n    matrixMult := func(A, B [][]int) [][]int {\n        return [][]int{\n            {A[0][0]*B[0][0] + A[0][1]*B[1][0],\n             A[0][0]*B[0][1] + A[0][1]*B[1][1]},\n            {A[1][0]*B[0][0] + A[1][1]*B[1][0],\n             A[1][0]*B[0][1] + A[1][1]*B[1][1]},\n        }\n    }\n\n    matrixPow := func(M [][]int, p int) [][]int {\n        result := [][]int{{1, 0}, {0, 1}}\n        base := M\n\n        for p > 0 {\n            if p%2 == 1 {\n                result = matrixMult(result, base)\n            }\n            base = matrixMult(base, base)\n            p /= 2\n        }\n\n        return result\n    }\n\n    M := [][]int{{1, 1}, {1, 0}}\n    result := matrixPow(M, n)\n    return result[0][0]\n}",
+        "semanticLines": [
+          "If n equals one.",
+          "Return one as the base case.",
+          "Close the base case condition.",
+          "Define a matrix multiplication function that takes two 2x2 integer matrices A and B.",
+          "Return a new 2x2 integer matrix slice.",
+          "Compute first row with element zero zero from A and B.",
+          "Compute element zero one from A and B.",
+          "Close first row slice.",
+          "Compute second row with element one zero from A and B.",
+          "Compute element one one from A and B.",
+          "Close second row slice.",
+          "Close the return slice.",
+          "Close the matrix multiplication function.",
+          "Define a matrix power function that takes matrix M and power p.",
+          "Initialize result to the 2x2 identity matrix.",
+          "Initialize base to matrix M.",
+          "While power p is greater than zero.",
+          "If p modulo two equals one.",
+          "Multiply result by base.",
+          "Close the odd power condition.",
+          "Square the base matrix.",
+          "Divide p by two using integer division.",
+          "Close the while loop.",
+          "Return the result matrix.",
+          "Close the matrix power function.",
+          "Create the Fibonacci transformation matrix.",
+          "Compute the matrix raised to power n.",
+          "Return the top-left element of the result matrix.",
+          "Close the climbStairs function."
+        ]
+      },
+      "detailedExplanation": "This advanced solution leverages the mathematical relationship between the Fibonacci sequence and matrix exponentiation. The key insight is that the Fibonacci recurrence can be expressed as a matrix equation: [F(n+1), F(n)] = [F(n), F(n-1)] * [[1,1],[1,0]]. Therefore, [F(n+1), F(n)] = [F(1), F(0)] * [[1,1],[1,0]]^n. By raising the transformation matrix to the nth power, we can compute F(n) directly. The magic happens in the matrix_pow function, which uses exponentiation by squaring: instead of multiplying the matrix n times (O(n)), we repeatedly square it and only multiply into the result when needed, based on the binary representation of n. This reduces the number of matrix multiplications to O(log n). Each matrix multiplication is O(1) for 2x2 matrices, giving us O(log n) total time complexity.",
+      "commonMistakes": [
+        "Incorrect matrix multiplication formula (must follow proper matrix math)",
+        "Not handling n=1 base case separately (index errors)",
+        "Using wrong transformation matrix (should be [[1,1],[1,0]])",
+        "Forgetting to square the base in each iteration (incorrect exponentiation)",
+        "Taking result from wrong position (should be result[0][0])",
+        "Not initializing result to identity matrix (incorrect starting point)"
+      ],
+      "whyItWorks": "Matrix exponentiation works because the Fibonacci recurrence is linear, allowing it to be represented as matrix multiplication. The transformation matrix [[1,1],[1,0]] encodes the recurrence relation: the first row computes F(n+1) = F(n) + F(n-1), and the second row shifts F(n) to the next position. By using exponentiation by squaring, we compute M^n in O(log n) matrix multiplications instead of O(n). The binary representation of n determines which powers of M to multiply into the result, effectively computing the power through a sequence of squarings and conditional multiplications.",
+      "keyInsights": [
+        "Fibonacci recurrence expressible as matrix multiplication",
+        "Transformation matrix [[1,1],[1,0]] encodes recurrence relation",
+        "Exponentiation by squaring reduces O(n) to O(log n) multiplications",
+        "Binary representation of n guides which powers to include",
+        "Optimal asymptotic complexity for computing Fibonacci numbers",
+        "Useful for very large n where even O(n) is too slow"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5",
+          "explanation": "M=[[1,1],[1,0]], compute M^5. Binary: 5=101. result=I, base=M, p=5. p is odd, result=I*M=M, base=M*M=[[2,1],[1,1]], p=2. p is even, base=[[2,1],[1,1]]^2=[[5,3],[3,2]], p=1. p is odd, result=M*[[5,3],[3,2]]=[[8,5],[5,3]], base=[[5,3],[3,2]]^2, p=0. Return result[0][0]=8."
+        },
+        "example2": {
+          "input": "n = 1",
+          "explanation": "n==1, return 1 immediately."
+        }
+      }
+    },
+    {
+      "name": "Math",
+      "description": "Use Binet's formula, a closed-form expression for the nth Fibonacci number using the golden ratio. The formula is F(n) = (phi^n - psi^n) / sqrt(5), where phi = (1+sqrt(5))/2 and psi = (1-sqrt(5))/2. This computes the result in constant time using exponentiation.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "python": {
+        "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        sqrt5 = math.sqrt(5)\n        phi = (1 + sqrt5) / 2\n        psi = (1 - sqrt5) / 2\n        n += 1\n        return round((phi**n - psi**n) / sqrt5)",
+        "semanticLines": [
+          "Compute the square root of five.",
+          "Compute phi as one plus square root of five divided by two, the golden ratio.",
+          "Compute psi as one minus square root of five divided by two, the conjugate golden ratio.",
+          "Increment n by one to adjust for the Fibonacci indexing.",
+          "Return the rounded result of phi to power n minus psi to power n divided by square root of five."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    climbStairs(n) {\n        const sqrt5 = Math.sqrt(5);\n        const phi = (1 + sqrt5) / 2;\n        const psi = (1 - sqrt5) / 2;\n        n += 1;\n        return Math.round((Math.pow(phi, n) - Math.pow(psi, n)) / sqrt5);\n    }\n}",
+        "semanticLines": [
+          "Compute the square root of five.",
+          "Compute phi as one plus square root of five divided by two, the golden ratio.",
+          "Compute psi as one minus square root of five divided by two, the conjugate golden ratio.",
+          "Increment n by one to adjust for the Fibonacci indexing.",
+          "Return the rounded result of phi to power n minus psi to power n divided by square root of five.",
+          "Close the climbStairs method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "import \"math\"\n\nfunc climbStairs(n int) int {\n    sqrt5 := math.Sqrt(5)\n    phi := (1 + sqrt5) / 2\n    psi := (1 - sqrt5) / 2\n    n += 1\n    return int(math.Round((math.Pow(phi, float64(n)) - math.Pow(psi, float64(n))) / sqrt5))\n}",
+        "semanticLines": [
+          "Compute the square root of five.",
+          "Compute phi as one plus square root of five divided by two, the golden ratio.",
+          "Compute psi as one minus square root of five divided by two, the conjugate golden ratio.",
+          "Increment n by one to adjust for the Fibonacci indexing.",
+          "Return the rounded result converted to integer of phi to power n minus psi to power n divided by square root of five.",
+          "Close the climbStairs function."
+        ]
+      },
+      "detailedExplanation": "Binet's formula is a remarkable closed-form expression for Fibonacci numbers. It states that F(n) = (φ^n - ψ^n) / √5, where φ (phi) = (1+√5)/2 ≈ 1.618 is the golden ratio, and ψ (psi) = (1-√5)/2 ≈ -0.618 is its conjugate. Despite involving irrational numbers and non-integer operations, the formula always produces an integer for integer n (the irrational parts cancel out). For this problem, we increment n by 1 because our problem uses 1-indexed steps while standard Fibonacci is 0-indexed. The time complexity is O(log n) because computing φ^n and ψ^n using exponentiation takes logarithmic time. The formula is elegant but has practical limitations: floating-point precision errors can cause incorrect results for large n (typically n > 70), and it's not as numerically stable as iterative methods.",
+      "commonMistakes": [
+        "Forgetting to increment n by 1 (wrong Fibonacci indexing)",
+        "Not rounding the final result (floating-point result instead of integer)",
+        "Using floor instead of round (incorrect for some values due to precision)",
+        "Forgetting to import math library",
+        "Not handling floating-point precision issues for large n",
+        "Confusing phi and psi formulas"
+      ],
+      "whyItWorks": "Binet's formula derives from solving the Fibonacci recurrence relation F(n) = F(n-1) + F(n-2) as a linear homogeneous recurrence. The characteristic equation x² = x + 1 has roots φ and ψ (the golden ratio and its conjugate). The general solution is F(n) = A·φ^n + B·ψ^n. Using initial conditions F(0)=0, F(1)=1, we solve for A=1/√5 and B=-1/√5, yielding Binet's formula. The ψ^n term vanishes rapidly (|ψ| < 1), so for large n, F(n) ≈ φ^n / √5. The formula works because the recurrence relation has constant coefficients, making it solvable using characteristic equations from linear algebra.",
+      "keyInsights": [
+        "Closed-form expression using golden ratio φ = (1+√5)/2",
+        "Derives from solving Fibonacci recurrence as characteristic equation",
+        "O(log n) time using fast exponentiation",
+        "Elegant but limited by floating-point precision for large n",
+        "Demonstrates deep connection between Fibonacci and golden ratio",
+        "Impractical for competitive programming due to precision issues"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "n = 5",
+          "explanation": "sqrt5=2.236, phi=1.618, psi=-0.618. Adjust n=6. Compute phi^6=17.944, psi^6=0.056. Result=(17.944-0.056)/2.236=8.00. Round to 8."
+        },
+        "example2": {
+          "input": "n = 2",
+          "explanation": "sqrt5=2.236, phi=1.618, psi=-0.618. Adjust n=3. Compute phi^3=4.236, psi^3=-0.236. Result=(4.236-(-0.236))/2.236=2.00. Round to 2."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "Think about how you can reach step n - from which steps can you arrive at step n?",
+    "This problem follows the Fibonacci sequence pattern. Why?",
+    "For optimization, do you really need to store all previous results, or just the last few?",
+    "Consider that f(n) = f(n-1) + f(n-2). Can you see why?",
+    "Advanced: The problem can be solved in O(log n) time using matrix exponentiation."
+  ],
+  "followUpQuestions": [
+    "What if you could climb 1, 2, or 3 steps at a time? How would the solution change?",
+    "Can you modify the solution to return the actual sequences of steps, not just the count?",
+    "What if different steps had different costs associated with them?",
+    "How would you handle very large n (say n = 10^9) where even O(n) is too slow?",
+    "Can you generalize this to k steps at a time?"
+  ],
+  "relatedProblems": [
+    "509. Fibonacci Number",
+    "746. Min Cost Climbing Stairs",
+    "1137. N-th Tribonacci Number",
+    "91. Decode Ways",
+    "198. House Robber"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
