@@ -1,0 +1,480 @@
+{
+  "id": "213",
+  "title": "House Robber II",
+  "category": "1-D Dynamic Programming",
+  "difficulty": "Medium",
+  "ultimateGuide": "https://neetcode.io/problems/house-robber-ii",
+  "problemStatement": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.\n\nGiven an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.",
+  "examples": [
+    {
+      "input": "nums = [2,3,2]",
+      "output": "3",
+      "explanation": "You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses. Rob house 2 (money = 3) for maximum amount."
+    },
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": "4",
+      "explanation": "Rob house 1 (money = 1) and then rob house 3 (money = 3). Total amount you can rob = 1 + 3 = 4."
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "3",
+      "explanation": "You cannot rob house 1 and house 3 because house 1 and house 3 are adjacent (circular). Rob house 3 (money = 3)."
+    }
+  ],
+  "constraints": [
+    "1 <= nums.length <= 100",
+    "0 <= nums[i] <= 1000"
+  ],
+  "solutions": [
+    {
+      "name": "Recursion",
+      "description": "Use pure recursion to explore all valid robbing patterns while respecting the circular constraint. Track whether we robbed the first house using a flag, and prevent robbing the last house if we robbed the first. Try both starting scenarios: robbing from house 0 with the flag set, or starting from house 1 without the flag.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        if len(nums) == 1:\n            return nums[0]\n        def dfs(i, flag):\n            if i >= len(nums) or (flag and i == len(nums) - 1):\n                return 0\n\n            return max(dfs(i + 1, flag),\n                       nums[i] + dfs(i + 2, flag or i == 0))\n        return max(dfs(0, True), dfs(1, False))",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Define a depth-first search function that takes current index i and flag indicating if first house was robbed.",
+          "If current index i is beyond array bounds or flag is true and we're at the last house.",
+          "Return zero because we cannot rob here.",
+          "Return the maximum of skipping current house and robbing current house.",
+          "Skip current house by recursing to i plus one with same flag.",
+          "Rob current house by adding nums at i to result of recursing to i plus two with flag set if robbing house zero.",
+          "Return the maximum of starting from house zero with flag true and starting from house one with flag false."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    rob(nums) {\n        if (nums.length === 1) {\n            return nums[0];\n        }\n        const dfs = (i, flag) => {\n            if (i >= nums.length || (flag && i === nums.length - 1)) {\n                return 0;\n            }\n\n            return Math.max(dfs(i + 1, flag),\n                           nums[i] + dfs(i + 2, flag || i === 0));\n        };\n        return Math.max(dfs(0, true), dfs(1, false));\n    }\n}",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Define a depth-first search arrow function that takes current index i and flag indicating if first house was robbed.",
+          "If current index i is beyond array bounds or flag is true and we're at the last house.",
+          "Return zero because we cannot rob here.",
+          "Close the base case condition.",
+          "Return the maximum of skipping current house and robbing current house.",
+          "Skip current house by recursing to i plus one with same flag.",
+          "Rob current house by adding nums at i to result of recursing to i plus two with flag set if robbing house zero.",
+          "Close the depth-first search function definition.",
+          "Return the maximum of starting from house zero with flag true and starting from house one with flag false.",
+          "Close the rob method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func rob(nums []int) int {\n    if len(nums) == 1 {\n        return nums[0]\n    }\n    var dfs func(int, bool) int\n    dfs = func(i int, flag bool) int {\n        if i >= len(nums) || (flag && i == len(nums)-1) {\n            return 0\n        }\n\n        skip := dfs(i+1, flag)\n        take := nums[i] + dfs(i+2, flag || i == 0)\n        if skip > take {\n            return skip\n        }\n        return take\n    }\n    \n    start0 := dfs(0, true)\n    start1 := dfs(1, false)\n    if start0 > start1 {\n        return start0\n    }\n    return start1\n}",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Declare a depth-first search function variable that takes an integer and boolean and returns an integer.",
+          "Define the depth-first search function that takes current index i and flag indicating if first house was robbed.",
+          "If current index i is beyond slice bounds or flag is true and we're at the last house.",
+          "Return zero because we cannot rob here.",
+          "Close the base case condition.",
+          "Calculate result of skipping current house by recursing to i plus one with same flag.",
+          "Calculate result of robbing current house by adding nums at i to result of recursing to i plus two with flag set if robbing house zero.",
+          "If skipping is better than taking.",
+          "Return the skip result.",
+          "Close the comparison condition.",
+          "Return the take result.",
+          "Close the depth-first search function definition.",
+          "Calculate maximum starting from house zero with flag true.",
+          "Calculate maximum starting from house one with flag false.",
+          "If starting from zero is better.",
+          "Return the result starting from zero.",
+          "Close the comparison condition.",
+          "Return the result starting from one.",
+          "Close the rob function."
+        ]
+      },
+      "detailedExplanation": "This recursive solution handles the circular constraint by tracking whether the first house (index 0) was robbed using a boolean flag. The key insight is that if we rob the first house, we cannot rob the last house. The flag propagates this constraint through the recursion. At each house, we have two choices: skip it (recurse to i+1), or rob it (add nums[i] and recurse to i+2, setting the flag if i==0). The base case returns 0 when we go beyond the array bounds or when the flag is true and we reach the last house (can't rob it). We try two scenarios: starting from house 0 with flag=true, and starting from house 1 with flag=false, then return the maximum. This explores all valid combinations but has exponential time complexity due to overlapping subproblems.",
+      "commonMistakes": [
+        "Not handling the single house case separately (array access errors)",
+        "Forgetting to set the flag when robbing house 0 (incorrect constraint enforcement)",
+        "Not preventing robbing last house when flag is true (violates circular constraint)",
+        "Only trying one starting position instead of both (missing optimal solution)",
+        "Confusing the flag logic (should be set on i==0, not i==1)"
+      ],
+      "whyItWorks": "The solution correctly models the circular constraint by using a flag to track first house robbery. When we rob house 0, the flag ensures we cannot rob the last house (which is adjacent in circular arrangement). By trying both starting positions (house 0 with constraint, and house 1 without constraint from house 0), we explore all valid scenarios. The recursion correctly explores all combinations of robbing/skipping houses while respecting the no-adjacent-houses rule and the circular constraint.",
+      "keyInsights": [
+        "Circular constraint: if rob first house, cannot rob last house",
+        "Flag tracks whether first house was robbed to enforce constraint",
+        "Must try both scenarios: start from house 0 (with constraint) or house 1 (without)",
+        "Base case prevents robbing last house when flag is set",
+        "Exponential time due to overlapping subproblems being recomputed"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "nums = [2,3,2]",
+          "explanation": "Try dfs(0, true): can rob 0 (value 2) or skip. If rob 0, dfs(2, true) returns 0 (flag prevents robbing last house). If skip, dfs(1, true) robs house 1 (value 3). So dfs(0, true) = max(3, 2+0) = 3. Try dfs(1, false): rob house 1 (value 3), dfs(3, false) returns 0. Or skip house 1, dfs(2, false) robs house 2 (value 2). So dfs(1, false) = max(2, 3+0) = 3. Return max(3, 3) = 3."
+        },
+        "example2": {
+          "input": "nums = [1,2,3,1]",
+          "explanation": "Try dfs(0, true): explores paths with house 0 robbed. Optimal: rob houses 0 and 2 (1+3=4, cannot rob house 3 due to flag). Try dfs(1, false): explores paths without house 0 constraint. Can rob houses 1 and 3 (2+1=3). Return max(4, 3) = 4."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Top-Down)",
+      "description": "Optimize the recursive solution using memoization with a 2D memo array indexed by [position][flag]. Cache results for each (position, flag) pair to avoid recomputation. This reduces time complexity from exponential to linear while maintaining the same logic.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        if len(nums) == 1:\n            return nums[0]\n\n        memo = [[-1] * 2 for _ in range(len(nums))]\n\n        def dfs(i, flag):\n            if i >= len(nums) or (flag and i == len(nums) - 1):\n                return 0\n            if memo[i][flag] != -1:\n                return memo[i][flag]\n            memo[i][flag] = max(dfs(i + 1, flag),\n                            nums[i] + dfs(i + 2, flag or (i == 0)))\n            return memo[i][flag]\n\n        return max(dfs(0, True), dfs(1, False))",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Create a 2D memo array with dimensions len of nums by two, initialized to negative one.",
+          "Define a depth-first search function that takes current index i and flag indicating if first house was robbed.",
+          "If current index i is beyond array bounds or flag is true and we're at the last house.",
+          "Return zero because we cannot rob here.",
+          "If memo at index i and flag is not negative one.",
+          "Return the cached value at memo i flag.",
+          "Compute and store in memo at i flag the maximum of skipping and robbing current house.",
+          "Skip by recursing to i plus one with same flag, or rob by adding nums at i to recursion at i plus two with flag set if i equals zero.",
+          "Return the memoized value at i flag.",
+          "Return the maximum of starting from house zero with flag true and starting from house one with flag false."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    rob(nums) {\n        if (nums.length === 1) {\n            return nums[0];\n        }\n\n        const memo = Array.from({ length: nums.length }, () => [-1, -1]);\n\n        const dfs = (i, flag) => {\n            if (i >= nums.length || (flag && i === nums.length - 1)) {\n                return 0;\n            }\n            if (memo[i][flag ? 1 : 0] !== -1) {\n                return memo[i][flag ? 1 : 0];\n            }\n            memo[i][flag ? 1 : 0] = Math.max(dfs(i + 1, flag),\n                                   nums[i] + dfs(i + 2, flag || i === 0));\n            return memo[i][flag ? 1 : 0];\n        };\n\n        return Math.max(dfs(0, true), dfs(1, false));\n    }\n}",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Create a 2D memo array with dimensions nums length by two, initialized to negative one.",
+          "Define a depth-first search arrow function that takes current index i and flag indicating if first house was robbed.",
+          "If current index i is beyond array bounds or flag is true and we're at the last house.",
+          "Return zero because we cannot rob here.",
+          "Close the base case condition.",
+          "If memo at index i and flag position is not negative one.",
+          "Return the cached value at memo i flag position.",
+          "Close the cache hit condition.",
+          "Compute and store in memo at i flag position the maximum of skipping and robbing current house.",
+          "Skip by recursing to i plus one with same flag, or rob by adding nums at i to recursion at i plus two with flag set if i equals zero.",
+          "Return the memoized value at i flag position.",
+          "Close the depth-first search function definition.",
+          "Return the maximum of starting from house zero with flag true and starting from house one with flag false.",
+          "Close the rob method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func rob(nums []int) int {\n    if len(nums) == 1 {\n        return nums[0]\n    }\n\n    memo := make([][2]int, len(nums))\n    for i := range memo {\n        memo[i][0] = -1\n        memo[i][1] = -1\n    }\n\n    var dfs func(int, bool) int\n    dfs = func(i int, flag bool) int {\n        if i >= len(nums) || (flag && i == len(nums)-1) {\n            return 0\n        }\n        flagIdx := 0\n        if flag {\n            flagIdx = 1\n        }\n        if memo[i][flagIdx] != -1 {\n            return memo[i][flagIdx]\n        }\n        skip := dfs(i+1, flag)\n        take := nums[i] + dfs(i+2, flag || i == 0)\n        if skip > take {\n            memo[i][flagIdx] = skip\n        } else {\n            memo[i][flagIdx] = take\n        }\n        return memo[i][flagIdx]\n    }\n    \n    start0 := dfs(0, true)\n    start1 := dfs(1, false)\n    if start0 > start1 {\n        return start0\n    }\n    return start1\n}",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Create a 2D memo array with dimensions len of nums by two.",
+          "For each row in the memo array.",
+          "Initialize memo at i zero to negative one.",
+          "Initialize memo at i one to negative one.",
+          "Close the initialization loop.",
+          "Declare a depth-first search function variable that takes an integer and boolean and returns an integer.",
+          "Define the depth-first search function that takes current index i and flag indicating if first house was robbed.",
+          "If current index i is beyond slice bounds or flag is true and we're at the last house.",
+          "Return zero because we cannot rob here.",
+          "Close the base case condition.",
+          "Initialize flag index to zero.",
+          "If flag is true.",
+          "Set flag index to one.",
+          "Close the flag check condition.",
+          "If memo at i and flag index is not negative one.",
+          "Return the cached value at memo i flag index.",
+          "Close the cache hit condition.",
+          "Calculate result of skipping current house by recursing to i plus one with same flag.",
+          "Calculate result of robbing current house by adding nums at i to result of recursing to i plus two with flag set if i equals zero.",
+          "If skipping is better than taking.",
+          "Store the skip result in memo at i flag index.",
+          "Close the comparison condition.",
+          "Otherwise store the take result in memo.",
+          "Close the else block.",
+          "Return the memoized value at i flag index.",
+          "Close the depth-first search function definition.",
+          "Calculate maximum starting from house zero with flag true.",
+          "Calculate maximum starting from house one with flag false.",
+          "If starting from zero is better.",
+          "Return the result starting from zero.",
+          "Close the comparison condition.",
+          "Return the result starting from one.",
+          "Close the rob function."
+        ]
+      },
+      "detailedExplanation": "This memoized solution adds a 2D cache to the recursive approach. The memo array has dimensions [n][2] where memo[i][flag] stores the maximum money that can be robbed starting from house i with the given flag value. Before computing a result, we check if it's already cached. If so, we return it immediately. Otherwise, we compute it recursively and store it in the cache. The flag dimension captures whether we're in a scenario where the first house was robbed (flag=1) or not (flag=0). This transforms the exponential recursive tree into a linear computation because each of the 2n unique states is computed exactly once. The space complexity is O(n) for the memo array plus O(n) for recursion stack depth.",
+      "commonMistakes": [
+        "Using 1D memo array instead of 2D (doesn't capture the flag dimension)",
+        "Not initializing memo properly (undefined behavior)",
+        "Forgetting to store result in memo before returning (no benefit from memoization)",
+        "Incorrect memo indexing for boolean flag (need to convert true/false to 0/1)",
+        "Not checking memo before making recursive calls (defeating the purpose)"
+      ],
+      "whyItWorks": "Memoization eliminates redundant computation by caching results for each unique (position, flag) state. Since there are only n positions and 2 flag values, we have at most 2n unique states. Each state is computed once and then cached. Subsequent encounters of the same state return the cached value in O(1) time. This reduces the time complexity from O(2^n) to O(n) while maintaining the same correctness as the pure recursive solution.",
+      "keyInsights": [
+        "2D memoization: position and flag together determine unique state",
+        "At most 2n unique states to compute (n positions × 2 flag values)",
+        "Each state computed exactly once, then cached for reuse",
+        "Same correctness as recursion but exponential to linear time improvement",
+        "Flag dimension essential to correctly handle circular constraint"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "nums = [2,3,2]",
+          "explanation": "memo=[[-1,-1],[-1,-1],[-1,-1]]. dfs(0,true): memo[0][1]==-1, compute. Call dfs(1,true): memo[1][1]==-1, compute. Call dfs(2,true): returns 0 (flag blocks). Call dfs(3,true): returns 0. memo[1][1]=max(0,3+0)=3. Call dfs(2,true): returns 0 (flag blocks). memo[0][1]=max(3,2+0)=3. dfs(1,false): memo[1][0]==-1, compute. Call dfs(2,false): memo[2][0]==-1, compute. memo[2][0]=2. Call dfs(3,false): returns 0. memo[1][0]=max(2,3+0)=3. Return max(3,3)=3."
+        },
+        "example2": {
+          "input": "nums = [1,2,3,1]",
+          "explanation": "Build memo through recursive calls. dfs(0,true) explores robbing house 0, optimal path robs houses 0,2 for total 4. dfs(1,false) explores starting from house 1, optimal path robs houses 1,3 for total 3. Return max(4,3)=4."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Bottom-Up)",
+      "description": "Break the circular problem into two linear subproblems: rob houses 1 to n-1 (excluding first), or rob houses 0 to n-2 (excluding last). Solve each linear subproblem using standard House Robber DP, then return the maximum. This avoids the complexity of tracking flags.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "python": {
+        "code": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        if len(nums) == 1:\n            return nums[0]\n        return max(self.helper(nums[1:]),\n                   self.helper(nums[:-1]))\n\n    def helper(self, nums: List[int]) -> int:\n        if not nums:\n            return 0\n        if len(nums) == 1:\n            return nums[0]\n\n        dp = [0] * len(nums)\n        dp[0] = nums[0]\n        dp[1] = max(nums[0], nums[1])\n\n        for i in range(2, len(nums)):\n            dp[i] = max(dp[i - 1], nums[i] + dp[i - 2])\n\n        return dp[-1]",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Return the maximum of robbing houses one to end and robbing houses zero to second-last.",
+          "Define a helper function that solves linear house robber problem.",
+          "If nums is empty.",
+          "Return zero.",
+          "If length of nums is one.",
+          "Return the single house value.",
+          "Create a dp array of zeros with length equal to nums length.",
+          "Initialize dp at index zero to nums at index zero.",
+          "Initialize dp at index one to the maximum of nums at index zero and nums at index one.",
+          "For each index i from two to length of nums minus one.",
+          "Set dp at index i to the maximum of not robbing current house or robbing current house.",
+          "Not robbing gives dp at i minus one, robbing gives nums at i plus dp at i minus two.",
+          "Return dp at last index as the maximum money that can be robbed."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    rob(nums) {\n        if (nums.length === 1) {\n            return nums[0];\n        }\n        return Math.max(this.helper(nums.slice(1)),\n                       this.helper(nums.slice(0, -1)));\n    }\n\n    helper(nums) {\n        if (nums.length === 0) {\n            return 0;\n        }\n        if (nums.length === 1) {\n            return nums[0];\n        }\n\n        const dp = new Array(nums.length).fill(0);\n        dp[0] = nums[0];\n        dp[1] = Math.max(nums[0], nums[1]);\n\n        for (let i = 2; i < nums.length; i++) {\n            dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);\n        }\n\n        return dp[dp.length - 1];\n    }\n}",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Return the maximum of robbing houses one to end and robbing houses zero to second-last.",
+          "Close the rob method.",
+          "Define a helper method that solves linear house robber problem.",
+          "If nums length is zero.",
+          "Return zero.",
+          "Close the empty check condition.",
+          "If length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Create a dp array of zeros with length equal to nums length.",
+          "Initialize dp at index zero to nums at index zero.",
+          "Initialize dp at index one to the maximum of nums at index zero and nums at index one.",
+          "For each index i from two to length of nums minus one.",
+          "Set dp at index i to the maximum of not robbing current house or robbing current house.",
+          "Not robbing gives dp at i minus one, robbing gives nums at i plus dp at i minus two.",
+          "Close the loop.",
+          "Return dp at last index as the maximum money that can be robbed.",
+          "Close the helper method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func rob(nums []int) int {\n    if len(nums) == 1 {\n        return nums[0]\n    }\n    result1 := helper(nums[1:])\n    result2 := helper(nums[:len(nums)-1])\n    if result1 > result2 {\n        return result1\n    }\n    return result2\n}\n\nfunc helper(nums []int) int {\n    if len(nums) == 0 {\n        return 0\n    }\n    if len(nums) == 1 {\n        return nums[0]\n    }\n\n    dp := make([]int, len(nums))\n    dp[0] = nums[0]\n    if nums[0] > nums[1] {\n        dp[1] = nums[0]\n    } else {\n        dp[1] = nums[1]\n    }\n\n    for i := 2; i < len(nums); i++ {\n        notRob := dp[i-1]\n        rob := nums[i] + dp[i-2]\n        if notRob > rob {\n            dp[i] = notRob\n        } else {\n            dp[i] = rob\n        }\n    }\n\n    return dp[len(dp)-1]\n}",
+        "semanticLines": [
+          "If the length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Calculate result of robbing houses one to end.",
+          "Calculate result of robbing houses zero to second-last.",
+          "If result one is greater than result two.",
+          "Return result one.",
+          "Close the comparison condition.",
+          "Return result two.",
+          "Close the rob function.",
+          "Define a helper function that solves linear house robber problem.",
+          "If nums length is zero.",
+          "Return zero.",
+          "Close the empty check condition.",
+          "If length of nums is one.",
+          "Return the single house value.",
+          "Close the single house condition.",
+          "Create a dp integer slice with length equal to nums length.",
+          "Initialize dp at index zero to nums at index zero.",
+          "If nums at index zero is greater than nums at index one.",
+          "Initialize dp at index one to nums at index zero.",
+          "Close the comparison condition.",
+          "Otherwise initialize dp at index one to nums at index one.",
+          "Close the else block.",
+          "For each index i from two to length of nums minus one.",
+          "Calculate result of not robbing current house as dp at i minus one.",
+          "Calculate result of robbing current house as nums at i plus dp at i minus two.",
+          "If not robbing is better than robbing.",
+          "Set dp at index i to not rob result.",
+          "Close the comparison condition.",
+          "Otherwise set dp at index i to rob result.",
+          "Close the else block.",
+          "Close the loop.",
+          "Return dp at last index as the maximum money that can be robbed.",
+          "Close the helper function."
+        ]
+      },
+      "detailedExplanation": "This elegant solution recognizes that the circular constraint creates exactly two scenarios: either we rob the first house (and therefore cannot rob the last), or we don't rob the first house (and can consider the last). We split the problem into two linear House Robber subproblems: (1) houses 1 to n-1 (excluding first house), and (2) houses 0 to n-2 (excluding last house). The helper function solves the standard linear House Robber problem using dynamic programming: dp[i] represents the maximum money that can be robbed from houses 0 to i. The recurrence is dp[i] = max(dp[i-1], nums[i] + dp[i-2]) - either skip the current house or rob it (and skip the previous). We solve both subproblems and return the maximum. This approach is cleaner than tracking flags and naturally handles the circular constraint.",
+      "commonMistakes": [
+        "Not handling the single house case separately (array slicing issues)",
+        "Forgetting to consider both scenarios (only checking one slice)",
+        "Incorrect array slicing (off-by-one errors in slice indices)",
+        "Not handling empty array in helper (though won't occur from main function)",
+        "Incorrect DP recurrence in helper function",
+        "Forgetting that dp[1] should be max(nums[0], nums[1]), not just nums[1]"
+      ],
+      "whyItWorks": "The solution correctly handles the circular constraint by recognizing mutual exclusivity: we cannot rob both the first and last houses. By considering both scenarios (rob houses 1 to n-1, or rob houses 0 to n-2) and taking the maximum, we're guaranteed to find the optimal solution while avoiding the first-last adjacency. The helper function correctly solves the linear subproblem using the standard House Robber DP approach. Since we solve two O(n) subproblems, the total time complexity is O(n).",
+      "keyInsights": [
+        "Circular constraint reduces to two linear subproblems",
+        "Cannot rob both first and last house - consider both scenarios",
+        "Reuse standard House Robber DP solution for each scenario",
+        "Cleaner than flag-based approaches - no special case handling during DP",
+        "Two O(n) subproblems give O(n) total time complexity"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "nums = [2,3,2]",
+          "explanation": "Scenario 1: helper([3,2]) - houses 1 to 2. dp=[3,3]. Max is 3. Scenario 2: helper([2,3]) - houses 0 to 1. dp=[2,3]. Max is 3. Return max(3,3)=3."
+        },
+        "example2": {
+          "input": "nums = [1,2,3,1]",
+          "explanation": "Scenario 1: helper([2,3,1]) - houses 1 to 3. dp=[2,3,4]. Max is 4 (rob houses 1,3). Scenario 2: helper([1,2,3]) - houses 0 to 2. dp=[1,2,4]. Max is 4 (rob houses 0,2). Return max(4,4)=4."
+        }
+      }
+    },
+    {
+      "name": "Dynamic Programming (Space Optimized)",
+      "description": "Optimize space by using only two variables in the helper function instead of a full DP array. Track only the last two DP values (rob1 and rob2) as we iterate through houses. This achieves O(1) space complexity while maintaining O(n) time complexity.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "python": {
+        "code": "class Solution:\n\n    def rob(self, nums: List[int]) -> int:\n        return max(nums[0], self.helper(nums[1:]),\n                            self.helper(nums[:-1]))\n\n    def helper(self, nums):\n        rob1, rob2 = 0, 0\n\n        for num in nums:\n            newRob = max(rob1 + num, rob2)\n            rob1 = rob2\n            rob2 = newRob\n        return rob2",
+        "semanticLines": [
+          "Return the maximum of robbing first house alone, robbing houses one to end, or robbing houses zero to second-last.",
+          "Define a helper function that solves linear house robber problem with space optimization.",
+          "Initialize rob1 to zero representing max money two houses ago.",
+          "Initialize rob2 to zero representing max money one house ago.",
+          "For each house value in nums.",
+          "Calculate new rob as maximum of robbing current house or not robbing it.",
+          "Robbing current gives rob1 plus num, not robbing gives rob2.",
+          "Update rob1 to old rob2 value.",
+          "Update rob2 to new rob value.",
+          "Return rob2 as the maximum money that can be robbed."
+        ]
+      },
+      "javascript": {
+        "code": "class Solution {\n    rob(nums) {\n        return Math.max(nums[0], this.helper(nums.slice(1)),\n                                 this.helper(nums.slice(0, -1)));\n    }\n\n    helper(nums) {\n        let rob1 = 0, rob2 = 0;\n\n        for (const num of nums) {\n            const newRob = Math.max(rob1 + num, rob2);\n            rob1 = rob2;\n            rob2 = newRob;\n        }\n        return rob2;\n    }\n}",
+        "semanticLines": [
+          "Return the maximum of robbing first house alone, robbing houses one to end, or robbing houses zero to second-last.",
+          "Close the rob method.",
+          "Define a helper method that solves linear house robber problem with space optimization.",
+          "Initialize rob1 to zero representing max money two houses ago.",
+          "Initialize rob2 to zero representing max money one house ago.",
+          "For each house value in nums.",
+          "Calculate new rob as maximum of robbing current house or not robbing it.",
+          "Robbing current gives rob1 plus num, not robbing gives rob2.",
+          "Update rob1 to old rob2 value.",
+          "Update rob2 to new rob value.",
+          "Close the loop.",
+          "Return rob2 as the maximum money that can be robbed.",
+          "Close the helper method.",
+          "Close the Solution class definition."
+        ]
+      },
+      "go": {
+        "code": "func rob(nums []int) int {\n    max := nums[0]\n    result1 := helper(nums[1:])\n    if result1 > max {\n        max = result1\n    }\n    result2 := helper(nums[:len(nums)-1])\n    if result2 > max {\n        max = result2\n    }\n    return max\n}\n\nfunc helper(nums []int) int {\n    rob1, rob2 := 0, 0\n\n    for _, num := range nums {\n        newRob := rob1 + num\n        if rob2 > newRob {\n            newRob = rob2\n        }\n        rob1 = rob2\n        rob2 = newRob\n    }\n    return rob2\n}",
+        "semanticLines": [
+          "Initialize max to the value of first house.",
+          "Calculate result of robbing houses one to end.",
+          "If result one is greater than current max.",
+          "Update max to result one.",
+          "Close the comparison condition.",
+          "Calculate result of robbing houses zero to second-last.",
+          "If result two is greater than current max.",
+          "Update max to result two.",
+          "Close the comparison condition.",
+          "Return max as the maximum money that can be robbed.",
+          "Close the rob function.",
+          "Define a helper function that solves linear house robber problem with space optimization.",
+          "Initialize rob1 to zero representing max money two houses ago.",
+          "Initialize rob2 to zero representing max money one house ago.",
+          "For each house value in nums.",
+          "Calculate new rob as rob1 plus current house value.",
+          "If not robbing current house gives more money.",
+          "Update new rob to rob2 value.",
+          "Close the comparison condition.",
+          "Update rob1 to old rob2 value.",
+          "Update rob2 to new rob value.",
+          "Close the loop.",
+          "Return rob2 as the maximum money that can be robbed.",
+          "Close the helper function."
+        ]
+      },
+      "detailedExplanation": "This space-optimized solution uses the same two-scenario approach as the bottom-up solution but optimizes the helper function to use O(1) space. The key observation is that when computing dp[i], we only need the two previous values: dp[i-1] and dp[i-2]. We maintain two variables: rob1 (equivalent to dp[i-2]) and rob2 (equivalent to dp[i-1]). For each house, we compute the maximum of robbing it (rob1 + num) or skipping it (rob2), store this in newRob, then slide our window forward by updating rob1 = rob2 and rob2 = newRob. After processing all houses, rob2 contains the maximum money for that subproblem. The main function still considers nums[0] separately as a third scenario to handle edge cases, then returns the maximum of all three scenarios. This achieves O(1) space complexity (excluding input slices) while maintaining O(n) time complexity.",
+      "commonMistakes": [
+        "Not updating variables in correct order (need temp variable or careful sequencing)",
+        "Forgetting to consider nums[0] as a separate scenario in main function",
+        "Incorrect initialization of rob1 and rob2 (should both be 0)",
+        "Updating rob1 before computing newRob (race condition)",
+        "Not understanding the sliding window pattern (rob1 and rob2 represent dp[i-2] and dp[i-1])"
+      ],
+      "whyItWorks": "The space optimization works because the DP recurrence only looks back two positions. By maintaining a sliding window of the last two DP values, we can compute each new value without storing the entire array. The variables rob1 and rob2 effectively track dp[i-2] and dp[i-1], and we compute dp[i] = max(rob1 + nums[i], rob2). Sliding the window forward (rob1 = rob2, rob2 = newRob) prepares for the next iteration. This maintains the same correctness as the full DP array approach but uses constant extra space.",
+      "keyInsights": [
+        "Sliding window optimization: only last two DP values needed",
+        "rob1 tracks dp[i-2], rob2 tracks dp[i-1], compute dp[i] on the fly",
+        "Same two-scenario approach as bottom-up but with O(1) space per scenario",
+        "Separate check for nums[0] handles edge case where single house is optimal",
+        "Optimal space-time trade-off: O(n) time, O(1) space"
+      ],
+      "walkthroughs": {
+        "example1": {
+          "input": "nums = [2,3,2]",
+          "explanation": "Check nums[0]=2. helper([3,2]): rob1=0, rob2=0. Process 3: newRob=max(0+3,0)=3, rob1=0, rob2=3. Process 2: newRob=max(0+2,3)=3, rob1=3, rob2=3. Return 3. helper([2,3]): rob1=0, rob2=0. Process 2: newRob=max(0+2,0)=2, rob1=0, rob2=2. Process 3: newRob=max(0+3,2)=3, rob1=2, rob2=3. Return 3. Return max(2,3,3)=3."
+        },
+        "example2": {
+          "input": "nums = [1,2,3,1]",
+          "explanation": "Check nums[0]=1. helper([2,3,1]): iterate through houses. rob1=0,rob2=0 → rob1=0,rob2=2 → rob1=2,rob2=3 → rob1=3,rob2=4. Return 4. helper([1,2,3]): rob1=0,rob2=0 → rob1=0,rob2=1 → rob1=1,rob2=2 → rob1=2,rob2=4. Return 4. Return max(1,4,4)=4."
+        }
+      }
+    }
+  ],
+  "hints": [
+    "The circular constraint means you cannot rob both the first and last houses.",
+    "Think about breaking this into subproblems: what if you exclude the first house? What if you exclude the last house?",
+    "You can reuse the solution to the original House Robber problem (linear array).",
+    "Consider using a helper function to solve the linear version of the problem.",
+    "For space optimization, notice that you only need the last two DP values at any time."
+  ],
+  "followUpQuestions": [
+    "What if there were three houses that formed a triangle instead of a circle?",
+    "How would you modify the solution if certain houses had security systems that alert neighbors within a radius?",
+    "Can you return the actual houses to rob, not just the maximum amount?",
+    "What if each house had a different alarm probability instead of a binary adjacent constraint?",
+    "How would you handle a 2D grid of houses with the circular constraint in both dimensions?"
+  ],
+  "relatedProblems": [
+    "198. House Robber",
+    "337. House Robber III",
+    "740. Delete and Earn",
+    "2320. Count Number of Ways to Place Houses",
+    "256. Paint House"
+  ],
+  "metadata": {
+    "createdDate": "2025-11-12",
+    "lastReviewDate": "2025-11-12",
+    "nextReviewDate": "2025-11-19",
+    "reviewCount": 0,
+    "easeFactor": 2.5,
+    "consecutiveCorrect": 0
+  }
+}
