@@ -12,21 +12,58 @@
               "name": "Prefix and Suffix Optimal",
               "type": "optimal",
               "explanation": "Use the output array to store prefix products in first pass, then multiply by suffix products in reverse pass. This achieves O(n) time with O(1) extra space by reusing the output array. Most space-efficient solution.",
+              "dryRun": {
+                "example": "nums = [1, 2, 3, 4]",
+                "trace": [
+                  "res = [1, 1, 1, 1], prefix = 1",
+                  "i=0: res[0]=prefix=1, prefix=1*1=1 → res=[1,1,1,1]",
+                  "i=1: res[1]=prefix=1, prefix=1*2=2 → res=[1,1,1,1]",
+                  "i=2: res[2]=prefix=2, prefix=2*3=6 → res=[1,1,2,1]",
+                  "i=3: res[3]=prefix=6, prefix=6*4=24 → res=[1,1,2,6]",
+                  "postfix = 1",
+                  "i=3: res[3]=6*1=6, postfix=1*4=4 → res=[1,1,2,6]",
+                  "i=2: res[2]=2*4=8, postfix=4*3=12 → res=[1,1,8,6]",
+                  "i=1: res[1]=1*12=12, postfix=12*2=24 → res=[1,12,8,6]",
+                  "i=0: res[0]=1*24=24, postfix=24*1=24 → res=[24,12,8,6]",
+                  "return [24, 12, 8, 6]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "Two passes: prefix from left captures everything before me, suffix from right captures everything after me.",
+                "whyItWorks": "Each position needs the product of all elements except itself. By multiplying the prefix product (everything to the left) by the suffix product (everything to the right), we get exactly that — without ever including the element itself."
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "prefix = 0",
+                  "right": "prefix = 1",
+                  "why": "Starting at zero makes every product zero. The multiplicative identity is 1."
+                },
+                {
+                  "wrong": "res[i] = prefix * nums[i]; prefix = res[i]",
+                  "right": "res[i] = prefix; prefix *= nums[i]",
+                  "why": "Store prefix BEFORE multiplying by current element — the current element must be excluded from its own result."
+                },
+                {
+                  "wrong": "res[i] = postfix  // assignment in second pass",
+                  "right": "res[i] *= postfix  // multiply in second pass",
+                  "why": "Second pass must MULTIPLY into the existing prefix value, not overwrite it. Overwriting loses the prefix products."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
-                    "Create array res of same length as nums initialized with all ones.",
-                    "Initialize variable prefix to one to track running product from left.",
-                    "Loop through indices from zero to length of nums.",
-                    "Set res at index i to current prefix value.",
-                    "Multiply prefix by nums at index i and store back in prefix.",
-                    "Initialize variable postfix to one to track running product from right.",
-                    "Loop through indices from length of nums minus one down to zero.",
-                    "Get res at index i, multiply by postfix, and store back in res at index i.",
-                    "Multiply postfix by nums at index i and store back in postfix.",
-                    "Return res."
+                    "Define function productExceptSelf(nums).",
+                    "Create result array filled with ones.",
+                    "Initialize prefix accumulator to one.",
+                    "Forward pass: build prefix products left to right.",
+                    "Store everything-before-i product at current position.",
+                    "Include current element in prefix for next position.",
+                    "Initialize postfix accumulator to one.",
+                    "Reverse pass: multiply by suffix products right to left.",
+                    "Multiply stored prefix by everything-after-i product.",
+                    "Include current element in postfix for next position.",
+                    "Return the result array."
                   ],
                   "codeLines": [
                     "def productExceptSelf(nums):",
@@ -45,20 +82,20 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
-                    "Create array res of same length as nums using Array constructor, fill with ones.",
-                    "Initialize variable prefix to one to track running product from left.",
-                    "Start for loop with i from zero while i less than length of nums incrementing i.",
-                    "Set res at index i to current prefix value.",
-                    "Multiply prefix by nums at index i and store back in prefix.",
-                    "Close the for loop with closing brace.",
-                    "Initialize variable postfix to one to track running product from right.",
-                    "Start for loop with i from length of nums minus one while i greater than or equal to zero decrementing i.",
-                    "Get res at index i, multiply by postfix, and store back in res at index i.",
-                    "Multiply postfix by nums at index i and store back in postfix.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "Create result array filled with ones.",
+                    "Initialize prefix accumulator to one.",
+                    "Forward pass: build prefix products left to right.",
+                    "Store everything-before-i product at current position.",
+                    "Include current element in prefix for next position.",
+                    "",
+                    "Initialize postfix accumulator to one.",
+                    "Reverse pass: multiply by suffix products right to left.",
+                    "Multiply stored prefix by everything-after-i product.",
+                    "Include current element in postfix for next position.",
+                    "",
+                    "Return the result array.",
+                    ""
                   ],
                   "codeLines": [
                     "function productExceptSelf(nums) {",
@@ -80,23 +117,23 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts slice of integers nums and returns slice of integers.",
-                    "Create integer slice res with same length as nums using make.",
-                    "Loop through res using range to get index i ignoring the value.",
-                    "Set res at index i to one.",
-                    "Close the for loop with closing brace.",
-                    "Initialize variable prefix to one to track running product from left.",
-                    "Start for loop with i from zero while i less than length of nums incrementing i.",
-                    "Set res at index i to current prefix value.",
-                    "Multiply prefix by nums at index i and store back in prefix.",
-                    "Close the for loop with closing brace.",
-                    "Initialize variable postfix to one to track running product from right.",
-                    "Start for loop with i from length of nums minus one while i greater than or equal to zero decrementing i.",
-                    "Get res at index i, multiply by postfix, and store back in res at index i.",
-                    "Multiply postfix by nums at index i and store back in postfix.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "Create result slice of same length as nums.",
+                    "Initialize all elements to one.",
+                    "",
+                    "",
+                    "Initialize prefix accumulator to one.",
+                    "Forward pass: build prefix products left to right.",
+                    "Store everything-before-i product at current position.",
+                    "Include current element in prefix for next position.",
+                    "",
+                    "Initialize postfix accumulator to one.",
+                    "Reverse pass: multiply by suffix products right to left.",
+                    "Multiply stored prefix by everything-after-i product.",
+                    "Include current element in postfix for next position.",
+                    "",
+                    "Return the result slice.",
+                    ""
                   ],
                   "codeLines": [
                     "func productExceptSelf(nums []int) []int {",
@@ -123,29 +160,60 @@
               "timeDescription": "Linear time where n is the length of the array. We make two passes through the array.",
               "spaceComplexity": "O(1)",
               "spaceDescription": "Constant extra space beyond the output array. The prefix and postfix variables use O(1) space. Output array of O(n) is not counted as extra space.",
-              "exampleWalkthrough": "Given [1,2,3,4]: First pass (prefix): res=[1,1,2,6] (prefix starts at 1, then 1, then 1*2=2, then 1*2*3=6). Second pass (postfix): postfix starts at 1. At i=3: res[3]=6*1=6, postfix=1*4=4. At i=2: res[2]=2*4=8, postfix=4*3=12. At i=1: res[1]=1*12=12, postfix=12*2=24. At i=0: res[0]=1*24=24, postfix=24*1=24. Result: [24,12,8,6].",
               "displayOrder": 1
             },
             {
               "name": "Prefix and Suffix Arrays",
               "type": "alternative",
               "explanation": "Create separate arrays for prefix and suffix products. The result at each index is the product of its prefix and suffix values. Clear approach but uses extra O(n) space for the prefix and suffix arrays.",
+              "dryRun": {
+                "example": "nums = [1, 2, 3, 4]",
+                "trace": [
+                  "n=4, pref=[0,0,0,0], suff=[0,0,0,0]",
+                  "Base cases: pref[0]=1, suff[3]=1",
+                  "Build pref → pref[1]=nums[0]*pref[0]=1*1=1, pref[2]=nums[1]*pref[1]=2*1=2, pref[3]=nums[2]*pref[2]=3*2=6 → pref=[1,1,2,6]",
+                  "Build suff → suff[2]=nums[3]*suff[3]=4*1=4, suff[1]=nums[2]*suff[2]=3*4=12, suff[0]=nums[1]*suff[1]=2*12=24 → suff=[24,12,4,1]",
+                  "Multiply: res[0]=1*24=24, res[1]=1*12=12, res[2]=2*4=8, res[3]=6*1=6",
+                  "return [24, 12, 8, 6]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "Split into 'everything before me' (prefix array) and 'everything after me' (suffix array), then multiply them together.",
+                "whyItWorks": "pref[i] holds the product of all elements to the left of i, suff[i] holds the product of all elements to the right. Their product at each index gives the product of everything except nums[i]."
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "pref[0] = nums[0]",
+                  "right": "pref[0] = 1",
+                  "why": "Base case must be 1 (nothing to the left of index 0). Using nums[0] would include the element itself."
+                },
+                {
+                  "wrong": "pref[i] = nums[i] * pref[i - 1]",
+                  "right": "pref[i] = nums[i - 1] * pref[i - 1]",
+                  "why": "pref[i] should be the product of elements BEFORE index i, so multiply nums[i-1] (not nums[i]) by the previous prefix."
+                },
+                {
+                  "wrong": "suff[i] = nums[i] * suff[i + 1]",
+                  "right": "suff[i] = nums[i + 1] * suff[i + 1]",
+                  "why": "suff[i] should be the product of elements AFTER index i, so multiply nums[i+1] (not nums[i]) by the next suffix."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
+                    "Define function productExceptSelf(nums).",
                     "Get length of nums and store as n.",
-                    "Create array pref of n zeros for prefix products.",
-                    "Create array suff of n zeros for suffix products.",
-                    "Set pref at index zero to one as base case.",
-                    "Set suff at index n minus one to one as base case.",
-                    "Loop through indices from one to n.",
-                    "Get nums at i minus one, multiply by pref at i minus one, store in pref at i.",
-                    "Loop through indices from n minus two down to zero.",
-                    "Get nums at i plus one, multiply by suff at i plus one, store in suff at i.",
-                    "Create array res by iterating through indices and multiplying pref at i by suff at i for each index.",
-                    "Return res."
+                    "Create prefix array of n zeros.",
+                    "Create suffix array of n zeros.",
+                    "Set pref[0] to one — nothing to the left of first element.",
+                    "Set suff[n-1] to one — nothing to the right of last element.",
+                    "Build prefix products: each position stores product of all elements before it.",
+                    "pref[i] = product of nums[0..i-1].",
+                    "Build suffix products: each position stores product of all elements after it.",
+                    "suff[i] = product of nums[i+1..n-1].",
+                    "Combine: multiply prefix and suffix at each index to get result.",
+                    "Return the result array."
                   ],
                   "codeLines": [
                     "def productExceptSelf(nums):",
@@ -165,21 +233,21 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
-                    "Get length of nums and store as n.",
-                    "Create array pref of n zeros for prefix products using Array constructor and fill.",
-                    "Create array suff of n zeros for suffix products using Array constructor and fill.",
-                    "Set pref at index zero to one as base case.",
-                    "Set suff at index n minus one to one as base case.",
-                    "Start for loop with i from one while i less than n incrementing i.",
-                    "Get nums at i minus one, multiply by pref at i minus one, store in pref at i.",
-                    "Close the for loop with closing brace.",
-                    "Start for loop with i from n minus two while i greater than or equal to zero decrementing i.",
-                    "Get nums at i plus one, multiply by suff at i plus one, store in suff at i.",
-                    "Close the for loop with closing brace.",
-                    "Create array res by mapping indices from zero to n and multiplying pref at i by suff at i for each index.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "",
+                    "Create prefix array of n zeros.",
+                    "Create suffix array of n zeros.",
+                    "Set pref[0] to one — nothing to the left of first element.",
+                    "Set suff[n-1] to one — nothing to the right of last element.",
+                    "Build prefix products: each position stores product of all elements before it.",
+                    "pref[i] = product of nums[0..i-1].",
+                    "",
+                    "Build suffix products: each position stores product of all elements after it.",
+                    "suff[i] = product of nums[i+1..n-1].",
+                    "",
+                    "Combine: multiply prefix and suffix at each index to get result.",
+                    "Return the result array.",
+                    ""
                   ],
                   "codeLines": [
                     "function productExceptSelf(nums) {",
@@ -202,24 +270,24 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts slice of integers nums and returns slice of integers.",
-                    "Get length of nums and store as n.",
-                    "Create integer slice res with length n using make.",
-                    "Create integer slice pref with length n using make.",
-                    "Create integer slice suff with length n using make.",
-                    "Set pref at index zero to one as base case.",
-                    "Set suff at index n minus one to one as base case.",
-                    "Start for loop with i from one while i less than n incrementing i.",
-                    "Get nums at i minus one, multiply by pref at i minus one, store in pref at i.",
-                    "Close the for loop with closing brace.",
-                    "Start for loop with i from n minus two while i greater than or equal to zero decrementing i.",
-                    "Get nums at i plus one, multiply by suff at i plus one, store in suff at i.",
-                    "Close the for loop with closing brace.",
-                    "Start for loop with i from zero while i less than n incrementing i.",
-                    "Get pref at i, multiply by suff at i, store in res at i.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "",
+                    "Create result slice of length n.",
+                    "Create prefix slice of length n.",
+                    "Create suffix slice of length n.",
+                    "Set pref[0] to one — nothing to the left of first element.",
+                    "Set suff[n-1] to one — nothing to the right of last element.",
+                    "Build prefix products: each position stores product of all elements before it.",
+                    "pref[i] = product of nums[0..i-1].",
+                    "",
+                    "Build suffix products: each position stores product of all elements after it.",
+                    "suff[i] = product of nums[i+1..n-1].",
+                    "",
+                    "Combine: multiply prefix and suffix at each index.",
+                    "res[i] = pref[i] * suff[i].",
+                    "",
+                    "Return the result slice.",
+                    ""
                   ],
                   "codeLines": [
                     "func productExceptSelf(nums []int) []int {",
@@ -247,32 +315,67 @@
               "timeDescription": "Linear time where n is the length of the array. We make three passes through the array.",
               "spaceComplexity": "O(n)",
               "spaceDescription": "Linear extra space for the prefix and suffix arrays, each of size n, in addition to the output array.",
-              "exampleWalkthrough": "Given [1,2,3,4]: Build pref=[1,1,2,6] (1, 1*1=1, 1*2=2, 2*3=6). Build suff=[24,12,4,1] (4*3*2*1=24, 4*3*2=12, 4*3=4, 1). Multiply: res[0]=1*24=24, res[1]=1*12=12, res[2]=2*4=8, res[3]=6*1=6. Result: [24,12,8,6].",
               "displayOrder": 2
             },
             {
               "name": "Division",
               "type": "alternative",
               "explanation": "Calculate the total product of all non-zero elements, then divide by each element to get the result. Handle zero cases specially: if more than one zero exists, all results are zero; if exactly one zero, only that position gets the product. Not allowed in problem constraints but shown for understanding.",
+              "dryRun": {
+                "example": "nums = [1, 2, 3, 4]  and  nums = [1, 0, 3, 4]",
+                "trace": [
+                  "Case 1: nums=[1,2,3,4]",
+                  "prod=1*2*3*4=24, zeroCount=0",
+                  "zeroCount==0 → divide: res[0]=24/1=24, res[1]=24/2=12, res[2]=24/3=8, res[3]=24/4=6",
+                  "return [24, 12, 8, 6]",
+                  "Case 2: nums=[1,0,3,4]",
+                  "prod=1*3*4=12 (skip 0), zeroCount=1",
+                  "zeroCount==1 → only zero position gets product: res[0]=0, res[1]=12, res[2]=0, res[3]=0",
+                  "return [0, 12, 0, 0]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "Total product ÷ self = everything else. Handle zeros as special cases.",
+                "whyItWorks": "If no zeros: dividing total product by each element gives the product of all others. One zero: only the zero position gets a non-zero result (since all others include zero in their product). Two+ zeros: every position includes at least one zero, so everything is zero."
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "for num in nums: prod *= num  // including zeros",
+                  "right": "if num != 0: prod *= num",
+                  "why": "Including zeros in the total product makes it zero, losing all useful information."
+                },
+                {
+                  "wrong": "// Not handling zeroCount == 1 case",
+                  "right": "if zeroCount > 0: res[i] = prod if num == 0 else 0",
+                  "why": "With one zero, only the zero position gets the product; all others must be zero since their product includes the zero element."
+                },
+                {
+                  "wrong": "res[i] = prod / num  // float division",
+                  "right": "res[i] = prod // num  // integer division in Python",
+                  "why": "Use integer division to keep results as integers. Regular division produces floats."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
-                    "Initialize variable prod to one to accumulate product of non-zero elements.",
-                    "Initialize variable zeroCount to zero to count zeros in array.",
-                    "Loop through each number num in nums.",
-                    "Check if num is not equal to zero.",
-                    "If not zero, multiply prod by num and store back in prod.",
-                    "If zero, increment zeroCount by one.",
-                    "Create array res of same length as nums initialized with zeros.",
-                    "Check if zeroCount is greater than one.",
-                    "If more than one zero, return res with all zeros.",
-                    "Loop through each index i and number num in nums using enumerate.",
-                    "Check if zeroCount is greater than zero.",
-                    "If zeroCount greater than zero, check if num equals zero, if so set res at i to prod, otherwise set res at i to zero.",
-                    "If zeroCount is zero, divide prod by num and store in res at i.",
-                    "Return res."
+                    "Define function productExceptSelf(nums).",
+                    "Initialize total product accumulator to one (skip zeros).",
+                    "Initialize zero counter.",
+                    "Loop through each number in nums.",
+                    "Check if current number is not zero.",
+                    "If not zero: include in total product.",
+                    "If zero:",
+                    "Increment zero counter.",
+                    "Create result array filled with zeros.",
+                    "If more than one zero: all products are zero, return early.",
+                    "",
+                    "Loop through each index and number.",
+                    "Check if there are any zeros.",
+                    "If zeros exist: only the zero position gets the product, others stay zero.",
+                    "If no zeros: divide total product by current element.",
+                    "Store integer division result.",
+                    "Return the result array."
                   ],
                   "codeLines": [
                     "def productExceptSelf(nums):",
@@ -297,26 +400,29 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
-                    "Initialize variable prod to one to accumulate product of non-zero elements.",
-                    "Initialize variable zeroCount to zero to count zeros in array.",
-                    "Loop through each number num in nums.",
-                    "Check if num is not equal to zero.",
-                    "If not zero, multiply prod by num and store back in prod.",
-                    "Close the if statement with closing brace.",
-                    "If zero, increment zeroCount by one.",
-                    "Close the for loop with closing brace.",
-                    "Create array res of same length as nums initialized with zeros using Array constructor and fill.",
-                    "Check if zeroCount is greater than one.",
-                    "If more than one zero, return res with all zeros.",
-                    "Close the if statement with closing brace.",
-                    "Loop through nums with index i using for loop from zero to length.",
-                    "Check if zeroCount is greater than zero.",
-                    "If zeroCount greater than zero, check if nums at i equals zero using ternary, if so set res at i to prod, otherwise set res at i to zero.",
-                    "If zeroCount is zero, divide prod by nums at i using Math floor for integer division and store in res at i.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "Initialize total product accumulator to one (skip zeros).",
+                    "Initialize zero counter.",
+                    "Loop through each number in nums.",
+                    "Check if current number is not zero.",
+                    "If not zero: include in total product.",
+                    "",
+                    "If zero: increment zero counter.",
+                    "",
+                    "",
+                    "Create result array filled with zeros.",
+                    "If more than one zero: all products are zero.",
+                    "Return early — all results are zero.",
+                    "",
+                    "Loop through indices to build result.",
+                    "Check if there are any zeros.",
+                    "If zeros exist: only the zero position gets the product, others stay zero.",
+                    "",
+                    "If no zeros: divide total product by current element (integer division).",
+                    "",
+                    "",
+                    "Return the result array.",
+                    ""
                   ],
                   "codeLines": [
                     "function productExceptSelf(nums) {",
@@ -347,33 +453,33 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts slice of integers nums and returns slice of integers.",
-                    "Initialize variable prod to one to accumulate product of non-zero elements.",
-                    "Initialize variable zeroCount to zero to count zeros in array.",
-                    "Loop through nums using range to get each number num ignoring the index.",
-                    "Check if num is not equal to zero.",
-                    "If not zero, multiply prod by num and store back in prod.",
-                    "Otherwise if zero.",
-                    "Increment zeroCount by one.",
-                    "Close the else block with closing brace.",
-                    "Close the for loop with closing brace.",
-                    "Create integer slice res with same length as nums using make initialized to zeros.",
-                    "Check if zeroCount is greater than one.",
-                    "If more than one zero, return res with all zeros.",
-                    "Close the if block with closing brace.",
-                    "Loop through nums using range to get index i and number num.",
-                    "Check if zeroCount is greater than zero.",
-                    "Check if num equals zero.",
-                    "If num equals zero, set res at i to prod.",
-                    "Otherwise if num not zero.",
-                    "Set res at i to zero.",
-                    "Close the inner if else block with closing brace.",
-                    "Otherwise if zeroCount is zero.",
-                    "Divide prod by num and store in res at i.",
-                    "Close the outer else block with closing brace.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "Initialize total product accumulator to one (skip zeros).",
+                    "Initialize zero counter.",
+                    "Loop through each number in nums.",
+                    "Check if current number is not zero.",
+                    "If not zero: include in total product.",
+                    "If zero.",
+                    "Increment zero counter.",
+                    "",
+                    "",
+                    "Create result slice filled with zeros.",
+                    "If more than one zero: all products are zero, return early.",
+                    "",
+                    "",
+                    "Loop through each index and number.",
+                    "Check if there are any zeros.",
+                    "Check if current number is the zero.",
+                    "If yes: this position gets the total product.",
+                    "If not the zero.",
+                    "This position stays zero.",
+                    "",
+                    "If no zeros: divide total product by current element.",
+                    "Store division result.",
+                    "",
+                    "",
+                    "Return the result slice.",
+                    ""
                   ],
                   "codeLines": [
                     "func productExceptSelf(nums []int) []int {",
@@ -410,28 +516,53 @@
               "timeDescription": "Linear time where n is the length of the array. We make two passes through the array.",
               "spaceComplexity": "O(1)",
               "spaceDescription": "Constant extra space beyond the output array. Only variables for prod and zeroCount are used.",
-              "exampleWalkthrough": "Given [1,2,3,4]: Calculate prod=1*2*3*4=24, zeroCount=0. For each i: res[0]=24/1=24, res[1]=24/2=12, res[2]=24/3=8, res[3]=24/4=6. Given [1,0,3,4]: prod=1*3*4=12, zeroCount=1. res[0]=0 (not zero), res[1]=12 (is zero), res[2]=0, res[3]=0. Result: [0,12,0,0].",
               "displayOrder": 3
             },
             {
               "name": "Brute Force",
               "type": "naive",
               "explanation": "For each position, calculate the product of all other elements using nested loops. Skip the current index when multiplying. Least efficient but most straightforward approach.",
+              "dryRun": {
+                "example": "nums = [1, 2, 3, 4]",
+                "trace": [
+                  "i=0: prod=1, skip j=0, prod*=2, prod*=3, prod*=4 → res[0]=24",
+                  "i=1: prod=1, prod*=1, skip j=1, prod*=3, prod*=4 → res[1]=12",
+                  "i=2: prod=1, prod*=1, prod*=2, skip j=2, prod*=4 → res[2]=8",
+                  "i=3: prod=1, prod*=1, prod*=2, prod*=3, skip j=3 → res[3]=6",
+                  "return [24, 12, 8, 6]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "For each element, multiply everything else by skipping self.",
+                "whyItWorks": "The most literal interpretation: for every position, loop through all other positions and multiply them together. Correct but slow at O(n²)."
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "prod *= nums[j]  // without skipping when i == j",
+                  "right": "if i == j: continue",
+                  "why": "Without skipping, you include the element itself in its own product."
+                },
+                {
+                  "wrong": "prod = 0",
+                  "right": "prod = 1",
+                  "why": "Multiplying by zero makes everything zero. The multiplicative identity is 1."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
+                    "Define function productExceptSelf(nums).",
                     "Get length of nums and store as n.",
-                    "Create array res of n zeros.",
-                    "Loop through indices from zero to n for outer loop with variable i.",
-                    "Initialize variable prod to one to accumulate product.",
-                    "Loop through indices from zero to n for inner loop with variable j.",
-                    "Check if i equals j.",
-                    "If equal, skip to next iteration with continue.",
-                    "Multiply prod by nums at j and store back in prod.",
-                    "Set res at i to prod.",
-                    "Return res."
+                    "Create result array of n zeros.",
+                    "Outer loop: for each position i, compute its product.",
+                    "Initialize product accumulator to one.",
+                    "Inner loop: multiply all elements except self.",
+                    "If i equals j: this is self.",
+                    "Skip it (continue to next iteration).",
+                    "Multiply current element into product.",
+                    "Store final product for position i.",
+                    "Return the result array."
                   ],
                   "codeLines": [
                     "def productExceptSelf(nums):",
@@ -450,21 +581,21 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts array nums.",
-                    "Get length of nums and store as n.",
-                    "Create array res of n zeros using Array constructor and fill.",
-                    "Start outer for loop with i from zero while i less than n incrementing i.",
-                    "Initialize variable prod to one to accumulate product.",
-                    "Start inner for loop with j from zero while j less than n incrementing j.",
-                    "Check if i equals j.",
-                    "If equal, skip to next iteration with continue.",
-                    "Close the if statement with closing brace.",
-                    "Multiply prod by nums at j and store back in prod.",
-                    "Close the inner for loop with closing brace.",
-                    "Set res at i to prod.",
-                    "Close the outer for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "Get length n.",
+                    "Create result array of n zeros.",
+                    "Outer loop: for each position i, compute its product.",
+                    "Initialize product accumulator to one.",
+                    "Inner loop: multiply all elements except self.",
+                    "If i equals j: this is self.",
+                    "Skip it (continue to next iteration).",
+                    "",
+                    "Multiply current element into product.",
+                    "",
+                    "Store final product for position i.",
+                    "",
+                    "Return the result array.",
+                    ""
                   ],
                   "codeLines": [
                     "function productExceptSelf(nums) {",
@@ -487,21 +618,21 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function productExceptSelf that accepts slice of integers nums and returns slice of integers.",
-                    "Get length of nums and store as n.",
-                    "Create integer slice res with length n using make.",
-                    "Start outer for loop with i from zero while i less than n incrementing i.",
-                    "Initialize variable prod to one to accumulate product.",
-                    "Start inner for loop with j from zero while j less than n incrementing j.",
-                    "Check if i equals j.",
-                    "If equal, skip to next iteration with continue.",
-                    "Close the if block with closing brace.",
-                    "Multiply prod by nums at j and store back in prod.",
-                    "Close the inner for loop with closing brace.",
-                    "Set res at i to prod.",
-                    "Close the outer for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function productExceptSelf(nums).",
+                    "Get length n.",
+                    "Create result slice of length n.",
+                    "Outer loop: for each position i, compute its product.",
+                    "Initialize product accumulator to one.",
+                    "Inner loop: multiply all elements except self.",
+                    "If i equals j: this is self.",
+                    "Skip it (continue to next iteration).",
+                    "",
+                    "Multiply current element into product.",
+                    "",
+                    "Store final product for position i.",
+                    "",
+                    "Return the result slice.",
+                    ""
                   ],
                   "codeLines": [
                     "func productExceptSelf(nums []int) []int {",
@@ -526,7 +657,6 @@
               "timeDescription": "Quadratic time where n is the length of the array due to nested loops checking every pair.",
               "spaceComplexity": "O(1)",
               "spaceDescription": "Constant extra space beyond the output array. Only the prod variable is used.",
-              "exampleWalkthrough": "Given [1,2,3,4]: At i=0: multiply all except index 0: 2*3*4=24. At i=1: multiply all except index 1: 1*3*4=12. At i=2: multiply all except index 2: 1*2*4=8. At i=3: multiply all except index 3: 1*2*3=6. Result: [24,12,8,6].",
               "displayOrder": 4
             }
           ],

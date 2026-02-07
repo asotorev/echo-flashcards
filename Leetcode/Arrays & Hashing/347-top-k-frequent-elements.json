@@ -11,30 +11,88 @@
             {
               "name": "Bucket Sort",
               "type": "optimal",
-              "explanation": "Use bucket sort where each bucket represents a frequency level. Count frequencies, then place numbers into buckets by their frequency. Iterate from highest frequency bucket down to collect k elements. Most efficient solution with linear time.",
+              "explanation": "Use bucket sort where index = frequency. Count frequencies first, then place numbers into buckets by their frequency. Iterate from highest frequency bucket down to collect k elements.",
+              "dryRun": {
+                "example": "nums = [1,1,1,2,2,3], k = 2",
+                "trace": [
+                  "=== STEP 1: Count frequencies ===",
+                  "count = {}",
+                  "num=1 → count={1:1}",
+                  "num=1 → count={1:2}",
+                  "num=1 → count={1:3}",
+                  "num=2 → count={1:3, 2:1}",
+                  "num=2 → count={1:3, 2:2}",
+                  "num=3 → count={1:3, 2:2, 3:1}",
+                  "",
+                  "=== STEP 2: Create frequency buckets ===",
+                  "freq = [[], [], [], [], [], [], []] (length = n+1 = 7)",
+                  "       idx: 0   1   2   3   4   5   6",
+                  "Put numbers into buckets by their frequency:",
+                  "1 has count 3 → freq[3].append(1) → freq[3]=[1]",
+                  "2 has count 2 → freq[2].append(2) → freq[2]=[2]",
+                  "3 has count 1 → freq[1].append(3) → freq[1]=[3]",
+                  "freq = [[], [3], [2], [1], [], [], []]",
+                  "",
+                  "=== STEP 3: Collect k elements from highest frequency ===",
+                  "res = []",
+                  "i=6: freq[6]=[] → skip",
+                  "i=5: freq[5]=[] → skip",
+                  "i=4: freq[4]=[] → skip",
+                  "i=3: freq[3]=[1] → res.append(1) → res=[1]",
+                  "i=2: freq[2]=[2] → res.append(2) → res=[1,2] → len(res)==k → return [1,2]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "Bucket index = frequency. Highest bucket = most frequent.",
+                "whyItWorks": "Max possible frequency is n (all elements same). Create n+1 buckets. Place each number in bucket[its_count]. Iterate backwards from highest bucket.",
+                "whyLinear": "No sorting! Bucket placement is O(1). Collecting k elements is at most O(n). Total: O(n).",
+                "visualization": "freq[frequency] = [numbers with that frequency]"
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "freq = [[]] * (len(nums) + 1)",
+                  "right": "freq = [[] for _ in range(len(nums) + 1)]",
+                  "why": "[[]] * n creates n references to SAME list. Appending to one affects all!"
+                },
+                {
+                  "wrong": "for i in range(len(freq) - 1, -1, -1):",
+                  "right": "for i in range(len(freq) - 1, 0, -1):",
+                  "why": "Frequency 0 is meaningless (no element appears 0 times). Stop at 1, not 0."
+                },
+                {
+                  "wrong": "freq[cnt] = num",
+                  "right": "freq[cnt].append(num)",
+                  "why": "Multiple numbers can have same frequency. Bucket must be a list."
+                },
+                {
+                  "wrong": "Returning after first bucket",
+                  "right": "Keep iterating until len(res) == k",
+                  "why": "One bucket might not have k elements. May need elements from multiple buckets."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts array nums and integer k.",
-                    "Create empty dictionary count to store number frequencies.",
-                    "Create list freq of empty lists with length of nums plus one for bucket sort.",
-                    "Loop through each number num in nums.",
-                    "Get num from count defaulting to zero, add one to it, and store back in count at key num.",
-                    "Loop through each number and its count in count dictionary items.",
-                    "Use cnt as index in freq list, get the list at that index, append num to it, and store back.",
-                    "Create empty list res to store result.",
-                    "Loop through indices from length of freq minus one down to zero.",
-                    "Loop through each num in the list at freq index i.",
-                    "Append num to res list.",
-                    "Check if length of res equals k.",
-                    "If length equals k, return res immediately.",
-                    "After all iterations, return res."
+                    "Define function topKFrequent(nums, k).",
+                    "Create dict to count frequency of each number.",
+                    "Create list of empty lists (buckets) — index = frequency.",
+                    "Count frequencies for each number.",
+                    "Place each number into bucket[its_frequency].",
+                    "Loop through each (number, count) pair.",
+                    "Append number to bucket at index count.",
+                    "Initialize empty result list.",
+                    "Iterate from highest frequency bucket downward.",
+                    "Loop through numbers in current bucket.",
+                    "Append number to result.",
+                    "Check if we have k elements.",
+                    "Return result when we have k elements.",
+                    "Return result."
                   ],
                   "codeLines": [
                     "def topKFrequent(nums, k):",
                     "    count = {}",
-                    "    freq = [[] for i in range(len(nums) + 1)]",
+                    "    freq = [[] for _ in range(len(nums) + 1)]",
                     "    for num in nums:",
                     "        count[num] = count.get(num, 0) + 1",
                     "    for num, cnt in count.items():",
@@ -51,26 +109,24 @@
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts array nums and integer k.",
-                    "Create new Map object count to store number frequencies.",
-                    "Create array freq of empty arrays with length of nums length plus one for bucket sort.",
-                    "Loop through each number num in nums.",
-                    "Get num from count defaulting to zero, add one to it, and store back in count at key num using set method.",
-                    "Close the for loop with closing brace.",
-                    "Loop through each number and count pair in count Map using entries.",
-                    "Use cnt as index in freq array and push num to the array at that index.",
-                    "Close the for loop with closing brace.",
-                    "Create empty array res to store result.",
-                    "Loop with i from length of freq minus one down to zero decrementing i.",
-                    "Loop through each num in the array at freq index i.",
-                    "Push num to res array.",
-                    "Check if length of res equals k.",
-                    "If length equals k, return res immediately.",
-                    "Close the if statement with closing brace.",
-                    "Close the inner for loop with closing brace.",
-                    "Close the outer for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function topKFrequent(nums, k).",
+                    "Open function block.",
+                    "Create Map for frequency counting.",
+                    "Create array of empty arrays (buckets).",
+                    "Count frequencies for each number.",
+                    "Increment count for current number.",
+                    "Close loop.",
+                    "Loop through each (number, count) pair.",
+                    "Place number in bucket at index count.",
+                    "Close loop.",
+                    "Initialize empty result array.",
+                    "Iterate from highest frequency bucket downward.",
+                    "Loop through numbers in current bucket.",
+                    "Append number to result.",
+                    "Check if we have k elements and return.",
+                    "Close inner loop.",
+                    "Close outer loop.",
+                    "Return result."
                   ],
                   "codeLines": [
                     "function topKFrequent(nums, k) {",
@@ -86,9 +142,7 @@
                     "    for (let i = freq.length - 1; i > 0; i--) {",
                     "        for (const num of freq[i]) {",
                     "            res.push(num);",
-                    "            if (res.length === k) {",
-                    "                return res;",
-                    "            }",
+                    "            if (res.length === k) return res;",
                     "        }",
                     "    }",
                     "    return res;",
@@ -98,26 +152,26 @@
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts slice of integers nums and integer k and returns slice of integers.",
-                    "Create map count with integer keys and integer values using make.",
-                    "Create slice freq of slices of integers with length of nums length plus one using make.",
-                    "Loop through nums using range to get each num ignoring the index.",
-                    "Increment count map at key num by one.",
-                    "Close the for loop with closing brace.",
-                    "Loop through count map using range to get each num and cnt pair.",
-                    "Use cnt as index in freq slice, get slice at that index, append num to it, and store back at freq index cnt.",
-                    "Close the for loop with closing brace.",
-                    "Create empty integer slice res.",
-                    "Loop with i from length of freq minus one down to greater than zero decrementing i.",
-                    "Loop through freq at index i using range to get each num ignoring the index.",
-                    "Append num to res slice.",
-                    "Check if length of res equals k.",
-                    "If length equals k, return res immediately.",
-                    "Close the if block with closing brace.",
-                    "Close the inner for loop with closing brace.",
-                    "Close the outer for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function topKFrequent(nums []int, k int) returning []int.",
+                    "Create map for frequency counting.",
+                    "Create slice of slices (buckets).",
+                    "Count frequencies for each number.",
+                    "Increment count for current number.",
+                    "Close loop.",
+                    "Loop through each (number, count) pair.",
+                    "Place number in bucket at index count.",
+                    "Close loop.",
+                    "Initialize empty result slice.",
+                    "Iterate from highest frequency bucket downward.",
+                    "Loop through numbers in current bucket.",
+                    "Append number to result.",
+                    "Check if we have k elements.",
+                    "Return result when we have k elements.",
+                    "Close if block.",
+                    "Close inner loop.",
+                    "Close outer loop.",
+                    "Return result.",
+                    "Close function."
                   ],
                   "codeLines": [
                     "func topKFrequent(nums []int, k int) []int {",
@@ -144,28 +198,62 @@
                 }
               ],
               "timeComplexity": "O(n)",
-              "timeDescription": "Linear time where n is the length of the array. We iterate through the array once to count, once to fill buckets, and at most once more to collect k elements.",
+              "timeDescription": "Count: O(n), fill buckets: O(unique), collect: O(n worst case). No sorting!",
               "spaceComplexity": "O(n)",
-              "spaceDescription": "Linear space for the count map and freq buckets array, both of which can store up to n elements in the worst case.",
-              "exampleWalkthrough": "Given [1,1,1,2,2,3] and k=2: Count frequencies: {1:3, 2:2, 3:1}. Create buckets freq[1]=[3], freq[2]=[2], freq[3]=[1]. Iterate from freq[6] down: freq[3]=[1] add 1 to res, freq[2]=[2] add 2 to res, length is 2 so return [1,2].",
+              "spaceDescription": "Count map: O(unique), freq buckets: O(n+1).",
               "displayOrder": 1
             },
             {
               "name": "Sorting",
               "type": "alternative",
-              "explanation": "Count frequencies, create array of [count, number] pairs, sort by count descending, and take first k elements. Simple approach but less efficient due to sorting overhead.",
+              "explanation": "Count frequencies, create (count, number) pairs, sort by count descending, take first k numbers.",
+              "dryRun": {
+                "example": "nums = [1,1,1,2,2,3], k = 2",
+                "trace": [
+                  "=== STEP 1: Count frequencies ===",
+                  "count = {1:3, 2:2, 3:1}",
+                  "",
+                  "=== STEP 2: Create (count, number) pairs ===",
+                  "arr = [(3, 1), (2, 2), (1, 3)]",
+                  "",
+                  "=== STEP 3: Sort by count descending ===",
+                  "arr.sort(reverse=True) → [(3, 1), (2, 2), (1, 3)]",
+                  "(already sorted in this example)",
+                  "",
+                  "=== STEP 4: Take first k numbers ===",
+                  "arr[:2] = [(3, 1), (2, 2)]",
+                  "Extract numbers: [1, 2]",
+                  "return [1, 2]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "Sort by frequency, pick top k",
+                "whyItWorks": "After sorting by frequency descending, first k elements are the most frequent.",
+                "tradeoff": "Simple to understand but O(n log n) due to sorting. Bucket sort is O(n)."
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "arr.sort() (ascending)",
+                  "right": "arr.sort(reverse=True) (descending)",
+                  "why": "We want HIGHEST frequency first, not lowest."
+                },
+                {
+                  "wrong": "[(num, cnt) for num, cnt in count.items()]",
+                  "right": "[(cnt, num) for num, cnt in count.items()]",
+                  "why": "Put count FIRST so default sort works on count, not number."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts array nums and integer k.",
-                    "Create empty dictionary count to store number frequencies.",
-                    "Loop through each number num in nums.",
-                    "Get num from count defaulting to zero, add one to it, and store back in count at key num.",
-                    "Create list arr by iterating through count items and creating tuples of count then num for each pair.",
-                    "Sort arr in place in descending order by first element of each tuple using reverse equals True.",
-                    "Create list res by taking first k elements from arr and extracting the number which is the second element of each tuple.",
-                    "Return res."
+                    "Define function topKFrequent(nums, k).",
+                    "Create dict to count frequencies.",
+                    "Count frequency of each number.",
+                    "Increment count for current number.",
+                    "Create (count, number) pairs from dict.",
+                    "Sort pairs descending by count.",
+                    "Extract first k numbers from sorted pairs."
                   ],
                   "codeLines": [
                     "def topKFrequent(nums, k):",
@@ -174,23 +262,21 @@
                     "        count[num] = count.get(num, 0) + 1",
                     "    arr = [(cnt, num) for num, cnt in count.items()]",
                     "    arr.sort(reverse=True)",
-                    "    res = [num for cnt, num in arr[:k]]",
-                    "    return res"
+                    "    return [num for cnt, num in arr[:k]]"
                   ]
                 },
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts array nums and integer k.",
-                    "Create new Map object count to store number frequencies.",
-                    "Loop through each number num in nums.",
-                    "Get num from count defaulting to zero, add one to it, and store back in count at key num using set method.",
-                    "Close the for loop with closing brace.",
-                    "Create array arr from count entries by mapping each num and cnt pair to array containing cnt then num.",
-                    "Sort arr in place in descending order by first element using comparison function that takes a and b and returns b at zero minus a at zero.",
-                    "Create array res by slicing first k elements from arr and mapping each pair to its second element which is the number.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function topKFrequent(nums, k).",
+                    "Open function block.",
+                    "Create Map for frequency counting.",
+                    "Count frequency of each number.",
+                    "Increment count for current number.",
+                    "Close loop.",
+                    "Create (count, number) pairs from Map.",
+                    "Sort pairs descending by count.",
+                    "Extract first k numbers from sorted pairs."
                   ],
                   "codeLines": [
                     "function topKFrequent(nums, k) {",
@@ -200,30 +286,31 @@
                     "    }",
                     "    const arr = Array.from(count.entries(), ([num, cnt]) => [cnt, num]);",
                     "    arr.sort((a, b) => b[0] - a[0]);",
-                    "    const res = arr.slice(0, k).map(pair => pair[1]);",
-                    "    return res;",
+                    "    return arr.slice(0, k).map(([cnt, num]) => num);",
                     "}"
                   ]
                 },
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts slice of integers nums and integer k and returns slice of integers.",
-                    "Create map count with integer keys and integer values using make.",
-                    "Loop through nums using range to get each num ignoring the index.",
-                    "Increment count map at key num by one.",
-                    "Close the for loop with closing brace.",
-                    "Create slice arr of arrays of two integers with initial capacity of count map length using make.",
-                    "Loop through count map using range to get each num and cnt pair.",
-                    "Create array of two integers with cnt then num, append to arr, and store result back in arr.",
-                    "Close the for loop with closing brace.",
-                    "Sort arr slice using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if arr at i at zero is greater than arr at j at zero for descending order.",
-                    "Create integer slice res with length k using make.",
-                    "Loop with i from zero while i less than k incrementing i.",
-                    "Get arr at index i at index one which is the number and store in res at index i.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function topKFrequent(nums []int, k int) returning []int.",
+                    "Create map for frequency counting.",
+                    "Count frequency of each number.",
+                    "Increment count for current number.",
+                    "Close loop.",
+                    "Create slice for (count, number) pairs.",
+                    "Loop through map entries.",
+                    "Append (count, number) pair to array.",
+                    "Close loop.",
+                    "Sort pairs descending by count.",
+                    "Sort using custom comparator.",
+                    "Close sort.",
+                    "Create result slice of size k.",
+                    "Loop k times to extract numbers.",
+                    "Extract number from pair and store in result.",
+                    "Close loop.",
+                    "Return result.",
+                    "Close function."
                   ],
                   "codeLines": [
                     "func topKFrequent(nums []int, k int) []int {",
@@ -248,31 +335,75 @@
                 }
               ],
               "timeComplexity": "O(n log n)",
-              "timeDescription": "Logarithmic time where n is the length of the array due to sorting the frequency array.",
+              "timeDescription": "Dominated by sorting. Count is O(n), sort is O(n log n).",
               "spaceComplexity": "O(n)",
-              "spaceDescription": "Linear space for the count map and arr array which can store up to n unique elements.",
-              "exampleWalkthrough": "Given [1,1,1,2,2,3] and k=2: Count frequencies: {1:3, 2:2, 3:1}. Create arr=[[3,1], [2,2], [1,3]]. Sort descending: [[3,1], [2,2], [1,3]]. Take first 2: [1, 2].",
+              "spaceDescription": "Count map and pairs array.",
               "displayOrder": 2
             },
             {
               "name": "Min-Heap",
               "type": "alternative",
-              "explanation": "Use a min-heap to keep only the k most frequent elements. For each unique number, add it to the heap. If heap size exceeds k, remove the minimum. More space-efficient than sorting when k is much smaller than n.",
+              "explanation": "Use a min-heap of size k. For each unique number, add to heap. If heap size exceeds k, pop minimum. At end, heap contains k most frequent.",
+              "dryRun": {
+                "example": "nums = [1,1,1,2,2,3], k = 2",
+                "trace": [
+                  "=== STEP 1: Count frequencies ===",
+                  "count = {1:3, 2:2, 3:1}",
+                  "",
+                  "=== STEP 2: Build min-heap of size k ===",
+                  "heap = [] (min-heap, smallest count on top)",
+                  "",
+                  "Process (1, 3): push (3, 1) → heap = [(3, 1)]",
+                  "  heap size 1 <= k=2, keep",
+                  "",
+                  "Process (2, 2): push (2, 2) → heap = [(2, 2), (3, 1)]",
+                  "  heap size 2 <= k=2, keep",
+                  "",
+                  "Process (3, 1): push (1, 3) → heap = [(1, 3), (3, 1), (2, 2)]",
+                  "  heap size 3 > k=2 → pop min (1, 3) → heap = [(2, 2), (3, 1)]",
+                  "",
+                  "=== STEP 3: Extract numbers from heap ===",
+                  "heap = [(2, 2), (3, 1)] → numbers = [2, 1]",
+                  "return [2, 1]"
+                ]
+              },
+              "mentalModel": {
+                "keyInsight": "Min-heap kicks out the LEAST frequent. What survives are the MOST frequent.",
+                "whyMinHeap": "We want top k LARGEST frequencies. Min-heap lets us efficiently remove smallest. After processing all, only k largest remain.",
+                "whyNotMaxHeap": "Max-heap would need to hold ALL elements. Min-heap of size k only holds k elements at a time.",
+                "tradeoff": "O(n log k) — better than sorting when k << n."
+              },
+              "commonMistakes": [
+                {
+                  "wrong": "Using max-heap",
+                  "right": "Using min-heap of size k",
+                  "why": "Max-heap would hold all elements. Min-heap of size k kicks out smallest, keeping k largest."
+                },
+                {
+                  "wrong": "heappush((num, cnt)) — number first",
+                  "right": "heappush((cnt, num)) — count first",
+                  "why": "Python heapq sorts by first element. We want to compare by COUNT."
+                },
+                {
+                  "wrong": "Popping when heap size == k",
+                  "right": "Popping when heap size > k",
+                  "why": "Pop AFTER adding, only if exceeds k. Otherwise you'd never have k elements."
+                }
+              ],
               "languageImplementations": [
                 {
                   "language": "python",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts array nums and integer k.",
-                    "Create empty dictionary count to store number frequencies.",
-                    "Loop through each number num in nums.",
-                    "Get num from count defaulting to zero, add one to it, and store back in count at key num.",
-                    "Create empty list heap to use as min-heap.",
-                    "Loop through each number and count pair in count dictionary items.",
-                    "Push tuple of cnt and num to heap using heapq heappush.",
-                    "Check if length of heap is greater than k.",
-                    "If greater than k, pop and remove the smallest element from heap using heapq heappop.",
-                    "Create list res by iterating through heap and extracting the number which is the second element of each tuple.",
-                    "Return res."
+                    "Define function topKFrequent(nums, k).",
+                    "Create dict to count frequencies.",
+                    "Count frequency of each number.",
+                    "Increment count for current number.",
+                    "Initialize empty heap.",
+                    "For each (num, count), push to min-heap.",
+                    "Push (count, number) pair to heap.",
+                    "Check if heap size exceeds k.",
+                    "Pop minimum from heap.",
+                    "Extract numbers from remaining heap."
                   ],
                   "codeLines": [
                     "def topKFrequent(nums, k):",
@@ -284,29 +415,25 @@
                     "        heapq.heappush(heap, (cnt, num))",
                     "        if len(heap) > k:",
                     "            heapq.heappop(heap)",
-                    "    res = [num for cnt, num in heap]",
-                    "    return res"
+                    "    return [num for cnt, num in heap]"
                   ]
                 },
                 {
                   "language": "javascript",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts array nums and integer k.",
-                    "Create new Map object count to store number frequencies.",
-                    "Loop through each number num in nums.",
-                    "Get num from count defaulting to zero, add one to it, and store back in count at key num using set method.",
-                    "Close the for loop with closing brace.",
-                    "Create empty array heap to use as min-heap.",
-                    "Loop through each number and count pair in count Map using entries.",
-                    "Push array containing cnt and num to heap.",
-                    "Sort heap in ascending order by first element to maintain min-heap property using comparison function that takes a and b and returns a at zero minus b at zero.",
-                    "Check if length of heap is greater than k.",
-                    "If greater than k, remove first element from heap using shift method.",
-                    "Close the if statement with closing brace.",
-                    "Close the for loop with closing brace.",
-                    "Create array res by mapping each pair in heap to its second element which is the number.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function topKFrequent(nums, k).",
+                    "Open function block.",
+                    "Create Map for frequency counting.",
+                    "Count frequency of each number.",
+                    "Increment count for current number.",
+                    "Close loop.",
+                    "Initialize empty heap array.",
+                    "Loop through Map entries.",
+                    "Push (count, number) pair to heap.",
+                    "Sort heap to maintain min-heap property.",
+                    "Check if heap size exceeds k and remove minimum.",
+                    "Close loop.",
+                    "Extract numbers from heap and return."
                   ],
                   "codeLines": [
                     "function topKFrequent(nums, k) {",
@@ -318,37 +445,36 @@
                     "    for (const [num, cnt] of count.entries()) {",
                     "        heap.push([cnt, num]);",
                     "        heap.sort((a, b) => a[0] - b[0]);",
-                    "        if (heap.length > k) {",
-                    "            heap.shift();",
-                    "        }",
+                    "        if (heap.length > k) heap.shift();",
                     "    }",
-                    "    const res = heap.map(pair => pair[1]);",
-                    "    return res;",
+                    "    return heap.map(([cnt, num]) => num);",
                     "}"
                   ]
                 },
                 {
                   "language": "go",
                   "semanticLines": [
-                    "Define function topKFrequent that accepts slice of integers nums and integer k and returns slice of integers.",
-                    "Create map count with integer keys and integer values using make.",
-                    "Loop through nums using range to get each num ignoring the index.",
-                    "Increment count map at key num by one.",
-                    "Close the for loop with closing brace.",
-                    "Create slice heap of arrays of two integers with initial capacity of k using make.",
-                    "Loop through count map using range to get each num and cnt pair.",
-                    "Create array of two integers with cnt then num and append to heap.",
-                    "Sort heap slice using sort Slice with a comparison function that takes indices i and j and returns a boolean indicating if heap at i at zero is less than heap at j at zero for min-heap property.",
-                    "Check if length of heap is greater than k.",
-                    "If greater than k, slice heap from index one to end to remove the minimum element and store back in heap.",
-                    "Close the if block with closing brace.",
-                    "Close the for loop with closing brace.",
-                    "Create integer slice res with length of heap using make.",
-                    "Loop with i from zero while i less than length of heap incrementing i.",
-                    "Get heap at index i at index one which is the number and store in res at index i.",
-                    "Close the for loop with closing brace.",
-                    "Return res.",
-                    "Close function with closing brace."
+                    "Define function topKFrequent(nums []int, k int) returning []int.",
+                    "Create map for frequency counting.",
+                    "Count frequency of each number.",
+                    "Increment count for current number.",
+                    "Close loop.",
+                    "Initialize empty heap slice.",
+                    "Loop through map entries.",
+                    "Append (count, number) pair to heap.",
+                    "Sort heap to maintain min-heap property.",
+                    "Sort using custom comparator.",
+                    "Close sort.",
+                    "Check if heap size exceeds k.",
+                    "Remove minimum element from heap.",
+                    "Close if block.",
+                    "Close loop.",
+                    "Create result slice of heap length.",
+                    "Loop through heap to extract numbers.",
+                    "Extract number from pair and store in result.",
+                    "Close loop.",
+                    "Return result.",
+                    "Close function."
                   ],
                   "codeLines": [
                     "func topKFrequent(nums []int, k int) []int {",
@@ -356,7 +482,7 @@
                     "    for _, num := range nums {",
                     "        count[num]++",
                     "    }",
-                    "    heap := make([][2]int, 0, k)",
+                    "    heap := [][2]int{}",
                     "    for num, cnt := range count {",
                     "        heap = append(heap, [2]int{cnt, num})",
                     "        sort.Slice(heap, func(i, j int) bool {",
@@ -367,8 +493,8 @@
                     "        }",
                     "    }",
                     "    res := make([]int, len(heap))",
-                    "    for i := 0; i < len(heap); i++ {",
-                    "        res[i] = heap[i][1]",
+                    "    for i, pair := range heap {",
+                    "        res[i] = pair[1]",
                     "    }",
                     "    return res",
                     "}"
@@ -376,10 +502,9 @@
                 }
               ],
               "timeComplexity": "O(n log k)",
-              "timeDescription": "Where n is the length of the array and k is the number of top frequent elements. Each heap operation takes O(log k) time and we do this for each unique number.",
+              "timeDescription": "Count: O(n), heap operations: O(unique × log k). Better than O(n log n) when k << n.",
               "spaceComplexity": "O(n + k)",
-              "spaceDescription": "Space for the count map which is O(n) and the heap which maintains at most k elements.",
-              "exampleWalkthrough": "Given [1,1,1,2,2,3] and k=2: Count frequencies: {1:3, 2:2, 3:1}. Process (1,3): heap=[(3,1)]. Process (2,2): heap=[(2,2),(3,1)]. Process (3,1): heap=[(1,3),(2,2),(3,1)] size>2 so pop min, heap=[(2,2),(3,1)]. Extract numbers: [2,1].",
+              "spaceDescription": "Count map: O(n), heap: O(k).",
               "displayOrder": 3
             }
           ],
